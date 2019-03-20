@@ -103,15 +103,6 @@
 		vec4 vScaled = vec4(v2.x * (transparencyPointer * 2.0 - 1.0), v2.yzw);
 		return mix(v1, vScaled, step(vScaled.x, v1.x) * step(0.0, transparencyPointer));
 	}
-	vec4 DistCombineIntersect(in vec4 v1, in vec4 v2)
-	{
-		return mix(v2, v1, step(v2.x, v1.x));
-	}
-	vec4 DistCombineSubtract(in vec4 v1, in vec4 v2)
-	{
-		return DistCombineIntersect(v1, vec4(-v2.x, v2.yzw));
-	}
-
 
 	float getTilt(vec3 p) { return dot(p, vec3(0.299, 0.587, 0.114)); }
 	vec3 tex3D(sampler2D tex, in vec3 p, in vec3 n) {
