@@ -1,4 +1,4 @@
-﻿Shader "Standard Vector Marching"
+﻿Shader "Standard Trace Marching"
 {
 	Properties{
 		_MainTex("Texture", 2D) = "white" {}
@@ -75,7 +75,10 @@
 	const float PI = 3.14159265359;
 	const float DEG_TO_RAD = PI / 180.0;
 	const float TWOPI = PI * 2.0;
+	const float TAU = PI * 2.0;
+	const float PHI = (sqrt(5)*0.5 + 0.5);
 	const float farClip = 32.0;
+#define saturate(x) clamp(x, 0, 1)
 
 	const float material_ID0 = 1.0;
 	const float material_ID1 = 2.0;
@@ -85,66 +88,9 @@
 	const float transparencyInformation = 1.0;
 	const float emptyInformation = 0.0;
 
-	struct Vector
-	{
-		vec3 origin;
-		vec3 direction;
-		float startdistanc;
-		float length;
-	};
+#include "Types.shader"
+#include "BasicFunctions.shader"
 
-	struct Surface
-	{
-		vec3 normal;
-		vec3 reflection;
-		vec3 subsurface;
-	};
-
-	struct Material
-	{
-		float reflectionCoefficient;
-		float reflectivity;
-		float transparency;
-		float reflectindx;
-		vec3 albedo;
-	};
-
-	struct Shading
-	{
-		vec3 diffuse;
-		vec3 specular;
-	};
-
-	struct CollisionInfo
-	{
-		vec3 position;
-		float distanc;
-		vec3 id;
-	};
-
-	struct PointLight
-	{
-		vec3 position;
-		vec3 color;
-	};
-	 
-	struct DirectionLight
-	{
-		vec3 direction;
-		vec3 color;
-	};
-
-	mat2 rot2(float th) { vec2 a = sin(vec2(1.5707963, 0) + th); return mat2(a, -a.y, a.x); }
-	float rand(vec2 co) {
-		return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
-	}
-	float rand(float co) {
-		return rand(vec2(co));
-	}
-	float smin(float a, float b, float k) {
-		float res = exp(-k * a) + exp(-k * b);
-		return -log(res) / k;
-	}
 	float sdSphere(vec3 p, float s) {
 		return length(p) - s;
 	}
@@ -168,19 +114,6 @@
 		return max(q.z - h.y, max((q.x*0.866025 + q.y*0.5), q.y) - h.x);
 	}
 
-	float length2(vec2 p) {
-		return sqrt(p.x*p.x + p.y*p.y);
-	}
-
-	float length6(vec2 p) {
-		p = p * p*p; p = p * p;
-		return pow(p.x + p.y, 1.0 / 6.0);
-	}
-
-	float length8(vec2 p) {
-		p = p * p; p = p * p; p = p * p;
-		return pow(p.x + p.y, 1.0 / 8.0);
-	}
 	float sdTorus88(vec3 p, vec2 t)
 	{
 		vec2 q = vec2(length8(p.xz) - t.x, p.y);
@@ -202,16 +135,6 @@
 		float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
 		return length(pa - ba * h) - r;
 	}
-	mat3 rotationMatrix(vec3 axis, float angle) {
-		axis = normalize(axis);
-		float s = sin(angle);
-		float c = cos(angle);
-		float oc = 1.0 - c;
-
-		return mat3(oc * axis.x * axis.x + c, oc * axis.x * axis.y - axis.z * s, oc * axis.z * axis.x + axis.y * s,
-			oc * axis.x * axis.y + axis.z * s, oc * axis.y * axis.y + c, oc * axis.y * axis.z - axis.x * s,
-			oc * axis.z * axis.x - axis.y * s, oc * axis.y * axis.z + axis.x * s, oc * axis.z * axis.z + c);
-	}
 	vec4 DistUnionCombine(in vec4 v1, in vec4 v2)
 	{
 		return mix(v1, v2, step(v2.x, v1.x));
@@ -230,34 +153,6 @@
 		return DistCombineIntersect(v1, vec4(-v2.x, v2.yzw));
 	}
 
-	float Noise(vec2 p)
-	{
-		vec2 s = sin(p * 0.6345) + sin(p * 1.62423);
-		return dot(s, vec2(0.125)) + 0.5;
-	}
-	vec2 hash(vec2 p)
-	{
-		p = vec2(dot(p, vec2(127.1, 311.7)),
-			dot(p, vec2(269.5, 183.3)));
-
-		return -1.0 + 2.0*fract(sin(p)*43758.5453123);
-	}
-
-	float perlinnoise(in vec2 p)
-	{
-		float K1 = 0.366025404;
-		float K2 = 0.211324865;
-		vec2 i = floor(p + (p.x + p.y)*K1);
-		vec2 a = p - i + (i.x + i.y)*K2;
-		vec2 o = (a.x > a.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
-		vec2 b = a - o + K2;
-		vec2 c = a - 1.0 + 2.0*K2;
-		vec3 h = max(0.5 - vec3(dot(a, a), dot(b, b), dot(c, c)), 0.0);
-		vec3 n = h * h*h*h*vec3(dot(a, hash(i + 0.0)), dot(b, hash(i + o)), dot(c, hash(i + 1.0)));
-		return dot(n, vec3(70.0));
-	}
-
-#define FAR 23.
 
 	float getTilt(vec3 p) { return dot(p, vec3(0.299, 0.587, 0.114)); }
 	vec3 tex3D(sampler2D tex, in vec3 p, in vec3 n) {
@@ -317,10 +212,7 @@
 		result = DistUnionCombine(result, vDistFloor);
 		return result;
 	}
-	float GetVectorFirstStep(in Vector ray) {
-		return ray.startdistanc;
-	}
-	Material GetObjectMaterial(in CollisionInfo hitNfo) {
+	Material GetObjectMaterial(in ContactInfo hitNfo) {
 		Material mat;
 
 		mat.reflectionCoefficient = 0.04;
@@ -399,10 +291,10 @@
 		return normalize(normal);
 	}
 
-	void RayMarch(in Vector ray, out CollisionInfo result, int maxIter, float transparencyPointer)
+	void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transparencyPointer)
 	{
-		CollisionInfo originalResult = result;
-		result.distanc = GetVectorFirstStep(ray);
+		ContactInfo originalResult = result;
+		result.distanc = ray.startdistanc;
 		result.id.x = 0.0;
 		for (int i = 0;i <= kRayMarchMaxIter;i++)
 		{
@@ -426,9 +318,9 @@
 		}
 	}
 
-	void insidemarch(in Vector ray, out CollisionInfo result, int maxIter, float transparencyPointer)
+	void insidemarch(in Trace ray, out ContactInfo result, int maxIter, float transparencyPointer)
 	{
-		result.distanc = GetVectorFirstStep(ray);
+		result.distanc = ray.startdistanc;
 		result.id.x = 0.0;
 
 		for (int i = 0;i <= kRayMarchMaxIter / 3;i++)
@@ -451,7 +343,7 @@
 		}
 	}
 
-	float traceToLight(vec3 rayPosition, vec3 normalVector, vec3 lightDir, float rayLightDistance) {
+	float traceToLight(vec3 rayPosition, vec3 normalTrace, vec3 lightDir, float rayLightDistance) {
 
 		vec3 ro = rayPosition;
 		vec3 rd = lightDir;
@@ -471,15 +363,15 @@
 	{
 		return traceToLight(position, normal, lightDirection, lightDistance);
 #ifdef ENABLE_SHADOWS
-		Vector shadowVector;
-		shadowVector.direction = lightDirection;
-		shadowVector.origin = position;
+		Trace shadowTrace;
+		shadowTrace.direction = lightDirection;
+		shadowTrace.origin = position;
 		float shadowBias = 0.05;
-		shadowVector.startdistanc = shadowBias / abs(dot(lightDirection, normal));
-		shadowVector.length = lightDistance - shadowVector.startdistanc;
+		shadowTrace.startdistanc = shadowBias / abs(dot(lightDirection, normal));
+		shadowTrace.length = lightDistance - shadowTrace.startdistanc;
 
-		CollisionInfo shadowIntersect;
-		RayMarch(shadowVector, shadowIntersect, 32, transparencyInformation);
+		ContactInfo shadowIntersect;
+		RayMarch(shadowTrace, shadowIntersect, 32, transparencyInformation);
 
 		float shadow = step(0.0, shadowIntersect.distanc) * step(lightDistance, shadowIntersect.distanc);
 
@@ -489,7 +381,7 @@
 #endif
 	}
 
-	float GetAmbientOcclusion(in CollisionInfo intersection, in Surface surface)
+	float GetAmbientOcclusion(in ContactInfo intersection, in Surface surface)
 	{
 #ifdef ENABLE_AO  
 		vec3 position = intersection.position;
@@ -513,7 +405,7 @@
 #endif  
 	}
 
-	void AddAtmosphere(inout vec3 col, in Vector ray, in CollisionInfo hitNfo)
+	void AddAtmosphere(inout vec3 col, in Trace ray, in ContactInfo hitNfo)
 	{
 		float fFogAmount = exp(hitNfo.distanc * -fogDensity * (1.0 + wasInWater));
 		vec3 fogColor = GetSkyGradient(ray.direction);
@@ -593,7 +485,7 @@
 	}
 
 
-	vec3 ShadeSurface(in Vector ray, in CollisionInfo hitNfo, in Surface surface, in Material material)
+	vec3 ShadeSurface(in Trace ray, in ContactInfo hitNfo, in Surface surface, in Material material)
 	{
 		Shading shading;
 
@@ -618,54 +510,54 @@
 		return AddFresnel(diffuseReflection, shading.specular, surface.normal, ray.direction, material);
 	}
 
-	vec3 GetSceneColourSecondary(in Vector ray);
+	vec3 GetSceneColourSecondary(in Trace ray);
 
-	vec3 GetReflection(in Vector ray, in CollisionInfo hitNfo, in Surface surface)
+	vec3 GetReflection(in Trace ray, in ContactInfo hitNfo, in Surface surface)
 	{
 #ifdef ENABLE_REFLECTIONS  
 		{
 			const float lightOffSurface = 0.1;
 
-			Vector reflectVector;
-			reflectVector.direction = reflect(ray.direction, surface.normal);
-			reflectVector.origin = hitNfo.position;
-			reflectVector.length = 16.0;
-			reflectVector.startdistanc = lightOffSurface / abs(dot(reflectVector.direction, surface.normal));
+			Trace reflectTrace;
+			reflectTrace.direction = reflect(ray.direction, surface.normal);
+			reflectTrace.origin = hitNfo.position;
+			reflectTrace.length = 16.0;
+			reflectTrace.startdistanc = lightOffSurface / abs(dot(reflectTrace.direction, surface.normal));
 
-			return GetSceneColourSecondary(reflectVector);
+			return GetSceneColourSecondary(reflectTrace);
 		}
 #else
 		return GetSkyGradient(reflect(ray.direction, surface.normal));
 #endif
 	}
 
-	vec3 GetSubSurface(in Vector ray, in CollisionInfo hitNfo, in Surface surface, in Material material)
+	vec3 GetSubSurface(in Trace ray, in ContactInfo hitNfo, in Surface surface, in Material material)
 	{
 		inWater = 0.;
 
 #ifdef ENABLE_TRANSPARENCY 
 			float lightOffSurface = 0.05;
-			Vector refractVector;
-			refractVector.direction = refract(ray.direction, surface.normal, material.reflectindx);
-			refractVector.origin = hitNfo.position;
-			refractVector.length = 16.0;
-			refractVector.startdistanc = lightOffSurface / abs(dot(refractVector.direction, surface.normal));
+			Trace refractTrace;
+			refractTrace.direction = refract(ray.direction, surface.normal, material.reflectindx);
+			refractTrace.origin = hitNfo.position;
+			refractTrace.length = 16.0;
+			refractTrace.startdistanc = lightOffSurface / abs(dot(refractTrace.direction, surface.normal));
 
-			CollisionInfo hitNfo2;
-			insidemarch(refractVector, hitNfo2, 32, emptyInformation);
+			ContactInfo hitNfo2;
+			insidemarch(refractTrace, hitNfo2, 32, emptyInformation);
 			vec3 normal = GetNormal(hitNfo2.position, emptyInformation);
 
-			Vector refractVector2;
-			refractVector2.direction = refract(refractVector.direction, normal, 1.0 / material.reflectindx);
-			refractVector2.origin = hitNfo2.position;
-			refractVector2.length = 16.0;
-			refractVector2.startdistanc = 0.0;
+			Trace refractTrace2;
+			refractTrace2.direction = refract(refractTrace.direction, normal, 1.0 / material.reflectindx);
+			refractTrace2.origin = hitNfo2.position;
+			refractTrace2.length = 16.0;
+			refractTrace2.startdistanc = 0.0;
 
 			float extinctionDistance = hitNfo2.distanc;
 			float transparencity = material.transparency / (1.0 + distance(hitNfo2.position, hitNfo.position)*4.);
 			float nonTransparency = 1.0 - transparencity;
 
-			vec3 sceneColor = material.albedo * GetSceneColourSecondary(refractVector2) * nonTransparency;
+			vec3 sceneColor = material.albedo * GetSceneColourSecondary(refractTrace2) * nonTransparency;
 			vec3 materialExtinction = material.albedo;
 
 			vec3 extinction = (1.7 / (1.0 + (materialExtinction * extinctionDistance)));
@@ -676,9 +568,9 @@
 #endif
 	}
 
-	vec3 GetSceneColourSecondary(in Vector ray)
+	vec3 GetSceneColourSecondary(in Trace ray)
 	{
-		CollisionInfo hitNfo;
+		ContactInfo hitNfo;
 		inWater = 0.;
 		RayMarch(ray, hitNfo, 64, noTransparency);
 
@@ -715,7 +607,7 @@
 
 	void mainImage(out vec4 fragColor, in vec2 fragCoord)
 	{
-		Vector ray;
+		Trace ray;
 		inWater = 0.;
 
 		vec2 uv = fragCoord.xy / _iResolution.xy;
@@ -746,7 +638,7 @@
 		ray.direction.y *= 0.85;
 
 
-		CollisionInfo intersection;
+		ContactInfo intersection;
 		RayMarch(ray, intersection, 12, transparencyInformation);
 		vec3 sceneColor;
 

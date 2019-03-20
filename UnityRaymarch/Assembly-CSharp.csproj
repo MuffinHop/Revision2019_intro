@@ -11,7 +11,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{FB5CC9FA-1F91-CCB7-193D-EC915D429363}</ProjectGuid>
+    <ProjectGuid>{28B5CDB1-8A44-27B1-0D42-0B30B550A155}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -68,28 +68,78 @@
     <Compile Include="Assets\Scripts\Demo\RM_Type.cs" />
     <Compile Include="Assets\Scripts\Demo\SyncUp.cs" />
     <Compile Include="Assets\Scripts\Demo\Track.cs" />
-    <Compile Include="Assets\Shaders\RayMarchShader.cs" />
+    <None Include="Assets\Shaders\Operators\OpPipe.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\Sphere.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\Capsule.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\Dodecahedron.shader" />
+    <None Include="Assets\Shaders\Modifiers\ModGrid2.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\Box.shader" />
+    <None Include="Assets\Shaders\Operators\OpUnionSoft.shader" />
+    <None Include="Assets\Shaders\Operators\OpIntersectionColumns.shader" />
+    <None Include="Assets\Shaders\Modifiers\ModMirror1.shader" />
+    <None Include="Assets\Shaders\Modifiers\MirrorOctant.shader" />
+    <None Include="Assets\Shaders\Modifiers\R45.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\Disc.shader" />
     <None Include="Assets\Shaders\StandardRayMarch.shader" />
+    <None Include="Assets\Shaders\Modifiers\Reflect.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\LineSegment.shader" />
+    <None Include="Assets\Shaders\Operators\OpUnionColumns.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\Cylinder.shader" />
+    <None Include="Assets\Shaders\Operators\OpUnionStairs.shader" />
+    <None Include="Assets\Shaders\Operators\OpDifferenceChamfer.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\Circle.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\Plane.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\Box2Cheap.shader" />
+    <None Include="Assets\Shaders\Operators\OpDifferenceColumns.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\Icosahedron.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\Cone.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\Corner.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\BoxCheap.shader" />
+    <None Include="Assets\Shaders\Modifiers\R.shader" />
+    <None Include="Assets\Shaders\Modifiers\ModInterval1.shader" />
+    <None Include="Assets\Shaders\Modifiers\ModSingle1.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\Blob.shader" />
+    <None Include="Assets\Shaders\Modifiers\ModPolar.shader" />
+    <None Include="Assets\Shaders\Modifiers\Mirror.shader" />
+    <None Include="Assets\Shaders\Modifiers\Mod2.shader" />
+    <None Include="Assets\Shaders\Operators\OpEngrave.shader" />
+    <None Include="Assets\Shaders\Operators\OpDifferenceStairs.shader" />
+    <None Include="Assets\Shaders\Types.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\HexagonCircumcircle.shader" />
+    <None Include="Assets\Shaders\Operators\OpUnionRound.shader" />
+    <None Include="Assets\Shaders\Modifiers\ModMirror2.shader" />
+    <None Include="Assets\Shaders\BasicFunctions.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\Torus.shader" />
+    <None Include="Assets\Shaders\Operators\OpIntersectionRound.shader" />
+    <None Include="Assets\Shaders\Operators\OpTongue.shader" />
+    <None Include="Assets\Shaders\Modifiers\Mod3.shader" />
+    <None Include="Assets\Shaders\Operators\OpDifferenceRound.shader" />
+    <None Include="Assets\Shaders\Modifiers\Mod1.shader" />
+    <None Include="Assets\Shaders\SDFs\Primitive\Octahedron.shader" />
+    <None Include="Assets\Shaders\Operators\OpUnionChamfer.shader" />
+    <None Include="Assets\Shaders\Operators\OpIntersectionChamfer.shader" />
+    <None Include="Assets\Shaders\Operators\OpGroove.shader" />
+    <None Include="Assets\Shaders\Operators\OpIntersectionStairs.shader" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>Z:/vanha c/Documents/Raymarch To Intro/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>Z:/vanha c/Documents/Revision2019_intro/UnityRaymarch/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>Z:/vanha c/Documents/Raymarch To Intro/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>Z:/vanha c/Documents/Revision2019_intro/UnityRaymarch/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>Z:/vanha c/Documents/Raymarch To Intro/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>Z:/vanha c/Documents/Revision2019_intro/UnityRaymarch/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>Z:/vanha c/Documents/Raymarch To Intro/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>Z:/vanha c/Documents/Revision2019_intro/UnityRaymarch/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>Z:/vanha c/Documents/Raymarch To Intro/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>Z:/vanha c/Documents/Revision2019_intro/UnityRaymarch/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>Z:/vanha c/Documents/Raymarch To Intro/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>Z:/vanha c/Documents/Revision2019_intro/UnityRaymarch/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>Z:/vanha c/Documents/Raymarch To Intro/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>Z:/vanha c/Documents/Revision2019_intro/UnityRaymarch/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.0b2/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -275,16 +325,16 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.0b2/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>Z:/vanha c/Documents/Raymarch To Intro/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>Z:/vanha c/Documents/Revision2019_intro/UnityRaymarch/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>Z:/vanha c/Documents/Raymarch To Intro/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>Z:/vanha c/Documents/Revision2019_intro/UnityRaymarch/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>Z:/vanha c/Documents/Raymarch To Intro/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>Z:/vanha c/Documents/Revision2019_intro/UnityRaymarch/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Purchasing">
-      <HintPath>Z:/vanha c/Documents/Raymarch To Intro/Library/PackageCache/com.unity.purchasing@2.0.1/UnityEngine.Purchasing.dll</HintPath>
+      <HintPath>Z:/vanha c/Documents/Revision2019_intro/UnityRaymarch/Library/PackageCache/com.unity.purchasing@2.0.1/UnityEngine.Purchasing.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.0b2/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
