@@ -90,6 +90,8 @@
 
 #include "Types.shader"
 #include "BasicFunctions.shader"
+#include "Modifiers/Mod1.shader"
+#include "Modifiers/R45.shader"
 
 	float sdSphere(vec3 p, float s) {
 		return length(p) - s;
@@ -172,15 +174,6 @@
 		grad = (grad - getTilt(tex3D(tex, p, normal))) / epsilon;
 		grad -= normal * dot(normal, grad);
 		return normalize(normal + grad * bumpPower);
-	}
-	float pMod1(inout float p, float size) {
-		float halfsize = size * 0.5;
-		float c = floor((p + halfsize) / size);
-		p = mod(p + halfsize, size) - halfsize;
-		return c;
-	}
-	void pR45(inout vec2 p) {
-		p = (p + vec2(p.y, -p.x))*sqrt(0.5);
 	}
 	float OperatorUnionColumns(float a, float b, float r, float n) {
 		if ((a < r) && (b < r)) {
