@@ -123,26 +123,6 @@
 		grad -= normal * dot(normal, grad);
 		return normalize(normal + grad * bumpPower);
 	}
-	float OperatorUnionColumns(float a, float b, float r, float n) {
-		if ((a < r) && (b < r)) {
-			vec2 p = vec2(a, b);
-			float columnradius = r * sqrt(2.) / ((n - 1.)*2. + sqrt(2.));
-			pR45(p);
-			p.x -= sqrt(2.) / 2.*r;
-			p.x += columnradius * sqrt(2.);
-			if (mod(n, 2.) == 1.) {
-				p.y += columnradius;
-			}
-			pMod1(p.y, columnradius*2.);
-			float result = length(p) - columnradius;
-			result = min(result, p.x);
-			result = min(result, a);
-			return min(result, b);
-		}
-		else {
-			return min(a, b);
-		}
-	}
 	vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
 	{
 		vec4 result = vec4(10000.0, -1.0, 0.0, 0.0);
@@ -155,27 +135,12 @@
 	}
 	Material GetObjectMaterial(in ContactInfo hitNfo) {
 		Material mat;
-
-		mat.reflectionCoefficient = 0.04;
-		mat.reflectindx = 0.6 / 1.3330;
-		vec3 position = hitNfo.position;
-		position.z *= abs(position.y)*0.06 + 0.95;
-		position.z += 0.023;
-		position *= rotationMatrix(vec3(1.0, 0.0, 0.0), 1.6*pow(perlinnoise(vec2(0.0, _iTime)), 3.0));
-		position *= rotationMatrix(vec3(0.0, 1.0, 0.0), 1.6*pow(perlinnoise(vec2(44.0, _iTime)), 3.0));
-		mat.reflectivity = 0.6 - 0.4*texture(_iChannel0, position.xy - vec2(0.5)).r;
-		position *= sin(_iTime)*0.015 + 1.03;
-		position /= 1.02;
-		mat.albedo = -vec3(0.0, 0.3, 0.3)*pow(texture(_iChannel2, position.xy).rgb, vec3(3.0)) +
-			vec3(1.0, 1.0, 1.0) - vec3((max(min(pow(position.z*(1.12 + 0.2*pow(perlinnoise(vec2(123.0, _iTime*1.2))*0.4, 7.0)), 66.0), 1.0), 0.0))) - vec3(0.6, 0.4, 0.8) * max(min(pow(position.z*1.2, 19.), 1.0), 0.0);
-		mat.albedo.gb -= vec2(min(max(-(position.z - 0.7) * 12., 0.), 1.)) * vec2(1.0, 0.8) * (0.6 + 0.4*texture(_iChannel1, position.xy).r);
-		mat.albedo = max(mat.albedo, vec3(0.0));
-		mat.transparency = 0.9 - length(mat.albedo.rg)*0.5;
 		if (hitNfo.id.x == material_ID0) {
 			mat.reflectionCoefficient = 0.05;
 			mat.albedo = vec3(1.0, 0.4, 0.3) * (0.9 + 0.1*texture(_iChannel1, hitNfo.position.xy).rgb);
 			mat.reflectivity = 0.4 - texture(_iChannel1, hitNfo.position.xy).r*0.8;
 			mat.transparency = 0.021;
+			mat.reflectindx = 0.6 / 1.3330;
 		}
 		return mat;
 	}
@@ -216,20 +181,18 @@
 	vec3 GetNormal(in vec3 position, in float transparencyPointer)
 	{
 		float delta = 0.025;
-
-		vec3 offset1 = vec3(delta, -delta, -delta);
-		vec3 offset2 = vec3(-delta, -delta, delta);
-		vec3 offset3 = vec3(-delta, delta, -delta);
-		vec3 offset4 = vec3(delta, delta, delta);
-
-		float f1 = GetDistanceScene(position + offset1, transparencyPointer).x;
-		float f2 = GetDistanceScene(position + offset2, transparencyPointer).x;
-		float f3 = GetDistanceScene(position + offset3, transparencyPointer).x;
-		float f4 = GetDistanceScene(position + offset4, transparencyPointer).x;
-
-		vec3 normal = offset1 * f1 + offset2 * f2 + offset3 * f3 + offset4 * f4;
-
-		return normalize(normal);
+		vec3 offset[] = { 
+			vec3(delta, -delta, -delta),
+			vec3(-delta, -delta, delta),
+			vec3(-delta, delta, -delta),
+			vec3(delta, delta, delta)
+		};
+		float f1 = GetDistanceScene(position + offset[0], transparencyPointer).x;
+		float f2 = GetDistanceScene(position + offset[1], transparencyPointer).x;
+		float f3 = GetDistanceScene(position + offset[2], transparencyPointer).x;
+		float f4 = GetDistanceScene(position + offset[3], transparencyPointer).x;
+		vec3 normal = normalize(offset[0] * f1 + offset[1] * f2 + offset[2] * f3 + offset[3] * f4);
+		return normal;
 	}
 
 	void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transparencyPointer)
@@ -259,7 +222,7 @@
 		}
 	}
 
-	void insidemarch(in Trace ray, out ContactInfo result, int maxIter, float transparencyPointer)
+	void insideMarch(in Trace ray, out ContactInfo result, int maxIter, float transparencyPointer)
 	{
 		result.distanc = ray.startdistanc;
 		result.id.x = 0.0;
@@ -485,7 +448,7 @@
 			refractTrace.startdistanc = lightOffSurface / abs(dot(refractTrace.direction, surface.normal));
 
 			ContactInfo hitNfo2;
-			insidemarch(refractTrace, hitNfo2, 32, emptyInformation);
+			insideMarch(refractTrace, hitNfo2, 32, emptyInformation);
 			vec3 normal = GetNormal(hitNfo2.position, emptyInformation);
 
 			Trace refractTrace2;
