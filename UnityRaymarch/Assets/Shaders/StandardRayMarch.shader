@@ -88,55 +88,12 @@
 	const float transparencyInformation = 1.0;
 	const float emptyInformation = 0.0;
 
-#include "Types.shader"
-#include "BasicFunctions.shader"
-#include "Modifiers/Mod1.shader"
-#include "Modifiers/R45.shader"
+#include "Types.glslinc"
+#include "BasicFunctions.glslinc"
+#include "Modifiers/Mod1.glslinc"
+#include "Modifiers/R45.glslinc"
+#include "SDFs/Primitive/sdBox.glslinc"
 
-	float sdSphere(vec3 p, float s) {
-		return length(p) - s;
-	}
-	float udRoundBox(vec3 p, vec3 b, float r) {
-		return length(max(abs(p) - b, 0.0)) - r;
-	}
-	float udBox(vec3 p, vec3 b)
-	{
-		return length(max(abs(p) - b, 0.0));
-	}
-	float sdBox(vec3 p, vec3 b)
-	{
-		vec3 d = abs(p) - b;
-		return min(max(d.x, max(d.y, d.z)), 0.0) +
-			length(max(d, 0.0));
-	}
-	float sdHexPrism(vec3 p, vec2 h)
-	{
-		vec3 q = abs(p);
-		q = q.zxy;
-		return max(q.z - h.y, max((q.x*0.866025 + q.y*0.5), q.y) - h.x);
-	}
-
-	float sdTorus88(vec3 p, vec2 t)
-	{
-		vec2 q = vec2(length8(p.xz) - t.x, p.y);
-		return length8(q) - t.y;
-	}
-	float sdTorus82(vec3 p, vec2 t)
-	{
-		vec2 q = vec2(length2(p.xz) - t.x, p.y);
-		return length8(q) - t.y;
-	}
-	float sdCappedCylinder(vec3 p, vec2 h)
-	{
-		vec2 d = abs(vec2(length(p.xz), p.y)) - h;
-		return min(max(d.x, d.y), 0.0) + length(max(d, 0.0));
-	}
-	float sdCapsule(vec3 p, vec3 a, vec3 b, float r)
-	{
-		vec3 pa = p - a, ba = b - a;
-		float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
-		return length(pa - ba * h) - r;
-	}
 	vec4 DistUnionCombine(in vec4 v1, in vec4 v2)
 	{
 		return mix(v1, v2, step(v2.x, v1.x));

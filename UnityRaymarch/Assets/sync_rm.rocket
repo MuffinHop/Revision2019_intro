@@ -28,7 +28,8 @@
 		<key row="0" value="0.000000" interpolation="0" />
 	</track>
 	<track name="PointLightPositionZ" folded="0" color="ff60b250">
-		<key row="0" value="1.000000" interpolation="0" />
+		<key row="0" value="1.000000" interpolation="1" />
+		<key row="162" value="-2.000000" interpolation="0" />
 	</track>
 	<track name="PointLightR" folded="0" color="ff4fb292">
 		<key row="0" value="3.000000" interpolation="0" />
@@ -61,7 +62,7 @@
 		<key row="0" value="-0.100000" interpolation="0" />
 	</track>
 	<track name="LookAtX" folded="0" color="ffa9b250">
-		<key row="0" value="1.000000" interpolation="0" />
+		<key row="0" value="0.000000" interpolation="0" />
 	</track>
 	<track name="LookAtY" folded="0" color="ff60b250">
 		<key row="0" value="0.000000" interpolation="0" />
