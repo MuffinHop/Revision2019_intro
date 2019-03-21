@@ -329,19 +329,18 @@
 		col += pointLight.color * 0.01 / (sdfDistance * sdfDistance);
 	}
 
-	float SchlicksApproximation(in vec3 reflectionToView, in vec3 viewDirection, in float reflectionCoefficient, in float smoothFactor)
-	{
-		float r1 = dot(reflectionToView, -viewDirection);
-		r1 = clamp((1.0 - r1), 0.0, 1.0);
-		float r1Pow = pow(r1, 5.0);
-		return reflectionCoefficient + (1.0 - reflectionCoefficient) * r1Pow * smoothFactor;
-	}
-
 	vec3 AddFresnel(in vec3 diffuse, in vec3 specular, in vec3 normal, in vec3 viewDirection, in Material material)
 	{
 		vec3 reflection = reflect(viewDirection, normal);
 		vec3 reflectionToView = normalize(reflection + -viewDirection);
-		float fresnelApprox = SchlicksApproximation(reflectionToView, viewDirection, material.reflectionCoefficient, material.reflectivity * 0.9 + 0.1);
+		float reflectionCoefficient = material.reflectionCoefficient;
+		float smoothFactor = material.reflectivity * 0.9 + 0.1;
+		// 
+		float r1 = dot(reflectionToView, -viewDirection);
+		r1 = clamp((1.0 - r1), 0.0, 1.0);
+		float r1Pow = pow(r1, 5.0);
+		float fresnelApprox = reflectionCoefficient + (1.0 - reflectionCoefficient) * r1Pow * smoothFactor;
+
 		return mix(diffuse, specular, fresnelApprox);
 	}
 
