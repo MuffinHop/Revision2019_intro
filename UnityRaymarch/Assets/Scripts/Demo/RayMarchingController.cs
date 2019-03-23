@@ -102,10 +102,9 @@ public class RayMarchingController : MonoBehaviour
         {
             var position = gameObjects[i].transform.position;
             var scale = gameObjects[i].transform.localScale;
-            var rotation = gameObjects[i].transform.rotation.eulerAngles;
-            rotation = new Vector3(Radians(rotation.x), Radians(rotation.y), Radians(rotation.z));
+            var rotation = gameObjects[i].transform.rotation;
             sdf1 += "               vec3 posID" + i + " = position + vec3(" + position.x.ToString(culture) + ", " + position.y.ToString(culture) + "," + position.z.ToString(culture) + ");\n";
-            sdf1 += "               rotationMatrix(vec3(" + rotation.x.ToString(culture) + "," + rotation.y.ToString(culture) + "," + rotation.z.ToString(culture) + "), 1.0);\n";
+            sdf1 += "               posID" + i + "= posID" + i + "*rotationMatrix(vec3(" + rotation.x.ToString(culture) + "," + rotation.y.ToString(culture) + "," + rotation.z.ToString(culture) + "), "+ rotation.w.ToString(culture) + ");\n";
             sdf1 += "               float id" + i + "_distance = sdBox(posID" + i + ", vec3(" + scale.x.ToString(culture) + ", " + scale.y.ToString(culture) + "," + scale.z.ToString(culture) + "));\n";
             sdf1 += "               vec4 distID" + i + " = vec4(id" + i + "_distance, material_ID" + getMaterialRegister(gameObjects[i].GetComponent<RM_Material>()) + ", position.xz + vec2(position.y, 0.0));\n";
             sdf1 += "               result = DistUnionCombine(result, distID" + i + ");\n\n";
