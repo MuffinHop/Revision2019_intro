@@ -140,7 +140,7 @@ public class RayMarchingController : MonoBehaviour
             mat1 += ";\n              mat.transparency =" + materials[i].albedo.a.ToString(culture);
             mat1 += ";\n              mat.reflectivity = " + materials[i].reflectivity.ToString(culture);
             mat1 += ";\n              mat.reflectindx = " + materials[i].reflectindx.ToString(culture);
-            mat1 += ";\n       }";
+            mat1 += ";\n       }\n";
 
         }
         /*
