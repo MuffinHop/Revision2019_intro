@@ -114,7 +114,7 @@ public class RM_Camera : MonoBehaviour
         _material.SetFloat("_epsilon", SyncUp.GetVal("Epsilon"));
         _material.SetFloat("_FOV", fov * 2.0f);
         
-        if (RM_Objects.Count > 0)
+        if (RM_Objects != null && RM_Objects.Count > 0)
         {
             _material.SetFloatArray("_Objects", RM_Objects);
         }

@@ -170,3 +170,12 @@ float fGDF(vec3 p, float r, int begin, int end) {
 		d = max(d, abs(dot(p, GDFVectors[i])));
 	return d - r;
 }
+vec4 DistUnionCombine(in vec4 v1, in vec4 v2)	{
+ return mix(v1, v2, step(v2.x, v1.x));
+}
+vec4 DistUnionCombineTransparent(in vec4 v1, in vec4 v2, in float transparencyPointer)
+{
+	vec4 vScaled = vec4(v2.x * (transparencyPointer * 2.0 - 1.0), v2.yzw);
+	return mix(v1, vScaled, step(vScaled.x, v1.x) * step(0.0, transparencyPointer));
+}
+
