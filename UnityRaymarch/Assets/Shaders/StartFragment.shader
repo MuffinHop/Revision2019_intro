@@ -1,2 +1,1 @@
-﻿
-#ifdef FRAGMENT
+﻿#ifdef FRAGMENT

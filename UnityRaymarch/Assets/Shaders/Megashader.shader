@@ -29,7 +29,6 @@ void main()
 	gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
 }
 #endif
-
 #ifdef FRAGMENT
 uniform sampler2D _MainTex;
 uniform sampler2D _iChannel0;
@@ -374,15 +373,41 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
         {
             vec4 result = vec4(10000.0, -1.0, 0.0, 0.0);
         
-               vec3 posID0 = position + vec3(2.465, 0.18,7.82);
-               rotationMatrix(vec3(5.981069,5.672669,6.02348), 1.0);                float id0_distance = sdBox(posID0, vec3(1, 1,1));
+               vec3 posID0 = position + vec3(0.79, -1.82,5.88);
+               rotationMatrix(vec3(5.981069,5.672669,6.02348), 1.0);
+               float id0_distance = sdBox(posID0, vec3(1, 1,1));
                vec4 distID0 = vec4(id0_distance, material_ID0, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID0);
 
-               vec3 posID1 = position + vec3(2.465, 0.18,7.82);
-               rotationMatrix(vec3(5.981069,5.672669,6.02348), 1.0);                float id1_distance = sdBox(posID1, vec3(1, 1,1));
+               vec3 posID1 = position + vec3(0.79, -1.82,5.88);
+               rotationMatrix(vec3(5.981069,5.672669,6.02348), 1.0);
+               float id1_distance = sdBox(posID1, vec3(1, 1,1));
                vec4 distID1 = vec4(id1_distance, material_ID0, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID1);
+
+               vec3 posID2 = position + vec3(-1.5, 0.18,7.82);
+               rotationMatrix(vec3(5.981069,5.672669,6.02348), 1.0);
+               float id2_distance = sdBox(posID2, vec3(1, 1,1));
+               vec4 distID2 = vec4(id2_distance, material_ID1, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID2);
+
+               vec3 posID3 = position + vec3(-1.5, 0.18,7.82);
+               rotationMatrix(vec3(5.981069,5.672669,6.02348), 1.0);
+               float id3_distance = sdBox(posID3, vec3(1, 1,1));
+               vec4 distID3 = vec4(id3_distance, material_ID1, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID3);
+
+               vec3 posID4 = position + vec3(2.465, 0.18,7.82);
+               rotationMatrix(vec3(5.981069,5.672669,6.02348), 1.0);
+               float id4_distance = sdBox(posID4, vec3(1, 1,1));
+               vec4 distID4 = vec4(id4_distance, material_ID2, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID4);
+
+               vec3 posID5 = position + vec3(2.465, 0.18,7.82);
+               rotationMatrix(vec3(5.981069,5.672669,6.02348), 1.0);
+               float id5_distance = sdBox(posID5, vec3(1, 1,1));
+               vec4 distID5 = vec4(id5_distance, material_ID2, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID5);
 
 
             return result;
@@ -392,6 +417,18 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
             Material mat;
             
        if (hitNfo.id.x == material_ID0){
+              mat.reflectionCoefficient = 0.05;
+              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
+              mat.transparency =1;
+              mat.reflectivity = 0.4;
+              mat.reflectindx = 0.45;
+       }       if (hitNfo.id.x == material_ID1){
+              mat.reflectionCoefficient = 0.05;
+              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
+              mat.transparency =1;
+              mat.reflectivity = 0.4;
+              mat.reflectindx = 0.45;
+       }       if (hitNfo.id.x == material_ID2){
               mat.reflectionCoefficient = 0.05;
               mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
               mat.transparency =1;

@@ -32,7 +32,7 @@ public class ShaderComponent : MonoBehaviour
     public TextAsset TextFile;
     public Mix Mixer;
 
-    void Start()
+    void asdf()
     {
         //hack
         string path = AssetDatabase.GetAssetPath(TextFile);

@@ -88,7 +88,6 @@
     <None Include="Assets\Shaders\SDFs\Primitive\sdEllipsoid.glslinc" />
     <None Include="Assets\Shaders\Modifiers\ModInterval1.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\Disc.glslinc" />
-    <None Include="Assets\Shaders\StandardRayMarch.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\LineSegment.glslinc" />
     <None Include="Assets\Shaders\Modifiers\ModGrid2.shader" />
     <None Include="Assets\Shaders\Modifiers\ModPolar.shader" />
