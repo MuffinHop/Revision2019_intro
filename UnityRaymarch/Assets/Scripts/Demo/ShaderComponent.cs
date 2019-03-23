@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
-[ExecuteInEditMode]
-public class ShaderComponent : MonoBehaviour
-{
+[ExecuteInEditMode, Serializable, CreateAssetMenu(fileName = "ShaderComponent", menuName = "Shader Component")]
+public class ShaderComponent : ScriptableObject
+{ 
     public enum Mix {
         Min,                    // box, sphere
         Max,                    // box, sphere
@@ -29,17 +29,18 @@ public class ShaderComponent : MonoBehaviour
         OpTongue,               // box, sphere, r*0.3, r*0.3
         OpUnionSoft             // box, sphere, r*0.3, r*0.3
     };
+
+    public enum ScaleInfo
+    {
+        OneDimension,
+        TwoDimension,
+        ThreeDimension,
+        FourDimension
+    };
+
     public TextAsset TextFile;
     public Mix Mixer;
+    public ScaleInfo Scale;
+    public string FunctionName;
 
-    void asdf()
-    {
-        //hack
-        string path = AssetDatabase.GetAssetPath(TextFile);
-
-        //Read the text from directly from the test.txt file
-        StreamReader reader = new StreamReader(path);
-        Debug.Log(reader.ReadToEnd()); 
-        reader.Close();
-    }
 }

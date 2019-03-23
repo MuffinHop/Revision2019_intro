@@ -9,10 +9,6 @@ const float TAU = PI * 2.0;
 const float PHI = (sqrt(5)*0.5 + 0.5);
 const float farClip = 32.0;
 
-const float material_ID0 = 1.0;
-const float material_ID1 = 2.0;
-const float material_ID2 = 3.0;
-
 const float noTransparency = -1.0;
 const float transparencyInformation = 1.0;
 const float emptyInformation = 0.0;

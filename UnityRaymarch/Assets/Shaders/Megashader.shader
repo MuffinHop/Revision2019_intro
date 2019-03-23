@@ -70,10 +70,6 @@ const float TAU = PI * 2.0;
 const float PHI = (sqrt(5)*0.5 + 0.5);
 const float farClip = 32.0;
 
-const float material_ID0 = 1.0;
-const float material_ID1 = 2.0;
-const float material_ID2 = 3.0;
-
 const float noTransparency = -1.0;
 const float transparencyInformation = 1.0;
 const float emptyInformation = 0.0;
@@ -342,12 +338,6 @@ float pMod1(inout float p, float size) {
 void pR45(inout vec2 p) {
 	p = (p + vec2(p.y, -p.x))*sqrt(0.5);
 }
-float sdBox(vec3 p, vec3 b)
-{
-	vec3 d = abs(p) - b;
-	return length(max(d, 0.0))
-		+ min(max(d.x, max(d.y, d.z)), 0.0); // remove this line for an only partially signed sdf 
-}
 float getTilt(vec3 p) { return dot(p, vec3(0.299, 0.587, 0.114)); }
 
 vec3 tex3D(sampler2D tex, in vec3 p, in vec3 n) {
@@ -369,27 +359,50 @@ vec3 doDisplacement(sampler2D tex, in vec3 p, in vec3 normal, float bumpPower) {
 	grad -= normal * dot(normal, grad);
 	return normalize(normal + grad * bumpPower);
 }
+
+const float material_ID0 = 0;
+
+const float material_ID1 = 1;
+
+const float material_ID2 = 2;
+
+const float material_ID3 = 3;
+
+// Box: correct distance to corners
+float fBox(vec3 p, vec3 b) {
+	vec3 d = abs(p) - b;
+	return length(max(d, vec3(0))) + vmax(min(d, vec3(0)));
+}
+float fSphere(vec3 p, float r) {
+	return length(p) - r;
+}
 vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
         {
             vec4 result = vec4(10000.0, -1.0, 0.0, 0.0);
         
-               vec3 posID0 = position + vec3(0.79, -1.82,5.88);
-               posID0= posID0*rotationMatrix(vec3(-0.103846,-0.3132005,-0.1669408), 0.9291137);
-               float id0_distance = sdBox(posID0, vec3(1, 1,1));
+               vec3 posID0 = position + vec3(-1.5, 0.18,7.82);
+               posID0= posID0*rotationMatrix(vec3(0,0,-0.3826834), 0.9238796);
+               float id0_distance = fBox(posID0, vec3(1, 1,1));
                vec4 distID0 = vec4(id0_distance, material_ID0, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID0);
 
-               vec3 posID1 = position + vec3(-1.5, 0.18,7.82);
-               posID1= posID1*rotationMatrix(vec3(0,0,-0.3826834), 0.9238796);
-               float id1_distance = sdBox(posID1, vec3(1, 1,1));
+               vec3 posID1 = position + vec3(0.79, -1.82,5.88);
+               posID1= posID1*rotationMatrix(vec3(-0.103846,-0.3132005,-0.1669408), 0.9291137);
+               float id1_distance = fBox(posID1, vec3(1, 1,1));
                vec4 distID1 = vec4(id1_distance, material_ID1, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID1);
 
-               vec3 posID2 = position + vec3(2.465, 0.18,10.74);
-               posID2= posID2*rotationMatrix(vec3(-0.006283063,0,0), 0.9999803);
-               float id2_distance = sdBox(posID2, vec3(1, 1,1));
+               vec3 posID2 = position + vec3(0.43, 0.1,10.96);
+               posID2= posID2*rotationMatrix(vec3(-0.103846,-0.3132005,-0.1669408), 0.9291137);
+               float id2_distance = fSphere(posID2, 1);
                vec4 distID2 = vec4(id2_distance, material_ID2, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID2);
+
+               vec3 posID3 = position + vec3(2.465, 0.18,10.74);
+               posID3= posID3*rotationMatrix(vec3(-0.2482672,0,0), 0.9686916);
+               float id3_distance = fBox(posID3, vec3(1, 1,1));
+               vec4 distID3 = vec4(id3_distance, material_ID3, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID3);
 
 
             return result;
@@ -413,6 +426,13 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
               mat.reflectindx = 0.45;
        }
        if (hitNfo.id.x == material_ID2){
+              mat.reflectionCoefficient = 0.05;
+              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
+              mat.transparency =1;
+              mat.reflectivity = 0.4;
+              mat.reflectindx = 0.45;
+       }
+       if (hitNfo.id.x == material_ID3){
               mat.reflectionCoefficient = 0.05;
               mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
               mat.transparency =1;

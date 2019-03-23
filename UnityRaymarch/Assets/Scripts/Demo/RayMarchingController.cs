@@ -44,7 +44,6 @@ public class RayMarchingController : MonoBehaviour
     "General/Lighting.shader",
     "Modifiers/Mod1.shader",
     "Modifiers/R45.shader",
-    "SDFs/Primitive/sdBox.glslinc",
     "General/TextureDisplacement.shader"
 };
     string[] end = {
@@ -71,7 +70,7 @@ public class RayMarchingController : MonoBehaviour
         reader.Close();
         return code;
     }
-
+    string materialIDStr = "";
     int getMaterialRegister(RM_Material material)
     {
         if (materials == null)
@@ -83,7 +82,9 @@ public class RayMarchingController : MonoBehaviour
             return materials.IndexOf(material);
         }
         materials.Add(material);
-        return materials.Count - 1;
+        int id = materials.Count - 1;
+        materialIDStr += "\nconst float material_ID" + id +" = " + id + ";\n";
+        return id;
     }
     public float Radians(float angle)
     {
@@ -103,9 +104,29 @@ public class RayMarchingController : MonoBehaviour
             var position = gameObjects[i].transform.position;
             var scale = gameObjects[i].transform.localScale;
             var rotation = gameObjects[i].transform.rotation;
+            var rmObject = gameObjects[i].GetComponent<RM_Object>();
+            if (rmObject.ShaderComponent == null)
+            {
+                Debug.LogWarning(rmObject.name + "missing shadercomponent");
+                continue;
+            }
+            var functionName = rmObject.ShaderComponent.FunctionName;
+            var scaleFormat = rmObject.ShaderComponent.Scale;
+            var mixerFormat = rmObject.ShaderComponent.Mixer;
             sdf1 += "               vec3 posID" + i + " = position + vec3(" + position.x.ToString(culture) + ", " + position.y.ToString(culture) + "," + position.z.ToString(culture) + ");\n";
-            sdf1 += "               posID" + i + "= posID" + i + "*rotationMatrix(vec3(" + rotation.x.ToString(culture) + "," + rotation.y.ToString(culture) + "," + rotation.z.ToString(culture) + "), "+ rotation.w.ToString(culture) + ");\n";
-            sdf1 += "               float id" + i + "_distance = sdBox(posID" + i + ", vec3(" + scale.x.ToString(culture) + ", " + scale.y.ToString(culture) + "," + scale.z.ToString(culture) + "));\n";
+            sdf1 += "               posID" + i + "= posID" + i + "*rotationMatrix(vec3(" + rotation.x.ToString(culture) + "," + rotation.y.ToString(culture) + "," + rotation.z.ToString(culture) + "), " + rotation.w.ToString(culture) + ");\n";
+            switch (scaleFormat)
+            {
+                case ShaderComponent.ScaleInfo.OneDimension:
+                    sdf1 += "               float id" + i + "_distance = " + functionName.ToString() + "(posID" + i + ", " + scale.x.ToString(culture) + ");\n";
+                    break;
+                case ShaderComponent.ScaleInfo.TwoDimension:
+                    sdf1 += "               float id" + i + "_distance = " + functionName.ToString() + "(posID" + i + ", vec2(" + scale.x.ToString(culture) + ", " + scale.y.ToString(culture) + "));\n";
+                    break;
+                case ShaderComponent.ScaleInfo.ThreeDimension:
+                    sdf1 += "               float id" + i + "_distance = " + functionName.ToString() + "(posID" + i + ", vec3(" + scale.x.ToString(culture) + ", " + scale.y.ToString(culture) + "," + scale.z.ToString(culture) + "));\n";
+                    break;
+            }
             sdf1 += "               vec4 distID" + i + " = vec4(id" + i + "_distance, material_ID" + getMaterialRegister(gameObjects[i].GetComponent<RM_Material>()) + ", position.xz + vec2(position.y, 0.0));\n";
             sdf1 += "               result = DistUnionCombine(result, distID" + i + ");\n\n";
         }
@@ -177,12 +198,37 @@ public class RayMarchingController : MonoBehaviour
         foreach (var GO in GOs)
         {
             gameObjects.Add(GO.gameObject);
+            var material = GO.GetComponent<RM_Material>();
+            if (material != null) {
+                getMaterialRegister(material);
+            }
         }
         string fullcode = shaderBeginning;
         foreach (string part in begin)
         {
             fullcode += "\n" + GetShaderPart(part);
         }
+        fullcode += "\n" + materialIDStr;
+        var sdfTextArray = new List<TextAsset>();
+        for (int i = 0; i < gameObjects.Count; i++)
+        {
+            var rmObject = gameObjects[i].GetComponent<RM_Object>();
+            if (rmObject.ShaderComponent == null)
+            {
+                continue;
+            }
+            else if (!sdfTextArray.Contains(rmObject.ShaderComponent.TextFile))
+            {
+                sdfTextArray.Add(rmObject.ShaderComponent.TextFile);
+            }
+        }
+        for (int i = 0; i < sdfTextArray.Count; i++)
+        {
+            var shaderCode = GetShaderPart("SDFs/Primitive/" + sdfTextArray[i].name + ".glslinc");
+            fullcode += "\n" + shaderCode;
+        }
+
+
         fullcode += "\n" + GetDistanceFields();
         fullcode += "\n" + GetMaterials();
         foreach (string part in end)
