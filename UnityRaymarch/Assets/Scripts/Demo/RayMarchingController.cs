@@ -159,7 +159,7 @@ public class RayMarchingController : MonoBehaviour
             mat1 += "       if (hitNfo.id.x == material_ID" + i + "){\n";
             mat1 += "              mat.reflectionCoefficient = " + materials[i].reflectionCoefficient.ToString(culture);
             mat1 += ";\n              mat.albedo = vec3(" + materials[i].albedo.r.ToString(culture) + "," + materials[i].albedo.g.ToString(culture) + "," + materials[i].albedo.b.ToString(culture) + ");";
-            mat1 += ";\n              mat.transparency =" + materials[i].albedo.a.ToString(culture);
+            mat1 += ";\n              mat.transparency =" + (1.0f-materials[i].albedo.a).ToString(culture);
             mat1 += ";\n              mat.reflectivity = " + materials[i].reflectivity.ToString(culture);
             mat1 += ";\n              mat.reflectindx = " + materials[i].reflectindx.ToString(culture);
             mat1 += ";\n       }\n";
