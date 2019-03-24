@@ -14,8 +14,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
 	vec3 position = _CameraPosition.xyz;
 
 	float fov = _FOV;
-	vec3 forwardDirection = -normalize(lookAt - position);
-	vec3 worldUpDirection = -_CameraUp.xyz;
+	vec3 forwardDirection = normalize(lookAt - position);
+	vec3 worldUpDirection = _CameraUp.xyz;
 
 
 	vec2 viewDirectionCoord = uv * 2.0 - 1.0;
@@ -29,7 +29,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
 	vec3 upDirection = cross(rightDirection, forwardDirection);
 
 	forwardDirection *= tan((90.0 - fov * 0.5) * DEG_TO_RAD);
-	ray.direction = normalize(rightDirection * viewDirectionCoord.x + upDirection * viewDirectionCoord.y + forwardDirection);
+	ray.direction = normalize(-rightDirection * viewDirectionCoord.x + upDirection * viewDirectionCoord.y + forwardDirection);
 	ray.startdistanc = 0.0;
 	ray.length = farClip;
 

@@ -43,11 +43,6 @@ public class RM_Camera : MonoBehaviour
     }
     void Update()
     {
-        if(RM_Objects == null)
-        {
-            RM_Objects = new List<float>();
-        }
-        RM_Objects.Clear();
     }
 
     void OnRenderImage(RenderTexture src, RenderTexture dest)

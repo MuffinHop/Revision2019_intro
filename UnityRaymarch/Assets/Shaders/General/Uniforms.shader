@@ -17,4 +17,3 @@ uniform vec4 _CameraPosition;
 uniform vec4 _CameraLookAt;
 uniform vec4 _CameraUp;
 uniform float _FOV;
-uniform float _Objects[10];

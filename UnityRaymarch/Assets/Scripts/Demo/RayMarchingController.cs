@@ -83,7 +83,7 @@ public class RayMarchingController : MonoBehaviour
         }
         materials.Add(material);
         int id = materials.Count - 1;
-        materialIDStr += "\nconst float material_ID" + id +" = " + id + ";\n";
+        materialIDStr += "\nconst float material_ID" + id + " = " + id + ";\n";
         return id;
     }
     public float Radians(float angle)
@@ -102,7 +102,7 @@ public class RayMarchingController : MonoBehaviour
         for (int i = 0; i < gameObjects.Count; i++)
         {
             var position = gameObjects[i].transform.position;
-            var scale = gameObjects[i].transform.localScale;
+            var scale = gameObjects[i].transform.localScale / 2.0f;
             var rotation = gameObjects[i].transform.rotation;
             var rmObject = gameObjects[i].GetComponent<RM_Object>();
             if (rmObject.ShaderComponent == null)
@@ -113,18 +113,19 @@ public class RayMarchingController : MonoBehaviour
             var functionName = rmObject.ShaderComponent.FunctionName;
             var scaleFormat = rmObject.ShaderComponent.Scale;
             var mixerFormat = rmObject.ShaderComponent.Mixer;
-            sdf1 += "               vec3 posID" + i + " = position + vec3(" + position.x.ToString(culture) + ", " + position.y.ToString(culture) + "," + position.z.ToString(culture) + ");\n";
-            sdf1 += "               posID" + i + "= posID" + i + "*rotationMatrix(vec3(" + rotation.x.ToString(culture) + "," + rotation.y.ToString(culture) + "," + rotation.z.ToString(culture) + "), " + rotation.w.ToString(culture) + ");\n";
+            int index = i * 10;
+            sdf1 += "               vec3 posID" + i + " = position - vec3(_Objects[" + (index + 0) + "], _Objects[" + (index + 1) + "], _Objects[" + (index + 2) + "]);\n";
+            sdf1 += "               posID" + i + "= posID" + i + "*rotationMatrix(vec3(_Objects[" + (index + 6) + "], _Objects[" + (index + 7) + "], _Objects[" + (index + 8) + "]),  _Objects[" + (index + 9) + "]);\n";
             switch (scaleFormat)
             {
                 case ShaderComponent.ScaleInfo.OneDimension:
-                    sdf1 += "               float id" + i + "_distance = " + functionName.ToString() + "(posID" + i + ", " + scale.x.ToString(culture) + ");\n";
+                    sdf1 += "               float id" + i + "_distance = " + functionName.ToString() + "(posID" + i + ",_Objects[" + (index + 3) + "]);\n";
                     break;
                 case ShaderComponent.ScaleInfo.TwoDimension:
-                    sdf1 += "               float id" + i + "_distance = " + functionName.ToString() + "(posID" + i + ", vec2(" + scale.x.ToString(culture) + ", " + scale.y.ToString(culture) + "));\n";
+                    sdf1 += "               float id" + i + "_distance = " + functionName.ToString() + "(posID" + i + ", vec2(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "]));\n";
                     break;
                 case ShaderComponent.ScaleInfo.ThreeDimension:
-                    sdf1 += "               float id" + i + "_distance = " + functionName.ToString() + "(posID" + i + ", vec3(" + scale.x.ToString(culture) + ", " + scale.y.ToString(culture) + "," + scale.z.ToString(culture) + "));\n";
+                    sdf1 += "               float id" + i + "_distance = " + functionName.ToString() + "(posID" + i + ", vec3(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "],_Objects[" + (index + 5) + "]));\n";
                     break;
             }
             sdf1 += "               vec4 distID" + i + " = vec4(id" + i + "_distance, material_ID" + getMaterialRegister(gameObjects[i].GetComponent<RM_Material>()) + ", position.xz + vec2(position.y, 0.0));\n";
@@ -195,11 +196,13 @@ public class RayMarchingController : MonoBehaviour
     {
         var GOs = FindObjectsOfType<RM_Object>();
         gameObjects = new List<GameObject>();
+
         foreach (var GO in GOs)
         {
             gameObjects.Add(GO.gameObject);
             var material = GO.GetComponent<RM_Material>();
-            if (material != null) {
+            if (material != null)
+            {
                 getMaterialRegister(material);
             }
         }
@@ -209,6 +212,7 @@ public class RayMarchingController : MonoBehaviour
             fullcode += "\n" + GetShaderPart(part);
         }
         fullcode += "\n" + materialIDStr;
+        fullcode += "\n uniform float _Objects[" + (gameObjects.Count * 10) + "];";
         var sdfTextArray = new List<TextAsset>();
         for (int i = 0; i < gameObjects.Count; i++)
         {
@@ -241,8 +245,26 @@ public class RayMarchingController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-
+        if (RM_Camera.RM_Objects == null)
+        {
+            RM_Camera.RM_Objects = new List<float>();
+        }
+        RM_Camera.RM_Objects.Clear();
+        foreach (var GO in gameObjects)
+        {
+            RM_Camera.RM_Objects.Add(GO.transform.position.x);
+            RM_Camera.RM_Objects.Add(GO.transform.position.y);
+            RM_Camera.RM_Objects.Add(GO.transform.position.z);
+            RM_Camera.RM_Objects.Add(GO.transform.localScale.x);
+            RM_Camera.RM_Objects.Add(GO.transform.localScale.y);
+            RM_Camera.RM_Objects.Add(GO.transform.localScale.z);
+            RM_Camera.RM_Objects.Add(GO.transform.rotation.x);
+            RM_Camera.RM_Objects.Add(GO.transform.rotation.y);
+            RM_Camera.RM_Objects.Add(GO.transform.rotation.z);
+            RM_Camera.RM_Objects.Add(GO.transform.rotation.w);
+        }
     }
+
 }

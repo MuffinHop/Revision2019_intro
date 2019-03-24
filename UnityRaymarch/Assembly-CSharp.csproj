@@ -62,6 +62,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Huge Mocap Library\demo\scripts\demo.cs" />
+    <Compile Include="Assets\Huge Mocap Library\demo\scripts\smoothFollow.cs" />
     <Compile Include="Assets\Scripts\Demo\Device.cs" />
     <Compile Include="Assets\Scripts\Demo\RayMarchingController.cs" />
     <Compile Include="Assets\Scripts\Demo\RM_Camera.cs" />
@@ -81,6 +83,7 @@
     <None Include="Assets\Shaders\General\Scene.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\Box.glslinc" />
     <None Include="Assets\Shaders\Operators\OpDifferenceChamfer.shader" />
+    <None Include="Assets\Huge Mocap Library\READTHIS.txt" />
     <None Include="Assets\Shaders\General\Shading.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdCappedCone.glslinc" />
     <None Include="Assets\Shaders\Modifiers\ModMirror1.shader" />
@@ -91,6 +94,7 @@
     <None Include="Assets\Shaders\SDFs\Primitive\LineSegment.glslinc" />
     <None Include="Assets\Shaders\Modifiers\ModGrid2.shader" />
     <None Include="Assets\Shaders\Modifiers\ModPolar.shader" />
+    <None Include="Assets\Huge Mocap Library\mocap animations\cmu-mocap-index-text.txt" />
     <None Include="Assets\Shaders\SDFs\Primitive\Cylinder.glslinc" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdRoundedCylinder.glslinc" />
     <None Include="Assets\Shaders\Operators\OpDifferenceColumns.shader" />
