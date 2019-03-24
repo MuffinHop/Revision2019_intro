@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reflectionCoefficient: 0.05
-  albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
+  albedo: {r: 0.509434, g: 0.509434, b: 0.509434, a: 0.7490196}
   reflectivity: 0.4
   reflectindx: 0.45
 --- !u!114 &3569930
@@ -230,53 +230,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!21 &46882434
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Standard Trace Marching
-  m_Shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel0:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel1:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel2:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel3:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Value: 0
-    - _iFrame: 18
-    - _iTime: 0
-    m_Colors:
-    - _Light: {r: 0, g: 0, b: 0, a: 0}
-    - _iMouse: {r: 0, g: 0, b: 0, a: 0}
-    - _iResolution: {r: 656, g: 369, b: 0, a: 0}
 --- !u!1 &192690825
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,7 +498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reflectionCoefficient: 0.05
-  albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
+  albedo: {r: 0.509434, g: 0.509434, b: 0.509434, a: 0.7490196}
   reflectivity: 0.4
   reflectindx: 0.45
 --- !u!114 &427746714
@@ -655,8 +608,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reflectionCoefficient: 0.05
-  albedo: {r: 0.8018868, g: 0.67120904, b: 0.55602527, a: 0.627451}
-  reflectivity: 0.4
+  albedo: {r: 0.8867924, g: 0.7999618, b: 0.72365606, a: 0.83137256}
+  reflectivity: 0.2
   reflectindx: 0.45
 --- !u!114 &477087309
 MonoBehaviour:
@@ -765,7 +718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reflectionCoefficient: 0.1
-  albedo: {r: 0.6603774, g: 0.2772339, b: 0.2772339, a: 1}
+  albedo: {r: 0.6603774, g: 0.2772339, b: 0.2772339, a: 0.67058825}
   reflectivity: 0
   reflectindx: 0.2
 --- !u!114 &483782608
@@ -985,7 +938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reflectionCoefficient: 0.05
-  albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
+  albedo: {r: 0.509434, g: 0.509434, b: 0.509434, a: 0.7490196}
   reflectivity: 0.4
   reflectindx: 0.45
 --- !u!114 &670804936
@@ -1732,8 +1685,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reflectionCoefficient: 0.05
-  albedo: {r: 0.8018868, g: 0.67120904, b: 0.55602527, a: 0.627451}
-  reflectivity: 0.4
+  albedo: {r: 0.8867924, g: 0.7999618, b: 0.72365606, a: 0.83137256}
+  reflectivity: 0.2
   reflectindx: 0.45
 --- !u!114 &1437319490
 MonoBehaviour:
@@ -2391,6 +2344,53 @@ MonoBehaviour:
   albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
   reflectivity: 0.4
   reflectindx: 0.45
+--- !u!21 &1757138037
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Standard Trace Marching
+  m_Shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Value: 0
+    - _iFrame: 3
+    - _iTime: 0
+    m_Colors:
+    - _Light: {r: 0, g: 0, b: 0, a: 0}
+    - _iMouse: {r: 0, g: 0, b: 0, a: 0}
+    - _iResolution: {r: 656, g: 369, b: 0, a: 0}
 --- !u!1 &1862993965
 GameObject:
   m_ObjectHideFlags: 0
@@ -2444,7 +2444,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 11.411215
+  field of view: 11
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2469,8 +2469,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1862993965}
-  m_LocalRotation: {x: 0, y: 0.9974757, z: 0, w: -0.0710094}
-  m_LocalPosition: {x: -3.7931035, y: 0, z: 22}
+  m_LocalRotation: {x: 0, y: 0.99723023, z: 0, w: -0.07437623}
+  m_LocalPosition: {x: -4, y: 0, z: 22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2490,7 +2490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
-  _material: {fileID: 46882434}
+  _material: {fileID: 1757138037}
   _camera: {fileID: 1862993967}
   iChannel0: {fileID: 0}
   iChannel1: {fileID: 0}

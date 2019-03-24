@@ -129,7 +129,11 @@ public class RayMarchingController : MonoBehaviour
                     break;
             }
             sdf1 += "               vec4 distID" + i + " = vec4(id" + i + "_distance, material_ID" + getMaterialRegister(gameObjects[i].GetComponent<RM_Material>()) + ", position.xz + vec2(position.y, 0.0));\n";
-            sdf1 += "               result = DistUnionCombine(result, distID" + i + ");\n\n";
+            if (gameObjects[i].GetComponent<RM_Material>().albedo.a < 1.0f) {
+                sdf1 += "               result = DistUnionCombineTransparent(result, distID" + i + ", transparencyPointer);\n\n";
+            } else {
+                sdf1 += "               result = DistUnionCombine(result, distID" + i + ");\n\n";
+            }
         }
         /*
             vec3 p1 = position + vec3(_Objects[1], _Objects[2], _Objects[3]);

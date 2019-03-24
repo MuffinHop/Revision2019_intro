@@ -413,7 +413,7 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
                posID0= posID0*rotationMatrix(vec3(_Objects[6], _Objects[7], _Objects[8]),  _Objects[9]);
                float id0_distance = fSphere(posID0,_Objects[3]);
                vec4 distID0 = vec4(id0_distance, material_ID0, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombine(result, distID0);
+               result = DistUnionCombineTransparent(result, distID0, transparencyPointer);
 
                vec3 posID1 = position - vec3(_Objects[10], _Objects[11], _Objects[12]);
                posID1= posID1*rotationMatrix(vec3(_Objects[16], _Objects[17], _Objects[18]),  _Objects[19]);
@@ -443,25 +443,25 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
                posID5= posID5*rotationMatrix(vec3(_Objects[56], _Objects[57], _Objects[58]),  _Objects[59]);
                float id5_distance = fSphere(posID5,_Objects[53]);
                vec4 distID5 = vec4(id5_distance, material_ID5, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombine(result, distID5);
+               result = DistUnionCombineTransparent(result, distID5, transparencyPointer);
 
                vec3 posID6 = position - vec3(_Objects[60], _Objects[61], _Objects[62]);
                posID6= posID6*rotationMatrix(vec3(_Objects[66], _Objects[67], _Objects[68]),  _Objects[69]);
                float id6_distance = fSphere(posID6,_Objects[63]);
                vec4 distID6 = vec4(id6_distance, material_ID6, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombine(result, distID6);
+               result = DistUnionCombineTransparent(result, distID6, transparencyPointer);
 
                vec3 posID7 = position - vec3(_Objects[70], _Objects[71], _Objects[72]);
                posID7= posID7*rotationMatrix(vec3(_Objects[76], _Objects[77], _Objects[78]),  _Objects[79]);
                float id7_distance = fSphere(posID7,_Objects[73]);
                vec4 distID7 = vec4(id7_distance, material_ID7, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombine(result, distID7);
+               result = DistUnionCombineTransparent(result, distID7, transparencyPointer);
 
                vec3 posID8 = position - vec3(_Objects[80], _Objects[81], _Objects[82]);
                posID8= posID8*rotationMatrix(vec3(_Objects[86], _Objects[87], _Objects[88]),  _Objects[89]);
                float id8_distance = fSphere(posID8,_Objects[83]);
                vec4 distID8 = vec4(id8_distance, material_ID8, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombine(result, distID8);
+               result = DistUnionCombineTransparent(result, distID8, transparencyPointer);
 
                vec3 posID9 = position - vec3(_Objects[90], _Objects[91], _Objects[92]);
                posID9= posID9*rotationMatrix(vec3(_Objects[96], _Objects[97], _Objects[98]),  _Objects[99]);
@@ -491,7 +491,7 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
                posID13= posID13*rotationMatrix(vec3(_Objects[136], _Objects[137], _Objects[138]),  _Objects[139]);
                float id13_distance = fSphere(posID13,_Objects[133]);
                vec4 distID13 = vec4(id13_distance, material_ID13, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombine(result, distID13);
+               result = DistUnionCombineTransparent(result, distID13, transparencyPointer);
 
                vec3 posID14 = position - vec3(_Objects[140], _Objects[141], _Objects[142]);
                posID14= posID14*rotationMatrix(vec3(_Objects[146], _Objects[147], _Objects[148]),  _Objects[149]);
@@ -526,9 +526,9 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
             
        if (hitNfo.id.x == material_ID0){
               mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.8018868,0.671209,0.5560253);;
-              mat.transparency =0.372549;
-              mat.reflectivity = 0.4;
+              mat.albedo = vec3(0.8867924,0.7999618,0.7236561);;
+              mat.transparency =0.1686274;
+              mat.reflectivity = 0.2;
               mat.reflectindx = 0.45;
        }
        if (hitNfo.id.x == material_ID1){
@@ -561,29 +561,29 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
        }
        if (hitNfo.id.x == material_ID5){
               mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
-              mat.transparency =0;
+              mat.albedo = vec3(0.509434,0.509434,0.509434);;
+              mat.transparency =0.2509804;
               mat.reflectivity = 0.4;
               mat.reflectindx = 0.45;
        }
        if (hitNfo.id.x == material_ID6){
               mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
-              mat.transparency =0;
+              mat.albedo = vec3(0.509434,0.509434,0.509434);;
+              mat.transparency =0.2509804;
               mat.reflectivity = 0.4;
               mat.reflectindx = 0.45;
        }
        if (hitNfo.id.x == material_ID7){
               mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
-              mat.transparency =0;
+              mat.albedo = vec3(0.509434,0.509434,0.509434);;
+              mat.transparency =0.2509804;
               mat.reflectivity = 0.4;
               mat.reflectindx = 0.45;
        }
        if (hitNfo.id.x == material_ID8){
               mat.reflectionCoefficient = 0.1;
               mat.albedo = vec3(0.6603774,0.2772339,0.2772339);;
-              mat.transparency =0;
+              mat.transparency =0.3294117;
               mat.reflectivity = 0;
               mat.reflectindx = 0.2;
        }
@@ -617,9 +617,9 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
        }
        if (hitNfo.id.x == material_ID13){
               mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.8018868,0.671209,0.5560253);;
-              mat.transparency =0.372549;
-              mat.reflectivity = 0.4;
+              mat.albedo = vec3(0.8867924,0.7999618,0.7236561);;
+              mat.transparency =0.1686274;
+              mat.reflectivity = 0.2;
               mat.reflectindx = 0.45;
        }
        if (hitNfo.id.x == material_ID14){
@@ -714,7 +714,7 @@ void insideMarch(in Trace ray, out ContactInfo result, int maxIter, float transp
 	result.distanc = ray.startdistanc;
 	result.id.x = 0.0;
 
-	for (int i = 0;i <= kRayMarchMaxIter ;i++)
+	for (int i = 0;i <= kRayMarchMaxIter / 3;i++)
 	{
 		result.position = ray.origin + ray.direction * result.distanc;
 		vec4 sceneDistance = GetDistanceScene(result.position, transparencyPointer);
