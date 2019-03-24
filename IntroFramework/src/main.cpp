@@ -165,8 +165,8 @@ int load_gl_functions() {
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
 
-LPDIRECT3D9 pD3D;
-LPDIRECT3DDEVICE9 pd3dDevice;
+LPDIRECT3D9 pD3D = NULL;
+LPDIRECT3DDEVICE9 pd3dDevice = NULL;
 HWND hwnd = {};
 
 LPD3DXFONT pFont = NULL;
@@ -175,15 +175,19 @@ LPDIRECT3DVERTEXBUFFER9 m_pVB;        // VertexBuffer for rendering text
 DWORD   m_dwTexWidth;                 // Texture dimensions
 DWORD   m_dwTexHeight;
 
-void initD3D(HWND hWnd)
+void initD3D()
 {
 	D3DPRESENT_PARAMETERS d3dpp;
-
+	ZeroMemory(&d3dpp, sizeof(d3dpp));
 	pD3D = Direct3DCreate9(D3D_SDK_VERSION);
 	d3dpp.Windowed = TRUE;
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	d3dpp.hDeviceWindow = hWnd;
-	pD3D->CreateDevice(0, D3DDEVTYPE_HAL, hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &pd3dDevice);
+	HRESULT hr = pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hwnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &pd3dDevice);
+	if (FAILED(hr))
+	{
+		MessageBox(NULL, "initD3D() failed", "Error", MB_OK);
+		// error handling here.
+	}
 }
 
 LPD3DXFONT MakeFont()
@@ -295,7 +299,12 @@ int __cdecl main(int argc, char* argv[])
 		#endif
 	#endif
 
-	initD3D(hwnd);
+	if (hwnd == NULL) {
+		MessageBox(NULL, "CreateWindow() failed", "Error", MB_OK);
+		return NULL;
+	}
+
+	initD3D();
 	HDC hDC = GetDC(hwnd);
 
 	// initalize opengl context
