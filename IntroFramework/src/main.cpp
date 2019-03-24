@@ -160,6 +160,116 @@ int load_gl_functions() {
 }
 
 
+#include <d3d9.h>
+#include <d3dx9.h>
+#pragma comment (lib, "d3d9.lib")
+#pragma comment (lib, "d3dx9.lib")
+
+LPDIRECT3D9 pD3D;
+LPDIRECT3DDEVICE9 pd3dDevice;
+HWND hwnd = {};
+
+LPD3DXFONT pFont = NULL;
+LPDIRECT3DTEXTURE9      m_pTexture;   // The d3d texture for this font
+LPDIRECT3DVERTEXBUFFER9 m_pVB;        // VertexBuffer for rendering text
+DWORD   m_dwTexWidth;                 // Texture dimensions
+DWORD   m_dwTexHeight;
+
+void initD3D(HWND hWnd)
+{
+	D3DPRESENT_PARAMETERS d3dpp;
+
+	pD3D = Direct3DCreate9(D3D_SDK_VERSION);
+	d3dpp.Windowed = TRUE;
+	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	d3dpp.hDeviceWindow = hWnd;
+	pD3D->CreateDevice(0, D3DDEVTYPE_HAL, hWnd, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &d3dpp, &pd3dDevice);
+}
+
+LPD3DXFONT MakeFont()
+{
+	// 48 Arial
+	LPD3DXFONT font = NULL;
+	D3DXFONT_DESC desc =
+	{ 48, 0, 0, 0, false, DEFAULT_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_PITCH, "" };
+	strcpy(desc.FaceName, "Arial");
+	D3DXCreateFontIndirect(pd3dDevice, &desc, &font);
+	return font;
+}
+
+void RenderFontToTexture() {
+	// font render to texture using dx9
+	HRESULT hr;
+
+	m_pTexture = NULL;
+	m_pVB = NULL;
+
+	m_dwTexWidth = m_dwTexHeight = 2048;
+
+	if (pd3dDevice != NULL) {
+		// create font texture
+		hr = pd3dDevice->CreateTexture(m_dwTexWidth, m_dwTexHeight, 1, 0, D3DFMT_A4R4G4B4, D3DPOOL_MANAGED, &m_pTexture, NULL);
+
+		// Prepare to create a bitmap
+		DWORD*      pBitmapBits;
+		BITMAPINFO bmi;
+		ZeroMemory(&bmi.bmiHeader, sizeof(BITMAPINFOHEADER));
+		bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+		bmi.bmiHeader.biWidth = (int)m_dwTexWidth;
+		bmi.bmiHeader.biHeight = -(int)m_dwTexHeight;
+		bmi.bmiHeader.biPlanes = 1;
+		bmi.bmiHeader.biCompression = BI_RGB;
+		bmi.bmiHeader.biBitCount = 32;
+
+		HDC fonthDC = CreateCompatibleDC(NULL);
+		HBITMAP hbmBitmap = CreateDIBSection(fonthDC, &bmi, DIB_RGB_COLORS, (void**)&pBitmapBits, NULL, 0);
+		SetMapMode(fonthDC, MM_TEXT);
+
+		HGDIOBJ hbmOld = SelectObject(fonthDC, hbmBitmap);
+		HGDIOBJ hFontOld = SelectObject(fonthDC, pFont);
+
+		// Set text properties
+		SetTextColor(fonthDC, RGB(255, 0, 0));
+		SetBkColor(fonthDC, 0x00000000);
+		SetTextAlign(fonthDC, TA_TOP);
+
+		ExtTextOut(fonthDC, 0, 0, ETO_OPAQUE, NULL, "teksti", 1, NULL);
+
+		// Lock the surface and write the alpha values for the set pixels
+		D3DLOCKED_RECT d3dlr;
+		m_pTexture->LockRect(0, &d3dlr, 0, 0);
+		BYTE* pDstRow = (BYTE*)d3dlr.pBits;
+		WORD* pDst16;
+		BYTE bAlpha; // 4-bit measure of pixel intensity
+
+		for (int y = 0; y < m_dwTexHeight; y++)
+		{
+			pDst16 = (WORD*)pDstRow;
+			for (int x = 0; x < m_dwTexWidth; x++)
+			{
+				bAlpha = (BYTE)((pBitmapBits[m_dwTexWidth*y + x] & 0xff) >> 4);
+				if (bAlpha > 0)
+				{
+					*pDst16++ = (WORD)((bAlpha << 12) | 0x0fff);
+				}
+				else
+				{
+					*pDst16++ = 0x0000;
+				}
+			}
+			pDstRow += d3dlr.Pitch;
+		}
+
+		// Done updating texture, so clean up used objects
+		m_pTexture->UnlockRect(0);
+		SelectObject(fonthDC, hbmOld);
+		SelectObject(fonthDC, hFontOld);
+		DeleteObject(hbmBitmap);
+		DeleteObject(pFont);
+		DeleteDC(fonthDC);
+	}
+}
+
 #ifndef EDITOR_CONTROLS
 #pragma code_seg(".main")
 void entrypoint(void)
@@ -173,27 +283,32 @@ int __cdecl main(int argc, char* argv[])
 	#if FULLSCREEN
 		ChangeDisplaySettings(&screenSettings, CDS_FULLSCREEN);
 		ShowCursor(0);
-		const HDC hDC = GetDC(CreateWindow((LPCSTR)0xC018, 0, WS_POPUP | WS_VISIBLE | WS_MAXIMIZE, 0, 0, 0, 0, 0, 0, 0, 0));
+		hwnd = CreateWindow((LPCSTR)0xC018, 0, WS_POPUP | WS_VISIBLE | WS_MAXIMIZE, 0, 0, 0, 0, 0, 0, 0, 0);
 	#else
 		#ifdef EDITOR_CONTROLS
-			HWND window = CreateWindow("static", 0, WS_POPUP | WS_VISIBLE, 0, 0, XRES, YRES, 0, 0, 0, 0);
-			HDC hDC = GetDC(window);
+			hwnd = CreateWindow("EDIT", NULL, WS_POPUP | WS_VISIBLE, 0, 0, XRES, YRES, 0, 0, 0, 0 );
 		#else
 			// you can create a pseudo fullscreen window by similarly enabling the WS_MAXIMIZE flag as above
 			// in which case you can replace the resolution parameters with 0s and save a couple bytes
 			// this only works if the resolution is set to the display device's native resolution
-			HDC hDC = GetDC(CreateWindow((LPCSTR)0xC018, 0, WS_POPUP | WS_VISIBLE, 0, 0, XRES, YRES, 0, 0, 0, 0));
+			hwnd = CreateWindow((LPCSTR)0xC018, 0, WS_POPUP | WS_VISIBLE, 0, 0, XRES, YRES, 0, 0, 0, 0);
 		#endif
 	#endif
+
+	initD3D(hwnd);
+	HDC hDC = GetDC(hwnd);
 
 	// initalize opengl context
 	SetPixelFormat(hDC, ChoosePixelFormat(hDC, &pfd), &pfd);
 	wglMakeCurrent(hDC, wglCreateContext(hDC));
 	
+	pFont = MakeFont();
+	RenderFontToTexture();
+
 	// create and compile shader programs
-	pidMain = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragment);
+	pidMain = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragment_frag);
 	#if POST_PASS
-		pidPost = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &post);
+		pidPost = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &post_frag);
 	#endif
 
 	// initialize sound

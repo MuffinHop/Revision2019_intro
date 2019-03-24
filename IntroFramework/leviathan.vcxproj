@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -25,7 +25,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{59C1D4F3-AE93-4A0A-B4FE-60841CA865E5}</ProjectGuid>
     <ProjectName>Leviathan 2.0</ProjectName>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -45,7 +45,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'" Label="Configuration">
@@ -94,6 +94,8 @@
     <ExecutablePath>$(SolutionDir);$(ExecutablePath)</ExecutablePath>
     <TargetName>leviathan-debug</TargetName>
     <GenerateManifest>false</GenerateManifest>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(DXSDK_DIR)Include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(DXSDK_DIR)Lib\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>out\</OutDir>
@@ -105,6 +107,8 @@
     <ExecutablePath>$(SolutionDir);$(ExecutablePath)</ExecutablePath>
     <TargetName>leviathan-release</TargetName>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(DXSDK_DIR)Include</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(DXSDK_DIR)Lib\x86</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Heavy Release|Win32'">
     <OutDir>out\</OutDir>
@@ -143,7 +147,7 @@
       <AdditionalIncludeDirectories>../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;WINDOWS;DEBUG;SIMD;A32BITS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>bin\debug\</AssemblerListingLocation>
@@ -210,7 +214,7 @@ shader_minifier.exe -v -o src\shaders\post.inl src\shaders\post.frag</Command>
       <AdditionalIncludeDirectories>../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>EDITOR_CONTROLS;_DEBUG;WINDOWS;DEBUG;SIMD;A32BITS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>
       </PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>bin\debug\</AssemblerListingLocation>
@@ -323,7 +327,7 @@ shader_minifier.exe -v -o src\shaders\post.inl src\shaders\post.frag</Command>
     </ResourceCompile>
     <Link>
       <AdditionalOptions>/CRINKLER  /RANGE:opengl32 /HASHTRIES:300 /COMPMODE:SLOW /ORDERTRIES:9000 /REPORT:out.html /PROGRESSGUI /HASHSIZE:1000 /UNSAFEIMPORT /UNALIGNCODE /SATURATE /NOINITIALIZERS /TRANSFORM:CALLS /TRUNCATEFLOATS:32 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>opengl32.lib;winmm.lib;src/4klang/4klang.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;opengl32.lib;winmm.lib;src/4klang/4klang.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>out\leviathan-release.exe</OutputFile>
       <SuppressStartupBanner>
       </SuppressStartupBanner>
@@ -580,11 +584,7 @@ shader_minifier.exe -v -o src\shaders\post.inl src\shaders\post.frag</Command>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\editor.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Snapshot|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Heavy Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="src\editor.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\song.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">false</ExcludedFromBuild>
