@@ -175,10 +175,40 @@ LPDIRECT3DVERTEXBUFFER9 m_pVB;        // VertexBuffer for rendering text
 DWORD   m_dwTexWidth;                 // Texture dimensions
 DWORD   m_dwTexHeight;
 
+void* my_memset(void* s, int c, size_t sz) {
+	byte* p = (byte*)s;
+	byte x = c & 0xff;
+	unsigned int leftover = sz & 0x7;
+
+	/* Catch the pathological case of 0. */
+	if (!sz)
+		return s;
+
+	/* To understand what's going on here, take a look at the original
+	* bytewise_memset and consider unrolling the loop. For this situation
+	* we'll unroll the loop 8 times (assuming a 32-bit architecture). Choosing
+	* the level to which to unroll the loop can be a fine art...
+	*/
+	sz = (sz + 7) >> 3;
+	switch (leftover) {
+	case 0: do {
+		*p++ = x;
+	case 7:      *p++ = x;
+	case 6:      *p++ = x;
+	case 5:      *p++ = x;
+	case 4:      *p++ = x;
+	case 3:      *p++ = x;
+	case 2:      *p++ = x;
+	case 1:      *p++ = x;
+	} while (--sz > 0);
+	}
+	return s;
+}
+
 void initD3D()
 {
 	D3DPRESENT_PARAMETERS d3dpp;
-	ZeroMemory(&d3dpp, sizeof(d3dpp));
+	my_memset(&d3dpp, 0, sizeof(d3dpp));
 	pD3D = Direct3DCreate9(D3D_SDK_VERSION);
 	d3dpp.Windowed = TRUE;
 	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
@@ -217,7 +247,7 @@ void RenderFontToTexture() {
 		// Prepare to create a bitmap
 		DWORD*      pBitmapBits;
 		BITMAPINFO bmi;
-		ZeroMemory(&bmi.bmiHeader, sizeof(BITMAPINFOHEADER));
+		my_memset(&bmi.bmiHeader, 0, sizeof(BITMAPINFOHEADER));
 		bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
 		bmi.bmiHeader.biWidth = (int)m_dwTexWidth;
 		bmi.bmiHeader.biHeight = -(int)m_dwTexHeight;
@@ -301,7 +331,6 @@ int __cdecl main(int argc, char* argv[])
 
 	if (hwnd == NULL) {
 		MessageBox(NULL, "CreateWindow() failed", "Error", MB_OK);
-		return NULL;
 	}
 
 	initD3D();
