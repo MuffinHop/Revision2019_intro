@@ -390,7 +390,13 @@ const float material_ID13 = 13;
 
 const float material_ID14 = 14;
 
- uniform float _Objects[150];
+const float material_ID15 = 15;
+
+const float material_ID16 = 16;
+
+const float material_ID17 = 17;
+
+ uniform float _Objects[180];
 float fSphere(vec3 p, float r) {
 	return length(p) - r;
 }
@@ -471,13 +477,13 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
 
                vec3 posID11 = position - vec3(_Objects[110], _Objects[111], _Objects[112]);
                posID11= posID11*rotationMatrix(vec3(_Objects[116], _Objects[117], _Objects[118]),  _Objects[119]);
-               float id11_distance = fBox(posID11, vec3(_Objects[113], _Objects[114],_Objects[115]));
+               float id11_distance = fSphere(posID11,_Objects[113]);
                vec4 distID11 = vec4(id11_distance, material_ID11, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID11);
 
                vec3 posID12 = position - vec3(_Objects[120], _Objects[121], _Objects[122]);
                posID12= posID12*rotationMatrix(vec3(_Objects[126], _Objects[127], _Objects[128]),  _Objects[129]);
-               float id12_distance = fBox(posID12, vec3(_Objects[123], _Objects[124],_Objects[125]));
+               float id12_distance = fSphere(posID12,_Objects[123]);
                vec4 distID12 = vec4(id12_distance, material_ID12, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID12);
 
@@ -493,6 +499,24 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
                vec4 distID14 = vec4(id14_distance, material_ID14, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID14);
 
+               vec3 posID15 = position - vec3(_Objects[150], _Objects[151], _Objects[152]);
+               posID15= posID15*rotationMatrix(vec3(_Objects[156], _Objects[157], _Objects[158]),  _Objects[159]);
+               float id15_distance = fBox(posID15, vec3(_Objects[153], _Objects[154],_Objects[155]));
+               vec4 distID15 = vec4(id15_distance, material_ID15, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID15);
+
+               vec3 posID16 = position - vec3(_Objects[160], _Objects[161], _Objects[162]);
+               posID16= posID16*rotationMatrix(vec3(_Objects[166], _Objects[167], _Objects[168]),  _Objects[169]);
+               float id16_distance = fSphere(posID16,_Objects[163]);
+               vec4 distID16 = vec4(id16_distance, material_ID16, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID16);
+
+               vec3 posID17 = position - vec3(_Objects[170], _Objects[171], _Objects[172]);
+               posID17= posID17*rotationMatrix(vec3(_Objects[176], _Objects[177], _Objects[178]),  _Objects[179]);
+               float id17_distance = fBox(posID17, vec3(_Objects[173], _Objects[174],_Objects[175]));
+               vec4 distID17 = vec4(id17_distance, material_ID17, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID17);
+
 
             return result;
         }
@@ -502,8 +526,8 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
             
        if (hitNfo.id.x == material_ID0){
               mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
-              mat.transparency =1;
+              mat.albedo = vec3(0.8018868,0.671209,0.5560253);;
+              mat.transparency =0.627451;
               mat.reflectivity = 0.4;
               mat.reflectindx = 0.45;
        }
@@ -536,11 +560,11 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
               mat.reflectindx = 0.45;
        }
        if (hitNfo.id.x == material_ID5){
-              mat.reflectionCoefficient = 0.1;
-              mat.albedo = vec3(0.6603774,0.2772339,0.2772339);;
+              mat.reflectionCoefficient = 0.05;
+              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
               mat.transparency =1;
-              mat.reflectivity = 0;
-              mat.reflectindx = 0.2;
+              mat.reflectivity = 0.4;
+              mat.reflectindx = 0.45;
        }
        if (hitNfo.id.x == material_ID6){
               mat.reflectionCoefficient = 0.05;
@@ -557,11 +581,11 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
               mat.reflectindx = 0.45;
        }
        if (hitNfo.id.x == material_ID8){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
+              mat.reflectionCoefficient = 0.1;
+              mat.albedo = vec3(0.6603774,0.2772339,0.2772339);;
               mat.transparency =1;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
+              mat.reflectivity = 0;
+              mat.reflectindx = 0.2;
        }
        if (hitNfo.id.x == material_ID9){
               mat.reflectionCoefficient = 0.05;
@@ -593,12 +617,33 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
        }
        if (hitNfo.id.x == material_ID13){
               mat.reflectionCoefficient = 0.05;
+              mat.albedo = vec3(0.8018868,0.671209,0.5560253);;
+              mat.transparency =0.627451;
+              mat.reflectivity = 0.4;
+              mat.reflectindx = 0.45;
+       }
+       if (hitNfo.id.x == material_ID14){
+              mat.reflectionCoefficient = 0.05;
               mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
               mat.transparency =1;
               mat.reflectivity = 0.4;
               mat.reflectindx = 0.45;
        }
-       if (hitNfo.id.x == material_ID14){
+       if (hitNfo.id.x == material_ID15){
+              mat.reflectionCoefficient = 0.05;
+              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
+              mat.transparency =1;
+              mat.reflectivity = 0.4;
+              mat.reflectindx = 0.45;
+       }
+       if (hitNfo.id.x == material_ID16){
+              mat.reflectionCoefficient = 0.05;
+              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
+              mat.transparency =1;
+              mat.reflectivity = 0.4;
+              mat.reflectindx = 0.45;
+       }
+       if (hitNfo.id.x == material_ID17){
               mat.reflectionCoefficient = 0.05;
               mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
               mat.transparency =1;
