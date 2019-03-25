@@ -16,6 +16,8 @@
 #define USE_AUDIO    1
 #define NO_UNIFORMS  0
 
+#include <WaveSabreCore.h>
+#include <WaveSabrePlayerLib.h>
 #include "IntroFramework/gl_loader.h"
 #include "definitions.h"
 #if OPENGL_DEBUG
@@ -33,8 +35,37 @@
 // static allocation saves a few bytes
 static int pidMain;
 static int pidPost;
+using namespace WaveSabreCore;
+using namespace WaveSabrePlayerLib;
+
+extern const unsigned char SongBlob[];
 // static HDC hDC;
 
+WaveSabreCore::Device *SongFactory(SongRenderer::DeviceId id)
+{
+	switch (id)
+	{
+	case SongRenderer::DeviceId::Falcon: return new WaveSabreCore::Falcon();
+	case SongRenderer::DeviceId::Slaughter: return new WaveSabreCore::Slaughter();
+	case SongRenderer::DeviceId::Thunder: return new WaveSabreCore::Thunder();
+	case SongRenderer::DeviceId::Scissor: return new WaveSabreCore::Scissor();
+	case SongRenderer::DeviceId::Leveller: return new WaveSabreCore::Leveller();
+	case SongRenderer::DeviceId::Crusher: return new WaveSabreCore::Crusher();
+	case SongRenderer::DeviceId::Echo: return new WaveSabreCore::Echo();
+	case SongRenderer::DeviceId::Smasher: return new WaveSabreCore::Smasher();
+	case SongRenderer::DeviceId::Chamber: return new WaveSabreCore::Chamber();
+	}
+	return nullptr;
+}
+
+void progressCallback(double progress, void *data)
+{
+	const int barLength = 32;
+	int filledChars = (int)(progress * (double)(barLength - 1));
+	printf("\r[");
+	for (int j = 0; j < barLength; j++) putchar(filledChars >= j ? '*' : '-');
+	printf("]");
+}
 
 void *GetAnyGLFuncAddress(const char *name)
 {
@@ -199,10 +230,39 @@ int __cdecl main(int argc, char* argv[])
 	// initialize sound
 	#ifndef EDITOR_CONTROLS
 		#if USE_AUDIO
+			/*4klang
 			CreateThread(0, 0, (LPTHREAD_START_ROUTINE)_4klang_render, lpSoundBuffer, 0, 0);
 			waveOutOpen(&hWaveOut, WAVE_MAPPER, &WaveFMT, NULL, 0, CALLBACK_NULL);
 			waveOutPrepareHeader(hWaveOut, &WaveHDR, sizeof(WaveHDR));
 			waveOutWrite(hWaveOut, &WaveHDR, sizeof(WaveHDR));
+			*/
+
+			SongRenderer::Song song;
+			song.blob = SongBlob;
+			song.factory = SongFactory;
+
+			IPlayer *player;
+
+			int numRenderThreads = 3;
+			bool preRender = true;
+			if (preRender)
+			{
+				printf("Prerender activated.\n");
+				printf("Rendering...\n");
+
+				player = new PreRenderPlayer(&song, numRenderThreads, progressCallback, nullptr);
+
+				printf("\n\n");
+}
+			else
+			{
+				player = new RealtimePlayer(&song, numRenderThreads);
+			}
+
+			printf("Realtime player activated. Press ESC to quit.\n");
+			player->Play();
+
+
 		#endif
 	#else
 		Leviathan::Editor editor = Leviathan::Editor();
@@ -235,13 +295,22 @@ int __cdecl main(int argc, char* argv[])
 		#ifndef EDITOR_CONTROLS
 			// if you don't have an audio system figure some other way to pass time to your shader
 			#if USE_AUDIO
-				waveOutGetPosition(hWaveOut, &MMTime, sizeof(MMTIME));
+				//4klang
+				//waveOutGetPosition(hWaveOut, &MMTime, sizeof(MMTIME));
+
+				auto songPos = player->GetSongPos();
+				if (songPos >= player->GetLength()) break;
+				int minutes = (int)songPos / 60;
+				int seconds = (int)songPos % 60;
+				int hundredths = (int)(songPos * 100.0) % 100;
+
 				// it is possible to upload your vars as vertex color attribute (gl_Color) to save one function import
 				#if NO_UNIFORMS
 					glColor3ui(MMTime.u.sample, 0, 0);
 				#else
 					// remember to divide your shader time variable with the SAMPLE_RATE (44100 with 4klang)
-					((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(0, MMTime.u.sample);
+					//((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(0, MMTime.u.sample);
+				((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(0, (int)songPos*44100);
 				#endif
 			#endif
 		#else
