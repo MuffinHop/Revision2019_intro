@@ -1,5 +1,6 @@
 #version 130
 uniform int m;
+uniform sampler2D f;
 out vec4 o;
 float PI = 3.1416;
 float t = m/float(44100);
@@ -253,5 +254,7 @@ void main()
 		col = mix(col,0.5+0.5*vec3(col*dot(n, normalize(p-vec3(99,-99,0)))), 0.3);
 	}
 	col = pow(col*brg/sqrt(2.+dot(v*0.3,v*0.3)), vec3(1./2.2));
+	vec3 fontf = texture(f, q).rgb;
+	if (fontf.r > 0.2) col=fontf;
 	o = vec4(cc(col-0.035*hash(length(q)*t)), p.y<0.1?tile*distance(p, rp)/10.0:0.0 );
 }

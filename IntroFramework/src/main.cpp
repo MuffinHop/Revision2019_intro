@@ -11,7 +11,7 @@
 	#define BREAK_COMPATIBILITY 0
 #endif
 
-#define POST_PASS    1
+#define POST_PASS    0
 #define USE_MIPMAPS  1
 #define USE_AUDIO    1
 #define NO_UNIFORMS  0
@@ -159,21 +159,28 @@ int load_gl_functions() {
 	return failed;
 }
 
-
 #include <d3d9.h>
 #include <d3dx9.h>
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
 
+DWORD* pBitmapBits;
+BITMAPINFO bmi;
+HDC fonthDC;
+HBITMAP hbmBitmap;
+HGDIOBJ hbmOld;
+HGDIOBJ hFontOld;
+HDC hDC;
+
 LPDIRECT3D9 pD3D = NULL;
 LPDIRECT3DDEVICE9 pd3dDevice = NULL;
 HWND hwnd = {};
 
-LPD3DXFONT pFont = NULL;
+HFONT pFont = NULL;
 LPDIRECT3DTEXTURE9      m_pTexture;   // The d3d texture for this font
 LPDIRECT3DVERTEXBUFFER9 m_pVB;        // VertexBuffer for rendering text
-DWORD   m_dwTexWidth;                 // Texture dimensions
-DWORD   m_dwTexHeight;
+
+GLuint fontTexture;
 
 void* my_memset(void* s, int c, size_t sz) {
 	byte* p = (byte*)s;
@@ -205,8 +212,7 @@ void* my_memset(void* s, int c, size_t sz) {
 	return s;
 }
 
-void initD3D()
-{
+void initD3D() {
 	D3DPRESENT_PARAMETERS d3dpp;
 	my_memset(&d3dpp, 0, sizeof(d3dpp));
 	pD3D = Direct3DCreate9(D3D_SDK_VERSION);
@@ -220,87 +226,104 @@ void initD3D()
 	}
 }
 
-LPD3DXFONT MakeFont()
-{
-	// 48 Arial
-	LPD3DXFONT font = NULL;
-	D3DXFONT_DESC desc =
-	{ 48, 0, 0, 0, false, DEFAULT_CHARSET, OUT_TT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_PITCH, "" };
-	strcpy(desc.FaceName, "Arial");
-	D3DXCreateFontIndirect(pd3dDevice, &desc, &font);
-	return font;
-}
+void *ppvBits;
 
-void RenderFontToTexture() {
-	// font render to texture using dx9
+void InitFontToTexture() {
 	HRESULT hr;
-
 	m_pTexture = NULL;
 	m_pVB = NULL;
 
-	m_dwTexWidth = m_dwTexHeight = 2048;
-
 	if (pd3dDevice != NULL) {
-		// create font texture
-		hr = pd3dDevice->CreateTexture(m_dwTexWidth, m_dwTexHeight, 1, 0, D3DFMT_A4R4G4B4, D3DPOOL_MANAGED, &m_pTexture, NULL);
-
 		// Prepare to create a bitmap
-		DWORD*      pBitmapBits;
-		BITMAPINFO bmi;
 		my_memset(&bmi.bmiHeader, 0, sizeof(BITMAPINFOHEADER));
 		bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-		bmi.bmiHeader.biWidth = (int)m_dwTexWidth;
-		bmi.bmiHeader.biHeight = -(int)m_dwTexHeight;
+		bmi.bmiHeader.biWidth = (int)XRES;
+		bmi.bmiHeader.biHeight = (int)YRES;
 		bmi.bmiHeader.biPlanes = 1;
 		bmi.bmiHeader.biCompression = BI_RGB;
-		bmi.bmiHeader.biBitCount = 32;
+		bmi.bmiHeader.biBitCount = 24;
 
-		HDC fonthDC = CreateCompatibleDC(NULL);
-		HBITMAP hbmBitmap = CreateDIBSection(fonthDC, &bmi, DIB_RGB_COLORS, (void**)&pBitmapBits, NULL, 0);
+		fonthDC = CreateCompatibleDC(NULL);
+		hbmBitmap = CreateDIBSection(fonthDC, &bmi, DIB_RGB_COLORS, (void**)&pBitmapBits, 0, 0);
 		SetMapMode(fonthDC, MM_TEXT);
 
-		HGDIOBJ hbmOld = SelectObject(fonthDC, hbmBitmap);
-		HGDIOBJ hFontOld = SelectObject(fonthDC, pFont);
+		pFont = CreateFont(YRES*0.8, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Arial");
 
-		// Set text properties
+		hbmOld = SelectObject(fonthDC, hbmBitmap);
+		hFontOld = SelectObject(fonthDC, pFont);
+
 		SetTextColor(fonthDC, RGB(255, 0, 0));
 		SetBkColor(fonthDC, 0x00000000);
 		SetTextAlign(fonthDC, TA_TOP);
 
-		ExtTextOut(fonthDC, 0, 0, ETO_OPAQUE, NULL, "teksti", 1, NULL);
+		ExtTextOut(fonthDC, 0, 0, ETO_OPAQUE, NULL, "teksti", 6, NULL);
+	}
+}
 
-		// Lock the surface and write the alpha values for the set pixels
-		D3DLOCKED_RECT d3dlr;
-		m_pTexture->LockRect(0, &d3dlr, 0, 0);
-		BYTE* pDstRow = (BYTE*)d3dlr.pBits;
-		WORD* pDst16;
-		BYTE bAlpha; // 4-bit measure of pixel intensity
+GLubyte *
+ConvertRGB(BITMAPINFO *info,        /* I - Original bitmap information */
+	void       *bits)        /* I - Original bitmap pixels */
+{
+	int       i, j,           /* Looping vars */
+		bitsize,        /* Total size of bitmap */
+		width;          /* Aligned width of bitmap */
+	GLubyte   *newbits;       /* New RGB bits */
+	GLubyte   *from, *to,     /* RGB looping vars */
+		temp;           /* Temporary var for swapping */
 
-		for (int y = 0; y < m_dwTexHeight; y++)
+						/*
+						* Copy the original bitmap to the new array, converting as necessary.
+						*/
+
+	switch (info->bmiHeader.biCompression)
+	{
+	case BI_RGB:
+		if (info->bmiHeader.biBitCount == 24)
 		{
-			pDst16 = (WORD*)pDstRow;
-			for (int x = 0; x < m_dwTexWidth; x++)
-			{
-				bAlpha = (BYTE)((pBitmapBits[m_dwTexWidth*y + x] & 0xff) >> 4);
-				if (bAlpha > 0)
-				{
-					*pDst16++ = (WORD)((bAlpha << 12) | 0x0fff);
-				}
-				else
-				{
-					*pDst16++ = 0x0000;
-				}
-			}
-			pDstRow += d3dlr.Pitch;
-		}
+			width = 3 * info->bmiHeader.biWidth;
+			width = (width + 3) & ~3;
+			bitsize = width * info->bmiHeader.biHeight;
+			if ((newbits = (GLubyte *)calloc(bitsize, 1)) == NULL)
+				return (NULL);
+			/*
+			* Swap red & blue in a 24-bit image...
+			*/
 
-		// Done updating texture, so clean up used objects
-		m_pTexture->UnlockRect(0);
-		SelectObject(fonthDC, hbmOld);
-		SelectObject(fonthDC, hFontOld);
-		DeleteObject(hbmBitmap);
-		DeleteObject(pFont);
-		DeleteDC(fonthDC);
+			for (i = 0; i < info->bmiHeader.biHeight; i++)
+				for (j = 0, from = ((GLubyte *)bits) + i * width,
+					to = newbits + i * width;
+					j < info->bmiHeader.biWidth;
+					j++, from += 3, to += 3)
+				{
+					to[0] = from[2];
+					to[1] = from[1];
+					to[2] = from[0];
+				};
+		};
+		break;
+	case BI_RLE4:
+	case BI_RLE8:
+	case BI_BITFIELDS:
+		break;
+	};
+
+	return (newbits);
+}
+
+
+void RenderFontToTexture() {
+	// font render to texture using dx9
+
+	if (pd3dDevice != NULL) {
+		// Set text properties
+
+		GLvoid * obrazek;
+		obrazek = ConvertRGB(&bmi, pBitmapBits);
+
+		glBindTexture(GL_TEXTURE_2D, fontTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, XRES, YRES, 0, GL_RGB, GL_UNSIGNED_BYTE, obrazek);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
 	}
 }
 
@@ -334,14 +357,34 @@ int __cdecl main(int argc, char* argv[])
 	}
 
 	initD3D();
-	HDC hDC = GetDC(hwnd);
+	InitFontToTexture();
 
+	hDC = GetDC(hwnd);
 	// initalize opengl context
 	SetPixelFormat(hDC, ChoosePixelFormat(hDC, &pfd), &pfd);
 	wglMakeCurrent(hDC, wglCreateContext(hDC));
-	
-	pFont = MakeFont();
+
+
+	// font texture
+
+	glGenTextures(1, &fontTexture);
+	glBindTexture(GL_TEXTURE_2D, fontTexture);
+
+	// elect modulate to mix texture with color for shading
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+	//when texture area is small, bilinear filter the closest mipmap
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	// when texture area is large, bilinear filter the first mipmap
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	//the texture wraps over at the edges
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 	RenderFontToTexture();
+
 
 	// create and compile shader programs
 	pidMain = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragment_frag);
@@ -400,12 +443,17 @@ int __cdecl main(int argc, char* argv[])
 		#else
 			position = track.getTime();
 			((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(0, (static_cast<int>(position*44100.0)));
+			// font
+			glBindTexture(GL_TEXTURE_2D, fontTexture);
+			((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
+			((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
 		#endif
 		glRects(-1, -1, 1, 1);
 
+
 		// render "post process" using the opengl backbuffer
 		#if POST_PASS
-			glBindTexture(GL_TEXTURE_2D, 1);
+			glBindTexture(GL_TEXTURE_2D, 2);
 			#if USE_MIPMAPS
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 				glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 0, 0, XRES, YRES, 0);
@@ -435,6 +483,11 @@ int __cdecl main(int argc, char* argv[])
 			&& MMTime.u.sample < MAX_SAMPLES
 		#endif
 	);
+	SelectObject(fonthDC, hbmOld);
+	SelectObject(fonthDC, hFontOld);
+	DeleteObject(hbmBitmap);
+	DeleteObject(pFont);
+	DeleteDC(fonthDC);
 
 	ExitProcess(0);
 }
