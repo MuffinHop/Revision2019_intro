@@ -29,8 +29,6 @@
 	#include "shaders/post.inl"
 #endif
 
-#undef EDITOR_CONTROLS
-
 #pragma data_seg(".pids")
 // static allocation saves a few bytes
 static int pidMain;
@@ -42,15 +40,9 @@ using namespace WaveSabrePlayerLib;
 
 // static HDC hDC;
 
+#define _NO_CRT_STDIO_INLINE
 
-void progressCallback(double progress, void *data)
-{
-	const int barLength = 32;
-	int filledChars = (int)(progress * (double)(barLength - 1));
-	printf("\r[");
-	for (int j = 0; j < barLength; j++) putchar(filledChars >= j ? '*' : '-');
-	printf("]");
-}
+#include <stdio.h>
 
 
 void *GetAnyGLFuncAddress(const char *name)
@@ -318,15 +310,15 @@ void RenderFontToTexture() {
 void entrypoint(void)
 #else
 #include "editor.h"
-#include "song.h"
 int __cdecl main(int argc, char* argv[])
 #endif
 {
 	// initialize window
 	#if FULLSCREEN
-		ChangeDisplaySettings(&screenSettings, CDS_FULLSCREEN);
-		ShowCursor(0);
-		hwnd = CreateWindow((LPCSTR)0xC018, 0, WS_POPUP | WS_VISIBLE | WS_MAXIMIZE, 0, 0, 0, 0, 0, 0, 0, 0);
+	//	ChangeDisplaySettings(&screenSettings, CDS_FULLSCREEN);
+	//	ShowCursor(0);
+//		hwnd = CreateWindow((LPCSTR)0xC018, 0, WS_POPUP | WS_VISIBLE | WS_MAXIMIZE, 0, 0, 0, 0, 0, 0, 0, 0);
+		hwnd = CreateWindow("EDIT", NULL, WS_POPUP | WS_VISIBLE, 0, 0, XRES, YRES, 0, 0, 0, 0);
 	#else
 		#ifdef EDITOR_CONTROLS
 			hwnd = CreateWindow("EDIT", NULL, WS_POPUP | WS_VISIBLE, 0, 0, XRES, YRES, 0, 0, 0, 0 );
@@ -392,20 +384,15 @@ int __cdecl main(int argc, char* argv[])
 
 		// absolute path always works here
 		// relative path works only when not ran from visual studio directly
-		Leviathan::Song track(L"audio.wav");
-		track.play();
 		double position = 0.0;
 	#endif
 
-		SongRenderer::Song song;
-		song.blob = SongBlob;
-		song.factory = SongFactory;
 
 		IPlayer *player;
 
 		int numRenderThreads = 3;
-		player = new RealtimePlayer(&song, numRenderThreads);
-
+		player = new RealtimePlayer(&Song, numRenderThreads);
+		player->Play();
 	// main loop
 	do
 	{
@@ -428,12 +415,13 @@ int __cdecl main(int argc, char* argv[])
 			#if USE_AUDIO
 				//waveOutGetPosition(hWaveOut, &MMTime, sizeof(MMTIME));
 
+		/*
 				auto songPos = player->GetSongPos();
 				if (songPos >= player->GetLength()) break;
 				int minutes = (int)songPos / 60;
 				int seconds = (int)songPos % 60;
 				int hundredths = (int)(songPos * 100.0) % 100;
-
+		*/
 				// it is possible to upload your vars as vertex color attribute (gl_Color) to save one function import
 				#if NO_UNIFORMS
 					glColor3ui(MMTime.u.sample, 0, 0);
