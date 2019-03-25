@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using UnityEditor;
 using UnityEngine;
 [ExecuteInEditMode, Serializable, CreateAssetMenu(fileName = "ShaderComponent", menuName = "Shader Component")]
 public class ShaderComponent : ScriptableObject

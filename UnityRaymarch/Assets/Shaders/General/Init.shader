@@ -54,7 +54,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
 
 		float distanctrans = intersection.distanc;
 		if (material.transparency > 0.0) {
-			surface.subsurface = GetSubSurface(ray, intersection, surface, material);
+			//surface.subsurface = GetSubSurface(ray, intersection, surface, material);
 		}
 
 		sceneColor = ShadeSurface(ray, intersection, surface, material);

@@ -10,5 +10,7 @@ public class RM_Object : MonoBehaviour
     internal RM_Type Type { get => type; set => type = value; }
 
     public ShaderComponent ShaderComponent;
-    
+
+    public RMMaterial Material;
+
 }

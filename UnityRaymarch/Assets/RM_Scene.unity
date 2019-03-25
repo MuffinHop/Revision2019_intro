@@ -132,7 +132,6 @@ GameObject:
   - component: {fileID: 3569932}
   - component: {fileID: 3569931}
   - component: {fileID: 3569930}
-  - component: {fileID: 3569929}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -154,23 +153,6 @@ Transform:
   m_Father: {fileID: 7787322552699947223}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -17.31, y: -34.98, z: -14.88}
---- !u!114 &3569929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3569927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.509434, g: 0.509434, b: 0.509434, a: 0.7490196}
-  reflectivity: 0.4
-  reflectindx: 0.45
 --- !u!114 &3569930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &3569931
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -242,7 +225,6 @@ GameObject:
   - component: {fileID: 192690830}
   - component: {fileID: 192690829}
   - component: {fileID: 192690828}
-  - component: {fileID: 192690827}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -264,23 +246,6 @@ Transform:
   m_Father: {fileID: 7787322552699947153}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -17.31, y: -34.98, z: -14.88}
---- !u!114 &192690827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 192690825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
-  reflectivity: 0.4
-  reflectindx: 0.45
 --- !u!114 &192690828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,6 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &192690829
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -352,7 +318,6 @@ GameObject:
   - component: {fileID: 255904047}
   - component: {fileID: 255904046}
   - component: {fileID: 255904045}
-  - component: {fileID: 255904044}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -374,23 +339,6 @@ Transform:
   m_Father: {fileID: 7787322552699947243}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -17.31, y: -34.98, z: -14.88}
---- !u!114 &255904044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 255904042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
-  reflectivity: 0.4
-  reflectindx: 0.45
 --- !u!114 &255904045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,6 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &255904046
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -462,7 +411,6 @@ GameObject:
   - component: {fileID: 427746716}
   - component: {fileID: 427746715}
   - component: {fileID: 427746714}
-  - component: {fileID: 427746713}
   m_Layer: 0
   m_Name: Sphere (2)
   m_TagString: Untagged
@@ -484,23 +432,6 @@ Transform:
   m_Father: {fileID: 7787322552699947165}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -17.31, y: -34.98, z: -14.88}
---- !u!114 &427746713
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 427746711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.509434, g: 0.509434, b: 0.509434, a: 0.7490196}
-  reflectivity: 0.4
-  reflectindx: 0.45
 --- !u!114 &427746714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &427746715
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -572,7 +504,6 @@ GameObject:
   - component: {fileID: 477087311}
   - component: {fileID: 477087310}
   - component: {fileID: 477087309}
-  - component: {fileID: 477087308}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -594,23 +525,6 @@ Transform:
   m_Father: {fileID: 7787322552699947225}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -17.31, y: -34.98, z: -14.88}
---- !u!114 &477087308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 477087306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.8867924, g: 0.7999618, b: 0.72365606, a: 0.83137256}
-  reflectivity: 0.2
-  reflectindx: 0.45
 --- !u!114 &477087309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -625,6 +539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &477087310
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -682,7 +597,6 @@ GameObject:
   - component: {fileID: 483782610}
   - component: {fileID: 483782609}
   - component: {fileID: 483782608}
-  - component: {fileID: 483782607}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -704,23 +618,6 @@ Transform:
   m_Father: {fileID: 7787322552699947141}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -17.31, y: -34.98, z: -14.88}
---- !u!114 &483782607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 483782605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.1
-  albedo: {r: 0.6603774, g: 0.2772339, b: 0.2772339, a: 0.67058825}
-  reflectivity: 0
-  reflectindx: 0.2
 --- !u!114 &483782608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -735,6 +632,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &483782609
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -792,7 +690,6 @@ GameObject:
   - component: {fileID: 618483604}
   - component: {fileID: 618483603}
   - component: {fileID: 618483602}
-  - component: {fileID: 618483601}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -814,23 +711,6 @@ Transform:
   m_Father: {fileID: 7787322552699947241}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -17.31, y: -34.98, z: -14.88}
---- !u!114 &618483601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 618483599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
-  reflectivity: 0.4
-  reflectindx: 0.45
 --- !u!114 &618483602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,6 +725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &618483603
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -902,7 +783,6 @@ GameObject:
   - component: {fileID: 670804938}
   - component: {fileID: 670804937}
   - component: {fileID: 670804936}
-  - component: {fileID: 670804935}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -924,23 +804,6 @@ Transform:
   m_Father: {fileID: 7787322552699947201}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -17.31, y: -34.98, z: -14.88}
---- !u!114 &670804935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 670804933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.509434, g: 0.509434, b: 0.509434, a: 0.7490196}
-  reflectivity: 0.4
-  reflectindx: 0.45
 --- !u!114 &670804936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -955,6 +818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &670804937
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1012,7 +876,6 @@ GameObject:
   - component: {fileID: 757784148}
   - component: {fileID: 757784147}
   - component: {fileID: 757784145}
-  - component: {fileID: 757784144}
   m_Layer: 0
   m_Name: Cube Ray Marched (1)
   m_TagString: Untagged
@@ -1020,23 +883,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &757784144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 757784143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
-  reflectivity: 0.4
-  reflectindx: 0.45
 --- !u!114 &757784145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1051,6 +897,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 8d284295cf2d23e479da4de46e8f4a21, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &757784147
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1249,7 +1096,6 @@ GameObject:
   - component: {fileID: 1250958948}
   - component: {fileID: 1250958947}
   - component: {fileID: 1250958946}
-  - component: {fileID: 1250958945}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -1271,23 +1117,6 @@ Transform:
   m_Father: {fileID: 7787322552699947159}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -17.31, y: -34.98, z: -14.88}
---- !u!114 &1250958945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1250958943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
-  reflectivity: 0.4
-  reflectindx: 0.45
 --- !u!114 &1250958946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1302,6 +1131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &1250958947
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1359,7 +1189,6 @@ GameObject:
   - component: {fileID: 1298074627}
   - component: {fileID: 1298074626}
   - component: {fileID: 1298074625}
-  - component: {fileID: 1298074624}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -1381,23 +1210,6 @@ Transform:
   m_Father: {fileID: 7787322552699947265}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -17.31, y: -34.98, z: -14.88}
---- !u!114 &1298074624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298074622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
-  reflectivity: 0.4
-  reflectindx: 0.45
 --- !u!114 &1298074625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1412,6 +1224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &1298074626
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1539,7 +1352,6 @@ GameObject:
   - component: {fileID: 1419629670}
   - component: {fileID: 1419629669}
   - component: {fileID: 1419629667}
-  - component: {fileID: 1419629666}
   m_Layer: 0
   m_Name: Cube Ray Marched (2)
   m_TagString: Untagged
@@ -1547,23 +1359,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1419629666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1419629665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
-  reflectivity: 0.4
-  reflectindx: 0.45
 --- !u!114 &1419629667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1578,6 +1373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 8d284295cf2d23e479da4de46e8f4a21, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &1419629669
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1649,7 +1445,6 @@ GameObject:
   - component: {fileID: 1437319492}
   - component: {fileID: 1437319491}
   - component: {fileID: 1437319490}
-  - component: {fileID: 1437319489}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -1671,23 +1466,6 @@ Transform:
   m_Father: {fileID: 7787322552699947225}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -17.31, y: -34.98, z: -14.88}
---- !u!114 &1437319489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1437319487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.8867924, g: 0.7999618, b: 0.72365606, a: 0.83137256}
-  reflectivity: 0.2
-  reflectindx: 0.45
 --- !u!114 &1437319490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1702,6 +1480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &1437319491
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1759,7 +1538,6 @@ GameObject:
   - component: {fileID: 1445720139}
   - component: {fileID: 1445720138}
   - component: {fileID: 1445720137}
-  - component: {fileID: 1445720136}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -1781,23 +1559,6 @@ Transform:
   m_Father: {fileID: 7787322552699947215}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -17.31, y: -34.98, z: -14.88}
---- !u!114 &1445720136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1445720134}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
-  reflectivity: 0.4
-  reflectindx: 0.45
 --- !u!114 &1445720137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1812,6 +1573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &1445720138
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1869,7 +1631,6 @@ GameObject:
   - component: {fileID: 1453281802}
   - component: {fileID: 1453281801}
   - component: {fileID: 1453281800}
-  - component: {fileID: 1453281799}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -1891,23 +1652,6 @@ Transform:
   m_Father: {fileID: 7787322552699947249}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -17.31, y: -34.98, z: -14.88}
---- !u!114 &1453281799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1453281797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
-  reflectivity: 0.4
-  reflectindx: 0.45
 --- !u!114 &1453281800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1922,6 +1666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &1453281801
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1979,7 +1724,6 @@ GameObject:
   - component: {fileID: 1568201615}
   - component: {fileID: 1568201614}
   - component: {fileID: 1568201613}
-  - component: {fileID: 1568201612}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -1987,23 +1731,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1568201612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1568201611}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
-  reflectivity: 0.4
-  reflectindx: 0.45
 --- !u!114 &1568201613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2018,6 +1745,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &1568201614
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2089,7 +1817,6 @@ GameObject:
   - component: {fileID: 1604039278}
   - component: {fileID: 1604039277}
   - component: {fileID: 1604039276}
-  - component: {fileID: 1604039275}
   m_Layer: 0
   m_Name: Sphere (1)
   m_TagString: Untagged
@@ -2111,23 +1838,6 @@ Transform:
   m_Father: {fileID: 7787322552699947199}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -17.31, y: -34.98, z: -14.88}
---- !u!114 &1604039275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1604039273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
-  reflectivity: 0.4
-  reflectindx: 0.45
 --- !u!114 &1604039276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2142,6 +1852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!33 &1604039277
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2246,7 +1957,6 @@ GameObject:
   - component: {fileID: 1745329772}
   - component: {fileID: 1745329771}
   - component: {fileID: 1745329776}
-  - component: {fileID: 1745329777}
   m_Layer: 0
   m_Name: Cube Ray Marched
   m_TagString: Untagged
@@ -2327,70 +2037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 8d284295cf2d23e479da4de46e8f4a21, type: 2}
---- !u!114 &1745329777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1745329770}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.05
-  albedo: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
-  reflectivity: 0.4
-  reflectindx: 0.45
---- !u!21 &1757138037
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Standard Trace Marching
-  m_Shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel0:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel1:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel2:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel3:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Value: 0
-    - _iFrame: 3
-    - _iTime: 0
-    m_Colors:
-    - _Light: {r: 0, g: 0, b: 0, a: 0}
-    - _iMouse: {r: 0, g: 0, b: 0, a: 0}
-    - _iResolution: {r: 656, g: 369, b: 0, a: 0}
+  Material: {fileID: 11400000, guid: c810f1e19d37ac04b9a284e031c13a4e, type: 2}
 --- !u!1 &1862993965
 GameObject:
   m_ObjectHideFlags: 0
@@ -2490,7 +2137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
-  _material: {fileID: 1757138037}
+  _material: {fileID: 2051154783}
   _camera: {fileID: 1862993967}
   iChannel0: {fileID: 0}
   iChannel1: {fileID: 0}
@@ -2512,6 +2159,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObjects: []
+--- !u!21 &2051154783
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Standard Trace Marching
+  m_Shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Value: 0
+    - _iFrame: 16
+    - _iTime: 0
+    m_Colors:
+    - _Light: {r: 0, g: 0, b: 0, a: 0}
+    - _iMouse: {r: 0, g: 0, b: 0, a: 0}
+    - _iResolution: {r: 656, g: 369, b: 0, a: 0}
 --- !u!4 &7787322552699947137
 Transform:
   m_ObjectHideFlags: 0

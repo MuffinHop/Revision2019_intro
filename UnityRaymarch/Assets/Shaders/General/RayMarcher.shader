@@ -25,14 +25,9 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 		result.position = ray.origin + ray.direction * result.distanc;
 		vec4 sceneDistance = GetDistanceScene(result.position, transparencyPointer);
 
-		if (inWater == 0. && (i < 1) && (sceneDistance.y == material_ID2) && (sceneDistance.x < 0.001)) {
-			inWater = 1.;
-			wasInWater = inWater;
-		}
-		else {
 			result.id = sceneDistance.yzw;
 			result.distanc = result.distanc + sceneDistance.x / 2.0;
-		}
+		
 	}
 	if (result.distanc >= ray.length)
 	{
@@ -54,8 +49,8 @@ void insideMarch(in Trace ray, out ContactInfo result, int maxIter, float transp
 		result.id = sceneDistance.yzw;
 
 		result.distanc = result.distanc + sceneDistance.x;
-		if (sceneDistance.y != material_ID2)
-			return;
+		//if (sceneDistance.y != material_ID2)
+		//	return;
 	}
 
 
