@@ -29,11 +29,28 @@
 	#include "shaders/post.inl"
 #endif
 
+#undef EDITOR_CONTROLS
+
 #pragma data_seg(".pids")
 // static allocation saves a few bytes
 static int pidMain;
 static int pidPost;
+
+
+#include "wavesabre.h"
+using namespace WaveSabrePlayerLib;
+
 // static HDC hDC;
+
+
+void progressCallback(double progress, void *data)
+{
+	const int barLength = 32;
+	int filledChars = (int)(progress * (double)(barLength - 1));
+	printf("\r[");
+	for (int j = 0; j < barLength; j++) putchar(filledChars >= j ? '*' : '-');
+	printf("]");
+}
 
 
 void *GetAnyGLFuncAddress(const char *name)
@@ -362,10 +379,12 @@ int __cdecl main(int argc, char* argv[])
 	// initialize sound
 	#ifndef EDITOR_CONTROLS
 		#if USE_AUDIO
+		/*
 			CreateThread(0, 0, (LPTHREAD_START_ROUTINE)_4klang_render, lpSoundBuffer, 0, 0);
 			waveOutOpen(&hWaveOut, WAVE_MAPPER, &WaveFMT, NULL, 0, CALLBACK_NULL);
 			waveOutPrepareHeader(hWaveOut, &WaveHDR, sizeof(WaveHDR));
 			waveOutWrite(hWaveOut, &WaveHDR, sizeof(WaveHDR));
+		*/
 		#endif
 	#else
 		Leviathan::Editor editor = Leviathan::Editor();
@@ -377,6 +396,15 @@ int __cdecl main(int argc, char* argv[])
 		track.play();
 		double position = 0.0;
 	#endif
+
+		SongRenderer::Song song;
+		song.blob = SongBlob;
+		song.factory = SongFactory;
+
+		IPlayer *player;
+
+		int numRenderThreads = 3;
+		player = new RealtimePlayer(&song, numRenderThreads);
 
 	// main loop
 	do
@@ -398,7 +426,14 @@ int __cdecl main(int argc, char* argv[])
 		#ifndef EDITOR_CONTROLS
 			// if you don't have an audio system figure some other way to pass time to your shader
 			#if USE_AUDIO
-				waveOutGetPosition(hWaveOut, &MMTime, sizeof(MMTIME));
+				//waveOutGetPosition(hWaveOut, &MMTime, sizeof(MMTIME));
+
+				auto songPos = player->GetSongPos();
+				if (songPos >= player->GetLength()) break;
+				int minutes = (int)songPos / 60;
+				int seconds = (int)songPos % 60;
+				int hundredths = (int)(songPos * 100.0) % 100;
+
 				// it is possible to upload your vars as vertex color attribute (gl_Color) to save one function import
 				#if NO_UNIFORMS
 					glColor3ui(MMTime.u.sample, 0, 0);
