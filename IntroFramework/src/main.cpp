@@ -177,9 +177,15 @@ HGDIOBJ hFontOld;
 HDC hDC;
 
 HWND hwnd = {};
-HFONT pFont = NULL;
+HFONT headingFont = NULL;
+HFONT subtitleFont = NULL;
+HFONT smallFont = NULL;
 GLuint fontTexture;
 
+_declspec(restrict, noalias) void *my_calloc(size_t nitems, size_t size)
+{
+	return HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, nitems * size);
+}
 
 void* my_memset(void* s, int c, size_t sz) {
 	BYTE* p = (BYTE*)s;
@@ -211,6 +217,78 @@ void* my_memset(void* s, int c, size_t sz) {
 	return s;
 }
 
+int fontcolors[3 * 32] = { 0,0,0 };
+
+static const char cap1_s[] = "THE MAN FROM U.N.C.L.E";
+static const char sub1_s[] = "featuring the talents of:";
+static const char sm1_s[] = "Napoleon Solo";
+static const char sm2_s[] = "Ilya Kuriakin";
+
+void FontInRect(const char* sText, RECT &rFont) {
+
+	int     i, nStringLength;
+	BOOL    bResult;
+	int     *pDx;
+	int     nX = rFont.left;
+	int     nY = rFont.top;
+	int     Width = 0;
+
+
+	// How long is the string - you need this later in this code.
+	nStringLength = strlen(sText);
+
+	// Allocate enough memory for the intercharacter spacing array.
+	pDx = (int*)my_calloc(sizeof(int)* nStringLength,1);
+
+	// Initialize the array with the standard values.
+	for (i = 0; i < nStringLength; i++) {
+		ABC     abc;
+		if (!GetCharABCWidths(fonthDC, sText[i], sText[i], &abc)) {
+			return;
+		}
+		pDx[i] = abc.abcA + abc.abcB + abc.abcC;
+
+		// You need the width.
+		Width += pDx[i];
+
+		// Also, account for the Black extent of the string.
+		if (i == 0) {
+			// Adjustment before the first character for underhang
+			nX -= abc.abcA;
+			Width -= abc.abcA;
+		}
+		if (i == nStringLength - 1) {
+			// Adjustment for overhang
+			Width -= abc.abcC;
+		}
+
+	}
+
+	int deltaCX = rFont.right - rFont.left - Width;
+	int deltaCh = deltaCX / nStringLength;
+	int remainder = deltaCX % nStringLength;
+	int error = 0;
+
+	// Distribute the adjustment through the intercharacter spacing.
+	// For a more typographically correct approach, distribute the 
+	// adjustment in the "white space."
+	for (i = 0; i < nStringLength; i++) {
+		pDx[i] += deltaCh;
+		error += remainder;
+		if (abs(error) >= nStringLength)    // adjustment?
+		{
+			int adjustment = abs(error) / error;
+			pDx[i] += adjustment;
+			error -= nStringLength * adjustment;
+		}
+
+	}
+
+	// ExtTextOut() draws our text with our ICS array.
+	bResult = ExtTextOut(fonthDC, nX, nY, ETO_OPAQUE, &rFont, sText, nStringLength, pDx);
+
+}
+
 void InitFontToTexture() {
 	HRESULT hr;
 	// Prepare to create a bitmap
@@ -226,22 +304,73 @@ void InitFontToTexture() {
 	hbmBitmap = CreateDIBSection(fonthDC, &bmi, DIB_RGB_COLORS, (void**)&pBitmapBits, 0, 0);
 	SetMapMode(fonthDC, MM_TEXT);
 
-	pFont = CreateFont(YRES*0.8, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Arial");
+	headingFont = CreateFont(YRES*0.2, 0, 0, 0, FW_THIN, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Impact");
+	subtitleFont = CreateFont(YRES*0.05, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Times New Roman");
+	smallFont = CreateFont(YRES*0.02, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Tahoma");
 
 	hbmOld = SelectObject(fonthDC, hbmBitmap);
-	hFontOld = SelectObject(fonthDC, pFont);
+	hFontOld = SelectObject(fonthDC, headingFont);
 
 	SetTextColor(fonthDC, RGB(255, 0, 0));
+	SetBkColor(fonthDC, 0x0000000);
+	SetTextAlign(fonthDC, TA_TOP);
+
+	RECT rc1;
+	rc1.top = 0;
+	rc1.left = 0;
+	rc1.bottom = YRES / 8;
+	rc1.right = XRES;
+
+	FontInRect(cap1_s, rc1);
+
+	//
+
+	hFontOld = SelectObject(fonthDC, subtitleFont);
+
+	SetTextColor(fonthDC, RGB(255, 255, 255));
 	SetBkColor(fonthDC, 0x00000000);
 	SetTextAlign(fonthDC, TA_TOP);
 
-	ExtTextOut(fonthDC, 0, 0, ETO_OPAQUE, NULL, "teksti", 6, NULL);
+	rc1.top = YRES / 8 + YRES / 16;
+	rc1.left = XRES / 64;
+	rc1.bottom = YRES / 8 + ((YRES / 16)*2);
+	rc1.right = XRES/4;
+
+	FontInRect(sub1_s, rc1);
+
+	//
+
+	hFontOld = SelectObject(fonthDC, smallFont);
+
+	SetTextColor(fonthDC, RGB(32, 128, 64));
+	SetBkColor(fonthDC, 0x00000000);
+	SetTextAlign(fonthDC, TA_TOP);
+
+	rc1.top = YRES / 2 + YRES / 4;
+	rc1.left = XRES / 64;
+	rc1.bottom = YRES / 2 + YRES / 3;
+	rc1.right = XRES / 8;
+
+	FontInRect(sm1_s, rc1);
+
+	//
+
+	hFontOld = SelectObject(fonthDC, smallFont);
+
+	SetTextColor(fonthDC, RGB(32, 128, 64));
+	SetBkColor(fonthDC, 0x00000000);
+	SetTextAlign(fonthDC, TA_TOP);
+
+	rc1.top = YRES / 2 + YRES / 4;
+	rc1.left = XRES / 2 + XRES /  64;
+	rc1.bottom = YRES / 2 + YRES / 3;
+	rc1.right = XRES / 2 + XRES / 64+ ((XRES / 8) - XRES / 64);
+
+	FontInRect(sm2_s, rc1);
+
+	//ExtTextOut(fonthDC, 0, 0, ETO_OPAQUE, NULL, "THE MAN FROM U.N.C.L.E", 6, NULL);
 }
 
-_declspec(restrict, noalias) void *my_calloc(size_t nitems, size_t size)
-{
-	return HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, nitems * size);
-}
 
 GLubyte *
 ConvertRGB(BITMAPINFO *info,        /* I - Original bitmap information */
@@ -367,6 +496,7 @@ int __cdecl main(int argc, char* argv[])
 		pidPost = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &post_frag);
 	#endif
 
+		((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(pidMain);
 
 		double position = 0.0;
 
@@ -391,7 +521,6 @@ int __cdecl main(int argc, char* argv[])
 		#endif
 
 		// render with the primary shader
-		((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(pidMain);
 		auto songPos = player->GetSongPos();
 		if (songPos >= player->GetLength()) break;
 		int minutes = (int)songPos / 60;
@@ -442,7 +571,9 @@ int __cdecl main(int argc, char* argv[])
 	SelectObject(fonthDC, hbmOld);
 	SelectObject(fonthDC, hFontOld);
 	DeleteObject(hbmBitmap);
-	DeleteObject(pFont);
+	DeleteObject(headingFont);
+	DeleteObject(subtitleFont);
+	DeleteObject(smallFont);
 	DeleteDC(fonthDC);
 
 	ExitProcess(0);

@@ -155,7 +155,7 @@ const char *fragment_frag =
  "}"
  "void main()"
  "{"
-   "vec2 v=vec2(1280,720),d=gl_FragCoord.xy/v.xy,o=-1.+2.*d;"
+   "vec2 v=vec2(1920,1080),d=gl_FragCoord.xy/v.xy,o=-1.+2.*d;"
    "o.x*=v.x/v.y;"
    "vec3 b=vec3(0),u=vec3(0);"
    "if(y<4)"
@@ -241,10 +241,9 @@ const char *fragment_frag =
      "}"
    "else"
      " k=mix(k,.5+.5*vec3(k*dot(q,normalize(g-vec3(99,-99,0)))),.3);"
-   "k=pow(k*s/sqrt(2.+dot(o*.3,o*.3)),vec3(1./2.2));"
+   "k=pow(k*s/sqrt(2.+dot(o*.3,o*.3)),vec3(1./2.2))*.5;"
    "vec3 C=texture(x,d).xyz;"
-   "if(C.x>.2)"
-     "k=C;"
+   "k+=C;"
    "f=vec4(l(k-.035*n(length(d)*y)),g.y<.1?D*distance(g,F)/10.:0.);"
  "}";
 
