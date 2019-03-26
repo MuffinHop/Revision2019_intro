@@ -25,7 +25,6 @@
     <ClInclude Include="src\WaveSabrePlayerLib\RealtimePlayer.h" />
     <ClInclude Include="src\WaveSabrePlayerLib\SongRenderer.h" />
     <ClInclude Include="src\WaveSabrePlayerLib\WavWriter.h" />
-    <ClInclude Include="src\wavesabre.h" />
     <ClInclude Include="src\WaveSabreCore.h" />
     <ClInclude Include="src\WaveSabrePlayerLib.h" />
     <ClInclude Include="src\WaveSabreCore\Adultery.h" />
