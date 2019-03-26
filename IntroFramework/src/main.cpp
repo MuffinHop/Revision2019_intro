@@ -35,7 +35,7 @@ static int pidMain;
 static int pidPost;
 
 
-#include "wavesabre.h"
+#include "biisi.h"
 using namespace WaveSabrePlayerLib;
 
 // static HDC hDC;
