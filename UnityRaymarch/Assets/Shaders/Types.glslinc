@@ -17,7 +17,7 @@ struct Surface
 struct Material
 {
 	float reflectionCoefficient;
-	float reflectivity;
+	float smoothness;
 	float transparency;
 	float reflectindx;
 	vec3 albedo;

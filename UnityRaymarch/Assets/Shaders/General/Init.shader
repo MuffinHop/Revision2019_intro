@@ -37,7 +37,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
 
 
 	ContactInfo intersection;
-	RayMarch(ray, intersection, 12, transparencyInformation);
+	RayMarch(ray, intersection, 256, transparencyInformation);
 	vec3 sceneColor;
 
 	if (intersection.id.x < 0.5) {

@@ -4,7 +4,7 @@ vec3 AddFresnel(in vec3 diffuse, in vec3 specular, in vec3 normal, in vec3 viewD
 	vec3 reflection = reflect(viewDirection, normal);
 	vec3 reflectionToView = normalize(reflection + -viewDirection);
 	float reflectionCoefficient = material.reflectionCoefficient;
-	float smoothFactor = material.reflectivity * 0.9 + 0.1;
+	float smoothFactor = material.smoothness * 0.9 + 0.1;
 	// 
 	float r1 = dot(reflectionToView, -viewDirection);
 	r1 = clamp((1.0 - r1), 0.0, 1.0);
@@ -14,12 +14,12 @@ vec3 AddFresnel(in vec3 diffuse, in vec3 specular, in vec3 normal, in vec3 viewD
 	return mix(diffuse, specular, fresnelApprox);
 }
 
-float BlinnPhong(in vec3 collisionDirection, in vec3 lightDirection, in vec3 normal, in float reflection)
+float BlinnPhong(in vec3 collisionDirection, in vec3 lightDirection, in vec3 normal, in float smoothness)
 {
 	vec3 reflectionToView = normalize(lightDirection - collisionDirection);
 	float n_dot_h = max(0.0, dot(reflectionToView, normal));
 
-	float specularPower = exp2(4.0 + 6.0 * reflection);
+	float specularPower = exp2(4.0 + 6.0 * smoothness);
 	float specularIntensity = (specularPower + 2.0) * 0.125;
 
 	return pow(n_dot_h, specularPower) * specularIntensity;
@@ -38,7 +38,7 @@ Shading AddPointLight(in PointLight light, in vec3 surfacePosition, in vec3 coll
 	float shadowFactor = GetShadow(surfacePosition, normal, lightDirection, shadowLength);
 	vec3 diffuse = light.color * max(0.0, shadowFactor * attenuation * dot(lightDirection, normal) / (1.0 + material.transparency));
 	shading.diffuse = diffuse;
-	shading.specular = BlinnPhong(collisionDirection, lightDirection, normal, material.reflectivity) * diffuse;
+	shading.specular = BlinnPhong(collisionDirection, lightDirection, normal, material.smoothness) * diffuse;
 
 	return shading;
 }
@@ -52,7 +52,7 @@ Shading AddDirectionLight(in DirectionLight light, in vec3 surfacePosition, in v
 	float shadowFactor = GetShadow(surfacePosition, normal, lightDirection, shadowLength);
 	vec3 diffuse = light.color * shadowFactor * max(0.0, dot(lightDirection, normal) / (1.0 + material.transparency));
 	shading.diffuse = diffuse;
-	shading.specular = BlinnPhong(collisionDirection, lightDirection, normal, material.reflectivity) * diffuse;
+	shading.specular = BlinnPhong(collisionDirection, lightDirection, normal, material.smoothness) * diffuse;
 
 	return shading;
 }
