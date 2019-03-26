@@ -50,7 +50,7 @@ uniform vec4 _CameraLookAt;
 uniform vec4 _CameraUp;
 uniform float _FOV;
 
-#define kRayMarchMaxIter 123
+#define maxItersGlobal 123
 #define fogDensity 0.01
 #define ENABLE_FOG
 #define ENABLE_REFLECTIONS
@@ -92,7 +92,7 @@ struct Surface
 struct Material
 {
 	float reflectionCoefficient;
-	float reflectivity;
+	float smoothness;
 	float transparency;
 	float reflectindx;
 	vec3 albedo;
@@ -360,41 +360,11 @@ vec3 doDisplacement(sampler2D tex, in vec3 p, in vec3 normal, float bumpPower) {
 	return normalize(normal + grad * bumpPower);
 }
 
-const float material_ID0 = 0;
+const float material_ID0 = 1;
 
-const float material_ID1 = 1;
+const float material_ID1 = 2;
 
-const float material_ID2 = 2;
-
-const float material_ID3 = 3;
-
-const float material_ID4 = 4;
-
-const float material_ID5 = 5;
-
-const float material_ID6 = 6;
-
-const float material_ID7 = 7;
-
-const float material_ID8 = 8;
-
-const float material_ID9 = 9;
-
-const float material_ID10 = 10;
-
-const float material_ID11 = 11;
-
-const float material_ID12 = 12;
-
-const float material_ID13 = 13;
-
-const float material_ID14 = 14;
-
-const float material_ID15 = 15;
-
-const float material_ID16 = 16;
-
-const float material_ID17 = 17;
+const float material_ID2 = 3;
 
  uniform float _Objects[180];
 float fSphere(vec3 p, float r) {
@@ -413,108 +383,108 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
                posID0= posID0*rotationMatrix(vec3(_Objects[6], _Objects[7], _Objects[8]),  _Objects[9]);
                float id0_distance = fSphere(posID0,_Objects[3]);
                vec4 distID0 = vec4(id0_distance, material_ID0, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombineTransparent(result, distID0, transparencyPointer);
+               result = DistUnionCombine(result, distID0);
 
                vec3 posID1 = position - vec3(_Objects[10], _Objects[11], _Objects[12]);
                posID1= posID1*rotationMatrix(vec3(_Objects[16], _Objects[17], _Objects[18]),  _Objects[19]);
                float id1_distance = fSphere(posID1,_Objects[13]);
-               vec4 distID1 = vec4(id1_distance, material_ID1, position.xz + vec2(position.y, 0.0));
+               vec4 distID1 = vec4(id1_distance, material_ID0, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID1);
 
                vec3 posID2 = position - vec3(_Objects[20], _Objects[21], _Objects[22]);
                posID2= posID2*rotationMatrix(vec3(_Objects[26], _Objects[27], _Objects[28]),  _Objects[29]);
                float id2_distance = fSphere(posID2,_Objects[23]);
-               vec4 distID2 = vec4(id2_distance, material_ID2, position.xz + vec2(position.y, 0.0));
+               vec4 distID2 = vec4(id2_distance, material_ID0, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID2);
 
                vec3 posID3 = position - vec3(_Objects[30], _Objects[31], _Objects[32]);
                posID3= posID3*rotationMatrix(vec3(_Objects[36], _Objects[37], _Objects[38]),  _Objects[39]);
                float id3_distance = fSphere(posID3,_Objects[33]);
-               vec4 distID3 = vec4(id3_distance, material_ID3, position.xz + vec2(position.y, 0.0));
+               vec4 distID3 = vec4(id3_distance, material_ID0, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID3);
 
                vec3 posID4 = position - vec3(_Objects[40], _Objects[41], _Objects[42]);
                posID4= posID4*rotationMatrix(vec3(_Objects[46], _Objects[47], _Objects[48]),  _Objects[49]);
                float id4_distance = fSphere(posID4,_Objects[43]);
-               vec4 distID4 = vec4(id4_distance, material_ID4, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombine(result, distID4);
+               vec4 distID4 = vec4(id4_distance, material_ID1, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombineTransparent(result, distID4, transparencyPointer);
 
                vec3 posID5 = position - vec3(_Objects[50], _Objects[51], _Objects[52]);
                posID5= posID5*rotationMatrix(vec3(_Objects[56], _Objects[57], _Objects[58]),  _Objects[59]);
                float id5_distance = fSphere(posID5,_Objects[53]);
-               vec4 distID5 = vec4(id5_distance, material_ID5, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombineTransparent(result, distID5, transparencyPointer);
+               vec4 distID5 = vec4(id5_distance, material_ID0, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID5);
 
                vec3 posID6 = position - vec3(_Objects[60], _Objects[61], _Objects[62]);
                posID6= posID6*rotationMatrix(vec3(_Objects[66], _Objects[67], _Objects[68]),  _Objects[69]);
                float id6_distance = fSphere(posID6,_Objects[63]);
-               vec4 distID6 = vec4(id6_distance, material_ID6, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombineTransparent(result, distID6, transparencyPointer);
+               vec4 distID6 = vec4(id6_distance, material_ID0, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID6);
 
                vec3 posID7 = position - vec3(_Objects[70], _Objects[71], _Objects[72]);
                posID7= posID7*rotationMatrix(vec3(_Objects[76], _Objects[77], _Objects[78]),  _Objects[79]);
                float id7_distance = fSphere(posID7,_Objects[73]);
-               vec4 distID7 = vec4(id7_distance, material_ID7, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombineTransparent(result, distID7, transparencyPointer);
+               vec4 distID7 = vec4(id7_distance, material_ID0, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID7);
 
                vec3 posID8 = position - vec3(_Objects[80], _Objects[81], _Objects[82]);
                posID8= posID8*rotationMatrix(vec3(_Objects[86], _Objects[87], _Objects[88]),  _Objects[89]);
-               float id8_distance = fSphere(posID8,_Objects[83]);
-               vec4 distID8 = vec4(id8_distance, material_ID8, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombineTransparent(result, distID8, transparencyPointer);
+               float id8_distance = fBox(posID8, vec3(_Objects[83], _Objects[84],_Objects[85]));
+               vec4 distID8 = vec4(id8_distance, material_ID2, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID8);
 
                vec3 posID9 = position - vec3(_Objects[90], _Objects[91], _Objects[92]);
                posID9= posID9*rotationMatrix(vec3(_Objects[96], _Objects[97], _Objects[98]),  _Objects[99]);
                float id9_distance = fSphere(posID9,_Objects[93]);
-               vec4 distID9 = vec4(id9_distance, material_ID9, position.xz + vec2(position.y, 0.0));
+               vec4 distID9 = vec4(id9_distance, material_ID0, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID9);
 
                vec3 posID10 = position - vec3(_Objects[100], _Objects[101], _Objects[102]);
                posID10= posID10*rotationMatrix(vec3(_Objects[106], _Objects[107], _Objects[108]),  _Objects[109]);
                float id10_distance = fSphere(posID10,_Objects[103]);
-               vec4 distID10 = vec4(id10_distance, material_ID10, position.xz + vec2(position.y, 0.0));
+               vec4 distID10 = vec4(id10_distance, material_ID0, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID10);
 
                vec3 posID11 = position - vec3(_Objects[110], _Objects[111], _Objects[112]);
                posID11= posID11*rotationMatrix(vec3(_Objects[116], _Objects[117], _Objects[118]),  _Objects[119]);
-               float id11_distance = fSphere(posID11,_Objects[113]);
-               vec4 distID11 = vec4(id11_distance, material_ID11, position.xz + vec2(position.y, 0.0));
+               float id11_distance = fBox(posID11, vec3(_Objects[113], _Objects[114],_Objects[115]));
+               vec4 distID11 = vec4(id11_distance, material_ID2, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID11);
 
                vec3 posID12 = position - vec3(_Objects[120], _Objects[121], _Objects[122]);
                posID12= posID12*rotationMatrix(vec3(_Objects[126], _Objects[127], _Objects[128]),  _Objects[129]);
                float id12_distance = fSphere(posID12,_Objects[123]);
-               vec4 distID12 = vec4(id12_distance, material_ID12, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombine(result, distID12);
+               vec4 distID12 = vec4(id12_distance, material_ID1, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombineTransparent(result, distID12, transparencyPointer);
 
                vec3 posID13 = position - vec3(_Objects[130], _Objects[131], _Objects[132]);
                posID13= posID13*rotationMatrix(vec3(_Objects[136], _Objects[137], _Objects[138]),  _Objects[139]);
                float id13_distance = fSphere(posID13,_Objects[133]);
-               vec4 distID13 = vec4(id13_distance, material_ID13, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombineTransparent(result, distID13, transparencyPointer);
+               vec4 distID13 = vec4(id13_distance, material_ID0, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID13);
 
                vec3 posID14 = position - vec3(_Objects[140], _Objects[141], _Objects[142]);
                posID14= posID14*rotationMatrix(vec3(_Objects[146], _Objects[147], _Objects[148]),  _Objects[149]);
-               float id14_distance = fBox(posID14, vec3(_Objects[143], _Objects[144],_Objects[145]));
-               vec4 distID14 = vec4(id14_distance, material_ID14, position.xz + vec2(position.y, 0.0));
+               float id14_distance = fSphere(posID14,_Objects[143]);
+               vec4 distID14 = vec4(id14_distance, material_ID0, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID14);
 
                vec3 posID15 = position - vec3(_Objects[150], _Objects[151], _Objects[152]);
                posID15= posID15*rotationMatrix(vec3(_Objects[156], _Objects[157], _Objects[158]),  _Objects[159]);
-               float id15_distance = fBox(posID15, vec3(_Objects[153], _Objects[154],_Objects[155]));
-               vec4 distID15 = vec4(id15_distance, material_ID15, position.xz + vec2(position.y, 0.0));
+               float id15_distance = fSphere(posID15,_Objects[153]);
+               vec4 distID15 = vec4(id15_distance, material_ID2, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID15);
 
                vec3 posID16 = position - vec3(_Objects[160], _Objects[161], _Objects[162]);
                posID16= posID16*rotationMatrix(vec3(_Objects[166], _Objects[167], _Objects[168]),  _Objects[169]);
                float id16_distance = fSphere(posID16,_Objects[163]);
-               vec4 distID16 = vec4(id16_distance, material_ID16, position.xz + vec2(position.y, 0.0));
+               vec4 distID16 = vec4(id16_distance, material_ID0, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID16);
 
                vec3 posID17 = position - vec3(_Objects[170], _Objects[171], _Objects[172]);
                posID17= posID17*rotationMatrix(vec3(_Objects[176], _Objects[177], _Objects[178]),  _Objects[179]);
                float id17_distance = fBox(posID17, vec3(_Objects[173], _Objects[174],_Objects[175]));
-               vec4 distID17 = vec4(id17_distance, material_ID17, position.xz + vec2(position.y, 0.0));
+               vec4 distID17 = vec4(id17_distance, material_ID2, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID17);
 
 
@@ -525,130 +495,25 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
             Material mat;
             
        if (hitNfo.id.x == material_ID0){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.8867924,0.7999618,0.7236561);;
-              mat.transparency =0.1686274;
-              mat.reflectivity = 0.2;
-              mat.reflectindx = 0.45;
+              mat.reflectionCoefficient = 0.178;
+              mat.albedo = vec3(1,1,1);;
+              mat.transparency =0;
+              mat.smoothness = 0.37;
+              mat.reflectindx = 0.54;
        }
        if (hitNfo.id.x == material_ID1){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
-              mat.transparency =0;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
+              mat.reflectionCoefficient = 0.19;
+              mat.albedo = vec3(1,0,0);;
+              mat.transparency =0.2588235;
+              mat.smoothness = 0.99;
+              mat.reflectindx = 0.64;
        }
        if (hitNfo.id.x == material_ID2){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
+              mat.reflectionCoefficient = 0.27;
+              mat.albedo = vec3(1,1,1);;
               mat.transparency =0;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
-       }
-       if (hitNfo.id.x == material_ID3){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
-              mat.transparency =0;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
-       }
-       if (hitNfo.id.x == material_ID4){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
-              mat.transparency =0;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
-       }
-       if (hitNfo.id.x == material_ID5){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.509434,0.509434,0.509434);;
-              mat.transparency =0.2509804;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
-       }
-       if (hitNfo.id.x == material_ID6){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.509434,0.509434,0.509434);;
-              mat.transparency =0.2509804;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
-       }
-       if (hitNfo.id.x == material_ID7){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.509434,0.509434,0.509434);;
-              mat.transparency =0.2509804;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
-       }
-       if (hitNfo.id.x == material_ID8){
-              mat.reflectionCoefficient = 0.1;
-              mat.albedo = vec3(0.6603774,0.2772339,0.2772339);;
-              mat.transparency =0.3294117;
-              mat.reflectivity = 0;
-              mat.reflectindx = 0.2;
-       }
-       if (hitNfo.id.x == material_ID9){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
-              mat.transparency =0;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
-       }
-       if (hitNfo.id.x == material_ID10){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
-              mat.transparency =0;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
-       }
-       if (hitNfo.id.x == material_ID11){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
-              mat.transparency =0;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
-       }
-       if (hitNfo.id.x == material_ID12){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
-              mat.transparency =0;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
-       }
-       if (hitNfo.id.x == material_ID13){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.8867924,0.7999618,0.7236561);;
-              mat.transparency =0.1686274;
-              mat.reflectivity = 0.2;
-              mat.reflectindx = 0.45;
-       }
-       if (hitNfo.id.x == material_ID14){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
-              mat.transparency =0;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
-       }
-       if (hitNfo.id.x == material_ID15){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
-              mat.transparency =0;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
-       }
-       if (hitNfo.id.x == material_ID16){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
-              mat.transparency =0;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
-       }
-       if (hitNfo.id.x == material_ID17){
-              mat.reflectionCoefficient = 0.05;
-              mat.albedo = vec3(0.7830189,0.7830189,0.7830189);;
-              mat.transparency =0;
-              mat.reflectivity = 0.4;
-              mat.reflectindx = 0.45;
+              mat.smoothness = 0.8;
+              mat.reflectindx = 0.69;
        }
 
             return mat;
@@ -687,7 +552,7 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 	ContactInfo originalResult = result;
 	result.distanc = ray.startdistanc;
 	result.id.x = 0.0;
-	for (int i = 0;i <= kRayMarchMaxIter;i++)
+	for (int i = 0;i <= maxIter;i++)
 	{
 		result.position = ray.origin + ray.direction * result.distanc;
 		vec4 sceneDistance = GetDistanceScene(result.position, transparencyPointer);
@@ -714,7 +579,7 @@ void insideMarch(in Trace ray, out ContactInfo result, int maxIter, float transp
 	result.distanc = ray.startdistanc;
 	result.id.x = 0.0;
 
-	for (int i = 0;i <= kRayMarchMaxIter / 3;i++)
+	for (int i = 0;i <= maxIter / 3;i++)
 	{
 		result.position = ray.origin + ray.direction * result.distanc;
 		vec4 sceneDistance = GetDistanceScene(result.position, transparencyPointer);
@@ -821,7 +686,7 @@ vec3 AddFresnel(in vec3 diffuse, in vec3 specular, in vec3 normal, in vec3 viewD
 	vec3 reflection = reflect(viewDirection, normal);
 	vec3 reflectionToView = normalize(reflection + -viewDirection);
 	float reflectionCoefficient = material.reflectionCoefficient;
-	float smoothFactor = material.reflectivity * 0.9 + 0.1;
+	float smoothFactor = material.smoothness * 0.9 + 0.1;
 	// 
 	float r1 = dot(reflectionToView, -viewDirection);
 	r1 = clamp((1.0 - r1), 0.0, 1.0);
@@ -831,12 +696,12 @@ vec3 AddFresnel(in vec3 diffuse, in vec3 specular, in vec3 normal, in vec3 viewD
 	return mix(diffuse, specular, fresnelApprox);
 }
 
-float BlinnPhong(in vec3 collisionDirection, in vec3 lightDirection, in vec3 normal, in float reflection)
+float BlinnPhong(in vec3 collisionDirection, in vec3 lightDirection, in vec3 normal, in float smoothness)
 {
 	vec3 reflectionToView = normalize(lightDirection - collisionDirection);
 	float n_dot_h = max(0.0, dot(reflectionToView, normal));
 
-	float specularPower = exp2(4.0 + 6.0 * reflection);
+	float specularPower = exp2(4.0 + 6.0 * smoothness);
 	float specularIntensity = (specularPower + 2.0) * 0.125;
 
 	return pow(n_dot_h, specularPower) * specularIntensity;
@@ -855,7 +720,7 @@ Shading AddPointLight(in PointLight light, in vec3 surfacePosition, in vec3 coll
 	float shadowFactor = GetShadow(surfacePosition, normal, lightDirection, shadowLength);
 	vec3 diffuse = light.color * max(0.0, shadowFactor * attenuation * dot(lightDirection, normal) / (1.0 + material.transparency));
 	shading.diffuse = diffuse;
-	shading.specular = BlinnPhong(collisionDirection, lightDirection, normal, material.reflectivity) * diffuse;
+	shading.specular = BlinnPhong(collisionDirection, lightDirection, normal, material.smoothness) * diffuse;
 
 	return shading;
 }
@@ -869,7 +734,7 @@ Shading AddDirectionLight(in DirectionLight light, in vec3 surfacePosition, in v
 	float shadowFactor = GetShadow(surfacePosition, normal, lightDirection, shadowLength);
 	vec3 diffuse = light.color * shadowFactor * max(0.0, dot(lightDirection, normal) / (1.0 + material.transparency));
 	shading.diffuse = diffuse;
-	shading.specular = BlinnPhong(collisionDirection, lightDirection, normal, material.reflectivity) * diffuse;
+	shading.specular = BlinnPhong(collisionDirection, lightDirection, normal, material.smoothness) * diffuse;
 
 	return shading;
 }
@@ -961,7 +826,7 @@ vec3 GetSceneColourSecondary(in Trace ray)
 {
 	ContactInfo hitNfo;
 	inWater = 0.;
-	RayMarch(ray, hitNfo, 64, noTransparency);
+	RayMarch(ray, hitNfo, 48, noTransparency);
 
 	vec3 sceneColor;
 
@@ -1026,7 +891,7 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
 
 
 	ContactInfo intersection;
-	RayMarch(ray, intersection, 12, transparencyInformation);
+	RayMarch(ray, intersection, 256, transparencyInformation);
 	vec3 sceneColor;
 
 	if (intersection.id.x < 0.5) {

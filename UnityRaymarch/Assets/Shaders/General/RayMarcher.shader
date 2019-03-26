@@ -20,7 +20,7 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 	ContactInfo originalResult = result;
 	result.distanc = ray.startdistanc;
 	result.id.x = 0.0;
-	for (int i = 0;i <= kRayMarchMaxIter;i++)
+	for (int i = 0;i <= maxIter;i++)
 	{
 		result.position = ray.origin + ray.direction * result.distanc;
 		vec4 sceneDistance = GetDistanceScene(result.position, transparencyPointer);
@@ -47,7 +47,7 @@ void insideMarch(in Trace ray, out ContactInfo result, int maxIter, float transp
 	result.distanc = ray.startdistanc;
 	result.id.x = 0.0;
 
-	for (int i = 0;i <= kRayMarchMaxIter / 3;i++)
+	for (int i = 0;i <= maxIter / 3;i++)
 	{
 		result.position = ray.origin + ray.direction * result.distanc;
 		vec4 sceneDistance = GetDistanceScene(result.position, transparencyPointer);

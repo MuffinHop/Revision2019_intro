@@ -83,7 +83,7 @@ public class RayMarchingController : MonoBehaviour
         }
         materials.Add(material);
         int id = materials.Count - 1;
-        materialIDStr += "\nconst float material_ID" + id + " = " + id + ";\n";
+        materialIDStr += "\nconst float material_ID" + id + " = " + (id + 1) + ";\n";
         return id;
     }
     public float Radians(float angle)
@@ -128,8 +128,8 @@ public class RayMarchingController : MonoBehaviour
                     sdf1 += "               float id" + i + "_distance = " + functionName.ToString() + "(posID" + i + ", vec3(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "],_Objects[" + (index + 5) + "]));\n";
                     break;
             }
-            sdf1 += "               vec4 distID" + i + " = vec4(id" + i + "_distance, material_ID" + getMaterialRegister(gameObjects[i].GetComponent<RM_Material>()) + ", position.xz + vec2(position.y, 0.0));\n";
-            if (gameObjects[i].GetComponent<RM_Material>().albedo.a < 1.0f) {
+            sdf1 += "               vec4 distID" + i + " = vec4(id" + i + "_distance, material_ID" + getMaterialRegister(gameObjects[i].GetComponent<RM_Object>().MaterialComponent) + ", position.xz + vec2(position.y, 0.0));\n";
+            if (gameObjects[i].GetComponent<RM_Object>().MaterialComponent.albedo.a < 1.0f) {
                 sdf1 += "               result = DistUnionCombineTransparent(result, distID" + i + ", transparencyPointer);\n\n";
             } else {
                 sdf1 += "               result = DistUnionCombine(result, distID" + i + ");\n\n";
@@ -164,7 +164,7 @@ public class RayMarchingController : MonoBehaviour
             mat1 += "              mat.reflectionCoefficient = " + materials[i].reflectionCoefficient.ToString(culture);
             mat1 += ";\n              mat.albedo = vec3(" + materials[i].albedo.r.ToString(culture) + "," + materials[i].albedo.g.ToString(culture) + "," + materials[i].albedo.b.ToString(culture) + ");";
             mat1 += ";\n              mat.transparency =" + (1.0f-materials[i].albedo.a).ToString(culture);
-            mat1 += ";\n              mat.reflectivity = " + materials[i].reflectivity.ToString(culture);
+            mat1 += ";\n              mat.smoothness = " + materials[i].smoothness.ToString(culture);
             mat1 += ";\n              mat.reflectindx = " + materials[i].reflectindx.ToString(culture);
             mat1 += ";\n       }\n";
 
@@ -174,7 +174,7 @@ public class RayMarchingController : MonoBehaviour
             {
                 mat.reflectionCoefficient = 0.05;
                 mat.albedo = vec3(1.0, 0.4, 0.3) * (0.9 + 0.1 * texture(_iChannel1, hitNfo.position.xy).rgb);
-                mat.reflectivity = 0.4 - texture(_iChannel1, hitNfo.position.xy).r * 0.8;
+                mat.smoothness = 0.4 - texture(_iChannel1, hitNfo.position.xy).r * 0.8;
                 mat.transparency = 0.021;
                 mat.reflectindx = 0.6 / 1.3330;
             }*/
@@ -196,7 +196,11 @@ public class RayMarchingController : MonoBehaviour
 
         AssetDatabase.ImportAsset(path);
     }
-    void Start()
+    private void Start()
+    {
+        OrganizeShader();
+    }
+    public void OrganizeShader()
     {
         var GOs = FindObjectsOfType<RM_Object>();
         gameObjects = new List<GameObject>();
@@ -204,7 +208,7 @@ public class RayMarchingController : MonoBehaviour
         foreach (var GO in GOs)
         {
             gameObjects.Add(GO.gameObject);
-            var material = GO.GetComponent<RM_Material>();
+            var material = GO.GetComponent<RM_Object>().MaterialComponent;
             if (material != null)
             {
                 getMaterialRegister(material);
