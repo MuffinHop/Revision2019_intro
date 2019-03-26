@@ -5,8 +5,8 @@
 	#define DESPERATE           0
 	#define BREAK_COMPATIBILITY 0
 #else
-	#define OPENGL_DEBUG        0
-	#define FULLSCREEN          1
+	#define OPENGL_DEBUG        1
+	#define FULLSCREEN          0
 	#define DESPERATE           0
 	#define BREAK_COMPATIBILITY 0
 #endif
@@ -315,10 +315,9 @@ int __cdecl main(int argc, char* argv[])
 {
 	// initialize window
 	#if FULLSCREEN
-	//	ChangeDisplaySettings(&screenSettings, CDS_FULLSCREEN);
-	//	ShowCursor(0);
-//		hwnd = CreateWindow((LPCSTR)0xC018, 0, WS_POPUP | WS_VISIBLE | WS_MAXIMIZE, 0, 0, 0, 0, 0, 0, 0, 0);
-		hwnd = CreateWindow("EDIT", NULL, WS_POPUP | WS_VISIBLE, 0, 0, XRES, YRES, 0, 0, 0, 0);
+		ChangeDisplaySettings(&screenSettings, CDS_FULLSCREEN);
+		ShowCursor(0);
+		hwnd = CreateWindow((LPCSTR)0xC018, 0, WS_POPUP | WS_VISIBLE | WS_MAXIMIZE, 0, 0, 0, 0, 0, 0, 0, 0);
 	#else
 		#ifdef EDITOR_CONTROLS
 			hwnd = CreateWindow("EDIT", NULL, WS_POPUP | WS_VISIBLE, 0, 0, XRES, YRES, 0, 0, 0, 0 );
@@ -368,25 +367,8 @@ int __cdecl main(int argc, char* argv[])
 		pidPost = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &post_frag);
 	#endif
 
-	// initialize sound
-	#ifndef EDITOR_CONTROLS
-		#if USE_AUDIO
-		/*
-			CreateThread(0, 0, (LPTHREAD_START_ROUTINE)_4klang_render, lpSoundBuffer, 0, 0);
-			waveOutOpen(&hWaveOut, WAVE_MAPPER, &WaveFMT, NULL, 0, CALLBACK_NULL);
-			waveOutPrepareHeader(hWaveOut, &WaveHDR, sizeof(WaveHDR));
-			waveOutWrite(hWaveOut, &WaveHDR, sizeof(WaveHDR));
-		*/
-		#endif
-	#else
-		Leviathan::Editor editor = Leviathan::Editor();
-		editor.updateShaders(&pidMain, &pidPost, true);
 
-		// absolute path always works here
-		// relative path works only when not ran from visual studio directly
 		double position = 0.0;
-	#endif
-
 
 		IPlayer *player;
 
@@ -410,38 +392,18 @@ int __cdecl main(int argc, char* argv[])
 
 		// render with the primary shader
 		((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(pidMain);
-		#ifndef EDITOR_CONTROLS
-			// if you don't have an audio system figure some other way to pass time to your shader
-			#if USE_AUDIO
-				//waveOutGetPosition(hWaveOut, &MMTime, sizeof(MMTIME));
+		auto songPos = player->GetSongPos();
+		if (songPos >= player->GetLength()) break;
+		int minutes = (int)songPos / 60;
+		int seconds = (int)songPos % 60;
+		int hundredths = (int)(songPos * 100.0) % 100;
 
-		/*
-				auto songPos = player->GetSongPos();
-				if (songPos >= player->GetLength()) break;
-				int minutes = (int)songPos / 60;
-				int seconds = (int)songPos % 60;
-				int hundredths = (int)(songPos * 100.0) % 100;
-		*/
-				// it is possible to upload your vars as vertex color attribute (gl_Color) to save one function import
-				#if NO_UNIFORMS
-					glColor3ui(MMTime.u.sample, 0, 0);
-				#else
-					// remember to divide your shader time variable with the SAMPLE_RATE (44100 with 4klang)
-					((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(0, MMTime.u.sample);
-					// font
-					glBindTexture(GL_TEXTURE_2D, fontTexture);
-					((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
-					((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
-#endif
-			#endif
-		#else
-			position = track.getTime();
-			((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(0, (static_cast<int>(position*44100.0)));
-			// font
-			glBindTexture(GL_TEXTURE_2D, fontTexture);
-			((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
-			((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
-		#endif
+		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(0, (static_cast<int>(songPos*44100.0)));
+		// font
+		glBindTexture(GL_TEXTURE_2D, fontTexture);
+		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
+		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
+
 		glRects(-1, -1, 1, 1);
 
 
