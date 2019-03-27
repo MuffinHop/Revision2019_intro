@@ -142,7 +142,7 @@ vec3 cc(vec3 c)
 }
 void main()
 {
-	vec2 res = vec2(1280,720);
+	vec2 res = vec2(1920,1080);
 	vec2 q = gl_FragCoord.xy/res.xy;
 	vec2 v = -1.0+2.0*q;
 	v.x *= res.x/res.y;
@@ -253,8 +253,8 @@ void main()
 	} else {
 		col = mix(col,0.5+0.5*vec3(col*dot(n, normalize(p-vec3(99,-99,0)))), 0.3);
 	}
-	col = pow(col*brg/sqrt(2.+dot(v*0.3,v*0.3)), vec3(1./2.2));
+	col = pow(col*brg/sqrt(2.+dot(v*0.3,v*0.3)), vec3(1./2.2))*0.5;
 	vec3 fontf = texture(f, q).rgb;
-	if (fontf.r > 0.2) col=fontf;
+	col+=fontf;
 	o = vec4(cc(col-0.035*hash(length(q)*t)), p.y<0.1?tile*distance(p, rp)/10.0:0.0 );
 }
