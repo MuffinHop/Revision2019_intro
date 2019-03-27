@@ -4,50 +4,40 @@ using UnityEngine;
 
 [ExecuteInEditMode, System.Serializable]
 public class RM_Object : MonoBehaviour
-{ 
+{
+    public enum Mix
+    {
+        Min,                    // box, sphere
+        Max,                    // box, sphere
+        MaxMinus,               // box, sphere
+        OpUnionRound,           // box, sphere, r
+        OpIntersectionRound,    // box, sphere, r
+        OpDifferenceRound,      // box, sphere, r
+        OpUnionChamfer,         // box, sphere, r
+        OpIntersectionChamfer,  // box, sphere, r
+        OpDifferenceChamfer,    // box, sphere, r
+        OpUnionColumns,         // box, sphere, r, n
+        OpIntersectionColumns,  // box, sphere, r, n
+        OpDifferenceColumns,    // box, sphere, r, n
+        OpUnionStairs,          // box, sphere, r, n
+        OpIntersectionStairs,   // box, sphere, r, n
+        OpDifferenceStairs,     // box, sphere, r, n
+        OpPipe,                 // box, sphere, r*0.3
+        OpEngrave,              // box, sphere, r*0.3
+        OpGroove,               // box, sphere ,r*0.3, r*0.3
+        OpTongue,               // box, sphere, r*0.3, r*0.3
+        OpUnionSoft             // box, sphere, r*0.3, r*0.3
+    };
+
     private RM_Type type;
 
     internal RM_Type Type { get => type; set => type = value; }
 
     public ShaderComponent ShaderComponent;
     public RM_Material MaterialComponent;
+    public Mix Mixer;
+    public float R, N;
 
     private ShaderComponent compShaderComponent;
     private RM_Material compMaterialComponent;
-    IEnumerator coroutine;
-    private void Awake()
-    {
-        coroutine = Recheck();
-        StartCoroutine(coroutine);
-        compShaderComponent = Instantiate(ShaderComponent);
-        compMaterialComponent = Instantiate(MaterialComponent);
-    }
-    private void OnDestroy()
-    {
-        StopCoroutine(coroutine);
-    }
-    private IEnumerator Recheck()
-    {
-        while (true)
-        {
-            if (compShaderComponent == null ||
-                compShaderComponent.Mixer != ShaderComponent.Mixer ||
-                compShaderComponent.Scale != ShaderComponent.Scale ||
-                compShaderComponent.TextFile != ShaderComponent.TextFile)
-            {
-                FindObjectOfType<RayMarchingController>().OrganizeShader();
-                compShaderComponent = Instantiate(ShaderComponent);
-            }
-            if (compMaterialComponent == null ||
-                compMaterialComponent.albedo != MaterialComponent.albedo ||
-                compMaterialComponent.reflectindx != MaterialComponent.reflectindx ||
-                compMaterialComponent.reflectionCoefficient != MaterialComponent.reflectionCoefficient ||
-                compMaterialComponent.smoothness != MaterialComponent.smoothness)
-            {
-                FindObjectOfType<RayMarchingController>().OrganizeShader();
-                compMaterialComponent = Instantiate(MaterialComponent);
-            }
-            yield return new WaitForSeconds(1.2f);
-        }
-    }
 }

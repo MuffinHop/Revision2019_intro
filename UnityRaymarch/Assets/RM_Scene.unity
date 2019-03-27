@@ -168,6 +168,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &3569931
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -261,6 +264,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &192690829
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -354,6 +360,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &255904046
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -447,6 +456,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &427746715
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -540,6 +552,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: 7f8760022f5a1fe4a86045aca256ae96, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &477087310
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -633,6 +648,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &483782609
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -726,6 +744,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &618483603
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -819,6 +840,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  Mixer: 3
+  R: 0.3
+  N: 0
 --- !u!33 &670804937
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -898,6 +922,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 8d284295cf2d23e479da4de46e8f4a21, type: 2}
   MaterialComponent: {fileID: 11400000, guid: dcf918400dd063046857302e923d6a4a, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &757784147
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1084,53 +1111,6 @@ Transform:
   m_Father: {fileID: 1668735782}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &1009455588
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Standard Trace Marching
-  m_Shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel0:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel1:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel2:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel3:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Value: 0
-    - _iFrame: 14
-    - _iTime: 0
-    m_Colors:
-    - _Light: {r: 0, g: 0, b: 0, a: 0}
-    - _iMouse: {r: 0, g: 0, b: 0, a: 0}
-    - _iResolution: {r: 564, g: 317, b: 0, a: 0}
 --- !u!1 &1250958943
 GameObject:
   m_ObjectHideFlags: 0
@@ -1179,6 +1159,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &1250958947
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1224,6 +1207,53 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!21 &1280056947
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Standard Trace Marching
+  m_Shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Value: 0
+    - _iFrame: 6
+    - _iTime: 0
+    m_Colors:
+    - _Light: {r: 0, g: 0, b: 0, a: 0}
+    - _iMouse: {r: 0, g: 0, b: 0, a: 0}
+    - _iResolution: {r: 492, g: 277, b: 0, a: 0}
 --- !u!1 &1298074622
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,6 +1302,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &1298074626
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1421,6 +1454,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 8d284295cf2d23e479da4de46e8f4a21, type: 2}
   MaterialComponent: {fileID: 11400000, guid: dcf918400dd063046857302e923d6a4a, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &1419629669
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1528,6 +1564,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: 7f8760022f5a1fe4a86045aca256ae96, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &1437319491
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1621,6 +1660,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &1445720138
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1714,6 +1756,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &1453281801
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1793,6 +1838,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: dcf918400dd063046857302e923d6a4a, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &1568201614
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1900,6 +1948,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!33 &1604039277
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2085,6 +2136,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 8d284295cf2d23e479da4de46e8f4a21, type: 2}
   MaterialComponent: {fileID: 11400000, guid: dcf918400dd063046857302e923d6a4a, type: 2}
+  Mixer: 0
+  R: 0
+  N: 0
 --- !u!1 &1862993965
 GameObject:
   m_ObjectHideFlags: 0
@@ -2138,7 +2192,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 23.95327
+  field of view: 11
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2163,8 +2217,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1862993965}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.5, y: 0, z: 22}
+  m_LocalRotation: {x: 0, y: 0.99723023, z: 0, w: -0.07437623}
+  m_LocalPosition: {x: -4, y: 0, z: 22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2184,14 +2238,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
-  _material: {fileID: 1009455588}
+  _material: {fileID: 1280056947}
   _camera: {fileID: 1862993967}
   iChannel0: {fileID: 0}
   iChannel1: {fileID: 0}
   iChannel2: {fileID: 0}
   iChannel3: {fileID: 0}
   _renderTexture: {fileID: 0}
-  _iResolution: {x: 564, y: 317}
+  _iResolution: {x: 492, y: 277}
 --- !u!114 &1862993970
 MonoBehaviour:
   m_ObjectHideFlags: 0

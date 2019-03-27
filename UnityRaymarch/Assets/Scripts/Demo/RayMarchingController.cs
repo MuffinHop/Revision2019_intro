@@ -10,6 +10,7 @@ public class RayMarchingController : MonoBehaviour
     [SerializeField]
     private List<GameObject> gameObjects;
     private List<RM_Material> materials;
+    private Dictionary<RM_Material, List<RM_Object>> gomat;
     string shaderBeginning = @"Shader ""Standard Trace Marching""
 {
 	Properties{
@@ -92,6 +93,7 @@ public class RayMarchingController : MonoBehaviour
     }
     string GetDistanceFields()
     {
+        List<string> includeCode = new List<string>();
         string sdf;
         string sdf0 = @"vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
         {
@@ -99,41 +101,153 @@ public class RayMarchingController : MonoBehaviour
         ";
         string sdf1 = "\n";
         var culture = System.Globalization.CultureInfo.InvariantCulture;
-        for (int i = 0; i < gameObjects.Count; i++)
+        int materialID = 0;
+        int generalIterator = 0;
+        foreach(var material in materials)
         {
-            var position = gameObjects[i].transform.position;
-            var scale = gameObjects[i].transform.localScale / 2.0f;
-            var rotation = gameObjects[i].transform.rotation;
-            var rmObject = gameObjects[i].GetComponent<RM_Object>();
-            if (rmObject.ShaderComponent == null)
+            sdf1 += "         float id" + materialID + "_distance = 1e9;\n";
+            for (int i = 0; i < gomat[material].Count; i++)
             {
-                Debug.LogWarning(rmObject.name + "missing shadercomponent");
-                continue;
+
+                var rmObject = gomat[material][i].GetComponent<RM_Object>();
+                if (rmObject.ShaderComponent == null)
+                {
+                    Debug.LogWarning(rmObject.name + "missing shadercomponent");
+                    continue;
+                }
+                var functionName = rmObject.ShaderComponent.FunctionName;
+                var scaleFormat = rmObject.ShaderComponent.Scale;
+                var mixerFormat = rmObject.Mixer;
+                string mixStr = "";
+                string specialFuncs = "";
+                string strR = rmObject.R.ToString(culture);
+                string strN = rmObject.N.ToString(culture);
+                switch (mixerFormat)
+                {
+                    case RM_Object.Mix.Min:
+                        mixStr += "min";
+                        break;
+                    case RM_Object.Mix.Max:
+                        mixStr += "max";
+                        break;
+                    case RM_Object.Mix.MaxMinus:
+                        mixStr += "maxMinus";
+                        functionName = functionName;
+                        break;
+                    case RM_Object.Mix.OpUnionRound:           // box, sphere, r
+                        mixStr += "fOpUnionRound";
+                        specialFuncs = "," + strR;
+                        includeCode.Add("Operators/OpUnionRound.shader");
+                        break;
+                    case RM_Object.Mix.OpIntersectionRound:    // box, sphere, r
+                        mixStr += "fOpIntersectionRound";
+                        specialFuncs = "," + strR;
+                        includeCode.Add("Operators/OpIntersectionRound.shader");
+                        break;
+                    case RM_Object.Mix.OpDifferenceRound:      // box, sphere, r
+                        mixStr += "fOpDifferenceRound";
+                        specialFuncs = "," + strR;
+                        includeCode.Add("Operators/OpDifferenceRound.shader");
+                        break;
+                    case RM_Object.Mix.OpUnionChamfer:         // box, sphere, r
+                        mixStr += "fOpUnionChamfer";
+                        specialFuncs = "," + strR;
+                        includeCode.Add("Operators/OpUnionChamfer.shader");
+                        break;
+                    case RM_Object.Mix.OpIntersectionChamfer:  // box, sphere, r
+                        mixStr += "fOpIntersectionChamfer";
+                        specialFuncs = "," + strR;
+                        includeCode.Add("Operators/OpIntersectionChamfer.shader");
+                        break;
+                    case RM_Object.Mix.OpDifferenceChamfer:    // box, sphere, r
+                        mixStr += "fOpDifferenceChamfer";
+                        specialFuncs = "," + strR;
+                        includeCode.Add("Operators/OpDifferenceChamfer.shader");
+                        break;
+                    case RM_Object.Mix.OpUnionColumns:         // box, sphere, r, n
+                        mixStr += "fOpUnionColumns";
+                        specialFuncs = "," + strR + "," + strN;
+                        includeCode.Add("Operators/OpUnionColumns.shader");
+                        break;
+                    case RM_Object.Mix.OpIntersectionColumns:  // box, sphere, r, n
+                        mixStr += "fOpIntersectionColumns";
+                        specialFuncs = "," + strR + "," + strN;
+                        includeCode.Add("Operators/OpIntersectionColumns.shader");
+                        break;
+                    case RM_Object.Mix.OpDifferenceColumns:    // box, sphere, r, n
+                        mixStr += "fOpDifferenceColumns";
+                        specialFuncs = "," + strR + "," + strN;
+                        includeCode.Add("Operators/OpDifferenceColumns.shader");
+                        break;
+                    case RM_Object.Mix.OpUnionStairs:          // box, sphere, r, n
+                        mixStr += "fOpUnionStairs";
+                        specialFuncs = "," + strR + "," + strN;
+                        includeCode.Add("Operators/OpUnionStairs.shader");
+                        break;
+                    case RM_Object.Mix.OpIntersectionStairs:   // box, sphere, r, n
+                        mixStr += "fOpIntersectionStairs";
+                        specialFuncs = "," + strR + "," + strN;
+                        includeCode.Add("Operators/OpIntersectionStairs.shader");
+                        break;
+                    case RM_Object.Mix.OpDifferenceStairs:     // box, sphere, r, n
+                        mixStr += "fOpDifferenceStairs";
+                        specialFuncs = "," + strR + "," + strN;
+                        includeCode.Add("Operators/OpDifferenceStairs.shader");
+                        break;
+                    case RM_Object.Mix.OpPipe:                 // box, sphere, r*0.3
+                        mixStr += "fOpPipe";
+                        specialFuncs = "," + strR + "," + strN;
+                        includeCode.Add("Operators/OpPipe.shader");
+                        break;
+                    case RM_Object.Mix.OpEngrave:              // box, sphere, r*0.3
+                        mixStr += "fOpEngrave";
+                        specialFuncs = "," + strR + "," + strN;
+                        includeCode.Add("Operators/OpEngrave.shader");
+                        break;
+                    case RM_Object.Mix.OpGroove:               // box, sphere ,r*0.3, r*0.3
+                        mixStr += "fOpGroove";
+                        specialFuncs = "," + strR + "," + strN;
+                        includeCode.Add("Operators/OpGroove.shader");
+                        break;
+                    case RM_Object.Mix.OpTongue:               // box, sphere, r*0.3, r*0.3
+                        mixStr += "fOpTongue";
+                        specialFuncs = "," + strR + "," + strN;
+                        includeCode.Add("Operators/OpTongue.shader");
+                        break;
+                    case RM_Object.Mix.OpUnionSoft:            // box, sphere, r*0.3, r*0.3
+                        mixStr += "fOpUnionSoft";
+                        specialFuncs = "," + strR + "," + strN;
+                        includeCode.Add("Operators/OpUnionSoft.shader");
+                        break;
+                }
+                int index = generalIterator * 10;
+                sdf1 += "               vec3 posID" + generalIterator + " = position - vec3(_Objects[" + (index + 0) + "], _Objects[" + (index + 1) + "], _Objects[" + (index + 2) + "]);\n";
+                sdf1 += "               posID" + generalIterator + "= posID" + generalIterator + "*rotationMatrix(vec3(_Objects[" + (index + 6) + "], _Objects[" + (index + 7) + "], _Objects[" + (index + 8) + "]),  _Objects[" + (index + 9) + "]);\n";
+                string firstPart = "               id" + materialID + "_distance ";
+                switch (scaleFormat)
+                {
+                    case ShaderComponent.ScaleInfo.OneDimension:
+                        sdf1 += firstPart + " = "+ mixStr + "(" + functionName.ToString() + "(posID" + generalIterator + ",_Objects[" + (index + 3) + "]), id" + materialID + "_distance" + specialFuncs + ");\n";
+                        break;
+                    case ShaderComponent.ScaleInfo.TwoDimension:
+                        sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + generalIterator + ", vec2(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "])), id" + materialID + "_distance "+ specialFuncs + ");\n";
+                        break;
+                    case ShaderComponent.ScaleInfo.ThreeDimension:
+                        sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + generalIterator + ", vec3(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "],_Objects[" + (index + 5) + "])), id" + materialID + "_distance" + specialFuncs + ");\n";
+                        break;
+                }
+                generalIterator++;
             }
-            var functionName = rmObject.ShaderComponent.FunctionName;
-            var scaleFormat = rmObject.ShaderComponent.Scale;
-            var mixerFormat = rmObject.ShaderComponent.Mixer;
-            int index = i * 10;
-            sdf1 += "               vec3 posID" + i + " = position - vec3(_Objects[" + (index + 0) + "], _Objects[" + (index + 1) + "], _Objects[" + (index + 2) + "]);\n";
-            sdf1 += "               posID" + i + "= posID" + i + "*rotationMatrix(vec3(_Objects[" + (index + 6) + "], _Objects[" + (index + 7) + "], _Objects[" + (index + 8) + "]),  _Objects[" + (index + 9) + "]);\n";
-            switch (scaleFormat)
+            sdf1 += "               vec4 distID" + materialID + " = vec4(id" + materialID + "_distance, material_ID" + materialID + ", position.xz + vec2(position.y, 0.0));\n";
+            if (material.albedo.a < 1.0f)
             {
-                case ShaderComponent.ScaleInfo.OneDimension:
-                    sdf1 += "               float id" + i + "_distance = " + functionName.ToString() + "(posID" + i + ",_Objects[" + (index + 3) + "]);\n";
-                    break;
-                case ShaderComponent.ScaleInfo.TwoDimension:
-                    sdf1 += "               float id" + i + "_distance = " + functionName.ToString() + "(posID" + i + ", vec2(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "]));\n";
-                    break;
-                case ShaderComponent.ScaleInfo.ThreeDimension:
-                    sdf1 += "               float id" + i + "_distance = " + functionName.ToString() + "(posID" + i + ", vec3(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "],_Objects[" + (index + 5) + "]));\n";
-                    break;
+                sdf1 += "               result = DistUnionCombineTransparent(result, distID" + materialID + ", transparencyPointer);\n\n";
             }
-            sdf1 += "               vec4 distID" + i + " = vec4(id" + i + "_distance, material_ID" + getMaterialRegister(gameObjects[i].GetComponent<RM_Object>().MaterialComponent) + ", position.xz + vec2(position.y, 0.0));\n";
-            if (gameObjects[i].GetComponent<RM_Object>().MaterialComponent.albedo.a < 1.0f) {
-                sdf1 += "               result = DistUnionCombineTransparent(result, distID" + i + ", transparencyPointer);\n\n";
-            } else {
-                sdf1 += "               result = DistUnionCombine(result, distID" + i + ");\n\n";
+            else
+            {
+                sdf1 += "               result = DistUnionCombine(result, distID" + materialID + ");\n\n";
             }
+            materialID++;
         }
         /*
             vec3 p1 = position + vec3(_Objects[1], _Objects[2], _Objects[3]);
@@ -145,7 +259,13 @@ public class RayMarchingController : MonoBehaviour
         string sdf2 = @"
             return result;
         }";
-        sdf = sdf0 + sdf1 + sdf2;
+        string sdfIncludes = "\n";
+        foreach( string sdfInclude in includeCode)
+        {
+            var shaderCode = GetShaderPart(sdfInclude);
+            sdfIncludes += shaderCode + "\n";
+        }
+        sdf = sdfIncludes + sdf0 + sdf1 + sdf2;
         return sdf;
     }
     string GetMaterials()
@@ -214,6 +334,16 @@ public class RayMarchingController : MonoBehaviour
                 getMaterialRegister(material);
             }
         }
+        gomat = new Dictionary<RM_Material, List<RM_Object>>();
+        foreach ( var GO in GOs)
+        {
+            var rmObj = GO.GetComponent<RM_Object>();
+            var material = rmObj.MaterialComponent;
+            if (!gomat.ContainsKey(material)) {
+                gomat.Add(material,new List<RM_Object>() );
+            }
+            gomat[material].Add(rmObj);
+        }
         string fullcode = shaderBeginning;
         foreach (string part in begin)
         {
@@ -260,18 +390,23 @@ public class RayMarchingController : MonoBehaviour
             RM_Camera.RM_Objects = new List<float>();
         }
         RM_Camera.RM_Objects.Clear();
-        foreach (var GO in gameObjects)
+
+        foreach (var material in materials)
         {
-            RM_Camera.RM_Objects.Add(GO.transform.position.x);
-            RM_Camera.RM_Objects.Add(GO.transform.position.y);
-            RM_Camera.RM_Objects.Add(GO.transform.position.z);
-            RM_Camera.RM_Objects.Add(GO.transform.localScale.x);
-            RM_Camera.RM_Objects.Add(GO.transform.localScale.y);
-            RM_Camera.RM_Objects.Add(GO.transform.localScale.z);
-            RM_Camera.RM_Objects.Add(GO.transform.rotation.x);
-            RM_Camera.RM_Objects.Add(GO.transform.rotation.y);
-            RM_Camera.RM_Objects.Add(GO.transform.rotation.z);
-            RM_Camera.RM_Objects.Add(GO.transform.rotation.w);
+            for (int i = 0; i < gomat[material].Count; i++)
+            {
+                var GO = gomat[material][i].gameObject;
+                RM_Camera.RM_Objects.Add(GO.transform.position.x);
+                RM_Camera.RM_Objects.Add(GO.transform.position.y);
+                RM_Camera.RM_Objects.Add(GO.transform.position.z);
+                RM_Camera.RM_Objects.Add(GO.transform.localScale.x);
+                RM_Camera.RM_Objects.Add(GO.transform.localScale.y);
+                RM_Camera.RM_Objects.Add(GO.transform.localScale.z);
+                RM_Camera.RM_Objects.Add(GO.transform.rotation.x);
+                RM_Camera.RM_Objects.Add(GO.transform.rotation.y);
+                RM_Camera.RM_Objects.Add(GO.transform.rotation.z);
+                RM_Camera.RM_Objects.Add(GO.transform.rotation.w);
+            }
         }
     }
 
