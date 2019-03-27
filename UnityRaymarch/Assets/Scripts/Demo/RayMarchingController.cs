@@ -132,7 +132,6 @@ public class RayMarchingController : MonoBehaviour
                         break;
                     case RM_Object.Mix.MaxMinus:
                         mixStr += "maxMinus";
-                        functionName = functionName;
                         break;
                     case RM_Object.Mix.OpUnionRound:           // box, sphere, r
                         mixStr += "fOpUnionRound";
@@ -380,6 +379,13 @@ public class RayMarchingController : MonoBehaviour
         fullcode += "\n" + shaderEnding;
         Debug.Log(fullcode);
         WriteString("Megashader", fullcode);
+    }
+    void Update()
+    {
+        if (Input.GetKeyUp("space"))
+        {
+            OrganizeShader();
+        }
     }
 
     // Update is called once per frame
