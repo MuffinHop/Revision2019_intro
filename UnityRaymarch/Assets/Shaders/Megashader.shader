@@ -380,12 +380,10 @@ float fBox(vec3 p, vec3 b) {
 	return length(max(d, vec3(0))) + vmax(min(d, vec3(0)));
 }
 
-// The "Stairs" flavour produces n-1 steps of a staircase:
-// much less stupid version by paniq
-float fOpUnionStairs(float a, float b, float r, float n) {
-	float s = r / n;
-	float u = b - r;
-	return min(min(a, b), 0.5 * (u + a + abs((mod(u - a + s, 2 * s)) - s)));
+// The "Round" variant uses a quarter-circle to join the two objects smoothly:
+float fOpUnionRound(float a, float b, float r) {
+	vec2 u = max(vec2(r - a, r - b), vec2(0));
+	return max(r, min(a, b)) - length(u);
 }
 vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
         {
@@ -412,7 +410,7 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
                id0_distance  = min(fSphere(posID5,_Objects[53]), id0_distance);
                vec3 posID6 = position - vec3(_Objects[60], _Objects[61], _Objects[62]);
                posID6= posID6*rotationMatrix(vec3(_Objects[66], _Objects[67], _Objects[68]),  _Objects[69]);
-               id0_distance  = fOpUnionStairs(fSphere(posID6,_Objects[63]), id0_distance,0.343,12);
+               id0_distance  = fOpUnionRound(fSphere(posID6,_Objects[63]), id0_distance,0.3);
                vec3 posID7 = position - vec3(_Objects[70], _Objects[71], _Objects[72]);
                posID7= posID7*rotationMatrix(vec3(_Objects[76], _Objects[77], _Objects[78]),  _Objects[79]);
                id0_distance  = min(fSphere(posID7,_Objects[73]), id0_distance);
