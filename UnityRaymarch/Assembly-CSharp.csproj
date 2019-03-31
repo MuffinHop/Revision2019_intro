@@ -67,6 +67,8 @@
     <Compile Include="Assets\Scripts\Demo\RM_Camera.cs" />
     <Compile Include="Assets\Scripts\Demo\RM_Material.cs" />
     <Compile Include="Assets\Scripts\Demo\RM_Object.cs" />
+    <Compile Include="Assets\Scripts\Demo\RM_SyncData.cs" />
+    <Compile Include="Assets\Scripts\Demo\RM_SyncDataController.cs" />
     <Compile Include="Assets\Scripts\Demo\RM_Type.cs" />
     <Compile Include="Assets\Scripts\Demo\ShaderComponent.cs" />
     <Compile Include="Assets\Scripts\Demo\SyncUp.cs" />

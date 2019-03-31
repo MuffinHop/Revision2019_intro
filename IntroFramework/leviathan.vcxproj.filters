@@ -4,6 +4,7 @@
     <ClCompile Include="src\song.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\editor.cpp" />
+    <ClCompile Include="src\general_sync.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\4klang\4klang.h" />
@@ -56,6 +57,7 @@
     <ClInclude Include="src\WaveSabreCore\Thunder.h" />
     <ClInclude Include="src\WaveSabreCore\Twister.h" />
     <ClInclude Include="src\biisi.h" />
+    <ClInclude Include="src\general_sync.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\post.inl">

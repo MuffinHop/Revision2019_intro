@@ -288,15 +288,6 @@ public class RayMarchingController : MonoBehaviour
             mat1 += ";\n       }\n";
 
         }
-        /*
-            if (hitNfo.id.x == material_ID0)
-            {
-                mat.reflectionCoefficient = 0.05;
-                mat.albedo = vec3(1.0, 0.4, 0.3) * (0.9 + 0.1 * texture(_iChannel1, hitNfo.position.xy).rgb);
-                mat.smoothness = 0.4 - texture(_iChannel1, hitNfo.position.xy).r * 0.8;
-                mat.transparency = 0.021;
-                mat.reflectindx = 0.6 / 1.3330;
-            }*/
 
         string mat2 = @"
             return mat;
@@ -321,6 +312,7 @@ public class RayMarchingController : MonoBehaviour
     }
     public void OrganizeShader()
     {
+        string coreCode = "";
         var GOs = FindObjectsOfType<RM_Object>();
         gameObjects = new List<GameObject>();
 
@@ -346,10 +338,10 @@ public class RayMarchingController : MonoBehaviour
         string fullcode = shaderBeginning;
         foreach (string part in begin)
         {
-            fullcode += "\n" + GetShaderPart(part);
+            coreCode += "\n" + GetShaderPart(part);
         }
-        fullcode += "\n" + materialIDStr;
-        fullcode += "\n uniform float _Objects[" + (gameObjects.Count * 10) + "];";
+        coreCode += "\n" + materialIDStr;
+        coreCode += "\n uniform float _Objects[" + (gameObjects.Count * 10) + "];";
         var sdfTextArray = new List<TextAsset>();
         for (int i = 0; i < gameObjects.Count; i++)
         {
@@ -366,17 +358,17 @@ public class RayMarchingController : MonoBehaviour
         for (int i = 0; i < sdfTextArray.Count; i++)
         {
             var shaderCode = GetShaderPart("SDFs/Primitive/" + sdfTextArray[i].name + ".glslinc");
-            fullcode += "\n" + shaderCode;
+            coreCode += "\n" + shaderCode;
         }
 
 
-        fullcode += "\n" + GetDistanceFields();
-        fullcode += "\n" + GetMaterials();
+        coreCode += "\n" + GetDistanceFields();
+        coreCode += "\n" + GetMaterials();
         foreach (string part in end)
         {
-            fullcode += "\n" + GetShaderPart(part);
+            coreCode += "\n" + GetShaderPart(part);
         }
-        fullcode += "\n" + shaderEnding;
+        fullcode += coreCode + "\n" + shaderEnding;
         Debug.Log(fullcode);
         WriteString("Megashader", fullcode);
     }
@@ -402,6 +394,7 @@ public class RayMarchingController : MonoBehaviour
             for (int i = 0; i < gomat[material].Count; i++)
             {
                 var GO = gomat[material][i].gameObject;
+                GO.GetComponent<RM_Object>().SetID(i);
                 RM_Camera.RM_Objects.Add(GO.transform.position.x);
                 RM_Camera.RM_Objects.Add(GO.transform.position.y);
                 RM_Camera.RM_Objects.Add(GO.transform.position.z);

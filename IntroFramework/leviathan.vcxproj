@@ -172,7 +172,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;src\WaveSabrePlayerLibD.lib;src\WaveSabreCoreD.lib;Msacm32.lib;winmm.lib;dsound.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;Msacm32.lib;winmm.lib;dsound.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <OutputFile>out/leviathan-debug.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -242,7 +242,7 @@ shader_minifier.exe -v -o src\shaders\post.inl src\shaders\post.frag</Command>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;src\WaveSabrePlayerLibD.lib;src\msvcrt_old.lib;src\WaveSabreCoreD.lib;Msacm32.lib;winmm.lib;dsound.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;src\msvcrt_old.lib;Msacm32.lib;winmm.lib;dsound.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <OutputFile>out/leviathan-debug.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -325,7 +325,7 @@ shader_minifier.exe -v -o src\shaders\post.inl src\shaders\post.frag</Command>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;src\WaveSabrePlayerLib.lib;src\msvcrt_old.lib;src\WaveSabreCore.lib;Msacm32.lib;winmm.lib;dsound.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;src\msvcrt_old.lib;src\WaveSabreCore.lib;Msacm32.lib;winmm.lib;dsound.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <OutputFile>out\leviathan-release.exe</OutputFile>
       <SuppressStartupBanner>
       </SuppressStartupBanner>
@@ -572,6 +572,7 @@ shader_minifier.exe -v -o src\shaders\post.inl src\shaders\post.frag</Command>
     </ClInclude>
     <ClInclude Include="src\definitions.h" />
     <ClInclude Include="src\fp.h" />
+    <ClInclude Include="src\general_sync.h" />
     <ClInclude Include="src\glext.h" />
     <ClInclude Include="src\song.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -620,6 +621,7 @@ shader_minifier.exe -v -o src\shaders\post.inl src\shaders\post.frag</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\editor.cpp" />
+    <ClCompile Include="src\general_sync.c" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\song.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">false</ExcludedFromBuild>

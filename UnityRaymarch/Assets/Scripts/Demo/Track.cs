@@ -157,7 +157,7 @@ namespace RocketNet
             }
         }
 
-        internal struct Key
+        public struct Key
         {
             public enum Type
             {

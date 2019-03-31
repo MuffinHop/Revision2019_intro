@@ -54,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 12
+    serializedVersion: 10
     m_Resolution: 2
     m_BakeResolution: 40
     m_AtlasSize: 1024
@@ -62,7 +62,6 @@ LightmapSettings:
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
     m_CompAOExponentDirect: 0
-    m_ExtractAmbientOcclusion: 0
     m_Padding: 2
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
@@ -77,16 +76,10 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 512
     m_PVRBounces: 2
-    m_PVREnvironmentSampleCount: 256
-    m_PVREnvironmentReferencePointCount: 2048
-    m_PVRFilteringMode: 1
-    m_PVRDenoiserTypeDirect: 1
-    m_PVRDenoiserTypeIndirect: 1
-    m_PVRDenoiserTypeAO: 1
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
-    m_PVREnvironmentMIS: 1
+    m_PVRFilteringMode: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
@@ -95,7 +88,6 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-    m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -162,15 +154,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 3569927}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &3569931
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -258,15 +252,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 192690825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &192690829
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -354,15 +350,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 255904042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &255904046
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -450,15 +448,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 427746711}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &427746715
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -504,6 +504,53 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!21 &468797949
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Standard Trace Marching
+  m_Shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Value: 0
+    - _iFrame: 25
+    - _iTime: 0
+    m_Colors:
+    - _Light: {r: 0, g: 0, b: 0, a: 0}
+    - _iMouse: {r: 0, g: 0, b: 0, a: 0}
+    - _iResolution: {r: 562, g: 316, b: 0, a: 0}
 --- !u!1 &477087306
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,15 +593,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 477087306}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: 7f8760022f5a1fe4a86045aca256ae96, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &477087310
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -642,15 +691,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 483782605}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &483782609
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -738,15 +789,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 618483599}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &618483603
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -834,15 +887,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 670804933}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
   Mixer: 3
   R: 0.3
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &670804937
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -916,15 +971,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 757784143}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 8d284295cf2d23e479da4de46e8f4a21, type: 2}
   MaterialComponent: {fileID: 11400000, guid: dcf918400dd063046857302e923d6a4a, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &757784147
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1153,15 +1210,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1250958943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &1250958947
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1207,53 +1266,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!21 &1280056947
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Standard Trace Marching
-  m_Shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel0:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel1:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel2:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel3:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Value: 0
-    - _iFrame: 6
-    - _iTime: 0
-    m_Colors:
-    - _Light: {r: 0, g: 0, b: 0, a: 0}
-    - _iMouse: {r: 0, g: 0, b: 0, a: 0}
-    - _iResolution: {r: 492, g: 277, b: 0, a: 0}
 --- !u!1 &1298074622
 GameObject:
   m_ObjectHideFlags: 0
@@ -1296,15 +1308,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1298074622}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &1298074626
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1375,13 +1389,12 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1329484819}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 8
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -1448,15 +1461,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1419629665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 8d284295cf2d23e479da4de46e8f4a21, type: 2}
   MaterialComponent: {fileID: 11400000, guid: dcf918400dd063046857302e923d6a4a, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &1419629669
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1558,15 +1573,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1437319487}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: 7f8760022f5a1fe4a86045aca256ae96, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &1437319491
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1654,15 +1671,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1445720134}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &1445720138
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1750,15 +1769,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1453281797}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &1453281801
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1832,15 +1853,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1568201611}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: dcf918400dd063046857302e923d6a4a, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &1568201614
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1942,15 +1965,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1604039273}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
   MaterialComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!33 &1604039277
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2006,6 +2031,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1668735782}
   - component: {fileID: 1668735781}
+  - component: {fileID: 1668735783}
   m_Layer: 0
   m_Name: SyncUp
   m_TagString: Untagged
@@ -2022,7 +2048,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1668735780}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cf2148c68bb613b4387b5c4e802b1f38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -2043,6 +2068,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1668735783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668735780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4112bd227c1cca143a2d2a953f4d63ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1745329770
 GameObject:
   m_ObjectHideFlags: 0
@@ -2130,15 +2167,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1745329770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: cb5274f3df4cfe642bc48bee7ba8b267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   ShaderComponent: {fileID: 11400000, guid: 8d284295cf2d23e479da4de46e8f4a21, type: 2}
   MaterialComponent: {fileID: 11400000, guid: dcf918400dd063046857302e923d6a4a, type: 2}
   Mixer: 0
   R: 0
   N: 0
+  syncDataController: {fileID: 1668735783}
+  visibleSyncDataCount: 10569
 --- !u!1 &1862993965
 GameObject:
   m_ObjectHideFlags: 0
@@ -2179,10 +2218,9 @@ Camera:
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
+  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -2233,19 +2271,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1862993965}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 69a14fab5f0670c43a8fdc001cc1e74d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
-  _material: {fileID: 1280056947}
+  _material: {fileID: 468797949}
   _camera: {fileID: 1862993967}
   iChannel0: {fileID: 0}
   iChannel1: {fileID: 0}
   iChannel2: {fileID: 0}
   iChannel3: {fileID: 0}
   _renderTexture: {fileID: 0}
-  _iResolution: {x: 492, y: 277}
+  _iResolution: {x: 562, y: 316}
 --- !u!114 &1862993970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2255,7 +2292,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1862993965}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: dab2d133752ab424d9fa50540bfe1017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -3692,7 +3728,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7787322552700245167}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: a5ac3f59df39e604b841051ecb493401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

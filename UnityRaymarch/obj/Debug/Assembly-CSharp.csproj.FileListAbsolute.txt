@@ -125,8 +125,6 @@ Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.Locat
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.PackageManagerUI.Editor.dll
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.TextMeshPro.dll
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.TextMeshPro.Editor.dll
-Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.Timeline.dll
-Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.Timeline.Editor.dll
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEditor.dll
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.AccessibilityModule.dll
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.AIModule.dll
@@ -155,7 +153,6 @@ Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.Physics2DModule.dll
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.PhysicsModule.dll
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.ProfilerModule.dll
-Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.Purchasing.dll
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.ScreenCaptureModule.dll
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.SharedInternalsModule.dll
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.SpriteMaskModule.dll
@@ -198,10 +195,8 @@ Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.IvyPa
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.CecilTools.dll
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.xml
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEditor.xml
-Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.Timeline.Editor.pdb
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.TextMeshPro.Editor.pdb
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.PackageManagerUI.Editor.pdb
-Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.Timeline.pdb
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.CollabProxy.Editor.pdb
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.TextMeshPro.pdb
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.Analytics.DataPrivacy.pdb
@@ -270,3 +265,18 @@ Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\obj\Debug\Assembly-CSharp.
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\obj\Debug\Assembly-CSharp.dll
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\obj\Debug\Assembly-CSharp.pdb
+Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.BaselibModule.dll
+Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.GoogleAudioSpatializer.dll
+Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.Networking.dll
+Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.SpatialTracking.dll
+Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.Timeline.dll
+Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.TimelineModule.dll
+Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.UNetWeaver.dll
+Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.Cecil.Pdb.dll
+Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Unity.Cecil.Mdb.dll
+Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.BaselibModule.xml
+Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.TimelineModule.xml
+Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.Timeline.xml
+Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.Networking.xml
+Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.GoogleAudioSpatializer.xml
+Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.SpatialTracking.xml

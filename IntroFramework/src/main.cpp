@@ -422,6 +422,7 @@ ConvertRGB(BITMAPINFO *info,        /* I - Original bitmap information */
 	return (newbits);
 }
 
+void AllSyncDataHandle(float row);
 
 void RenderFontToTexture() {
 	// Set text properties
@@ -532,6 +533,9 @@ int __cdecl main(int argc, char* argv[])
 		glBindTexture(GL_TEXTURE_2D, fontTexture);
 		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
 		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
+
+		AllSyncDataHandle(seconds);
+		//glUniform4fv(glGetUniformLocation(pidMain, "_Objects"), 2, threshold);
 
 		glRects(-1, -1, 1, 1);
 

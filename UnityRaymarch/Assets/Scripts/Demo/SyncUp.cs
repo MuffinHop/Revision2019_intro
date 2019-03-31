@@ -13,6 +13,7 @@ public class SyncUp : MonoBehaviour
     static public Device Device;
     public float BPM;
     public AudioSource AudioSource;
+    private Dictionary<int, RM_Object> rmObjects;
     void Awake()
     {
 #if UNITY_EDITOR
