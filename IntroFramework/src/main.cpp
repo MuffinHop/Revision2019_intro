@@ -289,6 +289,21 @@ void FontInRect(const char* sText, RECT &rFont) {
 
 }
 
+void DrawRectText(const char* sText, COLORREF fg, COLORREF bg, int left, int top, int bottom, int right) {
+	SetTextColor(fonthDC, fg);
+
+	SetBkMode(fonthDC, TRANSPARENT);
+	//SetBkColor(fonthDC, bg);
+	SetTextAlign(fonthDC, TA_TOP| TA_LEFT);
+
+	ExtTextOut(fonthDC, left+80, top, ETO_OPAQUE, NULL, sText, strlen(sText), NULL);
+}
+
+HFONT latinwide118Font = NULL;
+HFONT Courier57Font = NULL;
+HFONT Courier41Font = NULL;
+HFONT Arial24Font = NULL;
+
 void InitFontToTexture() {
 	HRESULT hr;
 	// Prepare to create a bitmap
@@ -304,71 +319,50 @@ void InitFontToTexture() {
 	hbmBitmap = CreateDIBSection(fonthDC, &bmi, DIB_RGB_COLORS, (void**)&pBitmapBits, 0, 0);
 	SetMapMode(fonthDC, MM_TEXT);
 
-	headingFont = CreateFont(YRES*0.2, 0, 0, 0, FW_THIN, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Impact");
-	subtitleFont = CreateFont(YRES*0.05, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Times New Roman");
-	smallFont = CreateFont(YRES*0.02, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Tahoma");
+	latinwide118Font = CreateFont(118, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Wide Latin");
+	Courier57Font = CreateFont(57, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Courier New");
+	Courier41Font = CreateFont(41, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Courier New");
+	Arial24Font = CreateFont(21, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Arial");
 
 	hbmOld = SelectObject(fonthDC, hbmBitmap);
-	hFontOld = SelectObject(fonthDC, headingFont);
 
-	SetTextColor(fonthDC, RGB(255, 0, 0));
-	SetBkColor(fonthDC, 0x0000000);
-	SetTextAlign(fonthDC, TA_TOP);
+	HBRUSH brush = CreateSolidBrush(RGB(218, 196, 103)); //create brush
+	SelectObject(fonthDC, brush); //select brush into DC
+	Rectangle(fonthDC, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)); //draw rectangle over whole screen
 
-	RECT rc1;
-	rc1.top = 0;
-	rc1.left = 0;
-	rc1.bottom = YRES / 8;
-	rc1.right = XRES;
 
-	FontInRect(cap1_s, rc1);
+	hFontOld = SelectObject(fonthDC, latinwide118Font);
+	DrawRectText("The Secret",RGB(255,255,255),RGB(218,196,103),414,64,333,1495);
+	hFontOld = SelectObject(fonthDC, latinwide118Font);
+	DrawRectText("The Secret",RGB(0,0,0),RGB(218,196,103),418,71,339,1500);
+	hFontOld = SelectObject(fonthDC, latinwide118Font);
+	DrawRectText("Service Agency", RGB(255, 255, 255), RGB(218, 196, 103), 192, 178, 447, 1717);
+	hFontOld = SelectObject(fonthDC, latinwide118Font);
+	DrawRectText("Service Agency", RGB(0, 0, 0), RGB(218, 196, 103), 196, 184, 453, 1722);
+	hFontOld = SelectObject(fonthDC, Courier57Font);
+	DrawRectText("------------------------------------------------------", RGB(50, 50, 50), RGB(218, 196, 103), 44, 407, 477, 1880);
+	hFontOld = SelectObject(fonthDC, Courier57Font);
+	DrawRectText("TO: Agent \"TSConf\" SUBJECT: \"Your Assignment\"", RGB(50, 50, 50), RGB(218, 196, 103), 43, 372, 437, 1573);
+	hFontOld = SelectObject(fonthDC, Courier41Font);
+	DrawRectText("I have selected you for a most important assignment. It’s purpose is to", RGB(50, 50, 50), RGB(218, 196, 103), 44, 477, 525, 1819);
+	hFontOld = SelectObject(fonthDC, Courier41Font);
+	DrawRectText("give false information to the enemy and destroy key targets.", RGB(50, 50, 50), RGB(218, 196, 103), 44, 539, 592, 1544);
+	hFontOld = SelectObject(fonthDC, Courier41Font);
+	DrawRectText("If you complete it successfully you will be promoted. ", RGB(50, 50, 50), RGB(218, 196, 103), 44, 600, 651, 1394);
+	hFontOld = SelectObject(fonthDC, Courier41Font);
+	DrawRectText("You’ve been given a briefcase which shall be used to destroy", RGB(50, 50, 50), RGB(218, 196, 103), 44, 715, 766, 1544);
+	hFontOld = SelectObject(fonthDC, Courier41Font);
+	DrawRectText("the SPECTRUM base and their new ZX decoding machine. For this you shall", RGB(50, 50, 50), RGB(218, 196, 103), 44, 776, 827, 1819);
+	hFontOld = SelectObject(fonthDC, Courier41Font);
+	DrawRectText("enter their secret facility un-noticed, insert misinformation to their", RGB(50, 50, 50), RGB(218, 196, 103), 44, 835, 886, 1794);
+	hFontOld = SelectObject(fonthDC, Courier41Font);
+	DrawRectText("systems and finally destroy the aforementioned decoding machine.", RGB(50, 50, 50), RGB(218, 196, 103), 45, 894, 951, 1645);
+	hFontOld = SelectObject(fonthDC, Courier41Font);
+	DrawRectText("- I wish you good luck, agent.",RGB(50,50,50),RGB(218,196,103),45,1007,1055,795);
+	hFontOld = SelectObject(fonthDC, Arial24Font);
+	DrawRectText("Doing your dirty work for you since 1969", RGB(50, 50, 50), RGB(218, 196, 103), 885, 84, 211, 1409);
+	// --------------------------------------------- END END END
 
-	//
-
-	hFontOld = SelectObject(fonthDC, subtitleFont);
-
-	SetTextColor(fonthDC, RGB(255, 255, 255));
-	SetBkColor(fonthDC, 0x00000000);
-	SetTextAlign(fonthDC, TA_TOP);
-
-	rc1.top = YRES / 8 + YRES / 16;
-	rc1.left = XRES / 64;
-	rc1.bottom = YRES / 8 + ((YRES / 16)*2);
-	rc1.right = XRES/4;
-
-	FontInRect(sub1_s, rc1);
-
-	//
-
-	hFontOld = SelectObject(fonthDC, smallFont);
-
-	SetTextColor(fonthDC, RGB(32, 128, 64));
-	SetBkColor(fonthDC, 0x00000000);
-	SetTextAlign(fonthDC, TA_TOP);
-
-	rc1.top = YRES / 2 + YRES / 4;
-	rc1.left = XRES / 64;
-	rc1.bottom = YRES / 2 + YRES / 3;
-	rc1.right = XRES / 8;
-
-	FontInRect(sm1_s, rc1);
-
-	//
-
-	hFontOld = SelectObject(fonthDC, smallFont);
-
-	SetTextColor(fonthDC, RGB(32, 128, 64));
-	SetBkColor(fonthDC, 0x00000000);
-	SetTextAlign(fonthDC, TA_TOP);
-
-	rc1.top = YRES / 2 + YRES / 4;
-	rc1.left = XRES / 2 + XRES /  64;
-	rc1.bottom = YRES / 2 + YRES / 3;
-	rc1.right = XRES / 2 + XRES / 64+ ((XRES / 8) - XRES / 64);
-
-	FontInRect(sm2_s, rc1);
-
-	//ExtTextOut(fonthDC, 0, 0, ETO_OPAQUE, NULL, "THE MAN FROM U.N.C.L.E", 6, NULL);
 }
 
 

@@ -254,7 +254,8 @@ void main()
 		col = mix(col,0.5+0.5*vec3(col*dot(n, normalize(p-vec3(99,-99,0)))), 0.3);
 	}
 	col = pow(col*brg/sqrt(2.+dot(v*0.3,v*0.3)), vec3(1./2.2))*0.5;
+	col = vec3(0.8579971,0.7686275,0.4049484);
 	vec3 fontf = texture(f, q).rgb;
-	col+=fontf;
+	col=fontf;
 	o = vec4(cc(col-0.035*hash(length(q)*t)), p.y<0.1?tile*distance(p, rp)/10.0:0.0 );
 }
