@@ -14,6 +14,7 @@ public class SyncUp : MonoBehaviour
     public float BPM;
     public AudioSource AudioSource;
     private Dictionary<int, RM_Object> rmObjects;
+    public static List<string> RocketParameterNames;
     void Awake()
     {
 #if UNITY_EDITOR
@@ -23,6 +24,7 @@ public class SyncUp : MonoBehaviour
         {
             Application.runInBackground = true;
         }
+        RocketParameterNames = new List<string>();
     }
 
 #if UNITY_EDITOR
@@ -79,6 +81,10 @@ public class SyncUp : MonoBehaviour
     {
         if (Device != null)
         {
+            if(RocketParameterNames.Contains(str) == false)
+            {
+                RocketParameterNames.Add(str);
+            }
             return Device.GetTrack(str).GetValue(frow);
         }
         else

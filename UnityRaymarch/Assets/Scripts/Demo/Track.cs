@@ -173,5 +173,6 @@ namespace RocketNet
 
         internal string name;
         private List<Key> keys = new List<Key>();
+        public List<Key> Keys() { return keys; }
     }
 }

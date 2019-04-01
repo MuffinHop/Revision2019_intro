@@ -242,8 +242,9 @@ const char *fragment_frag =
    "else"
      " k=mix(k,.5+.5*vec3(k*dot(q,normalize(g-vec3(99,-99,0)))),.3);"
    "k=pow(k*s/sqrt(2.+dot(o*.3,o*.3)),vec3(1./2.2))*.5;"
+   "k=vec3(.857997,.768628,.404948);"
    "vec3 C=texture(x,d).xyz;"
-   "k+=C;"
+   "k=C;"
    "f=vec4(l(k-.035*n(length(d)*y)),g.y<.1?D*distance(g,F)/10.:0.);"
  "}";
 

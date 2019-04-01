@@ -18,13 +18,15 @@
 
 #include "IntroFramework/gl_loader.h"
 #include "definitions.h"
-#if OPENGL_DEBUG
+
+#if OPENGL_DEBUG 
 	#include "debug.h"
 #include "atltrace.h"
 #endif
 
 #include "glext.h"
 #include "shaders/fragment.inl"
+#include "shaders/sync.inl"
 #if POST_PASS
 	#include "shaders/post.inl"
 #endif
@@ -45,6 +47,7 @@ using namespace WaveSabrePlayerLib;
 #include <stdio.h>
 
 
+void AllSyncDataHandle(float row);
 void *GetAnyGLFuncAddress(const char *name)
 {
 	void *p = (void *)wglGetProcAddress(name);
@@ -58,7 +61,6 @@ void *GetAnyGLFuncAddress(const char *name)
 
 	return p;
 }
-
 
 const char* gl_function_names[] = {
 "glActiveTexture",
@@ -99,6 +101,7 @@ const char* gl_function_names[] = {
 "glDeleteBuffers",
 "glDeleteVertexArrays",
 "glUniform1f",
+"glUniform12v",
 "glUniform3fv",
 "glUniform4fv",
 "glUniformMatrix4fv",
@@ -119,7 +122,8 @@ const char* gl_function_names[] = {
 "glUniform1i",
 "glGetAttribLocation",
 "glBufferSubData",
-"glUniform4iv"
+"glUniform4iv",
+"glUniform1fv"
 };
 
 void* gl_function_pointers[sizeof(gl_function_names) / sizeof(const char*)];
@@ -487,6 +491,8 @@ int __cdecl main(int argc, char* argv[])
 
 	// create and compile shader programs
 	pidMain = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragment_frag);
+	pidMain = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_VERTEX_SHADER, 1, &sync_vert);
+	
 	#if POST_PASS
 		pidPost = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &post_frag);
 	#endif
@@ -503,10 +509,6 @@ int __cdecl main(int argc, char* argv[])
 	// main loop
 	do
 	{
-		#ifdef EDITOR_CONTROLS
-			editor.beginFrame(timeGetTime());
-		#endif
-
 		#if !(DESPERATE)
 			// do minimal message handling so windows doesn't kill your application
 			// not always strictly necessary but increases compatibility and reliability a lot
@@ -528,8 +530,6 @@ int __cdecl main(int argc, char* argv[])
 		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
 		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
 
-		//AllSyncDataHandle(seconds);
-		//glUniform4fv(glGetUniformLocation(pidMain, "_Objects"), 2, threshold);
 
 		glRects(-1, -1, 1, 1);
 
@@ -553,13 +553,6 @@ int __cdecl main(int argc, char* argv[])
 
 		SwapBuffers(hDC);
 
-		// handle functionality of the editor
-		#ifdef EDITOR_CONTROLS
-			editor.endFrame(timeGetTime());
-			position = editor.handleEvents(&track, position);
-			editor.printFrameStatistics();
-			editor.updateShaders(&pidMain, &pidPost);
-		#endif
 
 	} while(!GetAsyncKeyState(VK_ESCAPE)
 		#if USE_AUDIO

@@ -35,8 +35,6 @@ public class RayMarchingController : MonoBehaviour
 
 ";
     string[] begin = {
-    "General/Vertex.shader",
-    "StartFragment.shader",
     "General/Uniforms.shader",
     "General/Defines.shader",
     "General/Globals.shader",
@@ -298,7 +296,7 @@ public class RayMarchingController : MonoBehaviour
 
     static void WriteString(string filename, string code)
     {
-        string path = "Assets/Shaders/" + filename + ".shader";
+        string path = filename;
 
         StreamWriter writer = new StreamWriter(path, false);
         writer.WriteLine(code);
@@ -336,6 +334,10 @@ public class RayMarchingController : MonoBehaviour
             gomat[material].Add(rmObj);
         }
         string fullcode = shaderBeginning;
+
+        fullcode += "\n" + GetShaderPart("General/Vertex.shader");
+        fullcode += "\n" + GetShaderPart("StartFragment.shader");
+
         foreach (string part in begin)
         {
             coreCode += "\n" + GetShaderPart(part);
@@ -369,9 +371,11 @@ public class RayMarchingController : MonoBehaviour
             coreCode += "\n" + GetShaderPart(part);
         }
         fullcode += coreCode + "\n" + shaderEnding;
-        Debug.Log(fullcode);
-        WriteString("PutThisShaderToLeviathan", "#version 130\n\n" + coreCode);
-        WriteString("Megashader", fullcode);
+        coreCode.Replace("uniform float _Objects", "varying float _Objects");
+
+
+        WriteString("../IntroFramework/src/shaders/fragment.frag", "#version 130\n\n" + coreCode);
+        WriteString("Assets/Shaders/Megashader.shader", fullcode);
     }
     void Update()
     {
