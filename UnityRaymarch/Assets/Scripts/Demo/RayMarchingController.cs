@@ -370,6 +370,7 @@ public class RayMarchingController : MonoBehaviour
         }
         fullcode += coreCode + "\n" + shaderEnding;
         Debug.Log(fullcode);
+        WriteString("PutThisShaderToLeviathan", "#version 130\n\n" + coreCode);
         WriteString("Megashader", fullcode);
     }
     void Update()

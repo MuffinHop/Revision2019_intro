@@ -127,6 +127,7 @@
     <None Include="Assets\Shaders\Operators\OpIntersectionChamfer.shader" />
     <None Include="Assets\Shaders\General\Init.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdTorus.glslinc" />
+    <None Include="Assets\Shaders\PutThisShaderToLeviathan.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdCylinder.glslinc" />
     <None Include="Assets\Shaders\Operators\OpDifferenceRound.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\HexagonCircumcircle.glslinc" />

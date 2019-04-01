@@ -534,7 +534,7 @@ int __cdecl main(int argc, char* argv[])
 		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
 		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
 
-		AllSyncDataHandle(seconds);
+		//AllSyncDataHandle(seconds);
 		//glUniform4fv(glGetUniformLocation(pidMain, "_Objects"), 2, threshold);
 
 		glRects(-1, -1, 1, 1);
