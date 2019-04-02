@@ -296,7 +296,7 @@ void DrawRectText(const char* sText, COLORREF fg, COLORREF bg, int left, int top
 	//SetBkColor(fonthDC, bg);
 	SetTextAlign(fonthDC, TA_TOP| TA_LEFT);
 
-	ExtTextOut(fonthDC, left+80, top, ETO_OPAQUE, NULL, sText, strlen(sText), NULL);
+	ExtTextOut(fonthDC, left, top, ETO_OPAQUE, NULL, sText, strlen(sText), NULL);
 }
 
 HFONT latinwide118Font = NULL;
@@ -319,10 +319,10 @@ void InitFontToTexture() {
 	hbmBitmap = CreateDIBSection(fonthDC, &bmi, DIB_RGB_COLORS, (void**)&pBitmapBits, 0, 0);
 	SetMapMode(fonthDC, MM_TEXT);
 
-	latinwide118Font = CreateFont(118, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Wide Latin");
-	Courier57Font = CreateFont(57, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Courier New");
-	Courier41Font = CreateFont(41, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Courier New");
-	Arial24Font = CreateFont(21, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Arial");
+	latinwide118Font = CreateFont(144, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Wide Latin");
+	Courier57Font = CreateFont(61, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Courier New");
+	Courier41Font = CreateFont(45, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Courier New");
+	Arial24Font = CreateFont(24, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Arial");
 
 	hbmOld = SelectObject(fonthDC, hbmBitmap);
 
@@ -332,9 +332,9 @@ void InitFontToTexture() {
 
 
 	hFontOld = SelectObject(fonthDC, latinwide118Font);
-	DrawRectText("The Secret",RGB(255,255,255),RGB(218,196,103),414,64,333,1495);
+	DrawRectText("The Secret", RGB(255, 255, 255), RGB(218, 196, 103), 431, 64, 333, 1478);
 	hFontOld = SelectObject(fonthDC, latinwide118Font);
-	DrawRectText("The Secret",RGB(0,0,0),RGB(218,196,103),418,71,339,1500);
+	DrawRectText("The Secret", RGB(0, 0, 0), RGB(218, 196, 103), 436, 71, 339, 1482);
 	hFontOld = SelectObject(fonthDC, latinwide118Font);
 	DrawRectText("Service Agency", RGB(255, 255, 255), RGB(218, 196, 103), 192, 178, 447, 1717);
 	hFontOld = SelectObject(fonthDC, latinwide118Font);
@@ -359,8 +359,8 @@ void InitFontToTexture() {
 	DrawRectText("systems and finally destroy the aforementioned decoding machine.", RGB(50, 50, 50), RGB(218, 196, 103), 45, 894, 951, 1645);
 	hFontOld = SelectObject(fonthDC, Courier41Font);
 	DrawRectText("- I wish you good luck, agent.",RGB(50,50,50),RGB(218,196,103),45,1007,1055,795);
-	hFontOld = SelectObject(fonthDC, Arial24Font);
-	DrawRectText("Doing your dirty work for you since 1969", RGB(50, 50, 50), RGB(218, 196, 103), 885, 84, 211, 1409);
+		hFontOld = SelectObject(fonthDC, Arial24Font);
+	DrawRectText("Doing your dirty work for you since 1969", RGB(50, 50, 50), RGB(218, 196, 103), 1030, 95, 211, 1409);
 	// --------------------------------------------- END END END
 
 }
