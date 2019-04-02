@@ -172,7 +172,7 @@
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;Msacm32.lib;winmm.lib;dsound.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>out/leviathan-debug.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -242,7 +242,7 @@ shader_minifier.exe -v -o src\shaders\post.inl src\shaders\post.frag</Command>
       <Culture>0x0409</Culture>
     </ResourceCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;src\WaveSabrePlayerLib.lib;src\msvcrt_old.lib;src\WaveSabreCore.lib;Msacm32.lib;winmm.lib;dsound.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>winmm.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>out/leviathan-debug.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -256,7 +256,7 @@ shader_minifier.exe -v -o src\shaders\post.inl src\shaders\post.frag</Command>
       </EntryPointSymbol>
       <AssemblyDebug>true</AssemblyDebug>
       <ProfileGuidedDatabase>bin\debug\$(TargetName).pgd</ProfileGuidedDatabase>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <ManifestFile />
       <ImageHasSafeExceptionHandlers>
       </ImageHasSafeExceptionHandlers>
@@ -269,8 +269,8 @@ shader_minifier.exe -v -o src\shaders\post.inl src\shaders\post.frag</Command>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <PreBuildEvent>
-      <Command>shader_minifier.exe -v -o src\shaders\fragment.inl src\shaders\fragment.frag
-shader_minifier.exe -v -o src\shaders\post.inl src\shaders\post.frag</Command>
+      <Command>shader_minifier.exe --no-renaming -v -o src\shaders\fragment.inl src\shaders\fragment.frag
+shader_minifier.exe --no-renaming -v -o src\shaders\post.inl src\shaders\post.frag</Command>
       <Message>Minify user-supplied shader files.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>

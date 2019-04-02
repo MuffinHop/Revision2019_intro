@@ -499,6 +499,14 @@ int __cdecl main(int argc, char* argv[])
 		pidPost = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &post_frag);
 	#endif
 
+#if OPENGL_DEBUG
+		shaderDebug(fragment_frag, FAIL_KILL);
+#if TWO_PASS
+		shaderDebug(post_frag, FAIL_KILL);
+#endif
+#endif
+
+
 		((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(pidMain);
 
 		double position = 0.0;

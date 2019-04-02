@@ -586,7 +586,6 @@ float traceToLight(vec3 rayPosition, vec3 normalTrace, vec3 lightDir, float rayL
 float GetShadow(in vec3 position, in vec3 normal, in vec3 lightDirection, in float lightDistance)
 {
 	return traceToLight(position, normal, lightDirection, lightDistance);
-#ifdef ENABLE_SHADOWS
 	Trace shadowTrace;
 	shadowTrace.direction = lightDirection;
 	shadowTrace.origin = position;
@@ -600,14 +599,10 @@ float GetShadow(in vec3 position, in vec3 normal, in vec3 lightDirection, in flo
 	float shadow = step(0.0, shadowIntersect.distanc) * step(lightDistance, shadowIntersect.distanc);
 
 	return shadow * traceToLight(position, normal, lightDirection, lightDistance);
-#else
-	return 1.0;
-#endif
 }
 
 float GetAmbientOcclusion(in ContactInfo intersection, in Surface surface)
 {
-#ifdef ENABLE_AO  
 	vec3 position = intersection.position;
 	vec3 normal = surface.normal;
 
@@ -624,9 +619,6 @@ float GetAmbientOcclusion(in ContactInfo intersection, in Surface surface)
 	}
 
 	return AO;
-#else
-	return 1.0;
-#endif  
 }
 
 void AddAtmosphere(inout vec3 col, in Trace ray, in ContactInfo hitNfo)
@@ -736,8 +728,6 @@ vec3 GetSceneColourSecondary(in Trace ray);
 
 vec3 GetReflection(in Trace ray, in ContactInfo hitNfo, in Surface surface)
 {
-#ifdef ENABLE_REFLECTIONS  
-	{
 		const float lightOffSurface = 0.1;
 
 		Trace reflectTrace;
@@ -747,17 +737,12 @@ vec3 GetReflection(in Trace ray, in ContactInfo hitNfo, in Surface surface)
 		reflectTrace.startdistanc = lightOffSurface / abs(dot(reflectTrace.direction, surface.normal));
 
 		return GetSceneColourSecondary(reflectTrace);
-	}
-#else
-	return GetSkyGradient(reflect(ray.direction, surface.normal));
-#endif
 }
 
 vec3 GetSubSurface(in Trace ray, in ContactInfo hitNfo, in Surface surface, in Material material)
 {
 	inWater = 0.;
 
-#ifdef ENABLE_TRANSPARENCY 
 	float lightOffSurface = 0.05;
 	Trace refractTrace;
 	refractTrace.direction = refract(ray.direction, surface.normal, material.reflectindx);
@@ -785,9 +770,6 @@ vec3 GetSubSurface(in Trace ray, in ContactInfo hitNfo, in Surface surface, in M
 	vec3 extinction = (1.7 / (1.0 + (materialExtinction * extinctionDistance)));
 
 	return sceneColor * extinction;
-#else
-	return GetSkyGradient(reflect(ray.direction, surface.normal));
-#endif
 }
 
 vec3 GetSceneColourSecondary(in Trace ray)
