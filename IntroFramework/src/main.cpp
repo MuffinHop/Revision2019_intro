@@ -1,4 +1,4 @@
-// custom build and feature flags
+ï»¿// custom build and feature flags
 #ifdef DEBUG
 	#define OPENGL_DEBUG        1
 	#define FULLSCREEN          0
@@ -36,9 +36,12 @@
 static int pidMain;
 static int pidPost;
 
+#ifndef DEBUG
 
 #include "biisi.h"
 using namespace WaveSabrePlayerLib;
+
+#endif // DEBUG
 
 // static HDC hDC;
 
@@ -101,7 +104,6 @@ const char* gl_function_names[] = {
 "glDeleteBuffers",
 "glDeleteVertexArrays",
 "glUniform1f",
-"glUniform12v",
 "glUniform3fv",
 "glUniform4fv",
 "glUniformMatrix4fv",
@@ -348,13 +350,13 @@ void InitFontToTexture() {
 	hFontOld = SelectObject(fonthDC, Courier57Font);
 	DrawRectText("TO: Agent \"TSConf\" SUBJECT: \"Your Assignment\"", RGB(50, 50, 50), RGB(218, 196, 103), 43, 372, 437, 1573);
 	hFontOld = SelectObject(fonthDC, Courier41Font);
-	DrawRectText("I have selected you for a most important assignment. It’s purpose is to", RGB(50, 50, 50), RGB(218, 196, 103), 44, 477, 525, 1819);
+	DrawRectText("I have selected you for a most important assignment. Itâ€™s purpose is to", RGB(50, 50, 50), RGB(218, 196, 103), 44, 477, 525, 1819);
 	hFontOld = SelectObject(fonthDC, Courier41Font);
 	DrawRectText("give false information to the enemy and destroy key targets.", RGB(50, 50, 50), RGB(218, 196, 103), 44, 539, 592, 1544);
 	hFontOld = SelectObject(fonthDC, Courier41Font);
 	DrawRectText("If you complete it successfully you will be promoted. ", RGB(50, 50, 50), RGB(218, 196, 103), 44, 600, 651, 1394);
 	hFontOld = SelectObject(fonthDC, Courier41Font);
-	DrawRectText("You’ve been given a briefcase which shall be used to destroy", RGB(50, 50, 50), RGB(218, 196, 103), 44, 715, 766, 1544);
+	DrawRectText("Youâ€™ve been given a briefcase which shall be used to destroy", RGB(50, 50, 50), RGB(218, 196, 103), 44, 715, 766, 1544);
 	hFontOld = SelectObject(fonthDC, Courier41Font);
 	DrawRectText("the SPECTRUM base and their new ZX decoding machine. For this you shall", RGB(50, 50, 50), RGB(218, 196, 103), 44, 776, 827, 1819);
 	hFontOld = SelectObject(fonthDC, Courier41Font);
@@ -491,7 +493,7 @@ int __cdecl main(int argc, char* argv[])
 
 	// create and compile shader programs
 	pidMain = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragment_frag);
-	pidMain = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_VERTEX_SHADER, 1, &sync_vert);
+	//pidMain = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_VERTEX_SHADER, 1, &sync_vert);
 	
 	#if POST_PASS
 		pidPost = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &post_frag);
@@ -501,11 +503,14 @@ int __cdecl main(int argc, char* argv[])
 
 		double position = 0.0;
 
+#ifndef DEBUG
 		IPlayer *player;
 
 		int numRenderThreads = 3;
 		player = new RealtimePlayer(&Song, numRenderThreads);
 		player->Play();
+#endif
+
 	// main loop
 	do
 	{
@@ -517,6 +522,7 @@ int __cdecl main(int argc, char* argv[])
 			PeekMessage(0, 0, 0, 0, PM_REMOVE);
 		#endif
 
+#ifndef DEBUG
 		// render with the primary shader
 		auto songPos = player->GetSongPos();
 		if (songPos >= player->GetLength()) break;
@@ -525,6 +531,7 @@ int __cdecl main(int argc, char* argv[])
 		int hundredths = (int)(songPos * 100.0) % 100;
 
 		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(0, (static_cast<int>(songPos*44100.0)));
+#endif
 		// font
 		glBindTexture(GL_TEXTURE_2D, fontTexture);
 		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);

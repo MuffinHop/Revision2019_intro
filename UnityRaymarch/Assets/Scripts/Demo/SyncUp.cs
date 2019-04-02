@@ -24,7 +24,10 @@ public class SyncUp : MonoBehaviour
         {
             Application.runInBackground = true;
         }
-        RocketParameterNames = new List<string>();
+        if (RocketParameterNames == null)
+        {
+            RocketParameterNames = new List<string>();
+        }
     }
 
 #if UNITY_EDITOR
@@ -41,8 +44,8 @@ public class SyncUp : MonoBehaviour
 
     void Connect()
     {
-       Device = new Device("Revision2019", false);
-       Device.Connect();  //vain clientillä, ei playerilla
+        Device = new Device("Revision2019", false);
+        Device.Connect();  //vain clientillä, ei playerilla
 
         Application.runInBackground = true;
         Cursor.visible = true;
@@ -81,6 +84,10 @@ public class SyncUp : MonoBehaviour
     {
         if (Device != null)
         {
+            if(RocketParameterNames == null)
+            {
+                RocketParameterNames = new List<string>();
+            }
             if(RocketParameterNames.Contains(str) == false)
             {
                 RocketParameterNames.Add(str);

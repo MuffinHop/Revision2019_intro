@@ -60,28 +60,33 @@ public class RM_SyncDataController : MonoBehaviour
                     syncCode += "               vec3( " + (int)syncval.Row + ", " + syncval.Value.ToString(culture) + ", " + (int)syncval.Interpolation + " ), \n";
                 }
             }
-            syncCode += "              ); \n";
+            syncCode += "              ); \n#break \n";
         }
         foreach (var item in SyncUp.RocketParameterNames)
         {
             List<Track.Key> itemKey = SyncUp.Device.GetTrack(item).Keys();
-
-            syncCode += "       vec3 " + item + "[" + itemKey.Count + "] = vec3[" + itemKey.Count + "]( \n";
-
-            for (int i = 0; i < itemKey.Count; i++)
+            if (itemKey.Count > 0)
             {
-                var syncval = itemKey[i];
-                if (i == itemKey.Count - 1)
-                {
-                    syncCode += "               vec3( " + (int)syncval.row + ", " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " ) \n";
-                } else
-                {
-                    syncCode += "               vec3( " + (int)syncval.row + ", " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " ), \n";
-                }
-            }
-            syncCode += "              ); \n";
+                syncCode += "       vec3 " + item + "Array[" + itemKey.Count + "] = vec3[" + itemKey.Count + "]( \n";
 
+                for (int i = 0; i < itemKey.Count; i++)
+                {
+                    var syncval = itemKey[i];
+                    if (i == itemKey.Count - 1)
+                    {
+                        syncCode += "               vec3( " + (int)syncval.row + ", " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " ) \n";
+                    }
+                    else
+                    {
+                        syncCode += "               vec3( " + (int)syncval.row + ", " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " ), \n";
+                    }
+                }
+                syncCode += "              ); \n";
+            }
+            syncCode += "       varying vec3 " + item + ";\n";
         }
+
+
         syncCode += @"
 
 	int R_INDX;
@@ -105,11 +110,18 @@ uniform float seconds;
             syncCode += "       setVal(" + item.Key + ", row, RM_Objects[" + index + "]); \n";
             index++;
         }
+
+        foreach (var item in SyncUp.RocketParameterNames)
+        {
+            List<Track.Key> itemKey = SyncUp.Device.GetTrack(item).Keys();
+            if(itemKey.Count>0) {
+                syncCode += "       setVal(" + item + "Array, row, " + item + "); \n";
+            }
+        }
+
         syncCode += @"
        gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
     }";
         WriteString("../IntroFramework/src/shaders/sync.vert", syncCode);
     }
 }
-
-
