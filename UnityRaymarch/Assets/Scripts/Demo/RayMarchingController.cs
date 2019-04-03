@@ -9,8 +9,8 @@ public class RayMarchingController : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> gameObjects;
-    private List<RM_Material> materials;
-    private Dictionary<RM_Material, List<RM_Object>> gomat;
+    private List<RM_Surface> surfaces;
+    private Dictionary<RM_Surface, List<RM_Object>> gomat;
     string shaderBeginning = @"Shader ""Standard Trace Marching""
 {
 	Properties{
@@ -70,18 +70,18 @@ public class RayMarchingController : MonoBehaviour
         return code;
     }
     string materialIDStr = "";
-    int getMaterialRegister(RM_Material material)
+    int getMaterialRegister(RM_Surface material)
     {
-        if (materials == null)
+        if (surfaces == null)
         {
-            materials = new List<RM_Material>();
+            surfaces = new List<RM_Surface>();
         }
-        if (materials.Contains(material))
+        if (surfaces.Contains(material))
         {
-            return materials.IndexOf(material);
+            return surfaces.IndexOf(material);
         }
-        materials.Add(material);
-        int id = materials.Count - 1;
+        surfaces.Add(material);
+        int id = surfaces.Count - 1;
         materialIDStr += "\nconst float material_ID" + id + " = " + (id + 1) + ";\n";
         return id;
     }
@@ -101,13 +101,13 @@ public class RayMarchingController : MonoBehaviour
         var culture = System.Globalization.CultureInfo.InvariantCulture;
         int materialID = 0;
         int generalIterator = 0;
-        foreach(var material in materials)
+        foreach(var surface in surfaces)
         {
             sdf1 += "         float id" + materialID + "_distance = 1e9;\n";
-            for (int i = 0; i < gomat[material].Count; i++)
+            for (int i = 0; i < gomat[surface].Count; i++)
             {
 
-                var rmObject = gomat[material][i].GetComponent<RM_Object>();
+                var rmObject = gomat[surface][i].GetComponent<RM_Object>();
                 if (rmObject.ShaderComponent == null)
                 {
                     Debug.LogWarning(rmObject.name + "missing shadercomponent");
@@ -236,7 +236,8 @@ public class RayMarchingController : MonoBehaviour
                 generalIterator++;
             }
             sdf1 += "               vec4 distID" + materialID + " = vec4(id" + materialID + "_distance, material_ID" + materialID + ", position.xz + vec2(position.y, 0.0));\n";
-            if (material.albedo.a < 1.0f)
+
+            if((surface as RM_Material) != null && ((RM_Material)surface).albedo.a < 1.0f)
             {
                 sdf1 += "               result = DistUnionCombineTransparent(result, distID" + materialID + ", transparencyPointer);\n\n";
             }
@@ -275,15 +276,26 @@ public class RayMarchingController : MonoBehaviour
 
         string mat1 = "\n";
         var culture = System.Globalization.CultureInfo.InvariantCulture;
-        for (int i = 0; i < materials.Count; i++)
+        for (int i = 0; i < surfaces.Count; i++)
         {
-            mat1 += "       if (hitNfo.id.x == material_ID" + i + "){\n";
-            mat1 += "              mat.reflectionCoefficient = " + materials[i].reflectionCoefficient.ToString(culture);
-            mat1 += ";\n              mat.albedo = vec3(" + materials[i].albedo.r.ToString(culture) + "," + materials[i].albedo.g.ToString(culture) + "," + materials[i].albedo.b.ToString(culture) + ");";
-            mat1 += ";\n              mat.transparency =" + (1.0f-materials[i].albedo.a).ToString(culture);
-            mat1 += ";\n              mat.smoothness = " + materials[i].smoothness.ToString(culture);
-            mat1 += ";\n              mat.reflectindx = " + materials[i].reflectindx.ToString(culture);
-            mat1 += ";\n       }\n";
+            if ((surfaces[i] as RM_Material) != null)
+            {
+                var material = surfaces[i] as RM_Material;
+                mat1 += "       if (hitNfo.id.x == material_ID" + i + "){\n";
+                mat1 += "              mat.reflectionCoefficient = " + material.reflectionCoefficient.ToString(culture);
+                mat1 += ";\n              mat.albedo = vec3(" + material.albedo.r.ToString(culture) + "," + material.albedo.g.ToString(culture) + "," + material.albedo.b.ToString(culture) + ");";
+                mat1 += ";\n              mat.transparency =" + (1.0f - material.albedo.a).ToString(culture);
+                mat1 += ";\n              mat.smoothness = " + material.smoothness.ToString(culture);
+                mat1 += ";\n              mat.reflectindx = " + material.reflectindx.ToString(culture);
+                mat1 += ";\n       }\n";
+            } else if((surfaces[i] as RM_Pattern) != null)
+            {
+                var surface = surfaces[i] as RM_Pattern;
+                var functionName = surface.FunctionName;
+                mat1 += "       if (hitNfo.id.x == material_ID" + i + "){\n";
+                mat1 += "              mat = " + functionName + "(hitNfo.position);\n";
+                mat1 += ";\n       }\n";
+            }
 
         }
 
@@ -317,17 +329,17 @@ public class RayMarchingController : MonoBehaviour
         foreach (var GO in GOs)
         {
             gameObjects.Add(GO.gameObject);
-            var material = GO.GetComponent<RM_Object>().MaterialComponent;
+            var material = GO.GetComponent<RM_Object>().SurfaceComponent;
             if (material != null)
             {
                 getMaterialRegister(material);
             }
         }
-        gomat = new Dictionary<RM_Material, List<RM_Object>>();
+        gomat = new Dictionary<RM_Surface, List<RM_Object>>();
         foreach ( var GO in GOs)
         {
             var rmObj = GO.GetComponent<RM_Object>();
-            var material = rmObj.MaterialComponent;
+            var material = rmObj.SurfaceComponent;
             if (!gomat.ContainsKey(material)) {
                 gomat.Add(material,new List<RM_Object>() );
             }
@@ -365,7 +377,19 @@ public class RayMarchingController : MonoBehaviour
 
 
         coreCode += "\n" + GetDistanceFields();
-        coreCode += "\n" + GetMaterials();
+
+
+        for (int i = 0; i < surfaces.Count; i++)
+        {
+            if ((surfaces[i] as RM_Pattern) != null)
+            {
+                var surface = surfaces[i] as RM_Pattern;
+                coreCode += GetShaderPart("Patterns/" + surface.name + ".glslinc");
+            }
+        }
+
+
+            coreCode += "\n" + GetMaterials();
         foreach (string part in end)
         {
             coreCode += "\n" + GetShaderPart(part);
@@ -394,8 +418,9 @@ public class RayMarchingController : MonoBehaviour
         }
         RM_Camera.RM_Objects.Clear();
 
-        foreach (var material in materials)
+        foreach (var material in surfaces)
         {
+            if(gomat.ContainsKey(material)) {
             for (int i = 0; i < gomat[material].Count; i++)
             {
                 var GO = gomat[material][i].gameObject;
@@ -403,13 +428,14 @@ public class RayMarchingController : MonoBehaviour
                 RM_Camera.RM_Objects.Add(GO.transform.position.x);
                 RM_Camera.RM_Objects.Add(GO.transform.position.y);
                 RM_Camera.RM_Objects.Add(GO.transform.position.z);
-                RM_Camera.RM_Objects.Add(GO.transform.localScale.x);
-                RM_Camera.RM_Objects.Add(GO.transform.localScale.y);
-                RM_Camera.RM_Objects.Add(GO.transform.localScale.z);
+                RM_Camera.RM_Objects.Add(GO.transform.localScale.x / 2.0f);
+                RM_Camera.RM_Objects.Add(GO.transform.localScale.y / 2.0f);
+                RM_Camera.RM_Objects.Add(GO.transform.localScale.z / 2.0f);
                 RM_Camera.RM_Objects.Add(GO.transform.rotation.x);
                 RM_Camera.RM_Objects.Add(GO.transform.rotation.y);
                 RM_Camera.RM_Objects.Add(GO.transform.rotation.z);
                 RM_Camera.RM_Objects.Add(GO.transform.rotation.w);
+            }
             }
         }
     }

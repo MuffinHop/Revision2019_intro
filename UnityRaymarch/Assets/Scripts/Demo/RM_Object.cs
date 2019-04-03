@@ -29,17 +29,16 @@ public class RM_Object : MonoBehaviour
         OpTongue,               // box, sphere, r*0.3, r*0.3
         OpUnionSoft             // box, sphere, r*0.3, r*0.3
     };
-    [SerializeField]
-    private RM_Type type;
+
     
     public ShaderComponent ShaderComponent;
-    public RM_Material MaterialComponent;
+    public RM_Surface SurfaceComponent;
     public Mix Mixer;
     public float R, N;
     private Key.Type interpolation = Key.Type.Linear;
 
     private ShaderComponent compShaderComponent;
-    private RM_Material compMaterialComponent;
+    private RM_Surface compSurfaceComponent;
     private Vector3 previousPosition;
     private Vector3 previousScale;
     private Vector4 previousRotation;

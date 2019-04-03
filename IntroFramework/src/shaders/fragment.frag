@@ -397,29 +397,29 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
                vec3 posID11 = position - vec3(_Objects[110], _Objects[111], _Objects[112]);
                posID11= posID11*rotationMatrix(vec3(_Objects[116], _Objects[117], _Objects[118]),  _Objects[119]);
                id0_distance  = min(fSphere(posID11,_Objects[113]), id0_distance);
+               vec3 posID12 = position - vec3(_Objects[120], _Objects[121], _Objects[122]);
+               posID12= posID12*rotationMatrix(vec3(_Objects[126], _Objects[127], _Objects[128]),  _Objects[129]);
+               id0_distance  = min(fSphere(posID12,_Objects[123]), id0_distance);
+               vec3 posID13 = position - vec3(_Objects[130], _Objects[131], _Objects[132]);
+               posID13= posID13*rotationMatrix(vec3(_Objects[136], _Objects[137], _Objects[138]),  _Objects[139]);
+               id0_distance  = min(fSphere(posID13,_Objects[133]), id0_distance);
                vec4 distID0 = vec4(id0_distance, material_ID0, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID0);
 
          float id1_distance = 1e9;
-               vec3 posID12 = position - vec3(_Objects[120], _Objects[121], _Objects[122]);
-               posID12= posID12*rotationMatrix(vec3(_Objects[126], _Objects[127], _Objects[128]),  _Objects[129]);
-               id1_distance  = min(fSphere(posID12,_Objects[123]), id1_distance);
-               vec3 posID13 = position - vec3(_Objects[130], _Objects[131], _Objects[132]);
-               posID13= posID13*rotationMatrix(vec3(_Objects[136], _Objects[137], _Objects[138]),  _Objects[139]);
-               id1_distance  = min(fSphere(posID13,_Objects[133]), id1_distance);
-               vec4 distID1 = vec4(id1_distance, material_ID1, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombineTransparent(result, distID1, transparencyPointer);
-
-         float id2_distance = 1e9;
                vec3 posID14 = position - vec3(_Objects[140], _Objects[141], _Objects[142]);
                posID14= posID14*rotationMatrix(vec3(_Objects[146], _Objects[147], _Objects[148]),  _Objects[149]);
-               id2_distance  = min(fBox(posID14, vec3(_Objects[143], _Objects[144],_Objects[145])), id2_distance);
+               id1_distance  = min(fSphere(posID14,_Objects[143]), id1_distance);
                vec3 posID15 = position - vec3(_Objects[150], _Objects[151], _Objects[152]);
                posID15= posID15*rotationMatrix(vec3(_Objects[156], _Objects[157], _Objects[158]),  _Objects[159]);
-               id2_distance  = min(fBox(posID15, vec3(_Objects[153], _Objects[154],_Objects[155])), id2_distance);
+               id1_distance  = min(fBox(posID15, vec3(_Objects[153], _Objects[154],_Objects[155])), id1_distance);
+               vec4 distID1 = vec4(id1_distance, material_ID1, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID1);
+
+         float id2_distance = 1e9;
                vec3 posID16 = position - vec3(_Objects[160], _Objects[161], _Objects[162]);
                posID16= posID16*rotationMatrix(vec3(_Objects[166], _Objects[167], _Objects[168]),  _Objects[169]);
-               id2_distance  = min(fSphere(posID16,_Objects[163]), id2_distance);
+               id2_distance  = min(fBox(posID16, vec3(_Objects[163], _Objects[164],_Objects[165])), id2_distance);
                vec3 posID17 = position - vec3(_Objects[170], _Objects[171], _Objects[172]);
                posID17= posID17*rotationMatrix(vec3(_Objects[176], _Objects[177], _Objects[178]),  _Objects[179]);
                id2_distance  = min(fBox(posID17, vec3(_Objects[173], _Objects[174],_Objects[175])), id2_distance);
@@ -429,30 +429,63 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
 
             return result;
         }
+Material RockPattern(vec3 position) {
+	vec3 _position = position;
+	_position.y += abs(_position.z) / 12.;
+	vec3 _position2 = _position;
+	vec3 _position3 = position;
+	vec3 _position4 = position;
+	float dist = 1e8;
+	float dist2 = 1e8;
+
+	float heightmap = perlinnoise(_position.xz / 6.);
+	heightmap += perlinnoise(_position.xz*12.) / 64.;
+	heightmap += perlinnoise(_position.xz*40.) / 128.;
+
+	dist += (perlinnoise(_position.xy / 3.)*sin(_position.z) + perlinnoise(_position.xy)*cos(_position.z)) / 3.;
+
+
+	float heightmap2 = perlinnoise(_position.xz*2.) / 6.;
+
+	float a = heightmap;
+	vec3 color = vec3(1.) - 6.*vec3(.4, .6, .8)*perlinnoise(_position.xz / 6.)*perlinnoise(_position.xz*12.);
+
+
+	dist -= (perlinnoise(_position.xz*120.) + perlinnoise(_position.zy*120.)) / 880.;
+
+
+	vec3 kummaj = vec3(0.8, 1.0, 0.4);
+	color += kummaj / (1. + 0.6*pow(length(_position - vec3(1., 0., 4.)), 2.));
+
+	Material mat;
+	mat.albedo = color;
+	mat.reflectionCoefficient = 0.1;
+	mat.smoothness = 0.1;
+	mat.transparency = 0.0;
+	mat.reflectindx = 0.1;
+	return mat;
+}
  Material GetObjectMaterial(in ContactInfo hitNfo)
         {
             Material mat;
             
        if (hitNfo.id.x == material_ID0){
-              mat.reflectionCoefficient = 0.178;
-              mat.albedo = vec3(1,1,1);;
-              mat.transparency =0;
-              mat.smoothness = 0.37;
-              mat.reflectindx = 0.54;
-       }
-       if (hitNfo.id.x == material_ID1){
-              mat.reflectionCoefficient = 0.19;
-              mat.albedo = vec3(1,0,0);;
-              mat.transparency =0.2588235;
-              mat.smoothness = 0.99;
-              mat.reflectindx = 0.64;
-       }
-       if (hitNfo.id.x == material_ID2){
               mat.reflectionCoefficient = 0.27;
               mat.albedo = vec3(1,1,1);;
               mat.transparency =0;
               mat.smoothness = 0.8;
               mat.reflectindx = 0.69;
+       }
+       if (hitNfo.id.x == material_ID1){
+              mat = RockPattern(hitNfo.position);
+;
+       }
+       if (hitNfo.id.x == material_ID2){
+              mat.reflectionCoefficient = 0.178;
+              mat.albedo = vec3(1,1,1);;
+              mat.transparency =0;
+              mat.smoothness = 0.37;
+              mat.reflectindx = 0.54;
        }
 
             return mat;
