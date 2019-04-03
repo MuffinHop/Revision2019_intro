@@ -67,6 +67,8 @@
     <Compile Include="Assets\Scripts\Demo\RM_Camera.cs" />
     <Compile Include="Assets\Scripts\Demo\RM_Material.cs" />
     <Compile Include="Assets\Scripts\Demo\RM_Object.cs" />
+    <Compile Include="Assets\Scripts\Demo\RM_Pattern.cs" />
+    <Compile Include="Assets\Scripts\Demo\RM_Surface.cs" />
     <Compile Include="Assets\Scripts\Demo\RM_SyncData.cs" />
     <Compile Include="Assets\Scripts\Demo\RM_SyncDataController.cs" />
     <Compile Include="Assets\Scripts\Demo\RM_Type.cs" />
@@ -159,6 +161,7 @@
     <None Include="Assets\Shaders\Operators\OpUnionSoft.shader" />
     <None Include="Assets\Shaders\General\Globals.shader" />
     <None Include="Assets\Shaders\General\RayMarcher.shader" />
+    <None Include="Assets\Shaders\Patterns\RockPattern.glslinc" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Z:/vanha c/Documents/Revision2019_intro/UnityRaymarch/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

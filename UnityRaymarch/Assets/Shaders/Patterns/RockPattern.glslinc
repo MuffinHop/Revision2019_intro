@@ -1,0 +1,37 @@
+﻿
+Material RockPattern(vec3 position) {
+	vec3 _position = position;
+	_position.y += abs(_position.z) / 12.;
+	vec3 _position2 = _position;
+	vec3 _position3 = position;
+	vec3 _position4 = position;
+	float dist = 1e8;
+	float dist2 = 1e8;
+
+	float heightmap = perlinnoise(_position.xz / 6.);
+	heightmap += perlinnoise(_position.xz*12.) / 64.;
+	heightmap += perlinnoise(_position.xz*40.) / 128.;
+
+	dist += (perlinnoise(_position.xy / 3.)*sin(_position.z) + perlinnoise(_position.xy)*cos(_position.z)) / 3.;
+
+
+	float heightmap2 = perlinnoise(_position.xz*2.) / 6.;
+
+	float a = heightmap;
+	vec3 color = vec3(1.) - 6.*vec3(.4, .6, .8)*perlinnoise(_position.xz / 6.)*perlinnoise(_position.xz*12.);
+
+
+	dist -= (perlinnoise(_position.xz*120.) + perlinnoise(_position.zy*120.)) / 880.;
+
+
+	vec3 kummaj = vec3(0.8, 1.0, 0.4);
+	color += kummaj / (1. + 0.6*pow(length(_position - vec3(1., 0., 4.)), 2.));
+
+	Material mat;
+	mat.albedo = color;
+	mat.reflectionCoefficient = 0.1;
+	mat.smoothness = 0.1;
+	mat.transparency = 0.0;
+	mat.reflectindx = 0.1;
+	return mat;
+}
