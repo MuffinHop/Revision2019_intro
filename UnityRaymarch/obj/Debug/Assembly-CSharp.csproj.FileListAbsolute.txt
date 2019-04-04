@@ -280,6 +280,3 @@ Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.Networking.xml
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.GoogleAudioSpatializer.xml
 Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEngine.SpatialTracking.xml
-Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\Boo.Lang.dll
-Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEditor.UI.dll
-Z:\vanha c\Documents\Revision2019_intro\UnityRaymarch\Temp\bin\Debug\UnityEditor.UI.xml

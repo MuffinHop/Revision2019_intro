@@ -42,48 +42,51 @@ public class RM_SyncDataController : MonoBehaviour
     public void Generate()
     {
         var culture = System.Globalization.CultureInfo.InvariantCulture;
-        string syncCode = @"
-    varying float RM_Objects[108];
+        string syncCode = "         #include <math.h>\n         float RM_Objects[" + _syncData.Count + "];";
+        syncCode += @"
+            struct vec3 {
+                    float x, y, z;
+                };
 ";
         foreach (KeyValuePair<string, List<RM_SyncData>> item in _syncData)
         {
-            syncCode += "       vec3 " + item.Key + "[" + item.Value.Count + "] = vec3[" + item.Value.Count + "]( \n";
+            syncCode += "       vec3 " + item.Key + "[" + item.Value.Count + "] = { \n";
             for (int i = 0; i < item.Value.Count; i++)
             {
                 var syncval = item.Value[i];
                 if (i == item.Value.Count - 1)
                 {
-                    syncCode += "               vec3( " + (int)syncval.Row + ", " + syncval.Value.ToString(culture) + ", " + (int)syncval.Interpolation + " ) \n";
+                    syncCode += "               { " + (int)syncval.Row + ", " + syncval.Value.ToString(culture) + ", " + (int)syncval.Interpolation + " } \n";
                 }
                 else
                 {
-                    syncCode += "               vec3( " + (int)syncval.Row + ", " + syncval.Value.ToString(culture) + ", " + (int)syncval.Interpolation + " ), \n";
+                    syncCode += "               { " + (int)syncval.Row + ", " + syncval.Value.ToString(culture) + ", " + (int)syncval.Interpolation + " }, \n";
                 }
             }
-            syncCode += "              ); \n#break \n";
+            syncCode += "              }; \n \n";
         }
         foreach (var item in SyncUp.RocketParameterNames)
         {
             List<Track.Key> itemKey = SyncUp.Device.GetTrack(item).Keys();
             if (itemKey.Count > 0)
             {
-                syncCode += "       vec3 " + item + "Array[" + itemKey.Count + "] = vec3[" + itemKey.Count + "]( \n";
+                syncCode += "       vec3 " + item + "Array[" + itemKey.Count + "] = { \n";
 
                 for (int i = 0; i < itemKey.Count; i++)
                 {
                     var syncval = itemKey[i];
                     if (i == itemKey.Count - 1)
                     {
-                        syncCode += "               vec3( " + (int)syncval.row + ", " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " ) \n";
+                        syncCode += "               {" + (int)syncval.row + ", " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " } \n";
                     }
                     else
                     {
-                        syncCode += "               vec3( " + (int)syncval.row + ", " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " ), \n";
+                        syncCode += "               { " + (int)syncval.row + ", " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " }, \n";
                     }
                 }
-                syncCode += "              ); \n";
+                syncCode += "              }; \n";
             }
-            syncCode += "       varying vec3 " + item + ";\n";
+            syncCode += "       float " + item + ";\n";
         }
 
 
@@ -95,19 +98,18 @@ public class RM_SyncDataController : MonoBehaviour
 #define row x
 #define value y
 #define type z
-#define findClosest(arr,currow) { for(int i=0; i<arr.length(); i++) { if(currow<=arr[i].row) { R_INDX = i-1; RET=arr[R_INDX]; break; } } }
+void findClosest(vec3 arr[], float currow) { for(int i=0; i< sizeof(arr) / sizeof(arr[0]); i++) { if(currow<=arr[i].row) { R_INDX = i-1; RET=arr[R_INDX]; break; } } }
 #define rType(r, t) { switch (int(r)) { case 0: t = 0.; break; case 2: t = t * t * (3. - 2. * t); break; case 3: t = pow(t, 2.); break; } }
-#define setVal(arr,row,target) { findClosest(arr,row); float t = (row - RET.row) / (arr[R_INDX+1].row - RET.row); rType(RET.type,t); float renVal = RET.value + (arr[R_INDX+1].value - RET.value) * t; target = renVal; }
-uniform float seconds;
-    void main(void)
+float setVal(vec3 arr[],float row) { findClosest(arr,row); float t = (row - RET.row) / (arr[R_INDX+1].row - RET.row); rType(RET.type,t); float renVal = RET.value + (arr[R_INDX+1].value - RET.value) * t; return renVal; }
+    void Sync( float second)
     {
 	    float div = 4.0 * 60.0 / 120.0;
-	    float row = seconds * div;
+	    float row = second * div;
 ";
         int index = 0;
         foreach (KeyValuePair<string, List<RM_SyncData>> item in _syncData)
         {
-            syncCode += "       setVal(" + item.Key + ", row, RM_Objects[" + index + "]); \n";
+            syncCode += "       RM_Objects[" + index + "] = setVal(" + item.Key + ", row ); \n";
             index++;
         }
 
@@ -115,13 +117,12 @@ uniform float seconds;
         {
             List<Track.Key> itemKey = SyncUp.Device.GetTrack(item).Keys();
             if(itemKey.Count>0) {
-                syncCode += "       setVal(" + item + "Array, row, " + item + "); \n";
+                syncCode += "       " + item + " = setVal(" + item + "Array, row); \n";
             }
         }
 
         syncCode += @"
-       gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
     }";
-        WriteString("../IntroFramework/src/shaders/sync.vert", syncCode);
+        WriteString("../IntroFramework/src/sync.c", syncCode);
     }
 }

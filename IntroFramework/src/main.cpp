@@ -309,6 +309,8 @@ HFONT latinwide118Font = NULL;
 HFONT Courier57Font = NULL;
 HFONT Courier41Font = NULL;
 HFONT Arial24Font = NULL;
+extern float RM_Objects[126];
+void Sync(float second);
 
 void InitFontToTexture() {
 	HRESULT hr;
@@ -443,6 +445,7 @@ void entrypoint(void)
 int __cdecl main(int argc, char* argv[])
 #endif
 {
+	float time = 0.0f;
 	// initialize window
 	#if FULLSCREEN
 		ChangeDisplaySettings(&screenSettings, CDS_FULLSCREEN);
@@ -544,7 +547,7 @@ int __cdecl main(int argc, char* argv[])
 		glBindTexture(GL_TEXTURE_2D, fontTexture);
 		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
 		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
-
+		Sync(time);
 
 		glRects(-1, -1, 1, 1);
 

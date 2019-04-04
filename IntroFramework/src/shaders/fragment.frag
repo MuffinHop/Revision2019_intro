@@ -505,12 +505,13 @@ vec3 GetSkyGradient(vec3 rayDirection)
 vec3 GetNormal(in vec3 position, in float transparencyPointer)
 {
 	float delta = 0.025;
-	vec3 offset[] = {
-		vec3(delta, -delta, -delta),
-		vec3(-delta, -delta, delta),
-		vec3(-delta, delta, -delta),
-		vec3(delta, delta, delta)
-	};
+	vec3 offset[4];
+
+	offset[0] = vec3(delta, -delta, -delta);
+	offset[1] = vec3(-delta, -delta, delta);
+	offset[2] = vec3(-delta, delta, -delta);
+	offset[3] = vec3(delta, delta, delta);
+
 	float f1 = GetDistanceScene(position + offset[0], transparencyPointer).x;
 	float f2 = GetDistanceScene(position + offset[1], transparencyPointer).x;
 	float f3 = GetDistanceScene(position + offset[2], transparencyPointer).x;

@@ -4,6 +4,7 @@
     <ClCompile Include="src\song.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\editor.cpp" />
+    <ClCompile Include="src\sync.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\4klang\4klang.h" />
@@ -68,12 +69,6 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="src\shaders\post.frag">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="src\shaders\sync.vert">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="src\shaders\sync.inl">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>
