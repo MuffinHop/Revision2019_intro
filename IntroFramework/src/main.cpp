@@ -548,7 +548,7 @@ int __cdecl main(int argc, char* argv[])
 		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
 		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
 		Sync(time);
-
+		time += 0.1f;
 		glRects(-1, -1, 1, 1);
 
 
