@@ -63,6 +63,7 @@ int load_gl_functions();
 #define glBufferSubData ((PFNGLBUFFERSUBDATAPROC)gl_function_pointers[57]) 
 #define glUniform4iv ((PFNGLUNIFORM4IVPROC)gl_function_pointers[58]) 
 #define glUniform1fv ((PFNGLUNIFORM1FVPROC)gl_function_pointers[59]) 
+#define glUniform3f ((PFNGLUNIFORM3FPROC)gl_function_pointers[60]) 
 
 #ifdef DEBUG
 extern void* gl_debug_function_pointers[];

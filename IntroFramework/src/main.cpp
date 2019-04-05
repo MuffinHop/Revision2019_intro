@@ -125,7 +125,8 @@ const char* gl_function_names[] = {
 "glGetAttribLocation",
 "glBufferSubData",
 "glUniform4iv",
-"glUniform1fv"
+"glUniform1fv",
+"glUniform3f"
 };
 
 void* gl_function_pointers[sizeof(gl_function_names) / sizeof(const char*)];
@@ -310,6 +311,32 @@ HFONT Courier57Font = NULL;
 HFONT Courier41Font = NULL;
 HFONT Arial24Font = NULL;
 extern float RM_Objects[126];
+extern float iMouseX;
+extern float iMouseY;
+extern float iTime;
+extern float DirectionalLightX;
+extern float DirectionalLightY;
+extern float DirectionalLightZ;
+extern float DirectionalLightR;
+extern float DirectionalLightG;
+extern float DirectionalLightB;
+extern float PointLightPositionX;
+extern float PointLightPositionY;
+extern float PointLightPositionZ;
+extern float PointLightR;
+extern float PointLightG;
+extern float PointLightB;
+extern float CameraPositionX;
+extern float CameraPositionY;
+extern float CameraPositionZ;
+extern float LookAtX;
+extern float LookAtY;
+extern float LookAtZ;
+extern float CameraUpX;
+extern float CameraUpY;
+extern float CameraUpZ;
+extern float FOV;
+extern float Epsilon;
 void Sync(float second);
 
 void InitFontToTexture() {
@@ -547,7 +574,24 @@ int __cdecl main(int argc, char* argv[])
 		glBindTexture(GL_TEXTURE_2D, fontTexture);
 		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
 		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
+
 		Sync(time);
+
+		GLint id_RM_Objects = glGetUniformLocation(pidMain, "_Objects");
+		GLint length = sizeof(RM_Objects) / sizeof(RM_Objects[0]) ;
+		//glUniform1fv(id_RM_Objects, length, RM_Objects);
+
+		glUniform1f(glGetUniformLocation(pidMain, "_iTime"), iTime);
+		glUniform3f(glGetUniformLocation(pidMain, "_DirectionalLight"), DirectionalLightX, DirectionalLightY, DirectionalLightZ);
+		glUniform3f(glGetUniformLocation(pidMain, "_DirectionalLightColor"), DirectionalLightR, DirectionalLightG, DirectionalLightB);
+		glUniform3f(glGetUniformLocation(pidMain, "_PointLightPosition"), PointLightPositionX, PointLightPositionY, PointLightPositionZ);
+		glUniform3f(glGetUniformLocation(pidMain, "_PointLightColor"), PointLightR, PointLightG, PointLightB);
+		glUniform3f(glGetUniformLocation(pidMain, "_CameraPosition"), CameraPositionX, CameraPositionY, CameraPositionZ);
+		glUniform3f(glGetUniformLocation(pidMain, "_CameraLookAt"), LookAtX, LookAtY, LookAtZ);
+		glUniform3f(glGetUniformLocation(pidMain, "_CameraUp"), CameraUpX, CameraUpY, CameraUpZ);
+		glUniform1f(glGetUniformLocation(pidMain, "_FOV"), FOV);
+
+
 		time += 0.1f;
 		glRects(-1, -1, 1, 1);
 
