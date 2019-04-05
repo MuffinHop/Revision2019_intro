@@ -91,16 +91,45 @@ public class RM_SyncDataController : MonoBehaviour
 
 
         syncCode += @"
-
-	int R_INDX;
-	vec3 RET;
-	float fRET;
 #define row x
 #define value y
 #define type z
-void findClosest(vec3 arr[], float currow) { for(int i=0; i< sizeof(arr) / sizeof(arr[0]); i++) { if(currow<=arr[i].row) { R_INDX = i-1; RET=arr[R_INDX]; break; } } }
-#define rType(r, t) { switch (int(r)) { case 0: t = 0.; break; case 2: t = t * t * (3. - 2. * t); break; case 3: t = pow(t, 2.); break; } }
-float setVal(vec3 arr[],float row) { findClosest(arr,row); float t = (row - RET.row) / (arr[R_INDX+1].row - RET.row); rType(RET.type,t); float renVal = RET.value + (arr[R_INDX+1].value - RET.value) * t; return renVal; }
+float rType(int r, float t) {
+	switch (r) {
+	case 0:
+		t = 0.;
+		break;
+	case 2:
+		t = t * t * (3. - 2. * t);
+		break;
+	case 3:
+		t = pow(t, 2.);
+		break;
+    default:
+        return t;
+	}
+	return t;
+}
+float setVal(vec3 arr[], float rrow) {
+	int R_INDX = 0;
+	int size = 0;
+	float t = 0;
+	float renVal = 0;
+	vec3 RET = { 0,0,0 };
+	vec3 NEXT = { 0,0,0 };
+	size = sizeof(arr) / sizeof(arr[0]);
+	for (int i = 0; i < size; i++) {
+		if (rrow <= arr[i].row) {
+			R_INDX = i - 1;
+			break;
+		}
+	}
+	RET = arr[R_INDX];
+	NEXT = arr[R_INDX + 1];
+	t = (rrow - RET.row) / (NEXT.row - RET.row);
+	renVal = RET.value + (NEXT.value - RET.value) * rType(RET.type, t);
+	return renVal;
+}
     void Sync( float second)
     {
 	    float div = 4.0 * 60.0 / 120.0;
