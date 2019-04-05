@@ -21,7 +21,7 @@ public class RM_SyncDataController : MonoBehaviour
         {
             _syncData.Add(name, new List<RM_SyncData>());
         }
-        var syncData = new RM_SyncData(RocketNet.Track.Key.Type.Linear, Time.frameCount / 10, data);
+        var syncData = new RM_SyncData(RocketNet.Track.Key.Type.Linear, Time.frameCount, data);
         _syncData[name].Add(syncData);
     }
 
@@ -50,7 +50,11 @@ public class RM_SyncDataController : MonoBehaviour
 ";
         foreach (KeyValuePair<string, List<RM_SyncData>> item in _syncData)
         {
-            syncCode += "       vec3 " + item.Key + "[" + item.Value.Count + "] = { \n";
+            syncCode += "       vec3 " + item.Key + "[" + (item.Value.Count + 1) + "] = { \n";
+            if (item.Value.Count > 0)
+            {
+                item.Value.Add(new RM_SyncData(Track.Key.Type.Step, 100000, 0.0f));
+            }
             for (int i = 0; i < item.Value.Count; i++)
             {
                 var syncval = item.Value[i];
@@ -70,20 +74,14 @@ public class RM_SyncDataController : MonoBehaviour
             List<Track.Key> itemKey = SyncUp.Device.GetTrack(item).Keys();
             if (itemKey.Count > 0)
             {
-                syncCode += "       vec3 " + item + "Array[" + itemKey.Count + "] = { \n";
-
+                syncCode += "       vec3 " + item + "Array[" + (itemKey.Count + 1) + "] = { \n";
+                
                 for (int i = 0; i < itemKey.Count; i++)
                 {
                     var syncval = itemKey[i];
-                    if (i == itemKey.Count - 1)
-                    {
-                        syncCode += "               {" + (int)syncval.row + ", " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " } \n";
-                    }
-                    else
-                    {
-                        syncCode += "               { " + (int)syncval.row + ", " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " }, \n";
-                    }
+                    syncCode += "               { " + (int)syncval.row + ", " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " }, \n";
                 }
+                syncCode += "               {100000.0f, 0.0f, 0.0f } \n";
                 syncCode += "              }; \n";
             }
             syncCode += "       float " + item + ";\n";
@@ -110,14 +108,12 @@ float rType(int r, float t) {
 	}
 	return t;
 }
-float setVal(vec3 arr[], float rrow) {
+float setVal(vec3 arr[], float rrow, int size) {
 	int R_INDX = 0;
-	int size = 0;
 	float t = 0;
 	float renVal = 0;
 	vec3 RET = { 0,0,0 };
 	vec3 NEXT = { 0,0,0 };
-	size = sizeof(arr) / sizeof(arr[0]);
 	for (int i = 0; i < size; i++) {
 		if (rrow <= arr[i].row) {
 			R_INDX = i - 1;
@@ -138,15 +134,16 @@ float setVal(vec3 arr[], float rrow) {
         int index = 0;
         foreach (KeyValuePair<string, List<RM_SyncData>> item in _syncData)
         {
-            syncCode += "       RM_Objects[" + index + "] = setVal(" + item.Key + ", row ); \n";
+            syncCode += "       RM_Objects[" + index + "] = setVal(" + item.Key + ", row, " + _syncData.Count + " ); \n";
             index++;
         }
 
         foreach (var item in SyncUp.RocketParameterNames)
         {
             List<Track.Key> itemKey = SyncUp.Device.GetTrack(item).Keys();
-            if(itemKey.Count>0) {
-                syncCode += "       " + item + " = setVal(" + item + "Array, row); \n";
+            if (itemKey.Count > 0)
+            {
+                syncCode += "       " + item + " = setVal(" + item + "Array, row, " + _syncData.Count + " ); \n";
             }
         }
 

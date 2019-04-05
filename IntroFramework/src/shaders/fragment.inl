@@ -6,9 +6,8 @@
 
 const char *fragment_frag =
  "#version 130\n"
- "uniform sampler2D _MainTex,_iChannel0,_iChannel1,_iChannel2,_iChannel3;"
- "uniform float _iTime,_Value,_iFrame;"
- "uniform vec4 _iMouse,_iResolution,_Light,_DirectionalLight,_DirectionalLightColor,_PointLightPosition,_PointLightColor,_CameraPosition,_CameraLookAt,_CameraUp;"
+ "uniform float _iTime;"
+ "uniform vec4 _iResolution,_DirectionalLight,_DirectionalLightColor,_PointLightPosition,_PointLightColor,_CameraPosition,_CameraLookAt,_CameraUp;"
  "uniform float _FOV;\n"
  "#define maxItersGlobal 123\n"
  "#define fogDensity 0.01\n"
@@ -520,8 +519,10 @@ const char *fragment_frag =
  "{"
    "return vec3(1.,1.,1.)-exp2(-color);"
  "}"
- "void mainImage(out vec4 fragColor,in vec2 fragCoord)"
+ "vec4 mainImage()"
  "{"
+   "vec2 fragCoord=gl_FragCoord.xy;"
+   "vec4 fragColor;"
    "Trace ray;"
    "inWater=0.;"
    "vec2 uv=fragCoord.xy/_iResolution.xy;"
@@ -560,14 +561,11 @@ const char *fragment_frag =
    "float falloff=.2,rf=sqrt(dot(coord,coord))*falloff,rf2_1=rf*rf+1.,e=1.2/(rf2_1*rf2_1);"
    "vec3 noise=(rand(uv+_iTime)-.5)*vec3(1.,1.,1.)*.01;"
    "fragColor=min(max(vec4(e*Reinhard(sceneColor*exposure)+noise,1.),vec4(0.,0.,0.,1.)),vec4(1.,1.,1.,1.));"
+   "return fragColor;"
  "}"
  "void main()"
  "{"
-   "vec4 fragColor;"
-   "vec2 fragCoord;"
-   "fragCoord=gl_FragCoord.xy;"
-   "mainImage(fragColor,fragCoord);"
-   "gl_FragColor=fragColor;"
+   "gl_FragColor=mainImage();"
  "}";
 
 #endif // FRAGMENT_INL_

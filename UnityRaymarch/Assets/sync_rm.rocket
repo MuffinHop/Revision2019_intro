@@ -1,114 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rootElement>
-<tracks rows="10000" startRow="0" endRow="10000" rowsPerBeat="8"
-beatsPerMin="125">
-	<track name="iMouseX" folded="0" muteKeyCount="0"
-color="ffb27474">
+<tracks rows="10000" startRow="0" endRow="10000" highlightRowStep="8">
+	<track name="iMouseX" folded="0" color="ffb27474">
 		<key row="78" value="0.000000" interpolation="0" />
 	</track>
-	<track name="iMouseY" folded="0" muteKeyCount="0"
-color="ffb28050" />
-	<track name="iTime" folded="0" muteKeyCount="0" color="ffa9b250" />
-	<track name="DirectionalLightX" folded="0" muteKeyCount="0"
-color="ff60b250">
+	<track name="iMouseY" folded="0" color="ffb28050" />
+	<track name="iTime" folded="0" color="ffa9b250">
+		<key row="0" value="0.000000" interpolation="1" />
+		<key row="306" value="12.000000" interpolation="0" />
+	</track>
+	<track name="DirectionalLightX" folded="0" color="ff60b250">
 		<key row="0" value="0.000000" interpolation="0" />
 	</track>
-	<track name="DirectionalLightY" folded="0" muteKeyCount="0"
-color="ff4fb292">
+	<track name="DirectionalLightY" folded="0" color="ff4fb292">
 		<key row="0" value="-1.000000" interpolation="0" />
 	</track>
-	<track name="DirectionalLightZ" folded="0" muteKeyCount="0"
-color="ff4f71b2">
+	<track name="DirectionalLightZ" folded="0" color="ff4f71b2">
 		<key row="0" value="-1.000000" interpolation="1" />
 		<key row="97" value="-1.000000" interpolation="0" />
 	</track>
-	<track name="DirectionalLightR" folded="0" muteKeyCount="0"
-color="ff8850b2">
+	<track name="DirectionalLightR" folded="0" color="ff8850b2">
 		<key row="0" value="2.000000" interpolation="0" />
 	</track>
-	<track name="DirectionalLightG" folded="0" muteKeyCount="0"
-color="ffb25091">
+	<track name="DirectionalLightG" folded="0" color="ffb25091">
 		<key row="0" value="2.000000" interpolation="0" />
 	</track>
-	<track name="DirectionalLightB" folded="0" muteKeyCount="0"
-color="ffb27474">
+	<track name="DirectionalLightB" folded="0" color="ffb27474">
 		<key row="0" value="2.000000" interpolation="0" />
 	</track>
-	<track name="PointLightPositionX" folded="0" muteKeyCount="0"
-color="ffb28050">
+	<track name="PointLightPositionX" folded="0" color="ffb28050">
 		<key row="0" value="0.000000" interpolation="0" />
 		<key row="140" value="4.000000" interpolation="0" />
 	</track>
-	<track name="PointLightPositionY" folded="0" muteKeyCount="0"
-color="ffa9b250">
+	<track name="PointLightPositionY" folded="0" color="ffa9b250">
 		<key row="0" value="1.000000" interpolation="0" />
 	</track>
-	<track name="PointLightPositionZ" folded="0" muteKeyCount="0"
-color="ff60b250">
+	<track name="PointLightPositionZ" folded="0" color="ff60b250">
 		<key row="0" value="1.000000" interpolation="0" />
 		<key row="162" value="-2.000000" interpolation="0" />
 	</track>
-	<track name="PointLightR" folded="0" muteKeyCount="0"
-color="ff4fb292">
+	<track name="PointLightR" folded="0" color="ff4fb292">
 		<key row="0" value="188.000000" interpolation="0" />
 	</track>
-	<track name="PointLightG" folded="0" muteKeyCount="0"
-color="ff4f71b2">
+	<track name="PointLightG" folded="0" color="ff4f71b2">
 		<key row="0" value="122.000000" interpolation="0" />
 	</track>
-	<track name="PointLightB" folded="0" muteKeyCount="0"
-color="ff8850b2">
+	<track name="PointLightB" folded="0" color="ff8850b2">
 		<key row="0" value="32.000000" interpolation="0" />
 	</track>
-	<track name="CameraPositionX" folded="0" muteKeyCount="0"
-color="ffb25091">
+	<track name="CameraPositionX" folded="0" color="ffb25091">
 		<key row="0" value="-4.000000" interpolation="1" />
 		<key row="87" value="0.500000" interpolation="0" />
 	</track>
-	<track name="CameraPositionY" folded="0" muteKeyCount="0"
-color="ffb27474">
+	<track name="CameraPositionY" folded="0" color="ffb27474">
 		<key row="0" value="0.000000" interpolation="0" />
 	</track>
-	<track name="CameraPositionZ" folded="0" muteKeyCount="0"
-color="ffb28050">
+	<track name="CameraPositionZ" folded="0" color="ffb28050">
 		<key row="0" value="22.000000" interpolation="0" />
 		<key row="184" value="-8.000000" interpolation="1" />
 		<key row="533" value="-2.000000" interpolation="0" />
 	</track>
-	<track name="LookAtX" folded="0" muteKeyCount="0"
-color="ffa9b250">
+	<track name="LookAtX" folded="0" color="ffa9b250">
 		<key row="0" value="-7.000000" interpolation="1" />
 		<key row="87" value="0.500000" interpolation="0" />
 		<key row="184" value="2.000000" interpolation="0" />
 	</track>
-	<track name="LookAtY" folded="0" muteKeyCount="0"
-color="ff60b250">
+	<track name="LookAtY" folded="0" color="ff60b250">
 		<key row="0" value="0.000000" interpolation="0" />
 	</track>
-	<track name="LookAtZ" folded="0" muteKeyCount="0"
-color="ff4fb292">
+	<track name="LookAtZ" folded="0" color="ff4fb292">
 		<key row="0" value="2.000000" interpolation="0" />
 		<key row="184" value="12.000000" interpolation="0" />
 	</track>
-	<track name="CameraUpX" folded="0" muteKeyCount="0"
-color="ff4f71b2">
+	<track name="CameraUpX" folded="0" color="ff4f71b2">
 		<key row="0" value="0.000000" interpolation="0" />
 	</track>
-	<track name="CameraUpY" folded="0" muteKeyCount="0"
-color="ff8850b2">
+	<track name="CameraUpY" folded="0" color="ff8850b2">
 		<key row="0" value="1.000000" interpolation="0" />
 	</track>
-	<track name="CameraUpZ" folded="0" muteKeyCount="0"
-color="ffb25091">
+	<track name="CameraUpZ" folded="0" color="ffb25091">
 		<key row="0" value="0.000000" interpolation="0" />
 	</track>
-	<track name="Epsilon" folded="0" muteKeyCount="0"
-color="ffb27474">
+	<track name="Epsilon" folded="0" color="ffb27474">
 		<key row="0" value="0.010000" interpolation="0" />
 	</track>
-	<track name="FOV" folded="0" muteKeyCount="0" color="ffb28050">
+	<track name="FOV" folded="0" color="ffb28050">
 		<key row="0" value="11.000000" interpolation="1" />
 		<key row="535" value="66.000000" interpolation="0" />
 	</track>
 </tracks>
-	</rootElement>

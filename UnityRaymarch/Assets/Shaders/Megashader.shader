@@ -30,17 +30,8 @@ void main()
 }
 #endif
 #ifdef FRAGMENT
-uniform sampler2D _MainTex;
-uniform sampler2D _iChannel0;
-uniform sampler2D _iChannel1;
-uniform sampler2D _iChannel2;
-uniform sampler2D _iChannel3;
 uniform float _iTime;
-uniform float _Value;
-uniform float _iFrame;
-uniform vec4 _iMouse;
 uniform vec4 _iResolution;
-uniform vec4 _Light;
 uniform vec4 _DirectionalLight;
 uniform vec4 _DirectionalLightColor;
 uniform vec4 _PointLightPosition;
@@ -841,8 +832,10 @@ vec3 Reinhard(in vec3 color)
 	return vec3(1.0, 1.0, 1.0) - exp2(-color);
 }
 
-void mainImage(out vec4 fragColor, in vec2 fragCoord)
+vec4 mainImage()
 {
+	vec2 fragCoord = gl_FragCoord.xy;
+	vec4 fragColor;
 	Trace ray;
 	inWater = 0.;
 
@@ -908,15 +901,12 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord)
 	float e = 1.2 / (rf2_1 * rf2_1);
 	vec3 noise = (rand(uv + _iTime) - .5) * vec3(1.0, 1.0, 1.0) * 0.01;
 	fragColor = min(max(vec4(e*Reinhard(sceneColor * exposure) + noise, 1.0), vec4(0.0, 0.0, 0.0, 1.0)), vec4(1.0, 1.0, 1.0, 1.0));
+	return  fragColor;
 }
 
 void main()
 {
-	vec4 fragColor;
-	vec2 fragCoord;
-	fragCoord = gl_FragCoord.xy;
-	mainImage(fragColor, fragCoord);
-	gl_FragColor = fragColor;
+	gl_FragColor = mainImage();
 }
 #endif
 

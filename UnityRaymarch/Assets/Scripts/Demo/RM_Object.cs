@@ -56,10 +56,12 @@ public class RM_Object : MonoBehaviour
     {
         id = i;
     }
+    int prevFrame = -1;
     private void Update()
     {
-        if (Time.frameCount % 10 == 0)
+        if (Time.frameCount % 10 == 0 && prevFrame != Time.frameCount )
         {
+            prevFrame = Time.frameCount ;
             //position
             if (Mathf.Abs(previousPosition.x - transform.position.x) > 0.01f)
             {
