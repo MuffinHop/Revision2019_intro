@@ -576,20 +576,58 @@ int __cdecl main(int argc, char* argv[])
 		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
 
 		Sync(time);
+		/*
+		
+uniform float _iTime;
+uniform float _Value;
+uniform float _iFrame;
+uniform vec4 _iMouse;
+uniform vec4 _iResolution;
+uniform vec4 _Light;
+uniform vec4 _DirectionalLight;
+uniform vec4 _DirectionalLightColor;
+uniform vec4 _PointLightPosition;
+uniform vec4 _PointLightColor;
+uniform vec4 _CameraPosition;
+uniform vec4 _CameraLookAt;
+uniform vec4 _CameraUp;
+uniform float _FOV;
+		
+		*/
 
-		GLint id_RM_Objects = glGetUniformLocation(pidMain, "_Objects");
 		GLint length = sizeof(RM_Objects) / sizeof(RM_Objects[0]) ;
-		//glUniform1fv(id_RM_Objects, length, RM_Objects);
+		GLuint ObjectsID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_Objects");
+		((PFNGLUNIFORM1FVPROC)wglGetProcAddress("glUniform1fv"))(ObjectsID, length, RM_Objects);
 
-		glUniform1f(glGetUniformLocation(pidMain, "_iTime"), iTime);
-		glUniform3f(glGetUniformLocation(pidMain, "_DirectionalLight"), DirectionalLightX, DirectionalLightY, DirectionalLightZ);
-		glUniform3f(glGetUniformLocation(pidMain, "_DirectionalLightColor"), DirectionalLightR, DirectionalLightG, DirectionalLightB);
-		glUniform3f(glGetUniformLocation(pidMain, "_PointLightPosition"), PointLightPositionX, PointLightPositionY, PointLightPositionZ);
-		glUniform3f(glGetUniformLocation(pidMain, "_PointLightColor"), PointLightR, PointLightG, PointLightB);
-		glUniform3f(glGetUniformLocation(pidMain, "_CameraPosition"), CameraPositionX, CameraPositionY, CameraPositionZ);
-		glUniform3f(glGetUniformLocation(pidMain, "_CameraLookAt"), LookAtX, LookAtY, LookAtZ);
-		glUniform3f(glGetUniformLocation(pidMain, "_CameraUp"), CameraUpX, CameraUpY, CameraUpZ);
-		glUniform1f(glGetUniformLocation(pidMain, "_FOV"), FOV);
+		GLuint resolutionID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))( pidMain, "_iResolution");
+		((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))( resolutionID, 1920, 1080, 1920, 1080);
+
+		GLuint iTimeID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_iTime");
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(iTimeID, iTime);
+
+		GLuint DirectionalLightID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_DirectionalLight");
+		((PFNGLUNIFORM3FPROC)wglGetProcAddress("glUniform3f"))(DirectionalLightID, DirectionalLightX, DirectionalLightY, DirectionalLightZ);
+
+		GLuint DirectionalLightColorID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_DirectionalLightColor");
+		((PFNGLUNIFORM3FPROC)wglGetProcAddress("glUniform3f"))(DirectionalLightColorID, DirectionalLightR, DirectionalLightG, DirectionalLightB);
+
+		GLuint PointLightPositionID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_PointLightPosition");
+		((PFNGLUNIFORM3FPROC)wglGetProcAddress("glUniform3f"))(PointLightPositionID, PointLightPositionX, PointLightPositionY, PointLightPositionZ);
+
+		GLuint PointLightColorID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_PointLightColor");
+		((PFNGLUNIFORM3FPROC)wglGetProcAddress("glUniform3f"))(PointLightColorID, PointLightR, PointLightG, PointLightB);
+
+		GLuint CameraPositionID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_CameraPosition");
+		((PFNGLUNIFORM3FPROC)wglGetProcAddress("glUniform3f"))(CameraPositionID, CameraPositionX, CameraPositionY, CameraPositionZ);
+
+		GLuint CameraLookAtID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_CameraLookAt");
+		((PFNGLUNIFORM3FPROC)wglGetProcAddress("glUniform3f"))(CameraLookAtID, LookAtX, LookAtY, LookAtZ);
+
+		GLuint CameraUpID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_CameraUp");
+		((PFNGLUNIFORM3FPROC)wglGetProcAddress("glUniform3f"))(CameraUpID, CameraUpX, CameraUpY, CameraUpZ);
+
+		GLuint fovID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_FOV");
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(fovID, FOV);
 
 
 		time += 0.1f;
