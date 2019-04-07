@@ -245,12 +245,6 @@ public class RayMarchingController : MonoBehaviour
             }
             materialID++;
         }
-        /*
-            vec3 p1 = position + vec3(_Objects[1], _Objects[2], _Objects[3]);
-            float material_ID0_distance = sdBox(p1, vec3(_Objects[7], _Objects[8], _Objects[9]));
-            vec4 distFloor = vec4(material_ID0_distance, material_ID0, position.xz + vec2(position.y, 0.0));
-            result = DistUnionCombine(result, distFloor);
-        */
 
         string sdf2 = @"
             return result;

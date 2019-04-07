@@ -613,7 +613,7 @@ int __cdecl main(int argc, char* argv[])
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(fovID, FOV * 2.0f);
 
 
-		time += 1.0f / 30.0f;
+		time += 1.0f / 60.0f;
 		glRects(-1, -1, 1, 1);
 
 

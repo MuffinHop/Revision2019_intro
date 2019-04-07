@@ -39,9 +39,9 @@ public class RM_Object : MonoBehaviour
 
     private ShaderComponent compShaderComponent;
     private RM_Surface compSurfaceComponent;
-    private Vector3 previousPosition;
-    private Vector3 previousScale;
-    private Vector4 previousRotation;
+    private Vector3 previousPosition = new Vector3(-1000000f,-1000000f,-100000f);
+    private Vector3 previousScale = new Vector3(0f, 0f, 0f);
+    private Vector4 previousRotation = new Vector4(-1000000f, -1000000f, -100000f, -100000f);
     public class SyncRMObject
     {
         public int Row;
@@ -66,19 +66,7 @@ public class RM_Object : MonoBehaviour
     private static int syncDataCount;
     [SerializeField]
     private int visibleSyncDataCount;
-    private void Start()
-    {
-        PositionXHistory = new List<SyncRMObject>();
-        PositionYHistory = new List<SyncRMObject>();
-        PositionZHistory = new List<SyncRMObject>();
-        ScaleXHistory = new List<SyncRMObject>();
-        ScaleYHistory = new List<SyncRMObject>();
-        ScaleZHistory = new List<SyncRMObject>();
-        RotationXHistory = new List<SyncRMObject>();
-        RotationYHistory = new List<SyncRMObject>();
-        RotationZHistory = new List<SyncRMObject>();
-        RotationWHistory = new List<SyncRMObject>();
-    }
+
     public void SetID(int i)
     {
         ID = i;
@@ -86,21 +74,75 @@ public class RM_Object : MonoBehaviour
     int prevFrame = -1;
     private void Update()
     {
-        if (Time.frameCount % 10 == 0 && prevFrame != Time.frameCount )
+        if (PositionXHistory == null)
+        {
+            PositionXHistory = new List<SyncRMObject>();
+        }
+        if (PositionYHistory == null)
+        {
+            PositionYHistory = new List<SyncRMObject>();
+        }
+        if (PositionZHistory == null)
+        {
+            PositionZHistory = new List<SyncRMObject>();
+        }
+        if (ScaleXHistory == null)
+        {
+            ScaleXHistory = new List<SyncRMObject>();
+        }
+        if (ScaleYHistory == null)
+        {
+            ScaleYHistory = new List<SyncRMObject>();
+        }
+        if (ScaleZHistory == null)
+        {
+            ScaleZHistory = new List<SyncRMObject>();
+        }
+        if (RotationXHistory == null)
+        {
+            RotationXHistory = new List<SyncRMObject>();
+        }
+        if (RotationYHistory == null)
+        {
+            RotationYHistory = new List<SyncRMObject>();
+        }
+        if (RotationZHistory == null)
+        {
+            RotationZHistory = new List<SyncRMObject>();
+        }
+        if (RotationWHistory == null)
+        {
+            RotationWHistory = new List<SyncRMObject>();
+        }
+
+        if (Time.frameCount % 4 == 0 && prevFrame != Time.frameCount )
         {
             prevFrame = Time.frameCount ;
-            PositionXHistory.Add(new SyncRMObject(Time.frameCount, transform.position.x));
-            PositionYHistory.Add(new SyncRMObject(Time.frameCount, transform.position.y));
-            PositionZHistory.Add(new SyncRMObject(Time.frameCount, transform.position.z));
+            if (previousPosition != transform.position)
+            {
+                PositionXHistory.Add(new SyncRMObject(Time.frameCount, transform.position.x));
+                PositionYHistory.Add(new SyncRMObject(Time.frameCount, transform.position.y));
+                PositionZHistory.Add(new SyncRMObject(Time.frameCount, transform.position.z));
+            }
 
-            ScaleXHistory.Add(new SyncRMObject(Time.frameCount, transform.localScale.x));
-            ScaleYHistory.Add(new SyncRMObject(Time.frameCount, transform.localScale.y));
-            ScaleZHistory.Add(new SyncRMObject(Time.frameCount, transform.localScale.z));
+            if (previousScale != transform.localScale)
+            {
+                ScaleXHistory.Add(new SyncRMObject(Time.frameCount, transform.localScale.x));
+                ScaleYHistory.Add(new SyncRMObject(Time.frameCount, transform.localScale.y));
+                ScaleZHistory.Add(new SyncRMObject(Time.frameCount, transform.localScale.z));
+            }
 
-            RotationXHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.x));
-            RotationYHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.y));
-            RotationZHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.z));
-            RotationWHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.w));
+            if (previousRotation != new Vector4(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w))
+            {
+                RotationXHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.x));
+                RotationYHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.y));
+                RotationZHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.z));
+                RotationWHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.w));
+            }
+
+            previousPosition = transform.position;
+            previousScale = transform.localScale;
+            previousRotation = new Vector4(transform.rotation.x,transform.rotation.y,transform.rotation.z,transform.rotation.w);
 
             visibleSyncDataCount += 10;
         }

@@ -3,26 +3,28 @@
  */
 #ifndef POST_INL_
 # define POST_INL_
+# define VAR_I "v"
+# define VAR_O "f"
 
 const char *post_frag =
  "#version 130\n"
- "uniform sampler2D o;"
- "out vec4 i;"
- "float hash(float c)"
+ "uniform sampler2D f;"
+ "out vec4 v;"
+ "float t(float f)"
  "{"
-   "return fract(sin(dot(c,12.9898))*43758.5);"
+   "return fract(sin(dot(f,12.9898))*43758.5);"
  "}"
  "void main()"
  "{"
-   "i=vec4(0);"
-   "for(int t=0;t<25;t++)"
+   "v=vec4(0);"
+   "for(int s=0;s<25;s++)"
      "{"
-       "vec2 uv=gl_FragCoord.xy/vec2(1280,720);"
-       "float s1=hash(float(t+dot(uv,uv))),s2=hash(float(1-t+dot(uv,uv)));"
-       "vec2 f=.01*(-1.+2.*vec2(s1,s2));"
-       "i+=vec4(textureLod(o,uv,(.3+.7*s1)*texture(o,(1.+f)*uv).w*8).xyz,1);"
+       "vec2 i=gl_FragCoord.xy/vec2(1280,720);"
+       "float d=t(float(s+dot(i,i))),o=t(float(1-s+dot(i,i)));"
+       "vec2 m=.01*(-1.+2.*vec2(d,o));"
+       "v+=vec4(textureLod(f,i,(.3+.7*d)*texture(f,(1.+m)*i).w*8).xyz,1);"
      "}"
-   "i/=vec4(25);"
+   "v/=vec4(25);"
  "}";
 
 #endif // POST_INL_
