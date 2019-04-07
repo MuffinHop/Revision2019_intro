@@ -535,7 +535,7 @@ Material RockPattern(vec3 position) {
               mat.reflectionCoefficient = 0.04;
               mat.albedo = vec3(0.6509434,0.3772959,0.2671325);;
               mat.transparency =0;
-              mat.smoothness = 0.09;
+              mat.smoothness = 0.51;
               mat.reflectindx = 0.03;
        }
        if (hitNfo.id.x == material_ID1){
@@ -605,9 +605,19 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 	{
 		result.position = ray.origin + ray.direction * result.distanc;
 		vec4 sceneDistance = GetDistanceScene(result.position, transparencyPointer);
-
+		/*
+		if (inWater == 0. && (i < 1) && (sceneDistance.y == material_ID2) && (sceneDistance.x < 0.001)) {
+			inWater = 1.;
+			wasInWater = inWater;
+		}
+		else {*/
 			result.id = sceneDistance.yzw;
 			result.distanc = result.distanc + sceneDistance.x;
+		//}
+		/*
+		if (sceneDistance.x < 0.001 + float(maxIter)*0.00001) {
+			break;
+		}*/
 	}
 	if (result.distanc >= ray.length)
 	{
