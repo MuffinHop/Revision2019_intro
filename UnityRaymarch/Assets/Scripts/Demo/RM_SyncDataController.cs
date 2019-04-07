@@ -133,6 +133,7 @@ float rType(int r, float t) {
 	}
 	return t;
 }
+#pragma optimize( """", off )
 float setVal(vec3 arr[], float rrow, long size, long *R_INDX) {
     if(*R_INDX>0) {
         *R_INDX--;
@@ -149,13 +150,15 @@ float setVal(vec3 arr[], float rrow, long size, long *R_INDX) {
 			break;
 		}
 	}
-	RET = arr[*R_INDX];
-	NEXT = arr[*R_INDX + 1];
+    long index = *R_INDX;
+	RET = arr[index];
+	NEXT = arr[index + 1];
 	t = (rrow - RET.row) / (NEXT.row - RET.row);
     t = rType(RET.type, t);
 	renVal = RET.value + (NEXT.value - RET.value) * t;
 	return renVal;
 }
+#pragma optimize( """", on )
 
 ";
 

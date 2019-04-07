@@ -115,13 +115,19 @@ public class RM_Object : MonoBehaviour
             RotationWHistory = new List<SyncRMObject>();
         }
 
-        if (Time.frameCount % 4 == 0 && prevFrame != Time.frameCount )
+        if (Time.frameCount % 5 == 0 && prevFrame != Time.frameCount )
         {
             prevFrame = Time.frameCount ;
-            if (previousPosition != transform.position)
+            if (Mathf.Abs(previousPosition.x-transform.position.x)>0.01f)
             {
                 PositionXHistory.Add(new SyncRMObject(Time.frameCount, transform.position.x));
+            }
+            if (Mathf.Abs(previousPosition.y - transform.position.y) > 0.01f)
+            {
                 PositionYHistory.Add(new SyncRMObject(Time.frameCount, transform.position.y));
+            }
+            if (Mathf.Abs(previousPosition.z - transform.position.z) > 0.01f)
+            {
                 PositionZHistory.Add(new SyncRMObject(Time.frameCount, transform.position.z));
             }
 
@@ -132,11 +138,20 @@ public class RM_Object : MonoBehaviour
                 ScaleZHistory.Add(new SyncRMObject(Time.frameCount, transform.localScale.z));
             }
 
-            if (previousRotation != new Vector4(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w))
+            if (Mathf.Abs(previousRotation.x - transform.rotation.x) > 0.1f)
             {
                 RotationXHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.x));
+            }
+            if (Mathf.Abs(previousRotation.y - transform.rotation.y) > 0.1f)
+            {
                 RotationYHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.y));
+            }
+            if (Mathf.Abs(previousRotation.z - transform.rotation.z) > 0.1f)
+            {
                 RotationZHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.z));
+            }
+            if (Mathf.Abs(previousRotation.w - transform.rotation.w) > 0.1f)
+            {
                 RotationWHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.w));
             }
 

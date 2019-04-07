@@ -580,15 +580,13 @@ int __cdecl main(int argc, char* argv[])
 		int minutes = (int)songPos / 60;
 		int seconds = (int)songPos % 60;
 		int hundredths = (int)(songPos * 100.0) % 100;
-
-		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(0, (static_cast<int>(songPos*44100.0)));
+		time = songPos;
+		//((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(0, (static_cast<int>(songPos*44100.0)));
 #endif
 		// font
 		glBindTexture(GL_TEXTURE_2D, fontTexture);
 		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
 		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
-
-		Sync(time);
 
 		((PFNGLUNIFORM1FVPROC)wglGetProcAddress("glUniform1fv"))(ObjectsID, length, RM_Objects);
 
@@ -613,7 +611,9 @@ int __cdecl main(int argc, char* argv[])
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(fovID, FOV * 2.0f);
 
 
+#ifdef DEBUG
 		time += 1.0f / 60.0f;
+#endif
 		glRects(-1, -1, 1, 1);
 
 
@@ -635,6 +635,8 @@ int __cdecl main(int argc, char* argv[])
 		#endif
 
 		SwapBuffers(hDC);
+
+		Sync(time);
 
 
 	} while(!GetAsyncKeyState(VK_ESCAPE)
