@@ -573,7 +573,7 @@ Material RockPattern(vec3 position) {
        }
        if (hitNfo.id.x == material_ID2){
               mat.reflectionCoefficient = 0.11;
-              mat.albedo = vec3(0.1370279,0.5849056,0.1186365);;
+              mat.albedo = vec3(0.3978099,0.6603774,0.2896938);;
               mat.transparency =0;
               mat.smoothness = 0.17;
               mat.reflectindx = 0.05;

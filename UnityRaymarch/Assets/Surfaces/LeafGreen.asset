@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: LeafGreen
   m_EditorClassIdentifier: 
   reflectionCoefficient: 0.11
-  albedo: {r: 0.13702786, g: 0.5849056, b: 0.11863652, a: 1}
+  albedo: {r: 0.3978099, g: 0.6603774, b: 0.28969383, a: 1}
   smoothness: 0.17
   reflectindx: 0.05
