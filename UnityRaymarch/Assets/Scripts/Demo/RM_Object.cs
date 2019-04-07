@@ -42,19 +42,46 @@ public class RM_Object : MonoBehaviour
     private Vector3 previousPosition;
     private Vector3 previousScale;
     private Vector4 previousRotation;
-    private int id;
-    [SerializeField]
-    private RM_SyncDataController syncDataController;
+    public class SyncRMObject
+    {
+        public int Row;
+        public float Value;
+        public SyncRMObject(int row, float value)
+        {
+            Row = row;
+            Value = value;
+        }
+    }
+    public List<SyncRMObject> PositionXHistory;
+    public List<SyncRMObject> PositionYHistory;
+    public List<SyncRMObject> PositionZHistory;
+    public List<SyncRMObject> ScaleXHistory;
+    public List<SyncRMObject> ScaleYHistory;
+    public List<SyncRMObject> ScaleZHistory;
+    public List<SyncRMObject> RotationXHistory;
+    public List<SyncRMObject> RotationYHistory;
+    public List<SyncRMObject> RotationZHistory;
+    public List<SyncRMObject> RotationWHistory;
+    public int ID;
     private static int syncDataCount;
     [SerializeField]
     private int visibleSyncDataCount;
     private void Start()
     {
-        syncDataController = FindObjectOfType<RM_SyncDataController>();
+        PositionXHistory = new List<SyncRMObject>();
+        PositionYHistory = new List<SyncRMObject>();
+        PositionZHistory = new List<SyncRMObject>();
+        ScaleXHistory = new List<SyncRMObject>();
+        ScaleYHistory = new List<SyncRMObject>();
+        ScaleZHistory = new List<SyncRMObject>();
+        RotationXHistory = new List<SyncRMObject>();
+        RotationYHistory = new List<SyncRMObject>();
+        RotationZHistory = new List<SyncRMObject>();
+        RotationWHistory = new List<SyncRMObject>();
     }
     public void SetID(int i)
     {
-        id = i;
+        ID = i;
     }
     int prevFrame = -1;
     private void Update()
@@ -62,73 +89,20 @@ public class RM_Object : MonoBehaviour
         if (Time.frameCount % 10 == 0 && prevFrame != Time.frameCount )
         {
             prevFrame = Time.frameCount ;
-            //position
-            if (Mathf.Abs(previousPosition.x - transform.position.x) > 0.01f)
-            {
-                syncDataController.AddData("rm"+ id+"_position_x", transform.position.x);
-                previousPosition.x = transform.position.x;
-                syncDataCount++;
-            }
-            if (Mathf.Abs(previousPosition.y - transform.position.y) > 0.01f)
-            {
-                syncDataController.AddData("rm" + id + "_position_y", transform.position.y);
-                previousPosition.y = transform.position.y;
-                syncDataCount++;
-            }
-            if (Mathf.Abs(previousPosition.z - transform.position.z) > 0.01f)
-            {
-                syncDataController.AddData("rm" + id + "_position_z", transform.position.z);
-                previousPosition.z = transform.position.z;
-                syncDataCount++;
-            }
+            PositionXHistory.Add(new SyncRMObject(Time.frameCount, transform.position.x));
+            PositionYHistory.Add(new SyncRMObject(Time.frameCount, transform.position.y));
+            PositionZHistory.Add(new SyncRMObject(Time.frameCount, transform.position.z));
 
-            //scale
-            if (Mathf.Abs(previousScale.x - transform.localScale.x) > 0.01f)
-            {
-                syncDataController.AddData("rm" + id + "_scale_x", transform.localScale.x);
-                previousScale.x = transform.localScale.x;
-                syncDataCount++;
-            }
-            if (Mathf.Abs(previousScale.y - transform.localScale.y) > 0.01f)
-            {
-                syncDataController.AddData("rm" + id + "_scale_y", transform.localScale.y);
-                previousScale.y = transform.localScale.y;
-                syncDataCount++;
-            }
-            if (Mathf.Abs(previousScale.z - transform.localScale.z) > 0.01f)
-            {
-                syncDataController.AddData("rm" + id + "_scale_z", transform.localScale.z);
-                previousScale.z = transform.localScale.z;
-                syncDataCount++;
-            }
+            ScaleXHistory.Add(new SyncRMObject(Time.frameCount, transform.localScale.x));
+            ScaleYHistory.Add(new SyncRMObject(Time.frameCount, transform.localScale.y));
+            ScaleZHistory.Add(new SyncRMObject(Time.frameCount, transform.localScale.z));
 
-            //rotation
-            if (Mathf.Abs(previousRotation.x - transform.rotation.x) > 0.01f)
-            {
-                syncDataController.AddData("rm" + id + "_rotation_x", transform.rotation.x);
-                previousRotation.x = transform.rotation.x;
-                syncDataCount++;
-            }
-            if (Mathf.Abs(previousRotation.y - transform.rotation.y) > 0.01f)
-            {
-                syncDataController.AddData("rm" + id + "_rotation_y", transform.rotation.y);
-                previousRotation.y = transform.rotation.y;
-                syncDataCount++;
-            }
-            if (Mathf.Abs(previousRotation.z - transform.rotation.z) > 0.01f)
-            {
-                syncDataController.AddData("rm" + id + "_rotation_z", transform.rotation.z);
-                previousRotation.z = transform.rotation.z;
-                syncDataCount++;
-            }
-            if (Mathf.Abs(previousRotation.z - transform.rotation.z) > 0.01f)
-            {
-                syncDataController.AddData("rm" + id + "_rotation_w", transform.rotation.w);
-                previousRotation.w = transform.rotation.w;
-                syncDataCount++;
-            }
+            RotationXHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.x));
+            RotationYHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.y));
+            RotationZHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.z));
+            RotationWHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.w));
 
-            visibleSyncDataCount = syncDataCount;
+            visibleSyncDataCount += 10;
         }
     }
 }

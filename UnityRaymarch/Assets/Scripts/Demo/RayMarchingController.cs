@@ -100,7 +100,6 @@ public class RayMarchingController : MonoBehaviour
         string sdf1 = "\n";
         var culture = System.Globalization.CultureInfo.InvariantCulture;
         int materialID = 0;
-        int generalIterator = 0;
         foreach(var surface in surfaces)
         {
             sdf1 += "         float id" + materialID + "_distance = 1e9;\n";
@@ -217,23 +216,22 @@ public class RayMarchingController : MonoBehaviour
                         includeCode.Add("Operators/OpUnionSoft.shader");
                         break;
                 }
-                int index = generalIterator * 10;
-                sdf1 += "               vec3 posID" + generalIterator + " = position - vec3(_Objects[" + (index + 0) + "], _Objects[" + (index + 1) + "], _Objects[" + (index + 2) + "]);\n";
-                sdf1 += "               posID" + generalIterator + "= posID" + generalIterator + "*rotationMatrix(vec3(_Objects[" + (index + 6) + "], _Objects[" + (index + 7) + "], _Objects[" + (index + 8) + "]),  _Objects[" + (index + 9) + "]);\n";
+                int index = rmObject.ID * 10;
+                sdf1 += "               vec3 posID" + rmObject.ID + " = position - vec3(_Objects[" + (index + 0) + "], _Objects[" + (index + 1) + "], _Objects[" + (index + 2) + "]);\n";
+                sdf1 += "               posID" + rmObject.ID + "= posID" + rmObject.ID + "*rotationMatrix(vec3(_Objects[" + (index + 6) + "], _Objects[" + (index + 7) + "], _Objects[" + (index + 8) + "]),  _Objects[" + (index + 9) + "]);\n";
                 string firstPart = "               id" + materialID + "_distance ";
                 switch (scaleFormat)
                 {
                     case ShaderComponent.ScaleInfo.OneDimension:
-                        sdf1 += firstPart + " = "+ mixStr + "(" + functionName.ToString() + "(posID" + generalIterator + ",_Objects[" + (index + 3) + "]), id" + materialID + "_distance" + specialFuncs + ");\n";
+                        sdf1 += firstPart + " = "+ mixStr + "(" + functionName.ToString() + "(posID" + rmObject.ID + ",_Objects[" + (index + 3) + "]), id" + materialID + "_distance" + specialFuncs + ");\n";
                         break;
                     case ShaderComponent.ScaleInfo.TwoDimension:
-                        sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + generalIterator + ", vec2(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "])), id" + materialID + "_distance "+ specialFuncs + ");\n";
+                        sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + rmObject.ID + ", vec2(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "])), id" + materialID + "_distance "+ specialFuncs + ");\n";
                         break;
                     case ShaderComponent.ScaleInfo.ThreeDimension:
-                        sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + generalIterator + ", vec3(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "],_Objects[" + (index + 5) + "])), id" + materialID + "_distance" + specialFuncs + ");\n";
+                        sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + rmObject.ID + ", vec3(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "],_Objects[" + (index + 5) + "])), id" + materialID + "_distance" + specialFuncs + ");\n";
                         break;
                 }
-                generalIterator++;
             }
             sdf1 += "               vec4 distID" + materialID + " = vec4(id" + materialID + "_distance, material_ID" + materialID + ", position.xz + vec2(position.y, 0.0));\n";
 
@@ -318,6 +316,15 @@ public class RayMarchingController : MonoBehaviour
     }
     private void Start()
     {
+        int index = 0;
+        //detect all gameobjects with raymarch objects
+        var rM_Objects = FindObjectsOfType<RM_Object>();
+        foreach (var rM_Object in rM_Objects)
+        {
+            var materialName = rM_Object.SurfaceComponent.name;
+            rM_Object.SetID(index++);
+        }
+
         OrganizeShader();
     }
     public void OrganizeShader()
@@ -362,6 +369,7 @@ public class RayMarchingController : MonoBehaviour
             var rmObject = gameObjects[i].GetComponent<RM_Object>();
             if (rmObject.ShaderComponent == null)
             {
+                Debug.LogWarning("Missing Shader Component", rmObject.gameObject);
                 continue;
             }
             else if (!sdfTextArray.Contains(rmObject.ShaderComponent.TextFile))
@@ -424,7 +432,8 @@ public class RayMarchingController : MonoBehaviour
             for (int i = 0; i < gomat[material].Count; i++)
             {
                 var GO = gomat[material][i].gameObject;
-                GO.GetComponent<RM_Object>().SetID(i);
+                    var rmObject = GO.GetComponent<RM_Object>();
+                    var index = rmObject.ID;
                 RM_Camera.RM_Objects.Add(GO.transform.position.x);
                 RM_Camera.RM_Objects.Add(GO.transform.position.y);
                 RM_Camera.RM_Objects.Add(GO.transform.position.z);
