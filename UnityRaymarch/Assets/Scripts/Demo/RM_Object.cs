@@ -72,7 +72,7 @@ public class RM_Object : MonoBehaviour
         ID = i;
     }
     int prevFrame = -1;
-    private void Update()
+    private void LateUpdate()
     {
         if (PositionXHistory == null)
         {
@@ -118,7 +118,7 @@ public class RM_Object : MonoBehaviour
         if (Time.frameCount % 5 == 0 && prevFrame != Time.frameCount )
         {
             prevFrame = Time.frameCount ;
-            if (Mathf.Abs(previousPosition.x-transform.position.x)>0.01f)
+            if (Mathf.Abs(previousPosition.x-transform.position.x) > 0.01f)
             {
                 PositionXHistory.Add(new SyncRMObject(Time.frameCount, transform.position.x));
             }

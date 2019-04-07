@@ -409,7 +409,7 @@ const float material_ID3 = 4;
 
 const float material_ID4 = 5;
 
- uniform float _Objects[60];
+ uniform float _Objects[50];
 // Box: correct distance to corners
 float fBox(vec3 p, vec3 b) {
 	vec3 d = abs(p) - b;
@@ -490,9 +490,6 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
                vec3 posID1 = position - vec3(_Objects[10], _Objects[11], _Objects[12]);
                posID1= posID1*rotationMatrix(vec3(_Objects[16], _Objects[17], _Objects[18]),  _Objects[19]);
                id1_distance  = min(fBox(posID1, vec3(_Objects[13], _Objects[14],_Objects[15])), id1_distance);
-               vec3 posID3 = position - vec3(_Objects[30], _Objects[31], _Objects[32]);
-               posID3= posID3*rotationMatrix(vec3(_Objects[36], _Objects[37], _Objects[38]),  _Objects[39]);
-               id1_distance  = min(fBox(posID3, vec3(_Objects[33], _Objects[34],_Objects[35])), id1_distance);
                vec4 distID1 = vec4(id1_distance, material_ID1, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID1);
 
@@ -504,16 +501,16 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
                result = DistUnionCombine(result, distID2);
 
          float id3_distance = 1e9;
-               vec3 posID4 = position - vec3(_Objects[40], _Objects[41], _Objects[42]);
-               posID4= posID4*rotationMatrix(vec3(_Objects[46], _Objects[47], _Objects[48]),  _Objects[49]);
-               id3_distance  = min(fSphere(posID4,_Objects[43]), id3_distance);
+               vec3 posID3 = position - vec3(_Objects[30], _Objects[31], _Objects[32]);
+               posID3= posID3*rotationMatrix(vec3(_Objects[36], _Objects[37], _Objects[38]),  _Objects[39]);
+               id3_distance  = min(fSphere(posID3,_Objects[33]), id3_distance);
                vec4 distID3 = vec4(id3_distance, material_ID3, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID3);
 
          float id4_distance = 1e9;
-               vec3 posID5 = position - vec3(_Objects[50], _Objects[51], _Objects[52]);
-               posID5= posID5*rotationMatrix(vec3(_Objects[56], _Objects[57], _Objects[58]),  _Objects[59]);
-               id4_distance  = min(fBox(posID5, vec3(_Objects[53], _Objects[54],_Objects[55])), id4_distance);
+               vec3 posID4 = position - vec3(_Objects[40], _Objects[41], _Objects[42]);
+               posID4= posID4*rotationMatrix(vec3(_Objects[46], _Objects[47], _Objects[48]),  _Objects[49]);
+               id4_distance  = min(fBox(posID4, vec3(_Objects[43], _Objects[44],_Objects[45])), id4_distance);
                vec4 distID4 = vec4(id4_distance, material_ID4, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID4);
 

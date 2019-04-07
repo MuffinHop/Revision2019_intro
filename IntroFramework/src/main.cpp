@@ -590,7 +590,7 @@ int __cdecl main(int argc, char* argv[])
 
 		((PFNGLUNIFORM1FVPROC)wglGetProcAddress("glUniform1fv"))(ObjectsID, length, RM_Objects);
 
-		((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))( resolutionID, 1920, 1080, 1920, 1080);
+		((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))( resolutionID, XRES, YRES, XRES, YRES);
 
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(iTimeID, iTime);
 
@@ -612,7 +612,7 @@ int __cdecl main(int argc, char* argv[])
 
 
 #ifdef DEBUG
-		time += 1.0f / 60.0f;
+		time += 30.0f / 60.0f;
 #endif
 		glRects(-1, -1, 1, 1);
 
