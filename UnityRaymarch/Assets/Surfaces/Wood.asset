@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
-  m_Name: Glassy
+  m_Name: Wood
   m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.27
-  albedo: {r: 1, g: 1, b: 1, a: 1}
-  smoothness: 0.8
-  reflectindx: 0.69
+  reflectionCoefficient: 0.04
+  albedo: {r: 0.6509434, g: 0.3772959, b: 0.26713246, a: 1}
+  smoothness: 0.51
+  reflectindx: 0.03

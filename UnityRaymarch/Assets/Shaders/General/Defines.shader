@@ -1,4 +1,4 @@
-﻿#define maxItersGlobal 123
+﻿#define maxItersGlobal 64
 #define fogDensity 0.01
 #define ENABLE_FOG
 #define ENABLE_REFLECTIONS

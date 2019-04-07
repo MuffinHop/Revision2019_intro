@@ -11,6 +11,10 @@ public class RayMarchingController : MonoBehaviour
     private List<GameObject> gameObjects;
     private List<RM_Surface> surfaces;
     private Dictionary<RM_Surface, List<RM_Object>> gomat;
+    public Dictionary<RM_Surface, List<RM_Object>> GetSortedObjectList()
+    {
+        return gomat;
+    }
     string shaderBeginning = @"Shader ""Standard Trace Marching""
 {
 	Properties{
@@ -64,10 +68,17 @@ public class RayMarchingController : MonoBehaviour
     string GetShaderPart(string file)
     {
         string path = "Assets/Shaders/" + file;
-        StreamReader reader = new StreamReader(path);
-        string code = reader.ReadToEnd();
-        reader.Close();
-        return code;
+        if (System.IO.File.Exists(path))
+        {
+            StreamReader reader = new StreamReader(path);
+            string code = reader.ReadToEnd();
+            reader.Close();
+            return code;
+        }
+        else
+        {
+            return null;
+        }
     }
     string materialIDStr = "";
     int getMaterialRegister(RM_Surface material)
@@ -91,6 +102,10 @@ public class RayMarchingController : MonoBehaviour
     }
     string GetDistanceFields()
     {
+        if (surfaces == null)
+        {
+            surfaces = new List<RM_Surface>();
+        }
         List<string> includeCode = new List<string>();
         string sdf;
         string sdf0 = @"vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
@@ -100,16 +115,15 @@ public class RayMarchingController : MonoBehaviour
         string sdf1 = "\n";
         var culture = System.Globalization.CultureInfo.InvariantCulture;
         int materialID = 0;
-        foreach(var surface in surfaces)
+        foreach (var surface in surfaces)
         {
             sdf1 += "         float id" + materialID + "_distance = 1e9;\n";
             for (int i = 0; i < gomat[surface].Count; i++)
             {
-
-                var rmObject = gomat[surface][i].GetComponent<RM_Object>();
+                var rmObject = gomat[surface][i];
                 if (rmObject.ShaderComponent == null)
                 {
-                    Debug.LogWarning(rmObject.name + "missing shadercomponent");
+                    Debug.LogWarning(rmObject.name + "missing shadercomponent", rmObject.gameObject);
                     continue;
                 }
                 var functionName = rmObject.ShaderComponent.FunctionName;
@@ -223,10 +237,10 @@ public class RayMarchingController : MonoBehaviour
                 switch (scaleFormat)
                 {
                     case ShaderComponent.ScaleInfo.OneDimension:
-                        sdf1 += firstPart + " = "+ mixStr + "(" + functionName.ToString() + "(posID" + rmObject.ID + ",_Objects[" + (index + 3) + "]), id" + materialID + "_distance" + specialFuncs + ");\n";
+                        sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + rmObject.ID + ",_Objects[" + (index + 3) + "]), id" + materialID + "_distance" + specialFuncs + ");\n";
                         break;
                     case ShaderComponent.ScaleInfo.TwoDimension:
-                        sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + rmObject.ID + ", vec2(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "])), id" + materialID + "_distance "+ specialFuncs + ");\n";
+                        sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + rmObject.ID + ", vec2(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "])), id" + materialID + "_distance " + specialFuncs + ");\n";
                         break;
                     case ShaderComponent.ScaleInfo.ThreeDimension:
                         sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + rmObject.ID + ", vec3(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "],_Objects[" + (index + 5) + "])), id" + materialID + "_distance" + specialFuncs + ");\n";
@@ -235,7 +249,7 @@ public class RayMarchingController : MonoBehaviour
             }
             sdf1 += "               vec4 distID" + materialID + " = vec4(id" + materialID + "_distance, material_ID" + materialID + ", position.xz + vec2(position.y, 0.0));\n";
 
-            if((surface as RM_Material) != null && ((RM_Material)surface).albedo.a < 1.0f)
+            if ((surface as RM_Material) != null && ((RM_Material)surface).albedo.a < 1.0f)
             {
                 sdf1 += "               result = DistUnionCombineTransparent(result, distID" + materialID + ", transparencyPointer);\n\n";
             }
@@ -250,7 +264,7 @@ public class RayMarchingController : MonoBehaviour
             return result;
         }";
         string sdfIncludes = "\n";
-        foreach( string sdfInclude in includeCode)
+        foreach (string sdfInclude in includeCode)
         {
             var shaderCode = GetShaderPart(sdfInclude);
             sdfIncludes += shaderCode + "\n";
@@ -280,7 +294,8 @@ public class RayMarchingController : MonoBehaviour
                 mat1 += ";\n              mat.smoothness = " + material.smoothness.ToString(culture);
                 mat1 += ";\n              mat.reflectindx = " + material.reflectindx.ToString(culture);
                 mat1 += ";\n       }\n";
-            } else if((surfaces[i] as RM_Pattern) != null)
+            }
+            else if ((surfaces[i] as RM_Pattern) != null)
             {
                 var surface = surfaces[i] as RM_Pattern;
                 var functionName = surface.FunctionName;
@@ -315,8 +330,10 @@ public class RayMarchingController : MonoBehaviour
         var rM_Objects = FindObjectsOfType<RM_Object>();
         foreach (var rM_Object in rM_Objects)
         {
-            var materialName = rM_Object.SurfaceComponent.name;
+            var surfaceComponent = rM_Object.SurfaceComponent;
+            var materialName = surfaceComponent.name;
             rM_Object.SetID(index++);
+            getMaterialRegister(surfaceComponent);
         }
 
         OrganizeShader();
@@ -324,27 +341,20 @@ public class RayMarchingController : MonoBehaviour
     public void OrganizeShader()
     {
         string coreCode = "";
-        var GOs = FindObjectsOfType<RM_Object>();
+        var rmObjects = FindObjectsOfType<RM_Object>();
         gameObjects = new List<GameObject>();
 
-        foreach (var GO in GOs)
-        {
-            gameObjects.Add(GO.gameObject);
-            var material = GO.GetComponent<RM_Object>().SurfaceComponent;
-            if (material != null)
-            {
-                getMaterialRegister(material);
-            }
-        }
+        int validRMObjects = 0;
         gomat = new Dictionary<RM_Surface, List<RM_Object>>();
-        foreach ( var GO in GOs)
+        foreach (var GO in rmObjects)
         {
-            var rmObj = GO.GetComponent<RM_Object>();
-            var material = rmObj.SurfaceComponent;
-            if (!gomat.ContainsKey(material)) {
-                gomat.Add(material,new List<RM_Object>() );
+            var material = GO.SurfaceComponent;
+            if (!gomat.ContainsKey(material))
+            {
+                gomat.Add(material, new List<RM_Object>());
             }
-            gomat[material].Add(rmObj);
+            gomat[material].Add(GO);
+            validRMObjects++;
         }
         string fullcode = shaderBeginning;
 
@@ -356,24 +366,47 @@ public class RayMarchingController : MonoBehaviour
             coreCode += "\n" + GetShaderPart(part);
         }
         coreCode += "\n" + materialIDStr;
-        coreCode += "\n uniform float _Objects[" + (gameObjects.Count * 10) + "];";
+        coreCode += "\n uniform float _Objects[" + (validRMObjects * 10) + "];";
         var sdfTextArray = new List<TextAsset>();
-        for (int i = 0; i < gameObjects.Count; i++)
+        foreach (var rmObject in rmObjects)
         {
-            var rmObject = gameObjects[i].GetComponent<RM_Object>();
             if (rmObject.ShaderComponent == null)
             {
                 Debug.LogWarning("Missing Shader Component", rmObject.gameObject);
                 continue;
             }
-            else if (!sdfTextArray.Contains(rmObject.ShaderComponent.TextFile))
+            var shaderComponent = rmObject.ShaderComponent;
+            foreach (var additionalShaderFile in shaderComponent.AdditionalShaderFiles)
             {
-                sdfTextArray.Add(rmObject.ShaderComponent.TextFile);
+                if (!sdfTextArray.Contains(additionalShaderFile) && additionalShaderFile != null)
+                {
+                    sdfTextArray.Add(additionalShaderFile);
+                }
+                else if (additionalShaderFile == null)
+                {
+                    Debug.LogWarning("Shader Component *Additional* Text File Missing", rmObject);
+                }
+            }
+            var textFile = rmObject.ShaderComponent.TextFile;
+            if (!sdfTextArray.Contains(textFile) && textFile != null)
+            {
+                sdfTextArray.Add(textFile);
+            }
+            else if (textFile == null)
+            {
+                Debug.LogWarning("Shader Component Text File Missing", rmObject);
             }
         }
+
         for (int i = 0; i < sdfTextArray.Count; i++)
         {
-            var shaderCode = GetShaderPart("SDFs/Primitive/" + sdfTextArray[i].name + ".glslinc");
+            var shaderPath0 = "SDFs/Primitive/" + sdfTextArray[i].name + ".glslinc";
+            var shaderPath1 = "SDFs/Custom/" + sdfTextArray[i].name + ".glslinc";
+            var shaderCode = GetShaderPart(shaderPath0);
+            if (shaderCode == null)
+            {
+                shaderCode = GetShaderPart(shaderPath1);
+            }
             coreCode += "\n" + shaderCode;
         }
 
@@ -391,7 +424,7 @@ public class RayMarchingController : MonoBehaviour
         }
 
 
-            coreCode += "\n" + GetMaterials();
+        coreCode += "\n" + GetMaterials();
         foreach (string part in end)
         {
             coreCode += "\n" + GetShaderPart(part);
@@ -417,28 +450,42 @@ public class RayMarchingController : MonoBehaviour
         if (RM_Camera.RM_Objects == null)
         {
             RM_Camera.RM_Objects = new List<float>();
+            foreach (var material in surfaces)
+            {
+                if (gomat.ContainsKey(material))
+                {
+                    for (int i = 0; i < gomat[material].Count; i++)
+                    {
+                        //lazylazylazylazylazylazylazylazy
+                        for (int j = 0; j < 10; j++)
+                        {
+                            RM_Camera.RM_Objects.Add(0);
+                        }
+                    }
+                }
+            }
         }
-        RM_Camera.RM_Objects.Clear();
 
         foreach (var material in surfaces)
         {
-            if(gomat.ContainsKey(material)) {
-            for (int i = 0; i < gomat[material].Count; i++)
+            if (gomat.ContainsKey(material))
             {
-                var GO = gomat[material][i].gameObject;
+                for (int i = 0; i < gomat[material].Count; i++)
+                {
+                    var GO = gomat[material][i].gameObject;
                     var rmObject = GO.GetComponent<RM_Object>();
                     var index = rmObject.ID;
-                RM_Camera.RM_Objects.Add(GO.transform.position.x);
-                RM_Camera.RM_Objects.Add(GO.transform.position.y);
-                RM_Camera.RM_Objects.Add(GO.transform.position.z);
-                RM_Camera.RM_Objects.Add(GO.transform.localScale.x / 2.0f);
-                RM_Camera.RM_Objects.Add(GO.transform.localScale.y / 2.0f);
-                RM_Camera.RM_Objects.Add(GO.transform.localScale.z / 2.0f);
-                RM_Camera.RM_Objects.Add(GO.transform.rotation.x);
-                RM_Camera.RM_Objects.Add(GO.transform.rotation.y);
-                RM_Camera.RM_Objects.Add(GO.transform.rotation.z);
-                RM_Camera.RM_Objects.Add(GO.transform.rotation.w);
-            }
+                    RM_Camera.RM_Objects[index * 10 + 0] = GO.transform.position.x;
+                    RM_Camera.RM_Objects[index * 10 + 1] = GO.transform.position.y;
+                    RM_Camera.RM_Objects[index * 10 + 2] = GO.transform.position.z;
+                    RM_Camera.RM_Objects[index * 10 + 3] = GO.transform.localScale.x / 2.0f;
+                    RM_Camera.RM_Objects[index * 10 + 4] = GO.transform.localScale.y / 2.0f;
+                    RM_Camera.RM_Objects[index * 10 + 5] = GO.transform.localScale.z / 2.0f;
+                    RM_Camera.RM_Objects[index * 10 + 6] = GO.transform.rotation.x;
+                    RM_Camera.RM_Objects[index * 10 + 7] = GO.transform.rotation.y;
+                    RM_Camera.RM_Objects[index * 10 + 8] = GO.transform.rotation.z;
+                    RM_Camera.RM_Objects[index * 10 + 9] = GO.transform.rotation.w;
+                }
             }
         }
     }

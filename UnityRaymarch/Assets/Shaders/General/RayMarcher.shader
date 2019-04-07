@@ -25,15 +25,19 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 	{
 		result.position = ray.origin + ray.direction * result.distanc;
 		vec4 sceneDistance = GetDistanceScene(result.position, transparencyPointer);
-
+		/*
 		if (inWater == 0. && (i < 1) && (sceneDistance.y == material_ID2) && (sceneDistance.x < 0.001)) {
 			inWater = 1.;
 			wasInWater = inWater;
 		}
-		else {
+		else {*/
 			result.id = sceneDistance.yzw;
-			result.distanc = result.distanc + sceneDistance.x / 2.0;
-		}
+			result.distanc = result.distanc + sceneDistance.x;
+		//}
+		/*
+		if (sceneDistance.x < 0.001 + float(maxIter)*0.00001) {
+			break;
+		}*/
 	}
 	if (result.distanc >= ray.length)
 	{
@@ -75,7 +79,7 @@ float traceToLight(vec3 rayPosition, vec3 normalTrace, vec3 lightDir, float rayL
 	float t = 0.1;
 	float k = rayLightDistance;
 	float res = 1.0;
-	for (int i = 0; i < 32; i++)
+	for (int i = 0; i < 24; i++)
 	{
 		float h = GetDistanceScene(ro + rd * t, transparencyInformation).x;
 		h = max(h, 0.0);

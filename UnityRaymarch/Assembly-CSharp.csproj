@@ -101,9 +101,11 @@
     <None Include="Assets\Shaders\SDFs\Primitive\sdRoundedCylinder.glslinc" />
     <None Include="Assets\Shaders\Operators\OpDifferenceColumns.shader" />
     <None Include="Assets\Shaders\BasicFunctions.glslinc" />
+    <None Include="Assets\Shaders\SDFs\Custom\TreeTrunk.glslinc" />
     <None Include="Assets\Shaders\SDFs\Primitive\Circle.glslinc" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdRoundBox.glslinc" />
     <None Include="Assets\Shaders\SDFs\Primitive\Plane.glslinc" />
+    <None Include="Assets\Shaders\SDFs\Custom\TreeBush.glslinc" />
     <None Include="Assets\Shaders\SDFs\Primitive\Box2Cheap.glslinc" />
     <None Include="Assets\Shaders\Operators\OpTongue.shader" />
     <None Include="Assets\Shaders\Operators\OpIntersectionStairs.shader" />

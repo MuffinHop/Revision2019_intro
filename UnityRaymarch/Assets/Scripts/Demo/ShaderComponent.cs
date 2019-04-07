@@ -19,5 +19,6 @@ public class ShaderComponent : ScriptableObject
     public TextAsset TextFile;
     public ScaleInfo Scale;
     public string FunctionName;
+    public List<TextAsset> AdditionalShaderFiles;
 
 }

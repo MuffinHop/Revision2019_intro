@@ -8,27 +8,10 @@ using static RM_Object;
 
 public class RM_SyncDataController : MonoBehaviour
 {
-    Dictionary<string, List<RM_Object>> _syncData;
-
-    private void Start()
-    {
-        _syncData = new Dictionary<string, List<RM_Object>>();
-
-        //detect all gameobjects with raymarch objects
-        var rM_Objects = FindObjectsOfType<RM_Object>();
-        foreach (var rM_Object in rM_Objects)
-        {
-            var materialName = rM_Object.SurfaceComponent.name;
-            if (!_syncData.ContainsKey(materialName))
-            {
-                _syncData.Add(materialName, new List<RM_Object>());
-            }
-            _syncData[materialName].Add(rM_Object);
-        }
-
-    }
-
-
+    [SerializeField]
+    private RayMarchingController _rayMarchingController;
+    
+    
     public void OnDestroy()
     {
         Generate();
@@ -61,10 +44,10 @@ public class RM_SyncDataController : MonoBehaviour
     public void Generate()
     {
         var culture = System.Globalization.CultureInfo.InvariantCulture;
-
+        var syncData = _rayMarchingController.GetSortedObjectList();
         int arrayLength = 0;
         var syncArrayStr = "";
-        foreach (KeyValuePair<string, List<RM_Object>> item in _syncData)
+        foreach (KeyValuePair<RM_Surface, List<RM_Object>> item in syncData)
         {
             var rmObjects = item.Value;
             foreach (var rmObject in rmObjects)
@@ -162,8 +145,9 @@ float setVal(vec3 arr[], float rrow, long size, long *R_INDX) {
 
 ";
 
+
         string arrayCode = "";
-        foreach (KeyValuePair<string, List<RM_Object>> item in _syncData)
+        foreach (KeyValuePair<RM_Surface, List<RM_Object>> item in syncData)
         {
             var rmObjects = item.Value;
             foreach (var rmObject in rmObjects)
@@ -179,7 +163,7 @@ float setVal(vec3 arr[], float rrow, long size, long *R_INDX) {
                 syncCode += "pointerID" + rmObject.ID + "ArrayRotationY = 0,";
                 syncCode += "pointerID" + rmObject.ID + "ArrayRotationZ = 0,";
                 syncCode += "pointerID" + rmObject.ID + "ArrayRotationW = 0; \n";
-                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayPositionX, row, " + (rmObject.PositionXHistory.Count+2) + ", &pointerID" + rmObject.ID + "ArrayPositionX ); \n";
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayPositionX, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayPositionX ); \n";
                 index++;
                 arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayPositionY, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayPositionY ); \n";
                 index++;
@@ -208,7 +192,7 @@ float setVal(vec3 arr[], float rrow, long size, long *R_INDX) {
             if (itemKey.Count > 0)
             {
                 syncCode += "long " + item + "ArrayPointer = 0;\n";
-                regularSyncCode += "       " + item + " = setVal(" + item + "Array, row, " + (_syncData.Count+2) + ", &" + item + "ArrayPointer); \n";
+                regularSyncCode += "       " + item + " = setVal(" + item + "Array, row, " + (syncData.Count+2) + ", &" + item + "ArrayPointer); \n";
             }
         }
         syncCode += @"

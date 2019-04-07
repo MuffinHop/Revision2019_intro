@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: a70a966103260ff4d8d032fa570a20d6, type: 3}
-  m_Name: Sphere
+  m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
+  m_Name: LeafGreen
   m_EditorClassIdentifier: 
-  TextFile: {fileID: 10900000, guid: 963c6bc0f4784bc42ac1b3ce7518f6f4, type: 3}
-  Mixer: 0
-  Scale: 0
-  FunctionName: fSphere
+  reflectionCoefficient: 0.11
+  albedo: {r: 0.13702786, g: 0.5849056, b: 0.11863652, a: 1}
+  smoothness: 0.17
+  reflectindx: 0.05
