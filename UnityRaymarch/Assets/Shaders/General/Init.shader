@@ -72,6 +72,7 @@ vec4 mainImage()
 	float e = 1.2 / (rf2_1 * rf2_1);
 	vec3 noise = (rand(uv + _iTime) - .5) * vec3(1.0, 1.0, 1.0) * 0.01;
 	fragColor = min(max(vec4(e*Reinhard(sceneColor * exposure) + noise, 1.0), vec4(0.0, 0.0, 0.0, 1.0)), vec4(1.0, 1.0, 1.0, 1.0));
+	fragColor.rgb = fragColor.rgb + filmgrain(fragColor.rgb) * 0.2;
 	return  fragColor;
 }
 

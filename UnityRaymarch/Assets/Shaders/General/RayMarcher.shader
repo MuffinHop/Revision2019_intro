@@ -23,7 +23,7 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 	result.id.x = 0.0;
 	for (int i = 0;i <= maxIter;i++)
 	{
-		result.position = ray.origin + ray.direction * result.distanc;
+		result.position = ray.origin + ray.direction * result.distanc * (1.0 + float(maxIter)*0.00333);
 		vec4 sceneDistance = GetDistanceScene(result.position, transparencyPointer);
 		/*
 		if (inWater == 0. && (i < 1) && (sceneDistance.y == material_ID2) && (sceneDistance.x < 0.001)) {

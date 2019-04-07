@@ -310,87 +310,110 @@
                {2100000.0f, 12, 0 } 
               }; 
        float iTime;
-       vec3 DirectionalLightXArray[4] = { 
+       vec3 DirectionalLightXArray[5] = { 
                { 0, 0, 0 }, 
-               { 184, 0, 0 }, 
-               {100000.0f, 0, 0 }, 
-               {2100000.0f, 0, 0 } 
+               { 184, 1, 0 }, 
+               { 534, -0.3, 0 }, 
+               {100000.0f, -0.3, 0 }, 
+               {2100000.0f, -0.3, 0 } 
               }; 
        float DirectionalLightX;
-       vec3 DirectionalLightYArray[5] = { 
+       vec3 DirectionalLightYArray[6] = { 
                { 0, 1, 0 }, 
                { 88, 0.4, 0 }, 
-               { 184, 0.7, 0 }, 
-               {100000.0f, 0.7, 0 }, 
-               {2100000.0f, 0.7, 0 } 
+               { 184, 0.4, 0 }, 
+               { 534, 0.5, 0 }, 
+               {100000.0f, 0.5, 0 }, 
+               {2100000.0f, 0.5, 0 } 
               }; 
        float DirectionalLightY;
-       vec3 DirectionalLightZArray[5] = { 
+       vec3 DirectionalLightZArray[6] = { 
                { 0, -1, 0 }, 
                { 97, -1, 0 }, 
                { 184, 1, 0 }, 
-               {100000.0f, 1, 0 }, 
-               {2100000.0f, 1, 0 } 
+               { 534, 0.3, 0 }, 
+               {100000.0f, 0.3, 0 }, 
+               {2100000.0f, 0.3, 0 } 
               }; 
        float DirectionalLightZ;
-       vec3 DirectionalLightRArray[4] = { 
-               { 0, 12, 0 }, 
+       vec3 DirectionalLightRArray[6] = { 
+               { 0, 22, 0 }, 
                { 88, 11, 0 }, 
-               {100000.0f, 11, 0 }, 
-               {2100000.0f, 11, 0 } 
+               { 184, 3, 0 }, 
+               { 534, 22, 0 }, 
+               {100000.0f, 22, 0 }, 
+               {2100000.0f, 22, 0 } 
               }; 
        float DirectionalLightR;
-       vec3 DirectionalLightGArray[4] = { 
-               { 0, 12, 0 }, 
+       vec3 DirectionalLightGArray[6] = { 
+               { 0, 14, 0 }, 
                { 88, 7, 0 }, 
-               {100000.0f, 7, 0 }, 
-               {2100000.0f, 7, 0 } 
+               { 184, 2, 0 }, 
+               { 534, 9, 0 }, 
+               {100000.0f, 9, 0 }, 
+               {2100000.0f, 9, 0 } 
               }; 
        float DirectionalLightG;
-       vec3 DirectionalLightBArray[4] = { 
-               { 0, 12, 0 }, 
+       vec3 DirectionalLightBArray[6] = { 
+               { 0, 12.06, 0 }, 
                { 88, 7, 0 }, 
+               { 184, 1, 0 }, 
+               { 534, 7, 0 }, 
                {100000.0f, 7, 0 }, 
                {2100000.0f, 7, 0 } 
               }; 
        float DirectionalLightB;
-       vec3 PointLightPositionXArray[3] = { 
+       vec3 PointLightPositionXArray[5] = { 
                { 0, 2, 0 }, 
-               {100000.0f, 2, 0 }, 
-               {2100000.0f, 2, 0 } 
+               { 184, 7, 0 }, 
+               { 534, 0, 0 }, 
+               {100000.0f, 0, 0 }, 
+               {2100000.0f, 0, 0 } 
               }; 
        float PointLightPositionX;
-       vec3 PointLightPositionYArray[4] = { 
+       vec3 PointLightPositionYArray[6] = { 
                { 0, -2, 1 }, 
-               { 88, 3, 0 }, 
-               {100000.0f, 3, 0 }, 
-               {2100000.0f, 3, 0 } 
+               { 88, 3.12, 0 }, 
+               { 184, 12, 0 }, 
+               { 534, -8, 0 }, 
+               {100000.0f, -8, 0 }, 
+               {2100000.0f, -8, 0 } 
               }; 
        float PointLightPositionY;
-       vec3 PointLightPositionZArray[3] = { 
+       vec3 PointLightPositionZArray[6] = { 
                { 0, 32, 0 }, 
-               {100000.0f, 32, 0 }, 
-               {2100000.0f, 32, 0 } 
+               { 88, -12, 0 }, 
+               { 184, -22, 0 }, 
+               { 534, -22, 0 }, 
+               {100000.0f, -22, 0 }, 
+               {2100000.0f, -22, 0 } 
               }; 
        float PointLightPositionZ;
-       vec3 PointLightRArray[4] = { 
-               { 0, 188, 1 }, 
-               { 88, 777, 0 }, 
-               {100000.0f, 777, 0 }, 
-               {2100000.0f, 777, 0 } 
+       vec3 PointLightRArray[6] = { 
+               { 0, 88, 1 }, 
+               { 88, 155, 0 }, 
+               { 184, 555, 0 }, 
+               { 534, 222, 0 }, 
+               {100000.0f, 222, 0 }, 
+               {2100000.0f, 222, 0 } 
               }; 
        float PointLightR;
-       vec3 PointLightGArray[4] = { 
-               { 0, 155, 1 }, 
-               { 88, 333, 0 }, 
-               {100000.0f, 333, 0 }, 
-               {2100000.0f, 333, 0 } 
+       vec3 PointLightGArray[6] = { 
+               { 0, 44, 1 }, 
+               { 88, 88, 0 }, 
+               { 184, 333, 0 }, 
+               { 534, 144, 0 }, 
+               {100000.0f, 144, 0 }, 
+               {2100000.0f, 144, 0 } 
               }; 
        float PointLightG;
-       vec3 PointLightBArray[3] = { 
-               { 0, 32, 0 }, 
-               {100000.0f, 32, 0 }, 
-               {2100000.0f, 32, 0 } 
+       vec3 PointLightBArray[6] = { 
+               { 0, 11, 1 }, 
+               { 88, 33, 0 }, 
+               { 184, 111, 0 }, 
+               { 534, 122, 0 }, 
+               {100000.0f, 122, 0 }, 
+               {2100000.0f, 122, 0 } 
               }; 
        float PointLightB;
        vec3 CameraPositionXArray[5] = { 

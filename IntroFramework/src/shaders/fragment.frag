@@ -12,7 +12,7 @@ uniform vec4 _CameraLookAt;
 uniform vec4 _CameraUp;
 uniform float _FOV;
 
-#define maxItersGlobal 64
+#define maxItersGlobal 48
 #define fogDensity 0.01
 #define ENABLE_FOG
 #define ENABLE_REFLECTIONS
@@ -137,6 +137,19 @@ float perlinnoise(in vec2 p)
 	vec3 h = max(0.5 - vec3(dot(a, a), dot(b, b), dot(c, c)), 0.0);
 	vec3 n = h * h*h*h*vec3(dot(a, hash(i + 0.0)), dot(b, hash(i + o)), dot(c, hash(i + 1.0)));
 	return dot(n, vec3(70.0));
+}
+// A hash function for some noise
+float hash12(vec2 p)
+{
+  vec3 p3  = fract(vec3(p.xyx) * .1031);
+  p3 += dot(p3, p3.yzx + 19.19);
+  return fract((p3.x + p3.y) * p3.z);
+}
+
+// Some magic values for a pretty filmic grain
+vec3 filmgrain(vec3 color) {
+    float noise = (hash12(gl_FragCoord.xy + 0.001*_iTime) / 3.0 + 0.85);
+    return color * noise;
 }
 
 // ------------------ 
@@ -600,7 +613,7 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 	result.id.x = 0.0;
 	for (int i = 0;i <= maxIter;i++)
 	{
-		result.position = ray.origin + ray.direction * result.distanc;
+		result.position = ray.origin + ray.direction * result.distanc * (1.0 + float(maxIter)*0.00333);
 		vec4 sceneDistance = GetDistanceScene(result.position, transparencyPointer);
 		/*
 		if (inWater == 0. && (i < 1) && (sceneDistance.y == material_ID2) && (sceneDistance.x < 0.001)) {
@@ -958,6 +971,7 @@ vec4 mainImage()
 	float e = 1.2 / (rf2_1 * rf2_1);
 	vec3 noise = (rand(uv + _iTime) - .5) * vec3(1.0, 1.0, 1.0) * 0.01;
 	fragColor = min(max(vec4(e*Reinhard(sceneColor * exposure) + noise, 1.0), vec4(0.0, 0.0, 0.0, 1.0)), vec4(1.0, 1.0, 1.0, 1.0));
+	fragColor.rgb = fragColor.rgb + filmgrain(fragColor.rgb) * 0.2;
 	return  fragColor;
 }
 
