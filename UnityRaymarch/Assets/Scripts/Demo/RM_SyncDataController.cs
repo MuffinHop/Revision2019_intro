@@ -4,26 +4,30 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
+using static RM_Object;
 
 public class RM_SyncDataController : MonoBehaviour
 {
-    Dictionary<string, List<RM_SyncData>> _syncData;
+    Dictionary<string, List<RM_Object>> _syncData;
 
     private void Start()
     {
-        _syncData = new Dictionary<string, List<RM_SyncData>>();
+        _syncData = new Dictionary<string, List<RM_Object>>();
+
+        //detect all gameobjects with raymarch objects
+        var rM_Objects = FindObjectsOfType<RM_Object>();
+        foreach (var rM_Object in rM_Objects)
+        {
+            var materialName = rM_Object.SurfaceComponent.name;
+            if (!_syncData.ContainsKey(materialName))
+            {
+                _syncData.Add(materialName, new List<RM_Object>());
+            }
+            _syncData[materialName].Add(rM_Object);
+        }
+
     }
 
-    public void AddData(string name, float data)
-    {
-        if (!Application.isPlaying) return;
-        if (_syncData.ContainsKey(name) == false)
-        {
-            _syncData.Add(name, new List<RM_SyncData>());
-        }
-        var syncData = new RM_SyncData(RocketNet.Track.Key.Type.Linear, Time.frameCount, data);
-        _syncData[name].Add(syncData);
-    }
 
     public void OnDestroy()
     {
@@ -38,50 +42,71 @@ public class RM_SyncDataController : MonoBehaviour
         writer.WriteLine(code);
         writer.Close();
     }
-
+    string GetSyncArray(List<SyncRMObject> History, string arrayName)
+    {
+        var culture = System.Globalization.CultureInfo.InvariantCulture;
+        string code = "";
+        code += "       vec3 " + arrayName + "[" + (History.Capacity + 2) + "] = { \n";
+        SyncRMObject historyItem = History[0];
+        for (int i = 0; i < History.Count; i++)
+        {
+            historyItem = History[i];
+            code += "               { " + (int)historyItem.Row + ", " + historyItem.Value.ToString(culture) + ", 1 }, \n";
+        }
+        code += "               { 100000, " + historyItem.Value.ToString(culture) + ", 1 }, \n";
+        code += "               { 200000, " + historyItem.Value.ToString(culture) + ", 1 } \n";
+        code += "              }; \n \n";
+        return code;
+    }
     public void Generate()
     {
         var culture = System.Globalization.CultureInfo.InvariantCulture;
-        string syncCode = "         #include <math.h>\n         float RM_Objects[" + _syncData.Count + "];";
+
+        int arrayLength = 0;
+        var syncArrayStr = "";
+        foreach (KeyValuePair<string, List<RM_Object>> item in _syncData)
+        {
+            var rmObjects = item.Value;
+            foreach (var rmObject in rmObjects)
+            {
+                syncArrayStr += GetSyncArray(rmObject.PositionXHistory, "ID" + rmObject.ID + "ArrayPositionX");
+                syncArrayStr += GetSyncArray(rmObject.PositionYHistory, "ID" + rmObject.ID + "ArrayPositionY");
+                syncArrayStr += GetSyncArray(rmObject.PositionZHistory, "ID" + rmObject.ID + "ArrayPositionZ");
+                syncArrayStr += GetSyncArray(rmObject.ScaleXHistory, "ID" + rmObject.ID + "ArrayScaleX");
+                syncArrayStr += GetSyncArray(rmObject.ScaleYHistory, "ID" + rmObject.ID + "ArrayScaleY");
+                syncArrayStr += GetSyncArray(rmObject.ScaleZHistory, "ID" + rmObject.ID + "ArrayScaleZ");
+                syncArrayStr += GetSyncArray(rmObject.RotationXHistory, "ID" + rmObject.ID + "ArrayRotationX");
+                syncArrayStr += GetSyncArray(rmObject.RotationYHistory, "ID" + rmObject.ID + "ArrayRotationY");
+                syncArrayStr += GetSyncArray(rmObject.RotationZHistory, "ID" + rmObject.ID + "ArrayRotationZ");
+                syncArrayStr += GetSyncArray(rmObject.RotationWHistory, "ID" + rmObject.ID + "ArrayRotationW");
+                arrayLength += 10;
+            }
+        }
+
+        string syncCode = "         #include <math.h>\n         float RM_Objects[" + arrayLength + "];";
         syncCode += @"
             struct vec3 {
                     float x, y, z;
                 };
 ";
-        foreach (KeyValuePair<string, List<RM_SyncData>> item in _syncData)
-        {
-            syncCode += "       vec3 " + item.Key + "[" + (item.Value.Count + 1) + "] = { \n";
-            if (item.Value.Count > 0)
-            {
-                item.Value.Add(new RM_SyncData(Track.Key.Type.Step, 100000, 0.0f));
-            }
-            for (int i = 0; i < item.Value.Count; i++)
-            {
-                var syncval = item.Value[i];
-                if (i == item.Value.Count - 1)
-                {
-                    syncCode += "               { " + (int)syncval.Row + ", " + syncval.Value.ToString(culture) + ", " + (int)syncval.Interpolation + " } \n";
-                }
-                else
-                {
-                    syncCode += "               { " + (int)syncval.Row + ", " + syncval.Value.ToString(culture) + ", " + (int)syncval.Interpolation + " }, \n";
-                }
-            }
-            syncCode += "              }; \n \n";
-        }
+        syncCode += syncArrayStr;
+
+
         foreach (var item in SyncUp.RocketParameterNames)
         {
             List<Track.Key> itemKey = SyncUp.Device.GetTrack(item).Keys();
             if (itemKey.Count > 0)
             {
-                syncCode += "       vec3 " + item + "Array[" + (itemKey.Count + 1) + "] = { \n";
-                
+                syncCode += "       vec3 " + item + "Array[" + (itemKey.Count + 2) + "] = { \n";
+
+                Track.Key syncval = itemKey[0];
                 for (int i = 0; i < itemKey.Count; i++)
                 {
-                    var syncval = itemKey[i];
+                    syncval = itemKey[i];
                     syncCode += "               { " + (int)syncval.row + ", " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " }, \n";
                 }
-                syncCode += "               {100000.0f, 0.0f, 0.0f } \n";
+                syncCode += "               {100000.0f, " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " }, \n";
+                syncCode += "               {2100000.0f, " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " } \n";
                 syncCode += "              }; \n";
             }
             syncCode += "       float " + item + ";\n";
@@ -108,44 +133,94 @@ float rType(int r, float t) {
 	}
 	return t;
 }
-float setVal(vec3 arr[], float rrow, int size) {
-	int R_INDX = 0;
+#pragma optimize( """", off )
+float setVal(vec3 arr[], float rrow, long size, long *R_INDX) {
+    if(*R_INDX>0) {
+        *R_INDX--;
+    }
 	float t = 0;
 	float renVal = 0;
 	vec3 RET = { 0,0,0 };
 	vec3 NEXT = { 0,0,0 };
-	for (int i = 0; i < size; i++) {
+	for (long i = *R_INDX; i < size - 1; i++) {
 		if (rrow <= arr[i].row) {
-			R_INDX = i - 1;
+            if(i>0) {
+			    *R_INDX = i - 1;
+            }
 			break;
 		}
 	}
-	RET = arr[R_INDX];
-	NEXT = arr[R_INDX + 1];
+    long index = *R_INDX;
+	RET = arr[index];
+	NEXT = arr[index + 1];
 	t = (rrow - RET.row) / (NEXT.row - RET.row);
-	renVal = RET.value + (NEXT.value - RET.value) * rType(RET.type, t);
+    t = rType(RET.type, t);
+	renVal = RET.value + (NEXT.value - RET.value) * t;
 	return renVal;
 }
-    void Sync( float second)
-    {
-	    float div = 4.0 * 60.0 / 120.0;
-	    float row = second * div;
-";
-        int index = 0;
-        foreach (KeyValuePair<string, List<RM_SyncData>> item in _syncData)
-        {
-            syncCode += "       RM_Objects[" + index + "] = setVal(" + item.Key + ", row, " + _syncData.Count + " ); \n";
-            index++;
-        }
+#pragma optimize( """", on )
 
+";
+
+        string arrayCode = "";
+        foreach (KeyValuePair<string, List<RM_Object>> item in _syncData)
+        {
+            var rmObjects = item.Value;
+            foreach (var rmObject in rmObjects)
+            {
+                int index = rmObject.ID * 10;
+                syncCode += "long pointerID" + rmObject.ID + "ArrayPositionX = 0,";
+                syncCode += "pointerID" + rmObject.ID + "ArrayPositionY = 0,";
+                syncCode += "pointerID" + rmObject.ID + "ArrayPositionZ = 0,";
+                syncCode += "pointerID" + rmObject.ID + "ArrayScaleX = 0,";
+                syncCode += "pointerID" + rmObject.ID + "ArrayScaleY = 0,";
+                syncCode += "pointerID" + rmObject.ID + "ArrayScaleZ = 0,";
+                syncCode += "pointerID" + rmObject.ID + "ArrayRotationX = 0,";
+                syncCode += "pointerID" + rmObject.ID + "ArrayRotationY = 0,";
+                syncCode += "pointerID" + rmObject.ID + "ArrayRotationZ = 0,";
+                syncCode += "pointerID" + rmObject.ID + "ArrayRotationW = 0; \n";
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayPositionX, row, " + (rmObject.PositionXHistory.Count+2) + ", &pointerID" + rmObject.ID + "ArrayPositionX ); \n";
+                index++;
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayPositionY, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayPositionY ); \n";
+                index++;
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayPositionZ, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayPositionZ ); \n";
+                index++;
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayScaleX, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayScaleX ) / 2.0f; \n";
+                index++;
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayScaleY, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayScaleY ) / 2.0f; \n";
+                index++;
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayScaleZ, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayScaleZ ) / 2.0f; \n";
+                index++;
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayRotationX, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayRotationX ); \n";
+                index++;
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayRotationY, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayRotationY ); \n";
+                index++;
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayRotationZ, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayRotationZ ); \n";
+                index++;
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayRotationW, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayRotationW ); \n";
+                index++;
+            }
+        }
+        string regularSyncCode = "";
         foreach (var item in SyncUp.RocketParameterNames)
         {
             List<Track.Key> itemKey = SyncUp.Device.GetTrack(item).Keys();
             if (itemKey.Count > 0)
             {
-                syncCode += "       " + item + " = setVal(" + item + "Array, row, " + _syncData.Count + " ); \n";
+                syncCode += "long " + item + "ArrayPointer = 0;\n";
+                regularSyncCode += "       " + item + " = setVal(" + item + "Array, row, " + (_syncData.Count+2) + ", &" + item + "ArrayPointer); \n";
             }
         }
+        syncCode += @"
+        void Sync(float second)
+        {
+            float div = 4.0 * 60.0 / 120.0;
+            float row = second * 60.0;
+
+            ";
+        syncCode += arrayCode;
+        syncCode += "       row = second * div;\n";
+        syncCode += regularSyncCode;
 
         syncCode += @"
     }";

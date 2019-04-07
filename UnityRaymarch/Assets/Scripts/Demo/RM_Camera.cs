@@ -84,11 +84,7 @@ public class RM_Camera : MonoBehaviour
             _material.SetTexture("_iChannel3", iChannel3);
         }
 
-        float iFrame = Time.frameCount;
-        Vector4 _iMouse = new Vector4(SyncUp.GetVal("iMouseX"), SyncUp.GetVal("iMouseY"), 0f, 0f);
         _material.SetVector("_iResolution", _iResolution);
-        _material.SetVector("_iMouse", _iMouse);
-        _material.SetFloat("_iFrame", iFrame);
         _material.SetFloat("_iTime", SyncUp.GetVal("iTime"));
         _material.SetFloat("_AspectCorrect", GetComponent<Camera>().rect.height);
         _material.SetVector("_DirectionalLight", new Vector4(SyncUp.GetVal("DirectionalLightX"), SyncUp.GetVal("DirectionalLightY"), SyncUp.GetVal("DirectionalLightZ"), 0f));
