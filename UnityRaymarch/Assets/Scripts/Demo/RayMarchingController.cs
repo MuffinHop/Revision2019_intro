@@ -232,8 +232,17 @@ public class RayMarchingController : MonoBehaviour
                 }
 
                 int index = rmObject.ID * 10;
-                sdf1 += "               vec3 posID" + rmObject.ID + " = position - vec3(_Objects[" + (index + 0) + "], _Objects[" + (index + 1) + "], _Objects[" + (index + 2) + "]);\n";
-                sdf1 += "               posID" + rmObject.ID + "= RotateQuaternion(vec4(_Objects[" + (index + 6) + "], _Objects[" + (index + 7) + "], _Objects[" + (index + 8) + "], - _Objects[" + (index + 9) + "]))*posID" + rmObject.ID + ";\n";
+                if (!rmObject.Centered)
+                {
+                    sdf1 += "               vec3 posID" + rmObject.ID + " = position - vec3(_Objects[" + (index + 0) + "], _Objects[" + (index + 1) + "], _Objects[" + (index + 2) + "]);\n";
+                } else
+                {
+                    sdf1 += "               #define posID" + rmObject.ID + " position\n";
+                }
+                if (rmObject.Rotatable)
+                {
+                    sdf1 += "               posID" + rmObject.ID + "= RotateQuaternion(vec4(_Objects[" + (index + 6) + "], _Objects[" + (index + 7) + "], _Objects[" + (index + 8) + "], - _Objects[" + (index + 9) + "]))*posID" + rmObject.ID + ";\n";
+                }
                 string firstPart = "               id" + materialID + "_distance ";
                 switch (scaleFormat)
                 {

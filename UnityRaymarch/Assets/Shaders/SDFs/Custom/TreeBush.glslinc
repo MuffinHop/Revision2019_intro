@@ -11,7 +11,7 @@ float TreeBush(vec3 pos, vec3 algorithm) {
     pR(opos.xz,pos.z*1.);
     pR(opos.zy,3.14);
 	
-    float height = GetHeightmap( pos*0.04)*0.01;
+    float height = 0.;
 	vec3 o = opos;
     opos = o;
 	float distance2 = sdSphere(opos+vec3(0.2,2.,0.0),max(0.0-opos.y*0.7,0.0));

@@ -97,7 +97,7 @@ float traceToLight(vec3 rayPosition, vec3 normalTrace, vec3 lightDir, float rayL
 	float t = 0.1;
 	float k = rayLightDistance;
 	float res = 1.0;
-	for (int i = 0; i < 24; i++)
+	for (int i = 0; i < 12; i++)
 	{
 		float h = GetDistanceScene(ro + rd * t, transparencyInformation).x;
 		h = max(h, 0.0);

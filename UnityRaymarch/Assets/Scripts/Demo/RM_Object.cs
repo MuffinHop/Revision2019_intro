@@ -35,6 +35,8 @@ public class RM_Object : MonoBehaviour
     public RM_Surface SurfaceComponent;
     public Mix Mixer;
     public float R, N;
+    public bool Centered;
+    public bool Rotatable;
     private Key.Type interpolation = Key.Type.Linear;
 
     private ShaderComponent compShaderComponent;
