@@ -129,14 +129,14 @@
 		<key row="535" value="33.000000" interpolation="0" />
 	</track>
 	<track name="Distance" folded="0" color="ffa9b250">
-		<key row="0" value="7.000000" interpolation="0" />
-		<key row="88" value="32.000000" interpolation="0" />
+		<key row="0" value="12.000000" interpolation="0" />
+		<key row="88" value="5.000000" interpolation="0" />
 		<key row="184" value="11.000000" interpolation="0" />
 		<key row="534" value="19.000000" interpolation="0" />
 	</track>
 	<track name="LensCoeff" folded="0" color="ff60b250">
-		<key row="0" value="2.000000" interpolation="0" />
-		<key row="88" value="1.400000" interpolation="0" />
+		<key row="0" value="14.000000" interpolation="0" />
+		<key row="88" value="2.000000" interpolation="0" />
 		<key row="184" value="3.000000" interpolation="0" />
 		<key row="534" value="2.000000" interpolation="0" />
 	</track>
@@ -150,14 +150,14 @@
 		<key row="0" value="0.300000" interpolation="0" />
 	</track>
 	<track name="MarchMinimum" folded="0" color="ff8850b2">
-		<key row="0" value="0.900000" interpolation="0" />
-		<key row="88" value="1.100000" interpolation="0" />
+		<key row="0" value="1.100000" interpolation="0" />
+		<key row="88" value="1.000000" interpolation="0" />
 		<key row="184" value="1.000000" interpolation="0" />
 		<key row="534" value="3.000000" interpolation="0" />
 	</track>
 	<track name="FarPlane" folded="0" color="ffb25091">
 		<key row="0" value="27.000000" interpolation="0" />
-		<key row="88" value="31.000000" interpolation="0" />
+		<key row="88" value="20.000000" interpolation="0" />
 		<key row="184" value="25.000000" interpolation="0" />
 		<key row="534" value="33.000000" interpolation="0" />
 	</track>

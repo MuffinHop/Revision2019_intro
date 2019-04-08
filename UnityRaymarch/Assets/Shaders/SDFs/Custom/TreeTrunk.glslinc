@@ -10,12 +10,11 @@ float TreeTrunk(vec3 pos, vec3 algorithm) {
 
 	float vali = 4.5;
 	opos.x = mod(opos.x, vali) - vali / 2.0;
-	opos.z += hash1(floor(pos.x / vali)) * 6.0;
 	opos.z = mod(opos.z, vali) - vali / 2.0;
 	pR(opos.xz, pos.z*1.);
 	pR(opos.zy, 3.14);
 
-	float height = GetHeightmap(pos*0.04)*0.01;
+	float height = 0.0;
 	opos.y += 0.75;
 	float dist = fBox(opos + vec3(0.0,height,0.0), vec3(0.08 + atan(opos.y*2.)*0.02, 1.5, 0.05));
 	opos.y -= 0.75;

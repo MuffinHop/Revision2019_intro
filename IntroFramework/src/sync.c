@@ -363,18 +363,20 @@
                {2100000.0f, 7, 0 } 
               }; 
        float DirectionalLightB;
-       vec3 PointLightPositionXArray[5] = { 
+       vec3 PointLightPositionXArray[6] = { 
                { 0, 2, 0 }, 
+               { 88, -4, 0 }, 
                { 184, 7, 0 }, 
                { 534, 0, 0 }, 
                {100000.0f, 0, 0 }, 
                {2100000.0f, 0, 0 } 
               }; 
        float PointLightPositionX;
-       vec3 PointLightPositionYArray[6] = { 
+       vec3 PointLightPositionYArray[7] = { 
                { 0, -2, 1 }, 
-               { 88, 3.12, 0 }, 
-               { 184, 12, 0 }, 
+               { 87, 3.12, 1 }, 
+               { 88, 3, 0 }, 
+               { 184, 3, 0 }, 
                { 534, -8, 0 }, 
                {100000.0f, -8, 0 }, 
                {2100000.0f, -8, 0 } 
@@ -382,8 +384,8 @@
        float PointLightPositionY;
        vec3 PointLightPositionZArray[6] = { 
                { 0, 32, 0 }, 
-               { 88, -12, 0 }, 
-               { 184, -22, 0 }, 
+               { 88, 1, 0 }, 
+               { 184, -11, 0 }, 
                { 534, -22, 0 }, 
                {100000.0f, -22, 0 }, 
                {2100000.0f, -22, 0 } 
@@ -498,8 +500,8 @@
               }; 
        float Epsilon;
        vec3 DistanceArray[6] = { 
-               { 0, 7, 0 }, 
-               { 88, 32, 0 }, 
+               { 0, 12, 0 }, 
+               { 88, 5, 0 }, 
                { 184, 11, 0 }, 
                { 534, 19, 0 }, 
                {100000.0f, 19, 0 }, 
@@ -507,8 +509,8 @@
               }; 
        float Distance;
        vec3 LensCoeffArray[6] = { 
-               { 0, 2, 0 }, 
-               { 88, 1.4, 0 }, 
+               { 0, 14, 0 }, 
+               { 88, 2, 0 }, 
                { 184, 3, 0 }, 
                { 534, 2, 0 }, 
                {100000.0f, 2, 0 }, 
@@ -531,8 +533,8 @@
               }; 
        float RcpMaxCoC;
        vec3 MarchMinimumArray[6] = { 
-               { 0, 0.9, 0 }, 
-               { 88, 1.1, 0 }, 
+               { 0, 1.1, 0 }, 
+               { 88, 1, 0 }, 
                { 184, 1, 0 }, 
                { 534, 3, 0 }, 
                {100000.0f, 3, 0 }, 
@@ -541,7 +543,7 @@
        float MarchMinimum;
        vec3 FarPlaneArray[6] = { 
                { 0, 27, 0 }, 
-               { 88, 31, 0 }, 
+               { 88, 20, 0 }, 
                { 184, 25, 0 }, 
                { 534, 33, 0 }, 
                {100000.0f, 33, 0 }, 
@@ -633,8 +635,8 @@ long FarPlaneArrayPointer = 0;
 
         void Sync(float second)
         {
-            float div = 4.0 * 60.0 / 180.0;
-            float row = second * 60.0;
+            float div = 8.0f * 60.0f / 180.0f;
+            float row = second * 60.0f;
 
                    RM_Objects[0] = setVal(ID0ArrayPositionX, row, 3, &pointerID0ArrayPositionX ); 
        RM_Objects[1] = setVal(ID0ArrayPositionY, row, 3, &pointerID0ArrayPositionY ); 

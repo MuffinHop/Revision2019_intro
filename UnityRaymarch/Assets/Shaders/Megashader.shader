@@ -471,12 +471,11 @@ float TreeTrunk(vec3 pos, vec3 algorithm) {
 
 	float vali = 4.5;
 	opos.x = mod(opos.x, vali) - vali / 2.0;
-	opos.z += hash1(floor(pos.x / vali)) * 6.0;
 	opos.z = mod(opos.z, vali) - vali / 2.0;
 	pR(opos.xz, pos.z*1.);
 	pR(opos.zy, 3.14);
 
-	float height = GetHeightmap(pos*0.04)*0.01;
+	float height = 0.0;
 	opos.y += 0.75;
 	float dist = fBox(opos + vec3(0.0,height,0.0), vec3(0.08 + atan(opos.y*2.)*0.02, 1.5, 0.05));
 	opos.y -= 0.75;
@@ -699,7 +698,7 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 #endif
 		//}
 		
-		if (sceneDistance.x < 0.001 + float(maxIter)*0.00001) {
+		if (sceneDistance.x < 0.001 + float(maxIter)*0.00001 || result.distanc > _FarPlane) {
 			sceneDistance = GetDistanceScene(result.position, transparencyPointer);
 #ifdef DEBUG_STEPS
 			focus = cocs;
@@ -710,13 +709,6 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 			break;
 		}
 
-
-			if (result.distanc > _FarPlane) {
-				result.distanc = 1000.0;
-				result.position = ray.origin + ray.direction * result.distanc;
-				result.id.x = 0.0;
-				break;
-			}
 	}
 	if (result.distanc >= ray.length)
 	{
@@ -770,19 +762,6 @@ float traceToLight(vec3 rayPosition, vec3 normalTrace, vec3 lightDir, float rayL
 float GetShadow(in vec3 position, in vec3 normal, in vec3 lightDirection, in float lightDistance)
 {
 	return traceToLight(position, normal, lightDirection, lightDistance);
-	Trace shadowTrace;
-	shadowTrace.direction = lightDirection;
-	shadowTrace.origin = position;
-	float shadowBias = 0.05;
-	shadowTrace.startdistanc = shadowBias / abs(dot(lightDirection, normal));
-	shadowTrace.length = lightDistance - shadowTrace.startdistanc;
-
-	ContactInfo shadowIntersect;
-	RayMarch(shadowTrace, shadowIntersect, 32, transparencyInformation);
-
-	float shadow = step(0.0, shadowIntersect.distanc) * step(lightDistance, shadowIntersect.distanc);
-
-	return shadow * traceToLight(position, normal, lightDirection, lightDistance);
 }
 
 float GetAmbientOcclusion(in ContactInfo intersection, in Surface surface)
@@ -1044,9 +1023,9 @@ vec4 mainImage()
 		//surface.reflection = GetReflection(ray, intersection, surface);
 
 		float distanctrans = intersection.distanc;
-		if (material.transparency > 0.0) {
+		/*if (material.transparency > 0.0) {
 			surface.subsurface = GetSubSurface(ray, intersection, surface, material);
-		}
+		}*/
 
 		sceneColor = ShadeSurface(ray, intersection, surface, material);
 	}

@@ -49,7 +49,7 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 #endif
 		//}
 		
-		if (sceneDistance.x < 0.001 + float(maxIter)*0.00001) {
+		if (sceneDistance.x < 0.001 + float(maxIter)*0.00001 || result.distanc > _FarPlane) {
 			sceneDistance = GetDistanceScene(result.position, transparencyPointer);
 #ifdef DEBUG_STEPS
 			focus = cocs;
@@ -60,13 +60,6 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 			break;
 		}
 
-
-			if (result.distanc > _FarPlane) {
-				result.distanc = 1000.0;
-				result.position = ray.origin + ray.direction * result.distanc;
-				result.id.x = 0.0;
-				break;
-			}
 	}
 	if (result.distanc >= ray.length)
 	{
@@ -120,19 +113,6 @@ float traceToLight(vec3 rayPosition, vec3 normalTrace, vec3 lightDir, float rayL
 float GetShadow(in vec3 position, in vec3 normal, in vec3 lightDirection, in float lightDistance)
 {
 	return traceToLight(position, normal, lightDirection, lightDistance);
-	Trace shadowTrace;
-	shadowTrace.direction = lightDirection;
-	shadowTrace.origin = position;
-	float shadowBias = 0.05;
-	shadowTrace.startdistanc = shadowBias / abs(dot(lightDirection, normal));
-	shadowTrace.length = lightDistance - shadowTrace.startdistanc;
-
-	ContactInfo shadowIntersect;
-	RayMarch(shadowTrace, shadowIntersect, 32, transparencyInformation);
-
-	float shadow = step(0.0, shadowIntersect.distanc) * step(lightDistance, shadowIntersect.distanc);
-
-	return shadow * traceToLight(position, normal, lightDirection, lightDistance);
 }
 
 float GetAmbientOcclusion(in ContactInfo intersection, in Surface surface)
