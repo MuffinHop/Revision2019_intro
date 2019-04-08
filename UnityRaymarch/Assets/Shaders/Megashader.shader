@@ -56,6 +56,8 @@ uniform float _FarPlane;
 #define ENABLE_AO
 #define DOUBLE_SIDED_TRANSPARENCY
 #define saturate(x) clamp(x, 0, 1)
+
+#define FRAGMENT_P lowp
 //#define DEBUG_STEPS 1
 
 float inWater;
@@ -142,21 +144,10 @@ mat3 RotateQuaternion (vec4 q)
   mat3 m;
   float a1, a2, s;
   s = q.w * q.w - 0.5;
-  m[0][0] = q.x * q.x + s;  
-  m[1][1] = q.y * q.y + s;  
-  m[2][2] = q.z * q.z + s;
-  a1 = q.x * q.y;  
-  a2 = q.z * q.w;  
-  m[0][1] = a1 + a2;  
-  m[1][0] = a1 - a2;
-  a1 = q.x * q.z;  
-  a2 = q.y * q.w;  
-  m[2][0] = a1 + a2;  
-  m[0][2] = a1 - a2;
-  a1 = q.y * q.z;  
-  a2 = q.x * q.w;  
-  m[1][2] = a1 + a2;  
-  m[2][1] = a1 - a2;
+
+  return mat3(q.x * q.x + s, q.x * q.y - q.z * q.w, q.x * q.z - q.y * q.w,
+	  q.x * q.y + q.z * q.w, q.y * q.y + s, q.y * q.z + q.x * q.w,
+	  q.x * q.z + q.y * q.w, q.y * q.z - q.x * q.w, q.z * q.z + s);
   return 2. * m;
 }
 
@@ -698,7 +689,7 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 #endif
 		//}
 		
-		if (sceneDistance.x < 0.001 + float(maxIter)*0.00001 || result.distanc > _FarPlane) {
+		if (sceneDistance.x < 0.001 || result.distanc > _FarPlane) {
 			sceneDistance = GetDistanceScene(result.position, transparencyPointer);
 #ifdef DEBUG_STEPS
 			focus = cocs;
