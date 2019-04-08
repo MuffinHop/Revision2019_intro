@@ -27,12 +27,9 @@ uniform float _FarPlane;
 #define ENABLE_AO
 #define DOUBLE_SIDED_TRANSPARENCY
 #define saturate(x) clamp(x, 0, 1)
+
+#define FRAGMENT_P lowp
 //#define DEBUG_STEPS 1
-
-float inWater;
-float wasInWater;
-int deform;
-
 const float PI = 3.14159265359;
 const float DEG_TO_RAD = PI / 180.0;
 const float TWOPI = PI * 2.0;
@@ -113,21 +110,10 @@ mat3 RotateQuaternion (vec4 q)
   mat3 m;
   float a1, a2, s;
   s = q.w * q.w - 0.5;
-  m[0][0] = q.x * q.x + s;  
-  m[1][1] = q.y * q.y + s;  
-  m[2][2] = q.z * q.z + s;
-  a1 = q.x * q.y;  
-  a2 = q.z * q.w;  
-  m[0][1] = a1 + a2;  
-  m[1][0] = a1 - a2;
-  a1 = q.x * q.z;  
-  a2 = q.y * q.w;  
-  m[2][0] = a1 + a2;  
-  m[0][2] = a1 - a2;
-  a1 = q.y * q.z;  
-  a2 = q.x * q.w;  
-  m[1][2] = a1 + a2;  
-  m[2][1] = a1 - a2;
+
+  return mat3(q.x * q.x + s, q.x * q.y - q.z * q.w, q.x * q.z - q.y * q.w,
+	  q.x * q.y + q.z * q.w, q.y * q.y + s, q.y * q.z + q.x * q.w,
+	  q.x * q.z + q.y * q.w, q.y * q.z - q.x * q.w, q.z * q.z + s);
   return 2. * m;
 }
 
@@ -628,13 +614,11 @@ vec3 GetNormal(in vec3 position, in float transparencyPointer)
 	offset[2] = vec3(-delta, delta, -delta);
 	offset[3] = vec3(delta, delta, delta);
 
-	deform = 1;
 	float f1 = GetDistanceScene(position + offset[0], transparencyPointer).x;
 	float f2 = GetDistanceScene(position + offset[1], transparencyPointer).x;
 	float f3 = GetDistanceScene(position + offset[2], transparencyPointer).x;
 	float f4 = GetDistanceScene(position + offset[3], transparencyPointer).x;
 	vec3 normal = normalize(offset[0] * f1 + offset[1] * f2 + offset[2] * f3 + offset[3] * f4);
-	deform = 0;
 	return normal;
 }
 #ifdef DEBUG_STEPS
@@ -645,7 +629,6 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 	ContactInfo originalResult = result;
 	result.distanc = ray.startdistanc;
 	result.id.x = 0.0;
-	deform = 0;
 	for (int i = 0;i <= maxIter;i++)
 	{
 		result.position = ray.origin + ray.direction * result.distanc;
@@ -669,7 +652,7 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 #endif
 		//}
 		
-		if (sceneDistance.x < 0.001 + float(maxIter)*0.00001 || result.distanc > _FarPlane) {
+		if (sceneDistance.x < 0.001 || result.distanc > _FarPlane) {
 			sceneDistance = GetDistanceScene(result.position, transparencyPointer);
 #ifdef DEBUG_STEPS
 			focus = cocs;
@@ -693,7 +676,6 @@ void insideMarch(in Trace ray, out ContactInfo result, int maxIter, float transp
 {
 	result.distanc = ray.startdistanc;
 	result.id.x = 0.0;
-	deform = 0;
 	for (int i = 0;i <= maxIter / 3;i++)
 	{
 		result.position = ray.origin + ray.direction * result.distanc;
@@ -743,21 +725,19 @@ float GetAmbientOcclusion(in ContactInfo intersection, in Surface surface)
 	float AO = 1.0;
 
 	float sdfDistance = 0.0;
-	deform = 1;
 	for (int i = 0; i <= 5; i++)
 	{
 		sdfDistance += 0.1;
 		vec4 sceneDistance = GetDistanceScene(position + normal * sdfDistance, transparencyInformation);
 		AO *= 1.0 - max(0.0, (sdfDistance - sceneDistance.x) * 0.4 / sdfDistance);
 	}
-	deform = 0;
 
 	return AO;
 }
 
 void AddAtmosphere(inout vec3 col, in Trace ray, in ContactInfo hitNfo)
 {
-	float fFogAmount = exp(hitNfo.distanc * -fogDensity * (1.0 + wasInWater));
+	float fFogAmount = exp(hitNfo.distanc * -fogDensity);
 	vec3 fogColor = GetSkyGradient(ray.direction);
 
 	DirectionLight directionalLight = GetDirectionLight();
@@ -875,7 +855,6 @@ vec3 GetReflection(in Trace ray, in ContactInfo hitNfo, in Surface surface)
 
 vec3 GetSubSurface(in Trace ray, in ContactInfo hitNfo, in Surface surface, in Material material)
 {
-	inWater = 0.;
 
 	float lightOffSurface = 0.05;
 	Trace refractTrace;
@@ -909,8 +888,6 @@ vec3 GetSubSurface(in Trace ray, in ContactInfo hitNfo, in Surface surface, in M
 vec3 GetSceneColourSecondary(in Trace ray)
 {
 	ContactInfo hitNfo;
-	inWater = 0.;
-	deform = 0;
 	RayMarch(ray, hitNfo, 22, noTransparency);
 
 	vec3 sceneColor;
@@ -947,7 +924,6 @@ vec4 mainImage()
 	vec2 fragCoord = gl_FragCoord.xy;
 	vec4 fragColor;
 	Trace ray;
-	inWater = 0.;
 
 	vec2 uv = fragCoord.xy / _iResolution.xy;
 

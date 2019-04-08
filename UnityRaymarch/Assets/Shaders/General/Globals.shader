@@ -1,9 +1,4 @@
-﻿
-float inWater;
-float wasInWater;
-int deform;
-
-const float PI = 3.14159265359;
+﻿const float PI = 3.14159265359;
 const float DEG_TO_RAD = PI / 180.0;
 const float TWOPI = PI * 2.0;
 const float TAU = PI * 2.0;

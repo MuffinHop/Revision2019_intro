@@ -15,7 +15,6 @@ vec3 GetReflection(in Trace ray, in ContactInfo hitNfo, in Surface surface)
 
 vec3 GetSubSurface(in Trace ray, in ContactInfo hitNfo, in Surface surface, in Material material)
 {
-	inWater = 0.;
 
 	float lightOffSurface = 0.05;
 	Trace refractTrace;
@@ -49,8 +48,6 @@ vec3 GetSubSurface(in Trace ray, in ContactInfo hitNfo, in Surface surface, in M
 vec3 GetSceneColourSecondary(in Trace ray)
 {
 	ContactInfo hitNfo;
-	inWater = 0.;
-	deform = 0;
 	RayMarch(ray, hitNfo, 22, noTransparency);
 
 	vec3 sceneColor;

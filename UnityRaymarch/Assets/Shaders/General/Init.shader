@@ -8,7 +8,6 @@ vec4 mainImage()
 	vec2 fragCoord = gl_FragCoord.xy;
 	vec4 fragColor;
 	Trace ray;
-	inWater = 0.;
 
 	vec2 uv = fragCoord.xy / _iResolution.xy;
 
