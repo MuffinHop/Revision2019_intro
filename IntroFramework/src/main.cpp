@@ -187,7 +187,8 @@ HWND hwnd = {};
 HFONT headingFont = NULL;
 HFONT subtitleFont = NULL;
 HFONT smallFont = NULL;
-GLuint fontTexture;
+GLuint fontTexture_telegram;
+GLuint fontTexture_cards;
 
 _declspec(restrict, noalias) void *my_calloc(size_t nitems, size_t size)
 {
@@ -310,6 +311,8 @@ HFONT latinwide118Font = NULL;
 HFONT Courier57Font = NULL;
 HFONT Courier41Font = NULL;
 HFONT Arial24Font = NULL;
+HFONT Arial300Font = NULL; 
+
 extern float RM_Objects[126];
 extern float iMouseX;
 extern float iMouseY;
@@ -358,13 +361,15 @@ void InitFontToTexture() {
 	Courier57Font = CreateFont(61, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Courier New");
 	Courier41Font = CreateFont(45, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Courier New");
 	Arial24Font = CreateFont(24, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Arial");
+	Arial300Font = CreateFont(300, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Arial");
 
 	hbmOld = SelectObject(fonthDC, hbmBitmap);
+}
 
+void RenderFont1() {
 	HBRUSH brush = CreateSolidBrush(RGB(218, 196, 103)); //create brush
 	SelectObject(fonthDC, brush); //select brush into DC
 	Rectangle(fonthDC, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)); //draw rectangle over whole screen
-
 
 	hFontOld = SelectObject(fonthDC, latinwide118Font);
 	DrawRectText("The Secret", RGB(255, 255, 255), RGB(218, 196, 103), 431, 64, 333, 1478);
@@ -393,13 +398,20 @@ void InitFontToTexture() {
 	hFontOld = SelectObject(fonthDC, Courier41Font);
 	DrawRectText("systems and finally destroy the aforementioned decoding machine.", RGB(50, 50, 50), RGB(218, 196, 103), 45, 894, 951, 1645);
 	hFontOld = SelectObject(fonthDC, Courier41Font);
-	DrawRectText("- I wish you good luck, agent.",RGB(50,50,50),RGB(218,196,103),45,1007,1055,795);
-		hFontOld = SelectObject(fonthDC, Arial24Font);
+	DrawRectText("- I wish you good luck, agent.", RGB(50, 50, 50), RGB(218, 196, 103), 45, 1007, 1055, 795);
+	hFontOld = SelectObject(fonthDC, Arial24Font);
 	DrawRectText("Doing your dirty work for you since 1969", RGB(50, 50, 50), RGB(218, 196, 103), 1030, 95, 211, 1409);
 	// --------------------------------------------- END END END
-
 }
 
+void RenderFont2() {
+	HBRUSH brush = CreateSolidBrush(RGB(0, 0, 0)); //create brush
+	SelectObject(fonthDC, brush); //select brush into DC
+	Rectangle(fonthDC, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)); //draw rectangle over whole screen
+
+	hFontOld = SelectObject(fonthDC, Arial300Font);
+	DrawRectText("♠♣♥♦",RGB(255,0,0),RGB(0,0,0),0,0,1065,693);
+}
 
 GLubyte *
 ConvertRGB(BITMAPINFO *info,        /* I - Original bitmap information */
@@ -453,15 +465,32 @@ ConvertRGB(BITMAPINFO *info,        /* I - Original bitmap information */
 
 void AllSyncDataHandle(float row);
 
-void RenderFontToTexture() {
-	// Set text properties
-
+void RenderFontToTexture(GLuint texture) {
 	GLvoid * obrazek;
 	obrazek = ConvertRGB(&bmi, pBitmapBits);
 
-	glBindTexture(GL_TEXTURE_2D, fontTexture);
+	glBindTexture(GL_TEXTURE_2D, texture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, XRES, YRES, 0, GL_RGB, GL_UNSIGNED_BYTE, obrazek);
 	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void GenFontTexture(GLuint texture) {
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	// elect modulate to mix texture with color for shading
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+	//when texture area is small, bilinear filter the closest mipmap
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	// when texture area is large, bilinear filter the first mipmap
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	//the texture wraps over at the edges
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 }
 
 #ifndef EDITOR_CONTROLS
@@ -500,25 +529,14 @@ int __cdecl main(int argc, char* argv[])
 	SetPixelFormat(hDC, ChoosePixelFormat(hDC, &pfd), &pfd);
 	wglMakeCurrent(hDC, wglCreateContext(hDC));
 	
-	// font texture
+	// font textures
+	RenderFont1();
+	GenFontTexture(fontTexture_telegram);
+	RenderFontToTexture(fontTexture_telegram);
 
-	glGenTextures(1, &fontTexture);
-	glBindTexture(GL_TEXTURE_2D, fontTexture);
-
-	// elect modulate to mix texture with color for shading
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-	//when texture area is small, bilinear filter the closest mipmap
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	// when texture area is large, bilinear filter the first mipmap
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	//the texture wraps over at the edges
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	RenderFontToTexture();
+	RenderFont2();
+	GenFontTexture(fontTexture_cards);
+	RenderFontToTexture(fontTexture_cards);
 
 
 	// create and compile shader programs
@@ -583,8 +601,10 @@ int __cdecl main(int argc, char* argv[])
 		time = songPos;
 		//((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(0, (static_cast<int>(songPos*44100.0)));
 #endif
+
+
 		// font
-		glBindTexture(GL_TEXTURE_2D, fontTexture);
+		glBindTexture(GL_TEXTURE_2D, fontTexture_telegram);
 		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
 		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
 
