@@ -1,6 +1,7 @@
 ﻿
 float inWater;
 float wasInWater;
+int deform;
 
 const float PI = 3.14159265359;
 const float DEG_TO_RAD = PI / 180.0;

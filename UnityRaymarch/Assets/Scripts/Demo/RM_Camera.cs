@@ -104,7 +104,17 @@ public class RM_Camera : MonoBehaviour
         _material.SetVector("_CameraUp", cameraUp);
         _material.SetFloat("_epsilon", SyncUp.GetVal("Epsilon"));
         _material.SetFloat("_FOV", fov * 2.0f);
+
+        _material.SetFloat("_Distance", SyncUp.GetVal("Distance"));
+        _material.SetFloat("_LensCoeff", SyncUp.GetVal("LensCoeff"));
+        _material.SetFloat("_MaxCoC", SyncUp.GetVal("MaxCoC"));
+        _material.SetFloat("_RcpMaxCoC", SyncUp.GetVal("RcpMaxCoC"));
+        _material.SetFloat("_MarchMinimum", SyncUp.GetVal("MarchMinimum"));
+        _material.SetFloat("_FarPlane", SyncUp.GetVal("FarPlane"));
         
+
+
+
         if (RM_Objects != null && RM_Objects.Count > 0)
         {
             _material.SetFloatArray("_Objects", RM_Objects);

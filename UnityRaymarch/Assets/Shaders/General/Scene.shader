@@ -50,7 +50,8 @@ vec3 GetSceneColourSecondary(in Trace ray)
 {
 	ContactInfo hitNfo;
 	inWater = 0.;
-	RayMarch(ray, hitNfo, 48, noTransparency);
+	deform = 0;
+	RayMarch(ray, hitNfo, 22, noTransparency);
 
 	vec3 sceneColor;
 

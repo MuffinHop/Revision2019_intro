@@ -262,65 +262,45 @@
               }; 
  
        vec3 ID4ArrayScaleX[6] = { 
-               { 5, 3, 1 }, 
-               { 100000, 3, 1 }, 
-               { 200000, 3, 1 } 
+               { 5, 1, 1 }, 
+               { 100000, 1, 1 }, 
+               { 200000, 1, 1 } 
               }; 
  
        vec3 ID4ArrayScaleY[6] = { 
-               { 5, 3, 1 }, 
-               { 100000, 3, 1 }, 
-               { 200000, 3, 1 } 
+               { 5, 1, 1 }, 
+               { 100000, 1, 1 }, 
+               { 200000, 1, 1 } 
               }; 
  
        vec3 ID4ArrayScaleZ[6] = { 
-               { 5, 3, 1 }, 
-               { 100000, 3, 1 }, 
-               { 200000, 3, 1 } 
+               { 5, 1, 1 }, 
+               { 100000, 1, 1 }, 
+               { 200000, 1, 1 } 
               }; 
  
-       vec3 ID4ArrayRotationX[10] = { 
-               { 5, -0.3826834, 1 }, 
-               { 70, -0.4199274, 1 }, 
-               { 75, -0.2555301, 1 }, 
-               { 80, 0.06435814, 1 }, 
-               { 90, -0.3626007, 1 }, 
-               { 110, -0.2717762, 1 }, 
-               { 120, -0.3641594, 1 }, 
-               { 100000, -0.3641594, 1 }, 
-               { 200000, -0.3641594, 1 } 
+       vec3 ID4ArrayRotationX[6] = { 
+               { 5, -0.2482672, 1 }, 
+               { 100000, -0.2482672, 1 }, 
+               { 200000, -0.2482672, 1 } 
               }; 
  
-       vec3 ID4ArrayRotationY[10] = { 
+       vec3 ID4ArrayRotationY[6] = { 
                { 5, 0, 1 }, 
-               { 110, -0.6504248, 1 }, 
-               { 120, -0.2839605, 1 }, 
-               { 125, 0.1013813, 1 }, 
-               { 130, -0.02901973, 1 }, 
-               { 135, -0.3205267, 1 }, 
-               { 140, 0, 1 }, 
                { 100000, 0, 1 }, 
                { 200000, 0, 1 } 
               }; 
  
-       vec3 ID4ArrayRotationZ[10] = { 
+       vec3 ID4ArrayRotationZ[6] = { 
                { 5, 0, 1 }, 
-               { 110, -0.2694148, 1 }, 
-               { 120, -0.1176203, 1 }, 
-               { 125, 0.0419935, 1 }, 
-               { 135, -0.1327665, 1 }, 
-               { 140, 0, 1 }, 
                { 100000, 0, 1 }, 
                { 200000, 0, 1 } 
               }; 
  
        vec3 ID4ArrayRotationW[6] = { 
-               { 5, 0.9238796, 1 }, 
-               { 70, 0.9075577, 1 }, 
-               { 110, 0.6561257, 1 }, 
-               { 120, 0.8791586, 1 }, 
-               { 100000, 0.8791586, 1 }, 
-               { 200000, 0.8791586, 1 } 
+               { 5, 0.9686916, 1 }, 
+               { 100000, 0.9686916, 1 }, 
+               { 200000, 0.9686916, 1 } 
               }; 
  
        vec3 iTimeArray[4] = { 
@@ -472,7 +452,7 @@
               }; 
        float LookAtX;
        vec3 LookAtYArray[4] = { 
-               { 0, 1, 0 }, 
+               { 0, 0.7, 0 }, 
                { 534, 7, 0 }, 
                {100000.0f, 7, 0 }, 
                {2100000.0f, 7, 0 } 
@@ -517,6 +497,57 @@
                {2100000.0f, 0.01, 0 } 
               }; 
        float Epsilon;
+       vec3 DistanceArray[6] = { 
+               { 0, 7, 0 }, 
+               { 88, 32, 0 }, 
+               { 184, 11, 0 }, 
+               { 534, 19, 0 }, 
+               {100000.0f, 19, 0 }, 
+               {2100000.0f, 19, 0 } 
+              }; 
+       float Distance;
+       vec3 LensCoeffArray[6] = { 
+               { 0, 2, 0 }, 
+               { 88, 1.4, 0 }, 
+               { 184, 3, 0 }, 
+               { 534, 2, 0 }, 
+               {100000.0f, 2, 0 }, 
+               {2100000.0f, 2, 0 } 
+              }; 
+       float LensCoeff;
+       vec3 MaxCoCArray[6] = { 
+               { 0, 32, 0 }, 
+               { 88, 23, 0 }, 
+               { 184, 5, 0 }, 
+               { 534, 5, 0 }, 
+               {100000.0f, 5, 0 }, 
+               {2100000.0f, 5, 0 } 
+              }; 
+       float MaxCoC;
+       vec3 RcpMaxCoCArray[3] = { 
+               { 0, 0.3, 0 }, 
+               {100000.0f, 0.3, 0 }, 
+               {2100000.0f, 0.3, 0 } 
+              }; 
+       float RcpMaxCoC;
+       vec3 MarchMinimumArray[6] = { 
+               { 0, 0.9, 0 }, 
+               { 88, 1.1, 0 }, 
+               { 184, 1, 0 }, 
+               { 534, 3, 0 }, 
+               {100000.0f, 3, 0 }, 
+               {2100000.0f, 3, 0 } 
+              }; 
+       float MarchMinimum;
+       vec3 FarPlaneArray[6] = { 
+               { 0, 27, 0 }, 
+               { 88, 31, 0 }, 
+               { 184, 25, 0 }, 
+               { 534, 33, 0 }, 
+               {100000.0f, 33, 0 }, 
+               {2100000.0f, 33, 0 } 
+              }; 
+       float FarPlane;
 
 #define row x
 #define value y
@@ -593,6 +624,12 @@ long CameraUpYArrayPointer = 0;
 long CameraUpZArrayPointer = 0;
 long FOVArrayPointer = 0;
 long EpsilonArrayPointer = 0;
+long DistanceArrayPointer = 0;
+long LensCoeffArrayPointer = 0;
+long MaxCoCArrayPointer = 0;
+long RcpMaxCoCArrayPointer = 0;
+long MarchMinimumArrayPointer = 0;
+long FarPlaneArrayPointer = 0;
 
         void Sync(float second)
         {
@@ -674,5 +711,11 @@ long EpsilonArrayPointer = 0;
        CameraUpZ = setVal(CameraUpZArray, row, 7, &CameraUpZArrayPointer); 
        FOV = setVal(FOVArray, row, 7, &FOVArrayPointer); 
        Epsilon = setVal(EpsilonArray, row, 7, &EpsilonArrayPointer); 
+       Distance = setVal(DistanceArray, row, 7, &DistanceArrayPointer); 
+       LensCoeff = setVal(LensCoeffArray, row, 7, &LensCoeffArrayPointer); 
+       MaxCoC = setVal(MaxCoCArray, row, 7, &MaxCoCArrayPointer); 
+       RcpMaxCoC = setVal(RcpMaxCoCArray, row, 7, &RcpMaxCoCArrayPointer); 
+       MarchMinimum = setVal(MarchMinimumArray, row, 7, &MarchMinimumArrayPointer); 
+       FarPlane = setVal(FarPlaneArray, row, 7, &FarPlaneArrayPointer); 
 
     }

@@ -8,22 +8,27 @@
 	offset[2] = vec3(-delta, delta, -delta);
 	offset[3] = vec3(delta, delta, delta);
 
+	deform = 1;
 	float f1 = GetDistanceScene(position + offset[0], transparencyPointer).x;
 	float f2 = GetDistanceScene(position + offset[1], transparencyPointer).x;
 	float f3 = GetDistanceScene(position + offset[2], transparencyPointer).x;
 	float f4 = GetDistanceScene(position + offset[3], transparencyPointer).x;
 	vec3 normal = normalize(offset[0] * f1 + offset[1] * f2 + offset[2] * f3 + offset[3] * f4);
+	deform = 0;
 	return normal;
 }
-
+#ifdef DEBUG_STEPS
+float focus;
+#endif
 void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transparencyPointer)
 {
 	ContactInfo originalResult = result;
 	result.distanc = ray.startdistanc;
 	result.id.x = 0.0;
+	deform = 0;
 	for (int i = 0;i <= maxIter;i++)
 	{
-		result.position = ray.origin + ray.direction * result.distanc * (1.0 + float(maxIter)*0.00333);
+		result.position = ray.origin + ray.direction * result.distanc;
 		vec4 sceneDistance = GetDistanceScene(result.position, transparencyPointer);
 		/*
 		if (inWater == 0. && (i < 1) && (sceneDistance.y == material_ID2) && (sceneDistance.x < 0.001)) {
@@ -31,13 +36,37 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 			wasInWater = inWater;
 		}
 		else {*/
+
+			float cocs = max(result.distanc - _Distance,0.0) * _LensCoeff / result.distanc;
+			cocs = min(cocs, _MaxCoC);
+
+
 			result.id = sceneDistance.yzw;
+#ifdef DEBUG_STEPS
 			result.distanc = result.distanc + sceneDistance.x;
+#else 
+			result.distanc = result.distanc + sceneDistance.x * max(cocs, _MarchMinimum);
+#endif
 		//}
-		/*
+		
 		if (sceneDistance.x < 0.001 + float(maxIter)*0.00001) {
+			sceneDistance = GetDistanceScene(result.position, transparencyPointer);
+#ifdef DEBUG_STEPS
+			focus = cocs;
+			result.distanc = result.distanc + sceneDistance.x;
+#else 
+			result.distanc = result.distanc + sceneDistance.x * 100.0;
+#endif
 			break;
-		}*/
+		}
+
+
+			if (result.distanc > _FarPlane) {
+				result.distanc = 1000.0;
+				result.position = ray.origin + ray.direction * result.distanc;
+				result.id.x = 0.0;
+				break;
+			}
 	}
 	if (result.distanc >= ray.length)
 	{
@@ -51,7 +80,7 @@ void insideMarch(in Trace ray, out ContactInfo result, int maxIter, float transp
 {
 	result.distanc = ray.startdistanc;
 	result.id.x = 0.0;
-
+	deform = 0;
 	for (int i = 0;i <= maxIter / 3;i++)
 	{
 		result.position = ray.origin + ray.direction * result.distanc;
@@ -114,14 +143,14 @@ float GetAmbientOcclusion(in ContactInfo intersection, in Surface surface)
 	float AO = 1.0;
 
 	float sdfDistance = 0.0;
+	deform = 1;
 	for (int i = 0; i <= 5; i++)
 	{
 		sdfDistance += 0.1;
-
 		vec4 sceneDistance = GetDistanceScene(position + normal * sdfDistance, transparencyInformation);
-
 		AO *= 1.0 - max(0.0, (sdfDistance - sceneDistance.x) * 0.4 / sdfDistance);
 	}
+	deform = 0;
 
 	return AO;
 }

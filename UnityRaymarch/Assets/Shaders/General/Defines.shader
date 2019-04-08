@@ -7,3 +7,4 @@
 #define ENABLE_AO
 #define DOUBLE_SIDED_TRANSPARENCY
 #define saturate(x) clamp(x, 0, 1)
+//#define DEBUG_STEPS 1
