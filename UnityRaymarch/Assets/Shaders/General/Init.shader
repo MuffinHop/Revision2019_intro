@@ -39,7 +39,7 @@ vec4 mainImage()
 
 
 	ContactInfo intersection;
-	RayMarch(ray, intersection, 256, transparencyInformation);
+	RayMarch(ray, intersection, 96, transparencyInformation);
 	vec3 sceneColor;
 
 	if (intersection.id.x < 0.5) {
@@ -55,9 +55,9 @@ vec4 mainImage()
 		//surface.reflection = GetReflection(ray, intersection, surface);
 
 		float distanctrans = intersection.distanc;
-		if (material.transparency > 0.0) {
+		/*if (material.transparency > 0.0) {
 			surface.subsurface = GetSubSurface(ray, intersection, surface, material);
-		}
+		}*/
 
 		sceneColor = ShadeSurface(ray, intersection, surface, material);
 	}
