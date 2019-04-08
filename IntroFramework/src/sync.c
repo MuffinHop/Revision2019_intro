@@ -633,7 +633,7 @@ long FarPlaneArrayPointer = 0;
 
         void Sync(float second)
         {
-            float div = 4.0 * 60.0 / 120.0;
+            float div = 4.0 * 60.0 / 180.0;
             float row = second * 60.0;
 
                    RM_Objects[0] = setVal(ID0ArrayPositionX, row, 3, &pointerID0ArrayPositionX ); 

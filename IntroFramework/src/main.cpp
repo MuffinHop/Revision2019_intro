@@ -340,6 +340,12 @@ extern float CameraUpY;
 extern float CameraUpZ;
 extern float FOV;
 extern float Epsilon;
+extern float Distance;
+extern float LensCoeff;
+extern float MaxCoC;
+extern float RcpMaxCoC;
+extern float MarchMinimum;
+extern float FarPlane;
 void Sync(float second);
 
 void InitFontToTexture() {
@@ -584,6 +590,15 @@ int __cdecl main(int argc, char* argv[])
 		GLuint CameraUpID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_CameraUp");
 		GLuint fovID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_FOV");
 
+
+		GLuint DistanceID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_Distance");
+		GLuint LensCoeffID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_LensCoeff");
+		GLuint MaxCoCID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_MaxCoC");
+		GLuint RcpMaxCoCID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_RcpMaxCoC");
+		GLuint MarchMinimumID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_MarchMinimum");
+		GLuint FarPlaneID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_FarPlane");
+
+
 	// main loop
 	do
 	{
@@ -633,6 +648,15 @@ int __cdecl main(int argc, char* argv[])
 		((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(CameraUpID, CameraUpX, CameraUpY, CameraUpZ, 0.0f);
 
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(fovID, FOV * 2.0f);
+
+
+
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(DistanceID, Distance);
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(LensCoeffID, LensCoeff);
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(MaxCoCID, MaxCoC);
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(RcpMaxCoCID, RcpMaxCoC);
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(MarchMinimumID, MarchMinimum);
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(FarPlaneID, FarPlane);
 
 
 #ifdef DEBUG

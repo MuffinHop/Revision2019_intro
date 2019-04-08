@@ -198,7 +198,7 @@ float setVal(vec3 arr[], float rrow, long size, long *R_INDX) {
         syncCode += @"
         void Sync(float second)
         {
-            float div = 4.0 * 60.0 / 120.0;
+            float div = 4.0 * 60.0 / 180.0;
             float row = second * 60.0;
 
             ";
