@@ -299,12 +299,12 @@ void FontInRect(const char* sText, RECT &rFont) {
 
 void DrawRectText(const char* sText, COLORREF fg, COLORREF bg, int left, int top, int bottom, int right) {
 	SetTextColor(fonthDC, fg);
-
-	SetBkMode(fonthDC, TRANSPARENT);
-	//SetBkColor(fonthDC, bg);
-	SetTextAlign(fonthDC, TA_TOP| TA_LEFT);
-
 	ExtTextOut(fonthDC, left, top, ETO_OPAQUE, NULL, sText, strlen(sText), NULL);
+}
+
+void DrawRectTextW(LPCWSTR a, int len, COLORREF fg, COLORREF bg, int left, int top, int bottom, int right) {
+	SetTextColor(fonthDC, fg);
+	ExtTextOutW(fonthDC, left, top, ETO_OPAQUE, NULL, a, len, NULL);
 }
 
 HFONT latinwide118Font = NULL;
@@ -364,6 +364,8 @@ void InitFontToTexture() {
 	Arial300Font = CreateFont(300, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Arial");
 
 	hbmOld = SelectObject(fonthDC, hbmBitmap);
+	SetBkMode(fonthDC, TRANSPARENT);
+	SetTextAlign(fonthDC, TA_TOP | TA_LEFT);
 }
 
 void RenderFont1() {
@@ -405,12 +407,13 @@ void RenderFont1() {
 }
 
 void RenderFont2() {
+	hbmOld = SelectObject(fonthDC, hbmBitmap);
 	HBRUSH brush = CreateSolidBrush(RGB(0, 0, 0)); //create brush
 	SelectObject(fonthDC, brush); //select brush into DC
 	Rectangle(fonthDC, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)); //draw rectangle over whole screen
-
 	hFontOld = SelectObject(fonthDC, Arial300Font);
-	DrawRectText("♠♣♥♦",RGB(255,0,0),RGB(0,0,0),0,0,1065,693);
+	LPCWSTR str = L"♠♣♥♦";
+	DrawRectTextW(str, 4, RGB(255, 0, 0), RGB(0, 0, 0), 0, 200, 1065, 693);
 }
 
 GLubyte *
@@ -474,9 +477,10 @@ void RenderFontToTexture(GLuint texture) {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void GenFontTexture(GLuint texture) {
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
+GLuint GenFontTexture() {
+	GLuint temp;
+	glGenTextures(1, &temp);
+	glBindTexture(GL_TEXTURE_2D, temp);
 
 	// elect modulate to mix texture with color for shading
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
@@ -490,7 +494,7 @@ void GenFontTexture(GLuint texture) {
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glBindTexture(GL_TEXTURE_2D, 0);
-
+	return temp;
 }
 
 #ifndef EDITOR_CONTROLS
@@ -531,11 +535,11 @@ int __cdecl main(int argc, char* argv[])
 	
 	// font textures
 	RenderFont1();
-	GenFontTexture(fontTexture_telegram);
+	fontTexture_telegram = GenFontTexture();
 	RenderFontToTexture(fontTexture_telegram);
 
 	RenderFont2();
-	GenFontTexture(fontTexture_cards);
+	fontTexture_cards = GenFontTexture();
 	RenderFontToTexture(fontTexture_cards);
 
 
