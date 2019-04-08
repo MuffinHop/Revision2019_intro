@@ -100,6 +100,18 @@ mat3 rotationMatrix(vec3 axis, float angle) {
 		oc * axis.z * axis.x - axis.y * s, oc * axis.y * axis.z + axis.x * s, oc * axis.z * axis.z + c);
 }
 
+mat3 RotateQuaternion (vec4 q) 
+{
+  mat3 m;
+  float a1, a2, s;
+  s = q.w * q.w - 0.5;
+  m[0][0] = q.x * q.x + s;  m[1][1] = q.y * q.y + s;  m[2][2] = q.z * q.z + s;
+  a1 = q.x * q.y;  a2 = q.z * q.w;  m[0][1] = a1 + a2;  m[1][0] = a1 - a2;
+  a1 = q.x * q.z;  a2 = q.y * q.w;  m[2][0] = a1 + a2;  m[0][2] = a1 - a2;
+  a1 = q.y * q.z;  a2 = q.x * q.w;  m[1][2] = a1 + a2;  m[2][1] = a1 - a2;
+  return 2. * m;
+}
+
 // ------------------ 
 // Noises 
 // ------------------
@@ -465,35 +477,35 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
         
          float id0_distance = 1e9;
                vec3 posID0 = position - vec3(_Objects[0], _Objects[1], _Objects[2]);
-               posID0= posID0*rotationMatrix(vec3(_Objects[6], _Objects[7], _Objects[8]),  _Objects[9]);
+               posID0= RotateQuaternion(vec4(_Objects[6], _Objects[7], _Objects[8], - _Objects[9]))*posID0;
                id0_distance  = min(TreeTrunk(posID0, vec3(_Objects[3], _Objects[4],_Objects[5])), id0_distance);
                vec4 distID0 = vec4(id0_distance, material_ID0, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID0);
 
          float id1_distance = 1e9;
                vec3 posID1 = position - vec3(_Objects[10], _Objects[11], _Objects[12]);
-               posID1= posID1*rotationMatrix(vec3(_Objects[16], _Objects[17], _Objects[18]),  _Objects[19]);
+               posID1= RotateQuaternion(vec4(_Objects[16], _Objects[17], _Objects[18], - _Objects[19]))*posID1;
                id1_distance  = min(fBox(posID1, vec3(_Objects[13], _Objects[14],_Objects[15])), id1_distance);
                vec4 distID1 = vec4(id1_distance, material_ID1, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID1);
 
          float id2_distance = 1e9;
                vec3 posID2 = position - vec3(_Objects[20], _Objects[21], _Objects[22]);
-               posID2= posID2*rotationMatrix(vec3(_Objects[26], _Objects[27], _Objects[28]),  _Objects[29]);
+               posID2= RotateQuaternion(vec4(_Objects[26], _Objects[27], _Objects[28], - _Objects[29]))*posID2;
                id2_distance  = min(TreeBush(posID2, vec3(_Objects[23], _Objects[24],_Objects[25])), id2_distance);
                vec4 distID2 = vec4(id2_distance, material_ID2, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID2);
 
          float id3_distance = 1e9;
                vec3 posID3 = position - vec3(_Objects[30], _Objects[31], _Objects[32]);
-               posID3= posID3*rotationMatrix(vec3(_Objects[36], _Objects[37], _Objects[38]),  _Objects[39]);
+               posID3= RotateQuaternion(vec4(_Objects[36], _Objects[37], _Objects[38], - _Objects[39]))*posID3;
                id3_distance  = min(fSphere(posID3,_Objects[33]), id3_distance);
                vec4 distID3 = vec4(id3_distance, material_ID3, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID3);
 
          float id4_distance = 1e9;
                vec3 posID4 = position - vec3(_Objects[40], _Objects[41], _Objects[42]);
-               posID4= posID4*rotationMatrix(vec3(_Objects[46], _Objects[47], _Objects[48]),  _Objects[49]);
+               posID4= RotateQuaternion(vec4(_Objects[46], _Objects[47], _Objects[48], - _Objects[49]))*posID4;
                id4_distance  = min(fBox(posID4, vec3(_Objects[43], _Objects[44],_Objects[45])), id4_distance);
                vec4 distID4 = vec4(id4_distance, material_ID4, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID4);
