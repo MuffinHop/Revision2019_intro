@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
   m_Name: Smoky
   m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.17
-  albedo: {r: 1, g: 1, b: 1, a: 1}
-  smoothness: 0.9
-  reflectindx: 0.1
+  reflectionCoefficient: 0.71
+  albedo: {r: 1, g: 0, b: 0, a: 1}
+  smoothness: 0.84
+  reflectindx: 0.8
