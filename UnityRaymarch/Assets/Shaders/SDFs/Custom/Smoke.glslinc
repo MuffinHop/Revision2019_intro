@@ -1,0 +1,12 @@
+﻿float Smoke(vec3 pos, vec3 algorithm) {
+	vec3 opos = pos;
+	vec3 opos_ = opos;
+	
+	float i = 0.0;
+
+	float distance5 = 1.0;
+
+	return min(distance5,sdBox(opos+vec3(fract(-opos.z*0.5+(0.2+0.5*cos(fract(opos.z*0.2)*algorithm.x*0.1)*0.2)*opos.y)*sin(opos.y+i*1.+opos.z*4.+algorithm.x)*1.+1.0,0.,i*0.01),vec3((2.0-opos.y)*0.03*abs(cos(opos.y*2.+algorithm.x)),3.0+fract(i)*1.,0.9)));
+
+    return distance5;
+}
