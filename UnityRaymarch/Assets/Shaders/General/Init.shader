@@ -50,7 +50,7 @@ vec4 mainImage()
 
 		Material material = GetObjectMaterial(intersection);
 
-		surface.reflection = GetReflection(ray, intersection, surface);
+		//surface.reflection = GetReflection(ray, intersection, surface);
 
 		float distanctrans = intersection.distanc;
 		/*if (material.transparency > 0.0) {

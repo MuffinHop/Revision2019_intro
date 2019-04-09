@@ -146,11 +146,13 @@
 	<track name="Distance" folded="0" color="ffa9b250">
 		<key row="0" value="9.000000" interpolation="0" />
 		<key row="140" value="7.700000" interpolation="0" />
+		<key row="256" value="12.000000" interpolation="0" />
 		<key row="534" value="16.000000" interpolation="0" />
 	</track>
 	<track name="LensCoeff" folded="0" color="ff60b250">
 		<key row="0" value="1.000000" interpolation="0" />
 		<key row="140" value="0.140000" interpolation="0" />
+		<key row="256" value="0.080000" interpolation="0" />
 		<key row="534" value="0.400000" interpolation="0" />
 	</track>
 	<track name="MaxCoC" folded="0" color="ff4fb292">
