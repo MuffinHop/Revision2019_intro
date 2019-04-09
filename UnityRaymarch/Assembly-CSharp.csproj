@@ -145,6 +145,7 @@
     <None Include="Assets\Shaders\Operators\OpIntersectionRound.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\Torus.glslinc" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdOctahedron.glslinc" />
+    <None Include="Assets\Shaders\SDFs\Custom\Smoke.glslinc" />
     <None Include="Assets\Shaders\Operators\OpPipe.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdCapsule.glslinc" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdBox.glslinc" />

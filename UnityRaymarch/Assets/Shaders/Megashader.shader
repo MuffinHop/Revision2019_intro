@@ -439,7 +439,9 @@ const float material_ID3 = 4;
 
 const float material_ID4 = 5;
 
- uniform float _Objects[50];
+const float material_ID5 = 6;
+
+ uniform float _Objects[60];
 // Box: correct distance to corners
 float fBox(vec3 p, vec3 b) {
 	vec3 d = abs(p) - b;
@@ -471,6 +473,24 @@ float TreeTrunk(vec3 pos, vec3 algorithm) {
 	dist = fOpUnionRund(dist, fBox(opos + vec3(-0.1 + 0.1*cos(pos.z*10.1), 0.0, 0.0), vec3(0.03, 0.5, 0.02)), 0.1);
 	opos = o;
 	return dist;
+}
+float sdBox(vec3 p, vec3 b)
+{
+	vec3 d = abs(p) - b;
+	return length(max(d, 0.0))
+		+ min(max(d.x, max(d.y, d.z)), 0.0); // remove this line for an only partially signed sdf 
+}
+float Smoke(vec3 pos, vec3 algorithm) {
+	vec3 opos = pos;
+	vec3 opos_ = opos;
+	
+	float i = 0.0;
+
+	float distance5 = 1.0;
+
+	return min(distance5,sdBox(opos+vec3(fract(-opos.z*0.5+(0.2+0.5*cos(fract(opos.z*0.2)*algorithm.x*0.1)*0.2)*opos.y)*sin(opos.y+i*1.+opos.z*4.+algorithm.x)*1.+1.0,0.,i*0.01),vec3((2.0-opos.y)*0.03*abs(cos(opos.y*2.+algorithm.x)),3.0+fract(i)*1.,0.9)));
+
+    return distance5;
 }
 float sdSphere(vec3 p, float s)
 {
@@ -523,22 +543,28 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
                result = DistUnionCombine(result, distID1);
 
          float id2_distance = 1e9;
-               #define posID2 position
-               id2_distance  = min(TreeBush(posID2, vec3(_Objects[23], _Objects[24],_Objects[25])), id2_distance);
+               vec3 posID2 = position - vec3(_Objects[20], _Objects[21], _Objects[22]);
+               id2_distance  = min(Smoke(posID2, vec3(_Objects[23], _Objects[24],_Objects[25])), id2_distance);
                vec4 distID2 = vec4(id2_distance, material_ID2, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID2);
 
          float id3_distance = 1e9;
-               vec3 posID3 = position - vec3(_Objects[30], _Objects[31], _Objects[32]);
-               id3_distance  = min(fSphere(posID3,_Objects[33]), id3_distance);
+               #define posID3 position
+               id3_distance  = min(TreeBush(posID3, vec3(_Objects[33], _Objects[34],_Objects[35])), id3_distance);
                vec4 distID3 = vec4(id3_distance, material_ID3, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID3);
 
          float id4_distance = 1e9;
                vec3 posID4 = position - vec3(_Objects[40], _Objects[41], _Objects[42]);
-               id4_distance  = min(fBox(posID4, vec3(_Objects[43], _Objects[44],_Objects[45])), id4_distance);
+               id4_distance  = min(fSphere(posID4,_Objects[43]), id4_distance);
                vec4 distID4 = vec4(id4_distance, material_ID4, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID4);
+
+         float id5_distance = 1e9;
+               vec3 posID5 = position - vec3(_Objects[50], _Objects[51], _Objects[52]);
+               id5_distance  = min(fBox(posID5, vec3(_Objects[53], _Objects[54],_Objects[55])), id5_distance);
+               vec4 distID5 = vec4(id5_distance, material_ID5, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID5);
 
 
             return result;
@@ -598,20 +624,27 @@ Material RockPattern(vec3 position) {
               mat.reflectindx = 0.54;
        }
        if (hitNfo.id.x == material_ID2){
+              mat.reflectionCoefficient = 0.17;
+              mat.albedo = vec3(1,1,1);;
+              mat.transparency =0;
+              mat.smoothness = 0.9;
+              mat.reflectindx = 0.1;
+       }
+       if (hitNfo.id.x == material_ID3){
               mat.reflectionCoefficient = 0.11;
               mat.albedo = vec3(0.3978099,0.6603774,0.2896938);;
               mat.transparency =0;
               mat.smoothness = 0.17;
               mat.reflectindx = 0.05;
        }
-       if (hitNfo.id.x == material_ID3){
+       if (hitNfo.id.x == material_ID4){
               mat.reflectionCoefficient = 0.27;
               mat.albedo = vec3(1,1,1);;
               mat.transparency =0;
               mat.smoothness = 0.8;
               mat.reflectindx = 0.69;
        }
-       if (hitNfo.id.x == material_ID4){
+       if (hitNfo.id.x == material_ID5){
               mat = RockPattern(hitNfo.position);
 ;
        }
@@ -1014,7 +1047,7 @@ vec4 mainImage()
 	cocs = clamp(cocs, -_MaxCoC, _MaxCoC);
 
 	fragColor.a = saturate(abs(cocs) * _RcpMaxCoC);
-
+	fragColor.a *= 0.1;
 
 #ifdef DEBUG_STEPS
 	fragColor.r = focus;

@@ -1,5 +1,5 @@
          #include <math.h>
-         float RM_Objects[50];
+         float RM_Objects[60];
             struct vec3 {
                     float x, y, z;
                 };
@@ -76,9 +76,9 @@
               }; 
  
        vec3 ID1ArrayPositionZ[6] = { 
-               { 5, 7.82, 1 }, 
-               { 100000, 7.82, 1 }, 
-               { 200000, 7.82, 1 } 
+               { 5, 1.24, 1 }, 
+               { 100000, 1.24, 1 }, 
+               { 200000, 1.24, 1 } 
               }; 
  
        vec3 ID1ArrayScaleX[6] = { 
@@ -124,21 +124,21 @@
               }; 
  
        vec3 ID2ArrayPositionX[6] = { 
-               { 5, 0, 1 }, 
-               { 100000, 0, 1 }, 
-               { 200000, 0, 1 } 
+               { 5, -0.18, 1 }, 
+               { 100000, -0.18, 1 }, 
+               { 200000, -0.18, 1 } 
               }; 
  
        vec3 ID2ArrayPositionY[6] = { 
-               { 5, 0, 1 }, 
-               { 100000, 0, 1 }, 
-               { 200000, 0, 1 } 
+               { 5, -0.2, 1 }, 
+               { 100000, -0.2, 1 }, 
+               { 200000, -0.2, 1 } 
               }; 
  
        vec3 ID2ArrayPositionZ[6] = { 
-               { 5, 0, 1 }, 
-               { 100000, 0, 1 }, 
-               { 200000, 0, 1 } 
+               { 5, 25.05, 1 }, 
+               { 100000, 25.05, 1 }, 
+               { 200000, 25.05, 1 } 
               }; 
  
        vec3 ID2ArrayScaleX[6] = { 
@@ -184,21 +184,21 @@
               }; 
  
        vec3 ID3ArrayPositionX[6] = { 
-               { 5, -1.26, 1 }, 
-               { 100000, -1.26, 1 }, 
-               { 200000, -1.26, 1 } 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
               }; 
  
        vec3 ID3ArrayPositionY[6] = { 
-               { 5, 0.1, 1 }, 
-               { 100000, 0.1, 1 }, 
-               { 200000, 0.1, 1 } 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
               }; 
  
        vec3 ID3ArrayPositionZ[6] = { 
-               { 5, 10.96, 1 }, 
-               { 100000, 10.96, 1 }, 
-               { 200000, 10.96, 1 } 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
               }; 
  
        vec3 ID3ArrayScaleX[6] = { 
@@ -220,45 +220,45 @@
               }; 
  
        vec3 ID3ArrayRotationX[6] = { 
-               { 5, -0.103846, 1 }, 
-               { 100000, -0.103846, 1 }, 
-               { 200000, -0.103846, 1 } 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
               }; 
  
        vec3 ID3ArrayRotationY[6] = { 
-               { 5, -0.3132005, 1 }, 
-               { 100000, -0.3132005, 1 }, 
-               { 200000, -0.3132005, 1 } 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
               }; 
  
        vec3 ID3ArrayRotationZ[6] = { 
-               { 5, -0.1669408, 1 }, 
-               { 100000, -0.1669408, 1 }, 
-               { 200000, -0.1669408, 1 } 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
               }; 
  
        vec3 ID3ArrayRotationW[6] = { 
-               { 5, 0.9291137, 1 }, 
-               { 100000, 0.9291137, 1 }, 
-               { 200000, 0.9291137, 1 } 
+               { 5, 1, 1 }, 
+               { 100000, 1, 1 }, 
+               { 200000, 1, 1 } 
               }; 
  
        vec3 ID4ArrayPositionX[6] = { 
-               { 5, 2.465, 1 }, 
-               { 100000, 2.465, 1 }, 
-               { 200000, 2.465, 1 } 
+               { 5, -1.26, 1 }, 
+               { 100000, -1.26, 1 }, 
+               { 200000, -1.26, 1 } 
               }; 
  
        vec3 ID4ArrayPositionY[6] = { 
-               { 5, 0.18, 1 }, 
-               { 100000, 0.18, 1 }, 
-               { 200000, 0.18, 1 } 
+               { 5, 0.1, 1 }, 
+               { 100000, 0.1, 1 }, 
+               { 200000, 0.1, 1 } 
               }; 
  
        vec3 ID4ArrayPositionZ[6] = { 
-               { 5, 10.74, 1 }, 
-               { 100000, 10.74, 1 }, 
-               { 200000, 10.74, 1 } 
+               { 5, 10.96, 1 }, 
+               { 100000, 10.96, 1 }, 
+               { 200000, 10.96, 1 } 
               }; 
  
        vec3 ID4ArrayScaleX[6] = { 
@@ -280,24 +280,84 @@
               }; 
  
        vec3 ID4ArrayRotationX[6] = { 
+               { 5, -0.103846, 1 }, 
+               { 100000, -0.103846, 1 }, 
+               { 200000, -0.103846, 1 } 
+              }; 
+ 
+       vec3 ID4ArrayRotationY[6] = { 
+               { 5, -0.3132005, 1 }, 
+               { 100000, -0.3132005, 1 }, 
+               { 200000, -0.3132005, 1 } 
+              }; 
+ 
+       vec3 ID4ArrayRotationZ[6] = { 
+               { 5, -0.1669408, 1 }, 
+               { 100000, -0.1669408, 1 }, 
+               { 200000, -0.1669408, 1 } 
+              }; 
+ 
+       vec3 ID4ArrayRotationW[6] = { 
+               { 5, 0.9291137, 1 }, 
+               { 100000, 0.9291137, 1 }, 
+               { 200000, 0.9291137, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayPositionX[6] = { 
+               { 5, 2.465, 1 }, 
+               { 100000, 2.465, 1 }, 
+               { 200000, 2.465, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayPositionY[6] = { 
+               { 5, 0.18, 1 }, 
+               { 100000, 0.18, 1 }, 
+               { 200000, 0.18, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayPositionZ[6] = { 
+               { 5, 10.74, 1 }, 
+               { 100000, 10.74, 1 }, 
+               { 200000, 10.74, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayScaleX[6] = { 
+               { 5, 1, 1 }, 
+               { 100000, 1, 1 }, 
+               { 200000, 1, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayScaleY[6] = { 
+               { 5, 1, 1 }, 
+               { 100000, 1, 1 }, 
+               { 200000, 1, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayScaleZ[6] = { 
+               { 5, 1, 1 }, 
+               { 100000, 1, 1 }, 
+               { 200000, 1, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayRotationX[6] = { 
                { 5, -0.2482672, 1 }, 
                { 100000, -0.2482672, 1 }, 
                { 200000, -0.2482672, 1 } 
               }; 
  
-       vec3 ID4ArrayRotationY[6] = { 
+       vec3 ID5ArrayRotationY[6] = { 
                { 5, 0, 1 }, 
                { 100000, 0, 1 }, 
                { 200000, 0, 1 } 
               }; 
  
-       vec3 ID4ArrayRotationZ[6] = { 
+       vec3 ID5ArrayRotationZ[6] = { 
                { 5, 0, 1 }, 
                { 100000, 0, 1 }, 
                { 200000, 0, 1 } 
               }; 
  
-       vec3 ID4ArrayRotationW[6] = { 
+       vec3 ID5ArrayRotationW[6] = { 
                { 5, 0.9686916, 1 }, 
                { 100000, 0.9686916, 1 }, 
                { 200000, 0.9686916, 1 } 
@@ -373,7 +433,7 @@
        float PointLightPositionX;
        vec3 PointLightPositionYArray[7] = { 
                { 0, -12, 0 }, 
-               { 140, 1, 1 }, 
+               { 140, -5, 1 }, 
                { 255, 0, 0 }, 
                { 256, 1, 0 }, 
                { 534, -8, 0 }, 
@@ -516,7 +576,7 @@
        float Epsilon;
        vec3 DistanceArray[6] = { 
                { 0, 9, 0 }, 
-               { 140, 7.7, 0 }, 
+               { 140, 11, 0 }, 
                { 256, 12, 0 }, 
                { 534, 16, 0 }, 
                {100000.0f, 16, 0 }, 
@@ -525,7 +585,7 @@
        float Distance;
        vec3 LensCoeffArray[6] = { 
                { 0, 1, 0 }, 
-               { 140, 0.14, 0 }, 
+               { 140, 0.1, 0 }, 
                { 256, 0.08, 0 }, 
                { 534, 0.4, 0 }, 
                {100000.0f, 0.4, 0 }, 
@@ -534,7 +594,7 @@
        float LensCoeff;
        vec3 MaxCoCArray[6] = { 
                { 0, 1.4, 0 }, 
-               { 140, 0.1, 0 }, 
+               { 140, 0.04, 0 }, 
                { 256, 1, 0 }, 
                { 534, 2, 0 }, 
                {100000.0f, 2, 0 }, 
@@ -543,9 +603,9 @@
        float MaxCoC;
        vec3 RcpMaxCoCArray[4] = { 
                { 0, 0.05, 0 }, 
-               { 140, 0.7, 0 }, 
-               {100000.0f, 0.7, 0 }, 
-               {2100000.0f, 0.7, 0 } 
+               { 140, 1.3, 0 }, 
+               {100000.0f, 1.3, 0 }, 
+               {2100000.0f, 1.3, 0 } 
               }; 
        float RcpMaxCoC;
        vec3 MarchMinimumArray[5] = { 
@@ -730,6 +790,7 @@ long pointerID1ArrayPositionX = 0,pointerID1ArrayPositionY = 0,pointerID1ArrayPo
 long pointerID2ArrayPositionX = 0,pointerID2ArrayPositionY = 0,pointerID2ArrayPositionZ = 0,pointerID2ArrayScaleX = 0,pointerID2ArrayScaleY = 0,pointerID2ArrayScaleZ = 0,pointerID2ArrayRotationX = 0,pointerID2ArrayRotationY = 0,pointerID2ArrayRotationZ = 0,pointerID2ArrayRotationW = 0; 
 long pointerID3ArrayPositionX = 0,pointerID3ArrayPositionY = 0,pointerID3ArrayPositionZ = 0,pointerID3ArrayScaleX = 0,pointerID3ArrayScaleY = 0,pointerID3ArrayScaleZ = 0,pointerID3ArrayRotationX = 0,pointerID3ArrayRotationY = 0,pointerID3ArrayRotationZ = 0,pointerID3ArrayRotationW = 0; 
 long pointerID4ArrayPositionX = 0,pointerID4ArrayPositionY = 0,pointerID4ArrayPositionZ = 0,pointerID4ArrayScaleX = 0,pointerID4ArrayScaleY = 0,pointerID4ArrayScaleZ = 0,pointerID4ArrayRotationX = 0,pointerID4ArrayRotationY = 0,pointerID4ArrayRotationZ = 0,pointerID4ArrayRotationW = 0; 
+long pointerID5ArrayPositionX = 0,pointerID5ArrayPositionY = 0,pointerID5ArrayPositionZ = 0,pointerID5ArrayScaleX = 0,pointerID5ArrayScaleY = 0,pointerID5ArrayScaleZ = 0,pointerID5ArrayRotationX = 0,pointerID5ArrayRotationY = 0,pointerID5ArrayRotationZ = 0,pointerID5ArrayRotationW = 0; 
 long iTimeArrayPointer = 0;
 long DirectionalLightXArrayPointer = 0;
 long DirectionalLightYArrayPointer = 0;
@@ -833,53 +894,63 @@ long TempratureNormalizationArrayPointer = 0;
        RM_Objects[47] = setVal(ID4ArrayRotationY, row, 3, &pointerID4ArrayRotationY ); 
        RM_Objects[48] = setVal(ID4ArrayRotationZ, row, 3, &pointerID4ArrayRotationZ ); 
        RM_Objects[49] = setVal(ID4ArrayRotationW, row, 3, &pointerID4ArrayRotationW ); 
+       RM_Objects[50] = setVal(ID5ArrayPositionX, row, 3, &pointerID5ArrayPositionX ); 
+       RM_Objects[51] = setVal(ID5ArrayPositionY, row, 3, &pointerID5ArrayPositionY ); 
+       RM_Objects[52] = setVal(ID5ArrayPositionZ, row, 3, &pointerID5ArrayPositionZ ); 
+       RM_Objects[53] = setVal(ID5ArrayScaleX, row, 3, &pointerID5ArrayScaleX ) / 2.0f; 
+       RM_Objects[54] = setVal(ID5ArrayScaleY, row, 3, &pointerID5ArrayScaleY ) / 2.0f; 
+       RM_Objects[55] = setVal(ID5ArrayScaleZ, row, 3, &pointerID5ArrayScaleZ ) / 2.0f; 
+       RM_Objects[56] = setVal(ID5ArrayRotationX, row, 3, &pointerID5ArrayRotationX ); 
+       RM_Objects[57] = setVal(ID5ArrayRotationY, row, 3, &pointerID5ArrayRotationY ); 
+       RM_Objects[58] = setVal(ID5ArrayRotationZ, row, 3, &pointerID5ArrayRotationZ ); 
+       RM_Objects[59] = setVal(ID5ArrayRotationW, row, 3, &pointerID5ArrayRotationW ); 
        row = second * div;
-       iTime = setVal(iTimeArray, row, 7, &iTimeArrayPointer); 
-       DirectionalLightX = setVal(DirectionalLightXArray, row, 7, &DirectionalLightXArrayPointer); 
-       DirectionalLightY = setVal(DirectionalLightYArray, row, 7, &DirectionalLightYArrayPointer); 
-       DirectionalLightZ = setVal(DirectionalLightZArray, row, 7, &DirectionalLightZArrayPointer); 
-       DirectionalLightR = setVal(DirectionalLightRArray, row, 7, &DirectionalLightRArrayPointer); 
-       DirectionalLightG = setVal(DirectionalLightGArray, row, 7, &DirectionalLightGArrayPointer); 
-       DirectionalLightB = setVal(DirectionalLightBArray, row, 7, &DirectionalLightBArrayPointer); 
-       PointLightPositionX = setVal(PointLightPositionXArray, row, 7, &PointLightPositionXArrayPointer); 
-       PointLightPositionY = setVal(PointLightPositionYArray, row, 7, &PointLightPositionYArrayPointer); 
-       PointLightPositionZ = setVal(PointLightPositionZArray, row, 7, &PointLightPositionZArrayPointer); 
-       PointLightR = setVal(PointLightRArray, row, 7, &PointLightRArrayPointer); 
-       PointLightG = setVal(PointLightGArray, row, 7, &PointLightGArrayPointer); 
-       PointLightB = setVal(PointLightBArray, row, 7, &PointLightBArrayPointer); 
-       CameraPositionX = setVal(CameraPositionXArray, row, 7, &CameraPositionXArrayPointer); 
-       CameraPositionY = setVal(CameraPositionYArray, row, 7, &CameraPositionYArrayPointer); 
-       CameraPositionZ = setVal(CameraPositionZArray, row, 7, &CameraPositionZArrayPointer); 
-       LookAtX = setVal(LookAtXArray, row, 7, &LookAtXArrayPointer); 
-       LookAtY = setVal(LookAtYArray, row, 7, &LookAtYArrayPointer); 
-       LookAtZ = setVal(LookAtZArray, row, 7, &LookAtZArrayPointer); 
-       CameraUpX = setVal(CameraUpXArray, row, 7, &CameraUpXArrayPointer); 
-       CameraUpY = setVal(CameraUpYArray, row, 7, &CameraUpYArrayPointer); 
-       CameraUpZ = setVal(CameraUpZArray, row, 7, &CameraUpZArrayPointer); 
-       FOV = setVal(FOVArray, row, 7, &FOVArrayPointer); 
-       Epsilon = setVal(EpsilonArray, row, 7, &EpsilonArrayPointer); 
-       Distance = setVal(DistanceArray, row, 7, &DistanceArrayPointer); 
-       LensCoeff = setVal(LensCoeffArray, row, 7, &LensCoeffArrayPointer); 
-       MaxCoC = setVal(MaxCoCArray, row, 7, &MaxCoCArrayPointer); 
-       RcpMaxCoC = setVal(RcpMaxCoCArray, row, 7, &RcpMaxCoCArrayPointer); 
-       MarchMinimum = setVal(MarchMinimumArray, row, 7, &MarchMinimumArrayPointer); 
-       FarPlane = setVal(FarPlaneArray, row, 7, &FarPlaneArrayPointer); 
-       Gain_R = setVal(Gain_RArray, row, 7, &Gain_RArrayPointer); 
-       Gain_G = setVal(Gain_GArray, row, 7, &Gain_GArrayPointer); 
-       Gain_B = setVal(Gain_BArray, row, 7, &Gain_BArrayPointer); 
-       Gamma_R = setVal(Gamma_RArray, row, 7, &Gamma_RArrayPointer); 
-       Gamma_G = setVal(Gamma_GArray, row, 7, &Gamma_GArrayPointer); 
-       Gamma_B = setVal(Gamma_BArray, row, 7, &Gamma_BArrayPointer); 
-       Lift_R = setVal(Lift_RArray, row, 7, &Lift_RArrayPointer); 
-       Lift_G = setVal(Lift_GArray, row, 7, &Lift_GArrayPointer); 
-       Lift_B = setVal(Lift_BArray, row, 7, &Lift_BArrayPointer); 
-       Presaturation_R = setVal(Presaturation_RArray, row, 7, &Presaturation_RArrayPointer); 
-       Presaturation_G = setVal(Presaturation_GArray, row, 7, &Presaturation_GArrayPointer); 
-       Presaturation_B = setVal(Presaturation_BArray, row, 7, &Presaturation_BArrayPointer); 
-       ColorTemperatureStrength_R = setVal(ColorTemperatureStrength_RArray, row, 7, &ColorTemperatureStrength_RArrayPointer); 
-       ColorTemperatureStrength_G = setVal(ColorTemperatureStrength_GArray, row, 7, &ColorTemperatureStrength_GArrayPointer); 
-       ColorTemperatureStrength_B = setVal(ColorTemperatureStrength_BArray, row, 7, &ColorTemperatureStrength_BArrayPointer); 
-       ColorTemprature = setVal(ColorTempratureArray, row, 7, &ColorTempratureArrayPointer); 
-       TempratureNormalization = setVal(TempratureNormalizationArray, row, 7, &TempratureNormalizationArrayPointer); 
+       iTime = setVal(iTimeArray, row, 8, &iTimeArrayPointer); 
+       DirectionalLightX = setVal(DirectionalLightXArray, row, 8, &DirectionalLightXArrayPointer); 
+       DirectionalLightY = setVal(DirectionalLightYArray, row, 8, &DirectionalLightYArrayPointer); 
+       DirectionalLightZ = setVal(DirectionalLightZArray, row, 8, &DirectionalLightZArrayPointer); 
+       DirectionalLightR = setVal(DirectionalLightRArray, row, 8, &DirectionalLightRArrayPointer); 
+       DirectionalLightG = setVal(DirectionalLightGArray, row, 8, &DirectionalLightGArrayPointer); 
+       DirectionalLightB = setVal(DirectionalLightBArray, row, 8, &DirectionalLightBArrayPointer); 
+       PointLightPositionX = setVal(PointLightPositionXArray, row, 8, &PointLightPositionXArrayPointer); 
+       PointLightPositionY = setVal(PointLightPositionYArray, row, 8, &PointLightPositionYArrayPointer); 
+       PointLightPositionZ = setVal(PointLightPositionZArray, row, 8, &PointLightPositionZArrayPointer); 
+       PointLightR = setVal(PointLightRArray, row, 8, &PointLightRArrayPointer); 
+       PointLightG = setVal(PointLightGArray, row, 8, &PointLightGArrayPointer); 
+       PointLightB = setVal(PointLightBArray, row, 8, &PointLightBArrayPointer); 
+       CameraPositionX = setVal(CameraPositionXArray, row, 8, &CameraPositionXArrayPointer); 
+       CameraPositionY = setVal(CameraPositionYArray, row, 8, &CameraPositionYArrayPointer); 
+       CameraPositionZ = setVal(CameraPositionZArray, row, 8, &CameraPositionZArrayPointer); 
+       LookAtX = setVal(LookAtXArray, row, 8, &LookAtXArrayPointer); 
+       LookAtY = setVal(LookAtYArray, row, 8, &LookAtYArrayPointer); 
+       LookAtZ = setVal(LookAtZArray, row, 8, &LookAtZArrayPointer); 
+       CameraUpX = setVal(CameraUpXArray, row, 8, &CameraUpXArrayPointer); 
+       CameraUpY = setVal(CameraUpYArray, row, 8, &CameraUpYArrayPointer); 
+       CameraUpZ = setVal(CameraUpZArray, row, 8, &CameraUpZArrayPointer); 
+       FOV = setVal(FOVArray, row, 8, &FOVArrayPointer); 
+       Epsilon = setVal(EpsilonArray, row, 8, &EpsilonArrayPointer); 
+       Distance = setVal(DistanceArray, row, 8, &DistanceArrayPointer); 
+       LensCoeff = setVal(LensCoeffArray, row, 8, &LensCoeffArrayPointer); 
+       MaxCoC = setVal(MaxCoCArray, row, 8, &MaxCoCArrayPointer); 
+       RcpMaxCoC = setVal(RcpMaxCoCArray, row, 8, &RcpMaxCoCArrayPointer); 
+       MarchMinimum = setVal(MarchMinimumArray, row, 8, &MarchMinimumArrayPointer); 
+       FarPlane = setVal(FarPlaneArray, row, 8, &FarPlaneArrayPointer); 
+       Gain_R = setVal(Gain_RArray, row, 8, &Gain_RArrayPointer); 
+       Gain_G = setVal(Gain_GArray, row, 8, &Gain_GArrayPointer); 
+       Gain_B = setVal(Gain_BArray, row, 8, &Gain_BArrayPointer); 
+       Gamma_R = setVal(Gamma_RArray, row, 8, &Gamma_RArrayPointer); 
+       Gamma_G = setVal(Gamma_GArray, row, 8, &Gamma_GArrayPointer); 
+       Gamma_B = setVal(Gamma_BArray, row, 8, &Gamma_BArrayPointer); 
+       Lift_R = setVal(Lift_RArray, row, 8, &Lift_RArrayPointer); 
+       Lift_G = setVal(Lift_GArray, row, 8, &Lift_GArrayPointer); 
+       Lift_B = setVal(Lift_BArray, row, 8, &Lift_BArrayPointer); 
+       Presaturation_R = setVal(Presaturation_RArray, row, 8, &Presaturation_RArrayPointer); 
+       Presaturation_G = setVal(Presaturation_GArray, row, 8, &Presaturation_GArrayPointer); 
+       Presaturation_B = setVal(Presaturation_BArray, row, 8, &Presaturation_BArrayPointer); 
+       ColorTemperatureStrength_R = setVal(ColorTemperatureStrength_RArray, row, 8, &ColorTemperatureStrength_RArrayPointer); 
+       ColorTemperatureStrength_G = setVal(ColorTemperatureStrength_GArray, row, 8, &ColorTemperatureStrength_GArrayPointer); 
+       ColorTemperatureStrength_B = setVal(ColorTemperatureStrength_BArray, row, 8, &ColorTemperatureStrength_BArrayPointer); 
+       ColorTemprature = setVal(ColorTempratureArray, row, 8, &ColorTempratureArrayPointer); 
+       TempratureNormalization = setVal(TempratureNormalizationArray, row, 8, &TempratureNormalizationArrayPointer); 
 
     }

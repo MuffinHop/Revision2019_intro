@@ -11,7 +11,7 @@
 	#define BREAK_COMPATIBILITY 0
 #endif
 
-#define POST_PASS    0
+#define POST_PASS    1
 #define USE_MIPMAPS  1
 #define USE_AUDIO    1
 #define NO_UNIFORMS  0
@@ -346,6 +346,24 @@ extern float MaxCoC;
 extern float RcpMaxCoC;
 extern float MarchMinimum;
 extern float FarPlane;
+extern float Gain_R;
+extern float Gain_G;
+extern float Gain_B;
+extern float Gamma_R;
+extern float Gamma_G;
+extern float Gamma_B;
+extern float Lift_R;
+extern float Lift_G;
+extern float Lift_B;
+extern float Presaturation_R;
+extern float Presaturation_G;
+extern float Presaturation_B;
+extern float ColorTemperatureStrength_R;
+extern float ColorTemperatureStrength_G;
+extern float ColorTemperatureStrength_B;
+extern float ColorTemprature;
+extern float TempratureNormalization;
+
 void Sync(float second);
 
 void InitFontToTexture() {
@@ -599,6 +617,20 @@ int __cdecl main(int argc, char* argv[])
 		GLuint FarPlaneID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_FarPlane");
 
 
+
+		GLuint MainTexID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_MainTex");
+		GLuint iResolutionID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "iResolution");
+		GLuint GainID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_Gain");
+		GLuint GammaID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_Gamma");
+		GLuint LiftID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_Lift");
+		GLuint PresaturationID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_Presaturation");
+		GLuint ColorTemperatureStrengthID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_ColorTemperatureStrength");
+		GLuint ColorTempratureID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_ColorTemprature");
+		GLuint TempratureNormalizationID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_TempratureNormalization");
+
+
+
+
 	// main loop
 	do
 	{
@@ -625,7 +657,7 @@ int __cdecl main(int argc, char* argv[])
 		// font
 		glBindTexture(GL_TEXTURE_2D, fontTexture_telegram);
 		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
-		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
+		//((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
 
 		((PFNGLUNIFORM1FVPROC)wglGetProcAddress("glUniform1fv"))(ObjectsID, length, RM_Objects);
 
@@ -664,7 +696,6 @@ int __cdecl main(int argc, char* argv[])
 #endif
 		glRects(-1, -1, 1, 1);
 
-
 		// render "post process" using the opengl backbuffer
 		#if POST_PASS
 			glBindTexture(GL_TEXTURE_2D, 2);
@@ -678,7 +709,18 @@ int __cdecl main(int argc, char* argv[])
 			#endif
 			((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
 			((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(pidPost);
-			((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(0, 0);
+			((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(MainTexID, 0);
+			((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(iResolutionID, XRES, YRES, XRES, YRES);
+			((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(GainID, Gain_R, Gain_G, Gain_B, 0);
+			((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(GammaID, Gamma_R, Gamma_G, Gamma_B, 0);
+			((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(LiftID, Lift_R, Lift_G, Lift_B, 0);
+			((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(PresaturationID, Presaturation_R, Presaturation_G, Presaturation_B, 0);
+			((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(ColorTemperatureStrengthID, ColorTemperatureStrength_R, ColorTemperatureStrength_G, ColorTemperatureStrength_B, 0);
+			((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(ColorTempratureID, ColorTemprature);
+			((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(TempratureNormalizationID, TempratureNormalization);
+
+
+
 			glRects(-1, -1, 1, 1);
 		#endif
 
