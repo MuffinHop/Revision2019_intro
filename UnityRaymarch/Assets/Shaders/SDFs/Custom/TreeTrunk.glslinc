@@ -7,9 +7,10 @@ float TreeTrunk(vec3 pos, vec3 algorithm) {
 	vec3 opos = pos;
 	vec3 opos_ = opos;
 
-
-	float vali = 4.5;
+	float vali = 5.;
+	opos.x += hash1(floor(pos.z / vali) + vali);
 	opos.x = mod(opos.x, vali) - vali / 2.0;
+	opos.z += hash1(floor(pos.x / vali) + vali);
 	opos.z = mod(opos.z, vali) - vali / 2.0;
 	pR(opos.xz, pos.z*1.);
 	pR(opos.zy, 3.14);
