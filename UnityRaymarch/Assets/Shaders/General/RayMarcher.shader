@@ -34,19 +34,15 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 		}
 		else {*/
 
-			float cocs = max(result.distanc - _Distance,0.0) * _LensCoeff / result.distanc;
-			cocs = min(cocs, _MaxCoC);
+			float cocs = max(result.distanc - _Distance,0.0) * _LensCoeff * 0.1;
+			cocs = min(cocs, _MaxCoC * 0.1);
 
 
 			result.id = sceneDistance.yzw;
-#ifdef DEBUG_STEPS
 			result.distanc = result.distanc + sceneDistance.x;
-#else 
-			result.distanc = result.distanc + sceneDistance.x * max(cocs, _MarchMinimum);
-#endif
 		//}
 		
-		if (sceneDistance.x < 0.001 || result.distanc > _FarPlane) {
+		if (sceneDistance.x < max(cocs, _MarchMinimum * 0.1) || result.distanc > _FarPlane) {
 			sceneDistance = GetDistanceScene(result.position, transparencyPointer);
 #ifdef DEBUG_STEPS
 			focus = cocs;
@@ -97,7 +93,7 @@ float traceToLight(vec3 rayPosition, vec3 normalTrace, vec3 lightDir, float rayL
 	float t = 0.1;
 	float k = rayLightDistance;
 	float res = 1.0;
-	for (int i = 0; i < 12; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		float h = GetDistanceScene(ro + rd * t, transparencyInformation).x;
 		h = max(h, 0.0);

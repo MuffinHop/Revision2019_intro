@@ -425,9 +425,10 @@ float TreeTrunk(vec3 pos, vec3 algorithm) {
 	vec3 opos = pos;
 	vec3 opos_ = opos;
 
-
-	float vali = 4.5;
+	float vali = 5.;
+	opos.x += hash1(floor(pos.z / vali) + vali);
 	opos.x = mod(opos.x, vali) - vali / 2.0;
+	opos.z += hash1(floor(pos.x / vali) + vali);
 	opos.z = mod(opos.z, vali) - vali / 2.0;
 	pR(opos.xz, pos.z*1.);
 	pR(opos.zy, 3.14);
@@ -452,11 +453,11 @@ float TreeBush(vec3 pos, vec3 algorithm) {
     vec3 opos = pos;
     vec3 opos_ = opos;
 
-    
-    float vali = 4.5;
-    opos.x = mod(opos.x,vali)-vali/2.0;
-    opos.z += hash1(floor(pos.x/vali)) * 6.0;
-    opos.z = mod(opos.z,vali)-vali/2.0;
+	float vali = 5.;
+	opos.x += hash1(floor(pos.z / vali) + vali);
+	opos.x = mod(opos.x, vali) - vali / 2.0;
+	opos.z += hash1(floor(pos.x / vali) + vali);
+	opos.z = mod(opos.z, vali) - vali / 2.0;
     pR(opos.xz,pos.z*1.);
     pR(opos.zy,3.14);
 	
@@ -636,19 +637,15 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 		}
 		else {*/
 
-			float cocs = max(result.distanc - _Distance,0.0) * _LensCoeff / result.distanc;
-			cocs = min(cocs, _MaxCoC);
+			float cocs = max(result.distanc - _Distance,0.0) * _LensCoeff * 0.1;
+			cocs = min(cocs, _MaxCoC * 0.1);
 
 
 			result.id = sceneDistance.yzw;
-#ifdef DEBUG_STEPS
 			result.distanc = result.distanc + sceneDistance.x;
-#else 
-			result.distanc = result.distanc + sceneDistance.x * max(cocs, _MarchMinimum);
-#endif
 		//}
 		
-		if (sceneDistance.x < 0.001 || result.distanc > _FarPlane) {
+		if (sceneDistance.x < max(cocs, _MarchMinimum * 0.1) || result.distanc > _FarPlane) {
 			sceneDistance = GetDistanceScene(result.position, transparencyPointer);
 #ifdef DEBUG_STEPS
 			focus = cocs;
@@ -699,7 +696,7 @@ float traceToLight(vec3 rayPosition, vec3 normalTrace, vec3 lightDir, float rayL
 	float t = 0.1;
 	float k = rayLightDistance;
 	float res = 1.0;
-	for (int i = 0; i < 12; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		float h = GetDistanceScene(ro + rd * t, transparencyInformation).x;
 		h = max(h, 0.0);
@@ -945,14 +942,13 @@ vec4 mainImage()
 	ray.direction = normalize(-rightDirection * viewDirectionCoord.x + upDirection * viewDirectionCoord.y + forwardDirection);
 	ray.startdistanc = 0.0;
 	ray.length = farClip;
-
 	ray.direction.y *= 0.85;
 
 
 	ContactInfo intersection;
-	RayMarch(ray, intersection, 96, transparencyInformation);
+	RayMarch(ray, intersection, 128, transparencyInformation);
 	vec3 sceneColor;
-
+	float d = intersection.distanc;
 	if (intersection.id.x < 0.5) {
 		sceneColor = GetSkyGradient(ray.direction);
 	}
@@ -963,7 +959,7 @@ vec4 mainImage()
 
 		Material material = GetObjectMaterial(intersection);
 
-		//surface.reflection = GetReflection(ray, intersection, surface);
+		surface.reflection = GetReflection(ray, intersection, surface);
 
 		float distanctrans = intersection.distanc;
 		/*if (material.transparency > 0.0) {
@@ -984,6 +980,13 @@ vec4 mainImage()
 	vec3 noise = (rand(uv + _iTime) - .5) * vec3(1.0, 1.0, 1.0) * 0.01;
 	fragColor = min(max(vec4(e*Reinhard(sceneColor * exposure) + noise, 1.0), vec4(0.0, 0.0, 0.0, 1.0)), vec4(1.0, 1.0, 1.0, 1.0));
 	fragColor.rgb = fragColor.rgb + filmgrain(fragColor.rgb) * 0.2;
+
+	float cocs = (d - _Distance) * _LensCoeff / d;
+	cocs = clamp(cocs, -_MaxCoC, _MaxCoC);
+
+	fragColor.a = saturate(abs(cocs) * _RcpMaxCoC);
+
+
 #ifdef DEBUG_STEPS
 	fragColor.r = focus;
 #endif

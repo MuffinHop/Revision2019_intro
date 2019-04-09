@@ -33,14 +33,13 @@ vec4 mainImage()
 	ray.direction = normalize(-rightDirection * viewDirectionCoord.x + upDirection * viewDirectionCoord.y + forwardDirection);
 	ray.startdistanc = 0.0;
 	ray.length = farClip;
-
 	ray.direction.y *= 0.85;
 
 
 	ContactInfo intersection;
-	RayMarch(ray, intersection, 96, transparencyInformation);
+	RayMarch(ray, intersection, 128, transparencyInformation);
 	vec3 sceneColor;
-
+	float d = intersection.distanc;
 	if (intersection.id.x < 0.5) {
 		sceneColor = GetSkyGradient(ray.direction);
 	}
@@ -51,7 +50,7 @@ vec4 mainImage()
 
 		Material material = GetObjectMaterial(intersection);
 
-		//surface.reflection = GetReflection(ray, intersection, surface);
+		surface.reflection = GetReflection(ray, intersection, surface);
 
 		float distanctrans = intersection.distanc;
 		/*if (material.transparency > 0.0) {
@@ -72,6 +71,13 @@ vec4 mainImage()
 	vec3 noise = (rand(uv + _iTime) - .5) * vec3(1.0, 1.0, 1.0) * 0.01;
 	fragColor = min(max(vec4(e*Reinhard(sceneColor * exposure) + noise, 1.0), vec4(0.0, 0.0, 0.0, 1.0)), vec4(1.0, 1.0, 1.0, 1.0));
 	fragColor.rgb = fragColor.rgb + filmgrain(fragColor.rgb) * 0.2;
+
+	float cocs = (d - _Distance) * _LensCoeff / d;
+	cocs = clamp(cocs, -_MaxCoC, _MaxCoC);
+
+	fragColor.a = saturate(abs(cocs) * _RcpMaxCoC);
+
+
 #ifdef DEBUG_STEPS
 	fragColor.r = focus;
 #endif
