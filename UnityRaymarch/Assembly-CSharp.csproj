@@ -63,6 +63,7 @@
     <Compile Include="Assets\Huge Mocap Library\demo\scripts\demo.cs" />
     <Compile Include="Assets\Huge Mocap Library\demo\scripts\smoothFollow.cs" />
     <Compile Include="Assets\Scripts\Demo\Device.cs" />
+    <Compile Include="Assets\Scripts\Demo\PostProcess.cs" />
     <Compile Include="Assets\Scripts\Demo\RayMarchingController.cs" />
     <Compile Include="Assets\Scripts\Demo\RM_Camera.cs" />
     <Compile Include="Assets\Scripts\Demo\RM_Material.cs" />
@@ -106,6 +107,7 @@
     <None Include="Assets\Shaders\SDFs\Primitive\sdRoundBox.glslinc" />
     <None Include="Assets\Shaders\SDFs\Primitive\Plane.glslinc" />
     <None Include="Assets\Shaders\SDFs\Custom\TreeBush.glslinc" />
+    <None Include="Assets\Shaders\General\BeroColorGrading.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\Box2Cheap.glslinc" />
     <None Include="Assets\Shaders\Operators\OpTongue.shader" />
     <None Include="Assets\Shaders\Operators\OpIntersectionStairs.shader" />

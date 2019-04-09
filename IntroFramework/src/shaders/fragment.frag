@@ -426,9 +426,9 @@ float TreeTrunk(vec3 pos, vec3 algorithm) {
 	vec3 opos_ = opos;
 
 	float vali = 5.;
-	opos.x += hash1(floor(pos.z / vali) + vali);
+	opos.x += hash1(floor(pos.z / vali) + vali) * 1.2;
 	opos.x = mod(opos.x, vali) - vali / 2.0;
-	opos.z += hash1(floor(pos.x / vali) + vali);
+	opos.z += hash1(floor(pos.x / vali) + vali) * 1.2;
 	opos.z = mod(opos.z, vali) - vali / 2.0;
 	pR(opos.xz, pos.z*1.);
 	pR(opos.zy, 3.14);
@@ -454,9 +454,9 @@ float TreeBush(vec3 pos, vec3 algorithm) {
     vec3 opos_ = opos;
 
 	float vali = 5.;
-	opos.x += hash1(floor(pos.z / vali) + vali);
+	opos.x += hash1(floor(pos.z / vali) + vali) * 1.2;
 	opos.x = mod(opos.x, vali) - vali / 2.0;
-	opos.z += hash1(floor(pos.x / vali) + vali);
+	opos.z += hash1(floor(pos.x / vali) + vali) * 1.2;
 	opos.z = mod(opos.z, vali) - vali / 2.0;
     pR(opos.xz,pos.z*1.);
     pR(opos.zy,3.14);
@@ -959,7 +959,7 @@ vec4 mainImage()
 
 		Material material = GetObjectMaterial(intersection);
 
-		surface.reflection = GetReflection(ray, intersection, surface);
+		//surface.reflection = GetReflection(ray, intersection, surface);
 
 		float distanctrans = intersection.distanc;
 		/*if (material.transparency > 0.0) {
