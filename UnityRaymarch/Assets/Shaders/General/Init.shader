@@ -76,7 +76,6 @@ vec4 mainImage()
 	cocs = clamp(cocs, -_MaxCoC, _MaxCoC);
 
 	fragColor.a = saturate(abs(cocs) * _RcpMaxCoC);
-	fragColor.a *= 0.2;
 
 #ifdef DEBUG_STEPS
 	fragColor.r = focus;

@@ -381,6 +381,7 @@ PointLight GetPointLight() {
 #if defined(NVIDIA)
 	result.position = -result.position;
 #endif
+
 	return result;
 }
 
@@ -850,6 +851,8 @@ Shading AddPointLight(in PointLight light, in vec3 surfacePosition, in vec3 coll
 	vec3 diffuse = light.color * max(0.0, shadowFactor * attenuation * dot(lightDirection, normal) / (1.0 + material.transparency));
 	shading.diffuse = diffuse;
 	shading.specular = BlinnPhong(collisionDirection, lightDirection, normal, material.smoothness) * diffuse;
+	shading.diffuse = clamp(shading.diffuse, 0.0, 1.0);
+	shading.specular = clamp(shading.specular, 0.0, 1.0);
 
 	return shading;
 }
@@ -864,6 +867,9 @@ Shading AddDirectionLight(in DirectionLight light, in vec3 surfacePosition, in v
 	vec3 diffuse = light.color * shadowFactor * max(0.0, dot(lightDirection, normal) / (1.0 + material.transparency));
 	shading.diffuse = diffuse;
 	shading.specular = BlinnPhong(collisionDirection, lightDirection, normal, material.smoothness) * diffuse;
+	shading.diffuse = clamp(shading.diffuse, 0.0, 1.0);
+	shading.specular = clamp(shading.specular, 0.0, 1.0);
+
 
 	return shading;
 }
@@ -1047,7 +1053,6 @@ vec4 mainImage()
 	cocs = clamp(cocs, -_MaxCoC, _MaxCoC);
 
 	fragColor.a = saturate(abs(cocs) * _RcpMaxCoC);
-	fragColor.a *= 0.2;
 
 #ifdef DEBUG_STEPS
 	fragColor.r = focus;

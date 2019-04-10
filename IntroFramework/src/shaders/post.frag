@@ -69,7 +69,7 @@
 		);
 
 		vec2 uv = gl_FragCoord.xy / iResolution.xy;
-		vec3 c = mainImage(uv).rgb;
+		vec3 c = pow(mainImage(uv).xyz,vec3(1.0/2.1));
 		c = colorGradingProcess(ColorGradingPreset1, c);
 		gl_FragColor = vec4(c,1.0);
 	}

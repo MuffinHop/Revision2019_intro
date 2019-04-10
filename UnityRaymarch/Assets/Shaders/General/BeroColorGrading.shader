@@ -69,7 +69,7 @@
 	vec4 mainImage(vec2 uv) {
 		vec4 i = vec4(0.);
 		float s1;
-		float blr = texture(_MainTex, uv).w * 5.;
+		float blr = texture(_MainTex, uv).w;
 		for (int t = 0; t < 11; t++) {
 			float s2 = s1;
 			s1 = hash(float(1 - t) + dot(uv, uv));

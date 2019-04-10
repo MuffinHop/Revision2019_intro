@@ -6,6 +6,7 @@
 #if defined(NVIDIA)
 	result.position = -result.position;
 #endif
+
 	return result;
 }
 

@@ -41,9 +41,7 @@ public class RM_Camera : MonoBehaviour
             }
         }
     }
-    void Update()
-    {
-    }
+
 
     void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
