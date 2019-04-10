@@ -250,7 +250,7 @@ MonoBehaviour:
   Centered: 1
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 5835
+  visibleSyncDataCount: 6015
 --- !u!33 &88055493
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1042,7 +1042,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 1
   ID: 0
-  visibleSyncDataCount: 6126
+  visibleSyncDataCount: 6306
 --- !u!33 &757784147
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1268,7 +1268,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 7469
+  visibleSyncDataCount: 7649
 --- !u!33 &817454197
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1367,7 +1367,7 @@ MonoBehaviour:
   Centered: 1
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 5835
+  visibleSyncDataCount: 6015
 --- !u!33 &937398719
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2129,7 +2129,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 6189
+  visibleSyncDataCount: 6369
 --- !u!33 &1568201614
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2330,7 +2330,7 @@ Material:
     m_Floats:
     - _Value: 0
     - _iFrame: 0
-    - _iTime: 0.19607845
+    - _iTime: 6.3137255
     m_Colors:
     - _Light: {r: 0, g: 0, b: 0, a: 0}
     - _iMouse: {r: 0, g: 0, b: 0, a: 0}
@@ -2493,7 +2493,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 6205
+  visibleSyncDataCount: 6385
 --- !u!1 &1862993965
 GameObject:
   m_ObjectHideFlags: 0
@@ -2555,7 +2555,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: 1
-  m_TargetTexture: {fileID: 8600000, guid: a3a2db794bd37584f8fbf4b2c7454f0e, type: 2}
+  m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -2572,8 +2572,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1862993965}
-  m_LocalRotation: {x: -0.046841368, y: 0.9153881, z: -0.1116838, w: -0.38392344}
-  m_LocalPosition: {x: 32, y: 6.992806, z: 32}
+  m_LocalRotation: {x: -0.08501395, y: 0.89873743, z: -0.20085801, w: -0.38039416}
+  m_LocalPosition: {x: 32, y: 8, z: 32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2612,25 +2612,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dab2d133752ab424d9fa50540bfe1017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObjects:
-  - {fileID: 3569927}
-  - {fileID: 192690825}
-  - {fileID: 255904042}
-  - {fileID: 427746711}
-  - {fileID: 477087306}
-  - {fileID: 483782605}
-  - {fileID: 618483599}
-  - {fileID: 670804933}
-  - {fileID: 757784143}
-  - {fileID: 1250958943}
-  - {fileID: 1298074622}
-  - {fileID: 1419629665}
-  - {fileID: 1437319487}
-  - {fileID: 1445720134}
-  - {fileID: 1453281797}
-  - {fileID: 1568201611}
-  - {fileID: 1604039273}
-  - {fileID: 1745329770}
 --- !u!114 &1862993971
 MonoBehaviour:
   m_ObjectHideFlags: 0
