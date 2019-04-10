@@ -760,10 +760,10 @@ float rType(int r, float t) {
 		t = 0.;
 		break;
 	case 2:
-		t = t * t * (3. - 2. * t);
+		t = t * t * (3.0f - 2.0f * t);
 		break;
 	case 3:
-		t = pow(t, 2.);
+		t = pow(t, 2.0f);
 		break;
     default:
         return t;
