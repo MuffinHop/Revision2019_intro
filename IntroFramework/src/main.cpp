@@ -642,6 +642,7 @@ int __cdecl main(int argc, char* argv[])
 			PeekMessage(0, 0, 0, 0, PM_REMOVE);
 		#endif
 
+			Sync(time);
 #ifndef DEBUG
 		// render with the primary shader
 		auto songPos = player->GetSongPos();
@@ -652,12 +653,32 @@ int __cdecl main(int argc, char* argv[])
 		time = songPos;
 		//((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(0, (static_cast<int>(songPos*44100.0)));
 #endif
-
-
 		// font
-		glBindTexture(GL_TEXTURE_2D, fontTexture_telegram);
+		((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(pidMain);
+		//glBindTexture(GL_TEXTURE_2D, fontTexture_telegram);
 		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
 		//((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
+
+		/*
+		GLuint mainTexture = 0;
+		glGenTextures(0, &mainTexture);
+		glBindTexture(GL_TEXTURE_2D, mainTexture);
+		//params
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, XRES, YRES, 0, GL_RGBA, GL_FLOAT, 0);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		//framebuffer
+		GLuint framebuffer = 0;
+		((PFNGLGENFRAMEBUFFERSPROC)wglGetProcAddress("glGenFramebuffers"))(0, &framebuffer);
+		((PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffer"))(GL_FRAMEBUFFER, framebuffer);
+		((PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffer"))(GL_DRAW_FRAMEBUFFER, framebuffer);
+		((PFNGLFRAMEBUFFERTEXTURE2DPROC)wglGetProcAddress("glFramebufferTexture2D"))(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mainTexture, 0);
+
+		const GLenum attachements[] = { GL_COLOR_ATTACHMENT0 };
+		((PFNGLDRAWBUFFERSPROC)wglGetProcAddress("glDrawBuffers"))(1, attachements);
+		*/
+		
+
 
 		((PFNGLUNIFORM1FVPROC)wglGetProcAddress("glUniform1fv"))(ObjectsID, length, RM_Objects);
 
@@ -692,22 +713,22 @@ int __cdecl main(int argc, char* argv[])
 
 
 #ifdef DEBUG
-		time += 30.0f / 60.0f;
+		time += 30.0f / 60.0f; 
 #endif
 		glRects(-1, -1, 1, 1);
 
 		// render "post process" using the opengl backbuffer
 		#if POST_PASS
-			glBindTexture(GL_TEXTURE_2D, 2);
+			glBindTexture(GL_TEXTURE_2D, 1); 
 			#if USE_MIPMAPS
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-				glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 0, 0, XRES, YRES, 0);
+				glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, 0, 0, XRES, YRES, 0);
 				((PFNGLGENERATEMIPMAPPROC)wglGetProcAddress("glGenerateMipmap"))(GL_TEXTURE_2D);
 			#else
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 0, 0, XRES, YRES, 0);
 			#endif
-			((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
+			((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE1);
 			((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(pidPost);
 			((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(MainTexID, 0);
 			((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(iResolutionID, XRES, YRES, XRES, YRES);
@@ -726,7 +747,6 @@ int __cdecl main(int argc, char* argv[])
 
 		SwapBuffers(hDC);
 
-		Sync(time);
 
 
 	} while(!GetAsyncKeyState(VK_ESCAPE)

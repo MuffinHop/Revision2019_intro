@@ -503,7 +503,7 @@
        float CameraPositionY;
        vec3 CameraPositionZArray[7] = { 
                { 0, 32, 0 }, 
-               { 256, 32, 0 }, 
+               { 256, 30, 0 }, 
                { 533, 16, 0 }, 
                { 534, -2, 1 }, 
                { 687, 2, 0 }, 
@@ -562,21 +562,24 @@
                {2100000.0f, 0, 0 } 
               }; 
        float CameraUpZ;
-       vec3 FOVArray[3] = { 
+       vec3 FOVArray[4] = { 
                { 0, 32, 0 }, 
-               {100000.0f, 32, 0 }, 
-               {2100000.0f, 32, 0 } 
+               { 256, 29, 0 }, 
+               {100000.0f, 29, 0 }, 
+               {2100000.0f, 29, 0 } 
               }; 
        float FOV;
-       vec3 EpsilonArray[3] = { 
+       vec3 EpsilonArray[4] = { 
                { 0, 0.01, 0 }, 
-               {100000.0f, 0.01, 0 }, 
-               {2100000.0f, 0.01, 0 } 
+               { 256, 0, 0 }, 
+               {100000.0f, 0, 0 }, 
+               {2100000.0f, 0, 0 } 
               }; 
        float Epsilon;
-       vec3 DistanceArray[6] = { 
-               { 0, 9, 0 }, 
-               { 140, 11, 0 }, 
+       vec3 DistanceArray[7] = { 
+               { 0, 8, 0 }, 
+               { 140, 5, 1 }, 
+               { 255, 12, 0 }, 
                { 256, 12, 0 }, 
                { 534, 16, 0 }, 
                {100000.0f, 16, 0 }, 
@@ -584,16 +587,16 @@
               }; 
        float Distance;
        vec3 LensCoeffArray[6] = { 
-               { 0, 1, 0 }, 
+               { 0, 0.4, 0 }, 
                { 140, 0.1, 0 }, 
-               { 256, 0.08, 0 }, 
+               { 256, 0.04, 0 }, 
                { 534, 0.4, 0 }, 
                {100000.0f, 0.4, 0 }, 
                {2100000.0f, 0.4, 0 } 
               }; 
        float LensCoeff;
        vec3 MaxCoCArray[6] = { 
-               { 0, 1.4, 0 }, 
+               { 0, 2, 0 }, 
                { 140, 0.04, 0 }, 
                { 256, 1, 0 }, 
                { 534, 2, 0 }, 
@@ -601,55 +604,61 @@
                {2100000.0f, 2, 0 } 
               }; 
        float MaxCoC;
-       vec3 RcpMaxCoCArray[4] = { 
-               { 0, 0.05, 0 }, 
+       vec3 RcpMaxCoCArray[5] = { 
+               { 0, 0.1, 0 }, 
                { 140, 1.3, 0 }, 
-               {100000.0f, 1.3, 0 }, 
-               {2100000.0f, 1.3, 0 } 
+               { 256, 1, 0 }, 
+               {100000.0f, 1, 0 }, 
+               {2100000.0f, 1, 0 } 
               }; 
        float RcpMaxCoC;
        vec3 MarchMinimumArray[5] = { 
-               { 0, 0.1, 0 }, 
+               { 0, 0.01, 0 }, 
                { 140, 0.01, 0 }, 
                { 534, 0.7, 0 }, 
                {100000.0f, 0.7, 0 }, 
                {2100000.0f, 0.7, 0 } 
               }; 
        float MarchMinimum;
-       vec3 FarPlaneArray[5] = { 
+       vec3 FarPlaneArray[6] = { 
                { 0, 22, 0 }, 
                { 140, 22, 0 }, 
+               { 256, 32, 0 }, 
                { 534, 23, 0 }, 
                {100000.0f, 23, 0 }, 
                {2100000.0f, 23, 0 } 
               }; 
        float FarPlane;
-       vec3 Gain_RArray[4] = { 
+       vec3 Gain_RArray[5] = { 
                { 0, 0.55, 0 }, 
+               { 256, 0.5, 0 }, 
                { 534, 0.5, 0 }, 
                {100000.0f, 0.5, 0 }, 
                {2100000.0f, 0.5, 0 } 
               }; 
        float Gain_R;
-       vec3 Gain_GArray[5] = { 
+       vec3 Gain_GArray[6] = { 
                { 0, 0.5, 0 }, 
                { 140, 0.55, 0 }, 
+               { 256, 0.5, 0 }, 
                { 534, 0.6, 0 }, 
                {100000.0f, 0.6, 0 }, 
                {2100000.0f, 0.6, 0 } 
               }; 
        float Gain_G;
-       vec3 Gain_BArray[4] = { 
+       vec3 Gain_BArray[5] = { 
                { 0, 0.4, 0 }, 
+               { 256, 0.5, 0 }, 
                { 534, 0.4, 0 }, 
                {100000.0f, 0.4, 0 }, 
                {2100000.0f, 0.4, 0 } 
               }; 
        float Gain_B;
-       vec3 Gamma_RArray[3] = { 
+       vec3 Gamma_RArray[4] = { 
                { 0, 0.3, 0 }, 
-               {100000.0f, 0.3, 0 }, 
-               {2100000.0f, 0.3, 0 } 
+               { 256, 0.36, 0 }, 
+               {100000.0f, 0.36, 0 }, 
+               {2100000.0f, 0.36, 0 } 
               }; 
        float Gamma_R;
        vec3 Gamma_GArray[5] = { 
@@ -687,11 +696,12 @@
                {2100000.0f, 0.6, 0 } 
               }; 
        float Lift_B;
-       vec3 Presaturation_RArray[4] = { 
+       vec3 Presaturation_RArray[5] = { 
                { 0, 1, 0 }, 
                { 140, 1, 0 }, 
-               {100000.0f, 1, 0 }, 
-               {2100000.0f, 1, 0 } 
+               { 256, 2, 0 }, 
+               {100000.0f, 2, 0 }, 
+               {2100000.0f, 2, 0 } 
               }; 
        float Presaturation_R;
        vec3 Presaturation_GArray[3] = { 
@@ -725,17 +735,19 @@
                {2100000.0f, 1, 0 } 
               }; 
        float ColorTemperatureStrength_B;
-       vec3 ColorTempratureArray[4] = { 
+       vec3 ColorTempratureArray[5] = { 
                { 0, 5500, 1 }, 
                { 140, 7000, 0 }, 
-               {100000.0f, 7000, 0 }, 
-               {2100000.0f, 7000, 0 } 
+               { 256, 5555, 0 }, 
+               {100000.0f, 5555, 0 }, 
+               {2100000.0f, 5555, 0 } 
               }; 
        float ColorTemprature;
-       vec3 TempratureNormalizationArray[3] = { 
+       vec3 TempratureNormalizationArray[4] = { 
                { 0, 0, 0 }, 
-               {100000.0f, 0, 0 }, 
-               {2100000.0f, 0, 0 } 
+               { 256, 3, 0 }, 
+               {100000.0f, 3, 0 }, 
+               {2100000.0f, 3, 0 } 
               }; 
        float TempratureNormalization;
 

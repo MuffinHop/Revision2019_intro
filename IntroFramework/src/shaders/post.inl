@@ -30,7 +30,7 @@ const char *post_frag =
  "vec4 mainImage(vec2 uv)"
  "{"
    "vec4 i=vec4(0.);"
-   "float s1,blr=texture(_MainTex,uv).w*10.;"
+   "float s1,blr=texture(_MainTex,uv).w;"
    "for(int t=0;t<11;t++)"
      "{"
        "float s2=s1;"
@@ -47,7 +47,7 @@ const char *post_frag =
    "vec2 uv=gl_FragCoord.xy/iResolution.xy;"
    "vec3 c=mainImage(uv).xyz;"
    "c=colorGradingProcess(ColorGradingPreset1,c);"
-   "gl_FragColor=texture(_MainTex,uv);"
+   "gl_FragColor=vec4(c,1.);"
  "}";
 
 #endif // POST_INL_
