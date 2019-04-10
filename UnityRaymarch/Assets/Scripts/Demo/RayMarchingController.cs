@@ -7,8 +7,6 @@ using UnityEngine;
 
 public class RayMarchingController : MonoBehaviour
 {
-    [SerializeField]
-    private List<GameObject> gameObjects;
     private List<RM_Surface> surfaces;
     private Dictionary<RM_Surface, List<RM_Object>> gomat;
     public Dictionary<RM_Surface, List<RM_Object>> GetSortedObjectList()
@@ -352,7 +350,6 @@ public class RayMarchingController : MonoBehaviour
     {
         string coreCode = "";
         var rmObjects = FindObjectsOfType<RM_Object>();
-        gameObjects = new List<GameObject>();
 
         int validRMObjects = 0;
         gomat = new Dictionary<RM_Surface, List<RM_Object>>();
