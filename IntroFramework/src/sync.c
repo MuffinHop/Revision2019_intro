@@ -549,11 +549,10 @@
                {2100000.0f, 0, 0 } 
               }; 
        float CameraUpX;
-       vec3 CameraUpYArray[4] = { 
+       vec3 CameraUpYArray[3] = { 
                { 0, 1, 0 }, 
-               { 535, 0.2, 0 }, 
-               {100000.0f, 0.2, 0 }, 
-               {2100000.0f, 0.2, 0 } 
+               {100000.0f, 1, 0 }, 
+               {2100000.0f, 1, 0 } 
               }; 
        float CameraUpY;
        vec3 CameraUpZArray[3] = { 
@@ -760,10 +759,10 @@ float rType(int r, float t) {
 		t = 0.;
 		break;
 	case 2:
-		t = t * t * (3.0f - 2.0f * t);
+		t = t * t * (3. - 2. * t);
 		break;
 	case 3:
-		t = pow(t, 2.0f);
+		t = pow(t, 2.);
 		break;
     default:
         return t;
@@ -772,9 +771,7 @@ float rType(int r, float t) {
 }
 #pragma optimize( "", off )
 float setVal(vec3 arr[], float rrow, long size, long *R_INDX) {
-    if(*R_INDX>0) {
-        *R_INDX--;
-    }
+	*R_INDX = 0;
 	float t = 0;
 	float renVal = 0;
 	vec3 RET = { 0,0,0 };
