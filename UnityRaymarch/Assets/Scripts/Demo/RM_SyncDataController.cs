@@ -118,9 +118,7 @@ float rType(int r, float t) {
 }
 #pragma optimize( """", off )
 float setVal(vec3 arr[], float rrow, long size, long *R_INDX) {
-    if(*R_INDX>0) {
-        *R_INDX--;
-    }
+	*R_INDX = 0;
 	float t = 0;
 	float renVal = 0;
 	vec3 RET = { 0,0,0 };
