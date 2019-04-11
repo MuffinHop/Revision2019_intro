@@ -1,0 +1,11 @@
+﻿float Wheat(vec3 pos, vec3 algorithm) {
+	pos.x+=cos(algorithm.z+pos.y*7.+pos.x*5.)*0.03;
+	pos.z-=0.5;
+	vec3 opos = pos;
+	opos.x = mod(opos.x, algorithm.z) - algorithm.z / 2.0;
+	opos.x+= mod(opos.z*1.5, algorithm.y)*algorithm.x;
+	opos.z = mod(opos.z, algorithm.z) - algorithm.z / 2.0;
+	opos.z-= mod(opos.z, algorithm.z/2.)*0.1;
+	float dist = fBox(opos + vec3(0.2,0.0,0.2), vec3(0.002, 0.2, 0.003));
+	return dist;
+}
