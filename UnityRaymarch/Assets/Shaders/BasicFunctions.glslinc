@@ -34,6 +34,16 @@ float Noise(vec2 p)
 	vec2 s = sin(p * 0.6345) + sin(p * 1.62423);
 	return dot(s, vec2(0.125)) + 0.5;
 }
+
+const float kHashScale1 = 443.8975;
+
+
+float hash11(float p) {
+  vec3 p3 = fract(vec3(p) * kHashScale1);
+  p3 += dot(p3, p3.yyx + 0.5);
+  return fract(p3.y*p3.z*p3.z*0.2)-fract(p3.y*p3.z*1.);
+}
+
 vec2 hash(vec2 p)
 {
 	p = vec2(dot(p, vec2(127.1, 311.7)),
@@ -81,24 +91,38 @@ vec3 filmgrain(vec3 color) {
 // ------------------ 
 // Others 
 // ------------------
-const mat2 r2D = mat2(1.3623, 1.7531, -1.7131, 1.4623);
+
 float GetHeightmap(vec3 p)
 {
-	vec2 p2 = p.xz;
-	vec2 p3 = p.yz - 0.5;
+    float hills;
 
+    // Combine from components
+    float hill_1 = 8.0 * perlinnoise(0.1 * p.xz); // High amplitude, very low frequency
+    float hill_2 = 4.0 * perlinnoise(0.5 * p.xz); // Medium amplitude, low frequency
+    float hill_3 = 2.0 * perlinnoise(1.0 * p.xz); // Small amplitude, high frequency
+    float hill_4 = 1.0 * perlinnoise(2.0 * p.xz); // Tiny amplitude, very high frequency
+    
+    hills += hill_1;
+    hills += hill_2;
+    hills += hill_3;
+    hills += hill_4; // Optional, if performance hit is too large
 
-	float d = .5 + (0.8*perlinnoise(p2*.25));
-	d = 321.0 * d * d;
-
-	p3 *= r2D;
-	float height = d * perlinnoise(p3);
-	p2 *= r2D;
-	d *= 0.9;
-	height += d * perlinnoise(p2);
-
-	return  height;
+	return  hills;
 }
+
+float GetHeightmapLowPrecision(vec3 p)
+{
+    float hills;
+
+    // Combine from components
+    float hill_1 = 8.0 * perlinnoise(0.1 * p.xz); // High amplitude, very low frequency
+
+    hills += hill_1;
+
+	return  hills;
+}
+
+
 void pR(inout vec2 p, float a) {
 	p = cos(a)*p + sin(a)*vec2(p.y, -p.x);
 }

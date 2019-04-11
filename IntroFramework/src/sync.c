@@ -22,21 +22,21 @@
               }; 
  
        vec3 ID0ArrayScaleX[6] = { 
-               { 5, 1, 1 }, 
-               { 100000, 1, 1 }, 
-               { 200000, 1, 1 } 
+               { 5, 0.1, 1 }, 
+               { 100000, 0.1, 1 }, 
+               { 200000, 0.1, 1 } 
               }; 
  
        vec3 ID0ArrayScaleY[6] = { 
-               { 5, 1, 1 }, 
-               { 100000, 1, 1 }, 
-               { 200000, 1, 1 } 
+               { 5, 0.1, 1 }, 
+               { 100000, 0.1, 1 }, 
+               { 200000, 0.1, 1 } 
               }; 
  
        vec3 ID0ArrayScaleZ[6] = { 
-               { 5, 1, 1 }, 
-               { 100000, 1, 1 }, 
-               { 200000, 1, 1 } 
+               { 5, 0.1, 1 }, 
+               { 100000, 0.1, 1 }, 
+               { 200000, 0.1, 1 } 
               }; 
  
        vec3 ID0ArrayRotationX[6] = { 
@@ -202,21 +202,21 @@
               }; 
  
        vec3 ID3ArrayScaleX[6] = { 
-               { 5, 1, 1 }, 
-               { 100000, 1, 1 }, 
-               { 200000, 1, 1 } 
+               { 5, 0.1, 1 }, 
+               { 100000, 0.1, 1 }, 
+               { 200000, 0.1, 1 } 
               }; 
  
        vec3 ID3ArrayScaleY[6] = { 
-               { 5, 1, 1 }, 
-               { 100000, 1, 1 }, 
-               { 200000, 1, 1 } 
+               { 5, 0.1, 1 }, 
+               { 100000, 0.1, 1 }, 
+               { 200000, 0.1, 1 } 
               }; 
  
        vec3 ID3ArrayScaleZ[6] = { 
-               { 5, 1, 1 }, 
-               { 100000, 1, 1 }, 
-               { 200000, 1, 1 } 
+               { 5, 0.1, 1 }, 
+               { 100000, 0.1, 1 }, 
+               { 200000, 0.1, 1 } 
               }; 
  
        vec3 ID3ArrayRotationX[6] = { 
@@ -370,174 +370,134 @@
                {2100000.0f, 12, 0 } 
               }; 
        float iTime;
-       vec3 DirectionalLightXArray[5] = { 
-               { 0, 1, 0 }, 
-               { 256, 1, 0 }, 
-               { 534, -0.3, 0 }, 
-               {100000.0f, -0.3, 0 }, 
-               {2100000.0f, -0.3, 0 } 
-              }; 
-       float DirectionalLightX;
-       vec3 DirectionalLightYArray[6] = { 
+       vec3 DirectionalLightXArray[4] = { 
                { 0, -1, 0 }, 
-               { 140, 1, 0 }, 
-               { 256, 0.2, 0 }, 
-               { 534, 0.5, 0 }, 
-               {100000.0f, 0.5, 0 }, 
-               {2100000.0f, 0.5, 0 } 
-              }; 
-       float DirectionalLightY;
-       vec3 DirectionalLightZArray[6] = { 
-               { 0, 1, 0 }, 
-               { 140, -2, 0 }, 
-               { 256, -1, 0 }, 
-               { 534, 0.3, 0 }, 
-               {100000.0f, 0.3, 0 }, 
-               {2100000.0f, 0.3, 0 } 
-              }; 
-       float DirectionalLightZ;
-       vec3 DirectionalLightRArray[5] = { 
-               { 0, 9, 0 }, 
-               { 256, 8, 0 }, 
-               { 534, 22, 0 }, 
-               {100000.0f, 22, 0 }, 
-               {2100000.0f, 22, 0 } 
-              }; 
-       float DirectionalLightR;
-       vec3 DirectionalLightGArray[5] = { 
-               { 0, 6, 0 }, 
-               { 256, 8, 0 }, 
-               { 534, 9, 0 }, 
-               {100000.0f, 9, 0 }, 
-               {2100000.0f, 9, 0 } 
-              }; 
-       float DirectionalLightG;
-       vec3 DirectionalLightBArray[5] = { 
-               { 0, 6, 0 }, 
-               { 256, 8, 0 }, 
-               { 534, 7, 0 }, 
-               {100000.0f, 7, 0 }, 
-               {2100000.0f, 7, 0 } 
-              }; 
-       float DirectionalLightB;
-       vec3 PointLightPositionXArray[8] = { 
-               { 0, -22, 0 }, 
-               { 140, -22, 1 }, 
-               { 255, -22, 0 }, 
                { 256, 0, 0 }, 
-               { 533, 4, 0 }, 
-               { 534, 0, 0 }, 
                {100000.0f, 0, 0 }, 
                {2100000.0f, 0, 0 } 
               }; 
+       float DirectionalLightX;
+       vec3 DirectionalLightYArray[4] = { 
+               { 0, 0.2, 0 }, 
+               { 256, 0, 0 }, 
+               {100000.0f, 0, 0 }, 
+               {2100000.0f, 0, 0 } 
+              }; 
+       float DirectionalLightY;
+       vec3 DirectionalLightZArray[4] = { 
+               { 0, -1, 0 }, 
+               { 256, 0, 0 }, 
+               {100000.0f, 0, 0 }, 
+               {2100000.0f, 0, 0 } 
+              }; 
+       float DirectionalLightZ;
+       vec3 DirectionalLightRArray[4] = { 
+               { 0, 12, 0 }, 
+               { 256, 8, 0 }, 
+               {100000.0f, 8, 0 }, 
+               {2100000.0f, 8, 0 } 
+              }; 
+       float DirectionalLightR;
+       vec3 DirectionalLightGArray[4] = { 
+               { 0, 12, 0 }, 
+               { 256, 8, 0 }, 
+               {100000.0f, 8, 0 }, 
+               {2100000.0f, 8, 0 } 
+              }; 
+       float DirectionalLightG;
+       vec3 DirectionalLightBArray[4] = { 
+               { 0, 33, 0 }, 
+               { 256, 8, 0 }, 
+               {100000.0f, 8, 0 }, 
+               {2100000.0f, 8, 0 } 
+              }; 
+       float DirectionalLightB;
+       vec3 PointLightPositionXArray[4] = { 
+               { 0, -22, 0 }, 
+               { 256, -5, 0 }, 
+               {100000.0f, -5, 0 }, 
+               {2100000.0f, -5, 0 } 
+              }; 
        float PointLightPositionX;
-       vec3 PointLightPositionYArray[7] = { 
-               { 0, -12, 0 }, 
-               { 140, -5, 1 }, 
-               { 255, 0, 0 }, 
-               { 256, 1, 0 }, 
-               { 534, -8, 0 }, 
-               {100000.0f, -8, 0 }, 
-               {2100000.0f, -8, 0 } 
+       vec3 PointLightPositionYArray[4] = { 
+               { 0, -4, 0 }, 
+               { 256, -0.4, 0 }, 
+               {100000.0f, -0.4, 0 }, 
+               {2100000.0f, -0.4, 0 } 
               }; 
        float PointLightPositionY;
-       vec3 PointLightPositionZArray[8] = { 
+       vec3 PointLightPositionZArray[4] = { 
                { 0, -22, 0 }, 
-               { 140, -22, 1 }, 
-               { 255, -18, 0 }, 
-               { 256, 12, 0 }, 
-               { 533, 4, 0 }, 
-               { 534, -22, 0 }, 
-               {100000.0f, -22, 0 }, 
-               {2100000.0f, -22, 0 } 
+               { 256, 30, 0 }, 
+               {100000.0f, 30, 0 }, 
+               {2100000.0f, 30, 0 } 
               }; 
        float PointLightPositionZ;
-       vec3 PointLightRArray[7] = { 
+       vec3 PointLightRArray[4] = { 
                { 0, 122, 0 }, 
-               { 140, 155, 1 }, 
-               { 255, 555, 0 }, 
-               { 256, 1232, 0 }, 
-               { 534, 222, 0 }, 
-               {100000.0f, 222, 0 }, 
-               {2100000.0f, 222, 0 } 
-              }; 
-       float PointLightR;
-       vec3 PointLightGArray[7] = { 
-               { 0, 122, 0 }, 
-               { 140, 155, 1 }, 
-               { 255, 333, 0 }, 
-               { 256, 875, 0 }, 
-               { 534, 144, 0 }, 
-               {100000.0f, 144, 0 }, 
-               {2100000.0f, 144, 0 } 
-              }; 
-       float PointLightG;
-       vec3 PointLightBArray[7] = { 
-               { 0, 122, 0 }, 
-               { 140, 155, 1 }, 
-               { 255, 333, 0 }, 
-               { 256, 555, 0 }, 
-               { 534, 122, 0 }, 
+               { 256, 122, 0 }, 
                {100000.0f, 122, 0 }, 
                {2100000.0f, 122, 0 } 
               }; 
+       float PointLightR;
+       vec3 PointLightGArray[4] = { 
+               { 0, 88, 0 }, 
+               { 256, 55, 0 }, 
+               {100000.0f, 55, 0 }, 
+               {2100000.0f, 55, 0 } 
+              }; 
+       float PointLightG;
+       vec3 PointLightBArray[4] = { 
+               { 0, 66, 0 }, 
+               { 256, 22, 0 }, 
+               {100000.0f, 22, 0 }, 
+               {2100000.0f, 22, 0 } 
+              }; 
        float PointLightB;
-       vec3 CameraPositionXArray[6] = { 
-               { 0, 32, 0 }, 
-               { 256, 0, 0 }, 
-               { 533, 16, 0 }, 
-               { 534, 2, 0 }, 
-               {100000.0f, 2, 0 }, 
-               {2100000.0f, 2, 0 } 
+       vec3 CameraPositionXArray[5] = { 
+               { 0, 39, 1 }, 
+               { 255, 38, 0 }, 
+               { 256, 4, 0 }, 
+               {100000.0f, 4, 0 }, 
+               {2100000.0f, 4, 0 } 
               }; 
        float CameraPositionX;
-       vec3 CameraPositionYArray[7] = { 
-               { 0, 7, 1 }, 
-               { 139, 6.8, 0 }, 
-               { 140, 8, 0 }, 
-               { 256, 0, 0 }, 
-               { 534, 12, 0 }, 
-               {100000.0f, 12, 0 }, 
-               {2100000.0f, 12, 0 } 
+       vec3 CameraPositionYArray[4] = { 
+               { 0, 12, 0 }, 
+               { 256, 1, 0 }, 
+               {100000.0f, 1, 0 }, 
+               {2100000.0f, 1, 0 } 
               }; 
        float CameraPositionY;
-       vec3 CameraPositionZArray[7] = { 
-               { 0, 32, 0 }, 
-               { 256, 30, 0 }, 
-               { 533, 16, 0 }, 
-               { 534, -2, 1 }, 
+       vec3 CameraPositionZArray[6] = { 
+               { 0, 32, 1 }, 
+               { 255, 31, 0 }, 
+               { 256, 0, 0 }, 
                { 687, 2, 0 }, 
                {100000.0f, 2, 0 }, 
                {2100000.0f, 2, 0 } 
               }; 
        float CameraPositionZ;
-       vec3 LookAtXArray[7] = { 
+       vec3 LookAtXArray[6] = { 
                { 0, 0.5, 1 }, 
-               { 139, -1, 0 }, 
-               { 256, 0, 0 }, 
-               { 533, -16, 0 }, 
-               { 534, 2, 0 }, 
+               { 255, 0.5, 0 }, 
+               { 256, 2, 1 }, 
+               { 334, 3, 0 }, 
+               {100000.0f, 3, 0 }, 
+               {2100000.0f, 3, 0 } 
+              }; 
+       float LookAtX;
+       vec3 LookAtYArray[5] = { 
+               { 0, -15, 1 }, 
+               { 255, -11, 0 }, 
+               { 256, 2, 0 }, 
                {100000.0f, 2, 0 }, 
                {2100000.0f, 2, 0 } 
               }; 
-       float LookAtX;
-       vec3 LookAtYArray[8] = { 
-               { 0, -4, 1 }, 
-               { 139, -3, 0 }, 
-               { 140, -13.99, 1 }, 
-               { 255, -12, 0 }, 
-               { 256, 2, 0 }, 
-               { 534, 7, 0 }, 
-               {100000.0f, 7, 0 }, 
-               {2100000.0f, 7, 0 } 
-              }; 
        float LookAtY;
-       vec3 LookAtZArray[8] = { 
+       vec3 LookAtZArray[5] = { 
                { 0, 1, 0 }, 
-               { 140, 0, 0 }, 
-               { 256, 0, 1 }, 
-               { 352, 1, 0 }, 
-               { 533, -8, 0 }, 
+               { 256, -12, 0 }, 
                { 687, 7, 0 }, 
                {100000.0f, 7, 0 }, 
                {2100000.0f, 7, 0 } 
@@ -563,9 +523,9 @@
        float CameraUpZ;
        vec3 FOVArray[4] = { 
                { 0, 32, 0 }, 
-               { 256, 29, 0 }, 
-               {100000.0f, 29, 0 }, 
-               {2100000.0f, 29, 0 } 
+               { 256, 22, 0 }, 
+               {100000.0f, 22, 0 }, 
+               {2100000.0f, 22, 0 } 
               }; 
        float FOV;
        vec3 EpsilonArray[4] = { 
@@ -575,178 +535,172 @@
                {2100000.0f, 0, 0 } 
               }; 
        float Epsilon;
-       vec3 DistanceArray[7] = { 
-               { 0, 8, 0 }, 
-               { 140, 5, 1 }, 
-               { 255, 12, 0 }, 
-               { 256, 12, 0 }, 
-               { 534, 16, 0 }, 
-               {100000.0f, 16, 0 }, 
-               {2100000.0f, 16, 0 } 
+       vec3 DistanceArray[4] = { 
+               { 0, 11, 0 }, 
+               { 256, 22, 0 }, 
+               {100000.0f, 22, 0 }, 
+               {2100000.0f, 22, 0 } 
               }; 
        float Distance;
-       vec3 LensCoeffArray[6] = { 
-               { 0, 0.4, 0 }, 
-               { 140, 0.1, 0 }, 
-               { 256, 0.04, 0 }, 
-               { 534, 0.4, 0 }, 
+       vec3 LensCoeffArray[4] = { 
+               { 0, 0.06, 0 }, 
+               { 256, 0.4, 0 }, 
                {100000.0f, 0.4, 0 }, 
                {2100000.0f, 0.4, 0 } 
               }; 
        float LensCoeff;
-       vec3 MaxCoCArray[6] = { 
-               { 0, 2, 0 }, 
-               { 140, 0.04, 0 }, 
-               { 256, 1, 0 }, 
-               { 534, 2, 0 }, 
-               {100000.0f, 2, 0 }, 
-               {2100000.0f, 2, 0 } 
+       vec3 MaxCoCArray[4] = { 
+               { 0, 1, 0 }, 
+               { 256, 0.12, 0 }, 
+               {100000.0f, 0.12, 0 }, 
+               {2100000.0f, 0.12, 0 } 
               }; 
        float MaxCoC;
-       vec3 RcpMaxCoCArray[5] = { 
-               { 0, 0.1, 0 }, 
-               { 140, 1.3, 0 }, 
-               { 256, 1, 0 }, 
-               {100000.0f, 1, 0 }, 
-               {2100000.0f, 1, 0 } 
+       vec3 RcpMaxCoCArray[4] = { 
+               { 0, 1, 0 }, 
+               { 256, 0.2, 0 }, 
+               {100000.0f, 0.2, 0 }, 
+               {2100000.0f, 0.2, 0 } 
               }; 
        float RcpMaxCoC;
-       vec3 MarchMinimumArray[5] = { 
+       vec3 MarchMinimumArray[4] = { 
                { 0, 0.01, 0 }, 
-               { 140, 0.01, 0 }, 
-               { 534, 0.7, 0 }, 
-               {100000.0f, 0.7, 0 }, 
-               {2100000.0f, 0.7, 0 } 
+               { 256, 0, 0 }, 
+               {100000.0f, 0, 0 }, 
+               {2100000.0f, 0, 0 } 
               }; 
        float MarchMinimum;
-       vec3 FarPlaneArray[6] = { 
-               { 0, 22, 0 }, 
-               { 140, 22, 0 }, 
+       vec3 FarPlaneArray[4] = { 
+               { 0, 32, 0 }, 
                { 256, 32, 0 }, 
-               { 534, 23, 0 }, 
-               {100000.0f, 23, 0 }, 
-               {2100000.0f, 23, 0 } 
+               {100000.0f, 32, 0 }, 
+               {2100000.0f, 32, 0 } 
               }; 
        float FarPlane;
-       vec3 Gain_RArray[5] = { 
+       vec3 StepArray[4] = { 
+               { 0, 2, 0 }, 
+               { 256, 1.4, 0 }, 
+               {100000.0f, 1.4, 0 }, 
+               {2100000.0f, 1.4, 0 } 
+              }; 
+       float Step;
+       vec3 Gain_RArray[4] = { 
                { 0, 0.55, 0 }, 
                { 256, 0.5, 0 }, 
-               { 534, 0.5, 0 }, 
                {100000.0f, 0.5, 0 }, 
                {2100000.0f, 0.5, 0 } 
               }; 
        float Gain_R;
-       vec3 Gain_GArray[6] = { 
+       vec3 Gain_GArray[4] = { 
                { 0, 0.5, 0 }, 
-               { 140, 0.55, 0 }, 
                { 256, 0.5, 0 }, 
-               { 534, 0.6, 0 }, 
-               {100000.0f, 0.6, 0 }, 
-               {2100000.0f, 0.6, 0 } 
+               {100000.0f, 0.5, 0 }, 
+               {2100000.0f, 0.5, 0 } 
               }; 
        float Gain_G;
-       vec3 Gain_BArray[5] = { 
+       vec3 Gain_BArray[4] = { 
                { 0, 0.4, 0 }, 
                { 256, 0.5, 0 }, 
-               { 534, 0.4, 0 }, 
-               {100000.0f, 0.4, 0 }, 
-               {2100000.0f, 0.4, 0 } 
+               {100000.0f, 0.5, 0 }, 
+               {2100000.0f, 0.5, 0 } 
               }; 
        float Gain_B;
        vec3 Gamma_RArray[4] = { 
-               { 0, 0.3, 0 }, 
-               { 256, 0.36, 0 }, 
-               {100000.0f, 0.36, 0 }, 
-               {2100000.0f, 0.36, 0 } 
+               { 0, 0.5, 0 }, 
+               { 256, 0.5, 0 }, 
+               {100000.0f, 0.5, 0 }, 
+               {2100000.0f, 0.5, 0 } 
               }; 
        float Gamma_R;
-       vec3 Gamma_GArray[5] = { 
-               { 0, 0.3, 1 }, 
-               { 139, 0.33, 0 }, 
-               { 534, 0.37, 0 }, 
-               {100000.0f, 0.37, 0 }, 
-               {2100000.0f, 0.37, 0 } 
+       vec3 Gamma_GArray[4] = { 
+               { 0, 0.4, 0 }, 
+               { 256, 0.5, 0 }, 
+               {100000.0f, 0.5, 0 }, 
+               {2100000.0f, 0.5, 0 } 
               }; 
        float Gamma_G;
        vec3 Gamma_BArray[4] = { 
-               { 0, 0.4, 0 }, 
-               { 534, 0.5, 0 }, 
+               { 0, 0.5, 0 }, 
+               { 256, 0.5, 0 }, 
                {100000.0f, 0.5, 0 }, 
                {2100000.0f, 0.5, 0 } 
               }; 
        float Gamma_B;
        vec3 Lift_RArray[4] = { 
                { 0, 0.51, 0 }, 
-               { 140, 0.55, 0 }, 
-               {100000.0f, 0.55, 0 }, 
-               {2100000.0f, 0.55, 0 } 
+               { 256, 0.5, 0 }, 
+               {100000.0f, 0.5, 0 }, 
+               {2100000.0f, 0.5, 0 } 
               }; 
        float Lift_R;
-       vec3 Lift_GArray[3] = { 
+       vec3 Lift_GArray[4] = { 
                { 0, 0.55, 0 }, 
-               {100000.0f, 0.55, 0 }, 
-               {2100000.0f, 0.55, 0 } 
+               { 256, 0.5, 0 }, 
+               {100000.0f, 0.5, 0 }, 
+               {2100000.0f, 0.5, 0 } 
               }; 
        float Lift_G;
        vec3 Lift_BArray[4] = { 
-               { 0, 0.55, 1 }, 
-               { 140, 0.6, 0 }, 
-               {100000.0f, 0.6, 0 }, 
-               {2100000.0f, 0.6, 0 } 
+               { 0, 0.55, 0 }, 
+               { 256, 0.5, 0 }, 
+               {100000.0f, 0.5, 0 }, 
+               {2100000.0f, 0.5, 0 } 
               }; 
        float Lift_B;
-       vec3 Presaturation_RArray[5] = { 
+       vec3 Presaturation_RArray[4] = { 
                { 0, 1, 0 }, 
-               { 140, 1, 0 }, 
-               { 256, 2, 0 }, 
-               {100000.0f, 2, 0 }, 
-               {2100000.0f, 2, 0 } 
+               { 256, 1, 0 }, 
+               {100000.0f, 1, 0 }, 
+               {2100000.0f, 1, 0 } 
               }; 
        float Presaturation_R;
-       vec3 Presaturation_GArray[3] = { 
+       vec3 Presaturation_GArray[4] = { 
                { 0, 1, 0 }, 
+               { 256, 1, 0 }, 
                {100000.0f, 1, 0 }, 
                {2100000.0f, 1, 0 } 
               }; 
        float Presaturation_G;
        vec3 Presaturation_BArray[4] = { 
-               { 0, 1.3, 0 }, 
-               { 140, 1.5, 0 }, 
-               {100000.0f, 1.5, 0 }, 
-               {2100000.0f, 1.5, 0 } 
+               { 0, 1, 0 }, 
+               { 256, 1, 0 }, 
+               {100000.0f, 1, 0 }, 
+               {2100000.0f, 1, 0 } 
               }; 
        float Presaturation_B;
-       vec3 ColorTemperatureStrength_RArray[3] = { 
+       vec3 ColorTemperatureStrength_RArray[4] = { 
                { 0, 1, 0 }, 
+               { 256, 1, 0 }, 
                {100000.0f, 1, 0 }, 
                {2100000.0f, 1, 0 } 
               }; 
        float ColorTemperatureStrength_R;
-       vec3 ColorTemperatureStrength_GArray[3] = { 
+       vec3 ColorTemperatureStrength_GArray[4] = { 
                { 0, 1, 0 }, 
+               { 256, 1, 0 }, 
                {100000.0f, 1, 0 }, 
                {2100000.0f, 1, 0 } 
               }; 
        float ColorTemperatureStrength_G;
-       vec3 ColorTemperatureStrength_BArray[3] = { 
+       vec3 ColorTemperatureStrength_BArray[4] = { 
                { 0, 1, 0 }, 
+               { 256, 1, 0 }, 
                {100000.0f, 1, 0 }, 
                {2100000.0f, 1, 0 } 
               }; 
        float ColorTemperatureStrength_B;
-       vec3 ColorTempratureArray[5] = { 
-               { 0, 5500, 1 }, 
-               { 140, 7000, 0 }, 
-               { 256, 5555, 0 }, 
-               {100000.0f, 5555, 0 }, 
-               {2100000.0f, 5555, 0 } 
+       vec3 ColorTempratureArray[4] = { 
+               { 0, 5555, 0 }, 
+               { 256, 6500, 0 }, 
+               {100000.0f, 6500, 0 }, 
+               {2100000.0f, 6500, 0 } 
               }; 
        float ColorTemprature;
        vec3 TempratureNormalizationArray[4] = { 
                { 0, 0, 0 }, 
-               { 256, 3, 0 }, 
-               {100000.0f, 3, 0 }, 
-               {2100000.0f, 3, 0 } 
+               { 256, 0, 0 }, 
+               {100000.0f, 0, 0 }, 
+               {2100000.0f, 0, 0 } 
               }; 
        float TempratureNormalization;
 
@@ -830,6 +784,7 @@ long MaxCoCArrayPointer = 0;
 long RcpMaxCoCArrayPointer = 0;
 long MarchMinimumArrayPointer = 0;
 long FarPlaneArrayPointer = 0;
+long StepArrayPointer = 0;
 long Gain_RArrayPointer = 0;
 long Gain_GArrayPointer = 0;
 long Gain_BArrayPointer = 0;
@@ -944,6 +899,7 @@ long TempratureNormalizationArrayPointer = 0;
        RcpMaxCoC = setVal(RcpMaxCoCArray, row, 8, &RcpMaxCoCArrayPointer); 
        MarchMinimum = setVal(MarchMinimumArray, row, 8, &MarchMinimumArrayPointer); 
        FarPlane = setVal(FarPlaneArray, row, 8, &FarPlaneArrayPointer); 
+       Step = setVal(StepArray, row, 8, &StepArrayPointer); 
        Gain_R = setVal(Gain_RArray, row, 8, &Gain_RArrayPointer); 
        Gain_G = setVal(Gain_GArray, row, 8, &Gain_GArrayPointer); 
        Gain_B = setVal(Gain_BArray, row, 8, &Gain_BArrayPointer); 

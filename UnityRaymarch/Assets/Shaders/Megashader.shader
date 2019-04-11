@@ -46,7 +46,7 @@ uniform float _MaxCoC;
 uniform float _RcpMaxCoC;
 uniform float _MarchMinimum;
 uniform float _FarPlane;
-
+uniform float _Step;
 #define maxItersGlobal 48
 #define fogDensity 0.01
 #define ENABLE_FOG
@@ -154,6 +154,16 @@ float Noise(vec2 p)
 	vec2 s = sin(p * 0.6345) + sin(p * 1.62423);
 	return dot(s, vec2(0.125)) + 0.5;
 }
+
+const float kHashScale1 = 443.8975;
+
+
+float hash11(float p) {
+  vec3 p3 = fract(vec3(p) * kHashScale1);
+  p3 += dot(p3, p3.yyx + 0.5);
+  return fract(p3.y*p3.z*p3.z*0.2)-fract(p3.y*p3.z*1.);
+}
+
 vec2 hash(vec2 p)
 {
 	p = vec2(dot(p, vec2(127.1, 311.7)),
@@ -201,24 +211,38 @@ vec3 filmgrain(vec3 color) {
 // ------------------ 
 // Others 
 // ------------------
-const mat2 r2D = mat2(1.3623, 1.7531, -1.7131, 1.4623);
+
 float GetHeightmap(vec3 p)
 {
-	vec2 p2 = p.xz;
-	vec2 p3 = p.yz - 0.5;
+    float hills;
 
+    // Combine from components
+    float hill_1 = 8.0 * perlinnoise(0.1 * p.xz); // High amplitude, very low frequency
+    float hill_2 = 4.0 * perlinnoise(0.5 * p.xz); // Medium amplitude, low frequency
+    float hill_3 = 2.0 * perlinnoise(1.0 * p.xz); // Small amplitude, high frequency
+    float hill_4 = 1.0 * perlinnoise(2.0 * p.xz); // Tiny amplitude, very high frequency
+    
+    hills += hill_1;
+    hills += hill_2;
+    hills += hill_3;
+    hills += hill_4; // Optional, if performance hit is too large
 
-	float d = .5 + (0.8*perlinnoise(p2*.25));
-	d = 321.0 * d * d;
-
-	p3 *= r2D;
-	float height = d * perlinnoise(p3);
-	p2 *= r2D;
-	d *= 0.9;
-	height += d * perlinnoise(p2);
-
-	return  height;
+	return  hills;
 }
+
+float GetHeightmapLowPrecision(vec3 p)
+{
+    float hills;
+
+    // Combine from components
+    float hill_1 = 8.0 * perlinnoise(0.1 * p.xz); // High amplitude, very low frequency
+
+    hills += hill_1;
+
+	return  hills;
+}
+
+
 void pR(inout vec2 p, float a) {
 	p = cos(a)*p + sin(a)*vec2(p.y, -p.x);
 }
@@ -450,14 +474,19 @@ float fOpUnionRund(float a, float b, float r) {
 	return max(r, min (a, b)) - length(u);
 }
 float TreeTrunk(vec3 pos, vec3 algorithm) {
+	pos.y += GetHeightmapLowPrecision(pos*algorithm) * algorithm.y;
 	vec3 opos = pos;
 	vec3 opos_ = opos;
 
 	float vali = 5.;
-	opos.x += hash1(floor(pos.z / vali) + vali) * vali * 2.0;
+	vec3 flrpos = vec3(floor(pos.z / vali) + vali,0.0,floor(pos.x / vali) + vali);	
+	opos.x += hash1(flrpos.z) * vali * 2.0;
 	opos.x = mod(opos.x, vali) - vali / 2.0;
-	opos.z += hash1(floor(pos.x / vali) + vali) * vali * 2.0;
+	opos.z += hash1(flrpos.x) * vali * 2.0;
 	opos.z = mod(opos.z, vali) - vali / 2.0;
+	if(mod(rand(flrpos.xz),1.0)<0.5) {
+		opos.y += 1000.0;
+	}
 	pR(opos.xz, pos.z*1.);
 	pR(opos.zy, 3.14);
 
@@ -496,6 +525,7 @@ float sdSphere(vec3 p, float s)
 
 
 float TreeBush(vec3 pos, vec3 algorithm) {
+	
     vec3 opos = pos;
     vec3 opos_ = opos;
 	
@@ -510,8 +540,10 @@ float TreeBush(vec3 pos, vec3 algorithm) {
     float height = 0.;
 	vec3 o = opos;
     opos = o;
+	opos.y += GetHeightmapLowPrecision(pos*algorithm) *  algorithm.y;
 	float distance2 = sdSphere(opos+vec3(0.2,2.,0.0),max(0.0-opos.y*0.7,0.0));
 	
+	pos.y += GetHeightmapLowPrecision(pos*algorithm) * algorithm.y;
     distance2 = min(distance2,fBox(pos+vec3(0.0,2.5 + height,0.0), vec3(1111.,2.,1111.)));
     distance2*=0.2;
     distance2+= cellTile(pos)*0.1;
@@ -701,16 +733,13 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 
 
 			result.id = sceneDistance.yzw;
-			result.distanc = result.distanc + sceneDistance.x;
+			result.distanc = result.distanc + sceneDistance.x * _Step;
 		//}
 		
 		if (sceneDistance.x < max(cocs, _MarchMinimum * 0.1) || result.distanc > _FarPlane) {
 			sceneDistance = GetDistanceScene(result.position, transparencyPointer);
 #ifdef DEBUG_STEPS
 			focus = cocs;
-			result.distanc = result.distanc + sceneDistance.x;
-#else 
-			result.distanc = result.distanc + sceneDistance.x * 100.0;
 #endif
 			break;
 		}

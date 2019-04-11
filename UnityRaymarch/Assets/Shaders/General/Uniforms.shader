@@ -14,3 +14,4 @@ uniform float _MaxCoC;
 uniform float _RcpMaxCoC;
 uniform float _MarchMinimum;
 uniform float _FarPlane;
+uniform float _Step;
