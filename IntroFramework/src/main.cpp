@@ -364,6 +364,7 @@ extern float ColorTemperatureStrength_B;
 extern float ColorTemprature;
 extern float TempratureNormalization;
 extern float Step;
+extern float fogDensity;
 
 void Sync(float second);
 
@@ -617,6 +618,7 @@ int __cdecl main(int argc, char* argv[])
 		GLuint MarchMinimumID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_MarchMinimum");
 		GLuint FarPlaneID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_FarPlane");
 		GLuint StepID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_Step");
+		GLuint fogDensityID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "fogDensity");
 
 
 
@@ -706,6 +708,8 @@ int __cdecl main(int argc, char* argv[])
 
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(StepID, Step);
 
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(fogDensityID, fogDensity);
+		
 
 		
 

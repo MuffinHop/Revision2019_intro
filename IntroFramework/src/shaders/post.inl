@@ -36,7 +36,7 @@ const char *post_frag =
        "float s2=s1;"
        "s1=hash(float(1-t)+dot(uv,uv));"
        "vec2 f=.01*(-1.+2.*vec2(s1,s2));"
-       "i+=texture(_MainTex,uv+max(blr/2.-.004,0.)*vec2(s1-.5,s2-.5));"
+       "i+=textureLod(_MainTex,uv+max(blr/2.-.004,0.)*vec2(s1-.5,s2-.5),blr);"
      "}"
    "i/=vec4(11.);"
    "return i-blr*2.;"
