@@ -9,17 +9,16 @@ vec3 GetSkyGradient(vec3 rayDirection)
 	backdrop += (min(max(pow(directLight, 81.0) * 1.6, 0.01), 1.)*1.1);
 	return max(backdrop, vec3(0.8, 0.9, 1.0)*0.125);
 }
-#define kFogDensity 0.01
 
 void ApplyAtmosphere(inout vec3 col, const in  Trace ray, const in  ContactInfo hitInfo)
 {
 
-	float fogAmount = exp(hitInfo.distanc * -fogDensity /* * (1.0 + wasInWater) */);
+	float fogAmount = exp(hitInfo.distanc * -fogDensity * 0.1 /* * (1.0 + wasInWater) */);
 	vec3 fog = GetSkyGradient(ray.direction);
 
 	DirectionLight directionalLight = GetDirectionLight();
 	float dirDot = clamp(dot(-directionalLight.direction, ray.direction), 0.0, 1.0);
-	fog += directionalLight.color * pow(dirDot, 20.0);
+	fog += directionalLight.color * pow(dirDot, 10.0);
 
 	col = mix(fog, col, fogAmount);
 

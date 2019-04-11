@@ -4,6 +4,7 @@ float fOpUnionRund(float a, float b, float r) {
 	return max(r, min (a, b)) - length(u);
 }
 float TreeTrunk(vec3 pos, vec3 algorithm) {
+	pos.y += GetHeightmapLowPrecision(pos*algorithm) * algorithm.y;
 	vec3 opos = pos;
 	vec3 opos_ = opos;
 

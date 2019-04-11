@@ -1,5 +1,4 @@
 ﻿#define maxItersGlobal 48
-#define fogDensity 0.01
 #define ENABLE_FOG
 #define ENABLE_REFLECTIONS
 #define ENABLE_SHADOWS
