@@ -447,19 +447,14 @@ float fOpUnionRund(float a, float b, float r) {
 	return max(r, min (a, b)) - length(u);
 }
 float TreeTrunk(vec3 pos, vec3 algorithm) {
-	pos.y += GetHeightmapLowPrecision(pos*algorithm) * algorithm.y;
 	vec3 opos = pos;
 	vec3 opos_ = opos;
 
 	float vali = 5.;
-	vec3 flrpos = vec3(floor(pos.z / vali) + vali,0.0,floor(pos.x / vali) + vali);	
-	opos.x += hash1(flrpos.z) * vali * 2.0;
+	opos.x += hash1(floor(pos.z / vali) + vali) * vali * 2.0;
 	opos.x = mod(opos.x, vali) - vali / 2.0;
-	opos.z += hash1(flrpos.x) * vali * 2.0;
+	opos.z += hash1(floor(pos.x / vali) + vali) * vali * 2.0;
 	opos.z = mod(opos.z, vali) - vali / 2.0;
-	if(mod(rand(flrpos.xz),1.0)<0.5) {
-		opos.y += 1000.0;
-	}
 	pR(opos.xz, pos.z*1.);
 	pR(opos.zy, 3.14);
 
@@ -510,26 +505,21 @@ float sdSphere(vec3 p, float s)
 
 
 float TreeBush(vec3 pos, vec3 algorithm) {
-	
     vec3 opos = pos;
-    vec3 opos_ = opos;
-	
-	float vali = 5.;
-	opos.x += hash1(floor(pos.z / vali) + vali) * vali * 2.0;
-	opos.x = mod(opos.x, vali) - vali / 2.0;
-	opos.z += hash1(floor(pos.x / vali) + vali) * vali * 2.0;
-	opos.z = mod(opos.z, vali) - vali / 2.0;
-	pR(opos.xz, pos.z*1.);
-	pR(opos.zy, 3.14);
-	
-    float height = 0.;
-	vec3 o = opos;
+    
+    float vali = 5.;
+    opos.x += hash1(floor(pos.z / vali) + vali) * vali * 2.0;
+    opos.x = mod(opos.x, vali) - vali / 2.0;
+    opos.z += hash1(floor(pos.x / vali) + vali) * vali * 2.0;
+    opos.z = mod(opos.z, vali) - vali / 2.0;
+    pR(opos.xz, pos.z*1.);
+    pR(opos.zy, 3.14);
+    float ss = 0.95+perlinnoise(floor(vec2(1.0+opos.x*algorithm.x,0.5+opos.z*algorithm.y)))*0.1;
+    vec3 o = opos;
     opos = o;
-	opos.y += GetHeightmapLowPrecision(pos*algorithm) *  algorithm.y;
-	float distance2 = sdSphere(opos+vec3(0.2,2.,0.0),max(0.0-opos.y*0.7,0.0));
-	
-	pos.y += GetHeightmapLowPrecision(pos*algorithm) * algorithm.y;
-    distance2 = min(distance2,fBox(pos+vec3(0.0,2.5 + height,0.0), vec3(1111.,2.,1111.)));
+    float distance2 = sdSphere(opos+vec3(0.2*ss,2.*ss,0.0),max(0.0-opos.y*0.7*ss,0.0));
+    
+    distance2 = min(distance2,fBox(pos+vec3(0.0,2.5,0.0), vec3(1111.,2.,1111.)));
     distance2*=0.2;
     distance2+= cellTile(pos)*0.1;
     distance2+= cellTile(pos*12.0)*0.025;

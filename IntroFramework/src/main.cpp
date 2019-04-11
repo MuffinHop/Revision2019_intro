@@ -363,6 +363,7 @@ extern float ColorTemperatureStrength_G;
 extern float ColorTemperatureStrength_B;
 extern float ColorTemprature;
 extern float TempratureNormalization;
+extern float Step;
 
 void Sync(float second);
 
@@ -615,6 +616,7 @@ int __cdecl main(int argc, char* argv[])
 		GLuint RcpMaxCoCID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_RcpMaxCoC");
 		GLuint MarchMinimumID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_MarchMinimum");
 		GLuint FarPlaneID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_FarPlane");
+		GLuint StepID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_Step");
 
 
 
@@ -629,7 +631,7 @@ int __cdecl main(int argc, char* argv[])
 		GLuint TempratureNormalizationID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_TempratureNormalization");
 
 
-
+		
 
 	// main loop
 	do
@@ -701,6 +703,11 @@ int __cdecl main(int argc, char* argv[])
 		((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(CameraUpID, CameraUpX, CameraUpY, CameraUpZ, 0.0f);
 
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(fovID, FOV * 2.0f);
+
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(StepID, Step);
+
+
+		
 
 
 
