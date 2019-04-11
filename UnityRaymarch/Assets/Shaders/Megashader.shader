@@ -235,7 +235,7 @@ float GetHeightmapLowPrecision(vec3 p)
     float hills;
 
     // Combine from components
-    float hill_1 = 8.0 * perlinnoise(0.1 * p.xz); // High amplitude, very low frequency
+    float hill_1 = 8.0 * perlinnoise(0.1 * p.xz); // High amplitude, very low frequency 
 
     hills += hill_1;
 
@@ -462,7 +462,9 @@ const float material_ID4 = 5;
 
 const float material_ID5 = 6;
 
- uniform float _Objects[60];
+const float material_ID6 = 7;
+
+ uniform float _Objects[80];
 // Box: correct distance to corners
 float fBox(vec3 p, vec3 b) {
 	vec3 d = abs(p) - b;
@@ -500,6 +502,18 @@ float TreeTrunk(vec3 pos, vec3 algorithm) {
 	opos = o;
 	return dist;
 }
+float Wheat(vec3 pos, vec3 algorithm) {
+	pos.x+=cos(algorithm.z+pos.y*7.+pos.x*5.)*0.03;
+	pos.z-=0.5;
+	vec3 opos = pos;
+	opos.x = mod(opos.x, algorithm.z) - algorithm.z / 2.0;
+	opos.x+= mod(opos.z*1.5, algorithm.y)*algorithm.x;
+	opos.z = mod(opos.z, algorithm.z) - algorithm.z / 2.0;
+	opos.z-= mod(opos.z, algorithm.z/2.)*0.1;
+	float dist = fBox(opos + vec3(0.2,0.0,0.2), vec3(0.002, 0.2, 0.003));
+	return dist;
+}
+
 float sdBox(vec3 p, vec3 b)
 {
 	vec3 d = abs(p) - b;
@@ -566,34 +580,42 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
 
          float id1_distance = 1e9;
                vec3 posID1 = position - vec3(_Objects[10], _Objects[11], _Objects[12]);
-               posID1= RotateQuaternion(vec4(_Objects[16], _Objects[17], _Objects[18], - _Objects[19]))*posID1;
-               id1_distance  = min(fBox(posID1, vec3(_Objects[13], _Objects[14],_Objects[15])), id1_distance);
+               id1_distance  = min(Wheat(posID1, vec3(_Objects[13], _Objects[14],_Objects[15])), id1_distance);
+               vec3 posID5 = position - vec3(_Objects[50], _Objects[51], _Objects[52]);
+               id1_distance  = min(Wheat(posID5, vec3(_Objects[53], _Objects[54],_Objects[55])), id1_distance);
                vec4 distID1 = vec4(id1_distance, material_ID1, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombine(result, distID1);
+               result = DistUnionCombineTransparent(result, distID1, transparencyPointer);
 
          float id2_distance = 1e9;
                vec3 posID2 = position - vec3(_Objects[20], _Objects[21], _Objects[22]);
-               id2_distance  = min(Smoke(posID2, vec3(_Objects[23], _Objects[24],_Objects[25])), id2_distance);
+               posID2= RotateQuaternion(vec4(_Objects[26], _Objects[27], _Objects[28], - _Objects[29]))*posID2;
+               id2_distance  = min(fBox(posID2, vec3(_Objects[23], _Objects[24],_Objects[25])), id2_distance);
                vec4 distID2 = vec4(id2_distance, material_ID2, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID2);
 
          float id3_distance = 1e9;
-               #define posID3 position
-               id3_distance  = min(TreeBush(posID3, vec3(_Objects[33], _Objects[34],_Objects[35])), id3_distance);
+               vec3 posID3 = position - vec3(_Objects[30], _Objects[31], _Objects[32]);
+               id3_distance  = min(Smoke(posID3, vec3(_Objects[33], _Objects[34],_Objects[35])), id3_distance);
                vec4 distID3 = vec4(id3_distance, material_ID3, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID3);
 
          float id4_distance = 1e9;
-               vec3 posID4 = position - vec3(_Objects[40], _Objects[41], _Objects[42]);
-               id4_distance  = min(fSphere(posID4,_Objects[43]), id4_distance);
+               #define posID4 position
+               id4_distance  = min(TreeBush(posID4, vec3(_Objects[43], _Objects[44],_Objects[45])), id4_distance);
                vec4 distID4 = vec4(id4_distance, material_ID4, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID4);
 
          float id5_distance = 1e9;
-               vec3 posID5 = position - vec3(_Objects[50], _Objects[51], _Objects[52]);
-               id5_distance  = min(fBox(posID5, vec3(_Objects[53], _Objects[54],_Objects[55])), id5_distance);
+               vec3 posID6 = position - vec3(_Objects[60], _Objects[61], _Objects[62]);
+               id5_distance  = min(fSphere(posID6,_Objects[63]), id5_distance);
                vec4 distID5 = vec4(id5_distance, material_ID5, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID5);
+
+         float id6_distance = 1e9;
+               vec3 posID7 = position - vec3(_Objects[70], _Objects[71], _Objects[72]);
+               id6_distance  = min(fBox(posID7, vec3(_Objects[73], _Objects[74],_Objects[75])), id6_distance);
+               vec4 distID6 = vec4(id6_distance, material_ID6, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID6);
 
 
             return result;
@@ -646,34 +668,41 @@ Material RockPattern(vec3 position) {
               mat.reflectindx = 0.03;
        }
        if (hitNfo.id.x == material_ID1){
+              mat.reflectionCoefficient = 0.1;
+              mat.albedo = vec3(0.951649,0.990566,0.0233624);;
+              mat.transparency =0.2588235;
+              mat.smoothness = 0.1;
+              mat.reflectindx = 0.2;
+       }
+       if (hitNfo.id.x == material_ID2){
               mat.reflectionCoefficient = 0.178;
               mat.albedo = vec3(1,1,1);;
               mat.transparency =0;
               mat.smoothness = 0.37;
               mat.reflectindx = 0.54;
        }
-       if (hitNfo.id.x == material_ID2){
+       if (hitNfo.id.x == material_ID3){
               mat.reflectionCoefficient = 0.71;
               mat.albedo = vec3(1,0,0);;
               mat.transparency =0;
               mat.smoothness = 0.84;
               mat.reflectindx = 0.8;
        }
-       if (hitNfo.id.x == material_ID3){
+       if (hitNfo.id.x == material_ID4){
               mat.reflectionCoefficient = 0.11;
               mat.albedo = vec3(0.3978099,0.6603774,0.2896938);;
               mat.transparency =0;
               mat.smoothness = 0.17;
               mat.reflectindx = 0.05;
        }
-       if (hitNfo.id.x == material_ID4){
+       if (hitNfo.id.x == material_ID5){
               mat.reflectionCoefficient = 0.27;
               mat.albedo = vec3(1,1,1);;
               mat.transparency =0;
               mat.smoothness = 0.8;
               mat.reflectindx = 0.69;
        }
-       if (hitNfo.id.x == material_ID5){
+       if (hitNfo.id.x == material_ID6){
               mat = RockPattern(hitNfo.position);
 ;
        }
@@ -691,6 +720,31 @@ vec3 GetSkyGradient(vec3 rayDirection)
 	backdrop += (min(max(pow(directLight, 81.0) * 1.6, 0.01), 1.)*1.1);
 	return max(backdrop, vec3(0.8, 0.9, 1.0)*0.125);
 }
+#define kFogDensity 0.01
+
+void ApplyAtmosphere(inout vec3 col, const in  Trace ray, const in  ContactInfo hitInfo)
+{
+
+	float fogAmount = exp(hitInfo.distanc * -fogDensity /* * (1.0 + wasInWater) */);
+	vec3 fog = GetSkyGradient(ray.direction);
+
+	DirectionLight directionalLight = GetDirectionLight();
+	float dirDot = clamp(dot(-directionalLight.direction, ray.direction), 0.0, 1.0);
+	fog += directionalLight.color * pow(dirDot, 20.0);
+
+	col = mix(fog, col, fogAmount);
+
+	PointLight pointLight = GetPointLight();
+
+	vec3 vToLight = pointLight.position - ray.origin;
+	float pointDot = dot(vToLight, ray.direction);
+	pointDot = clamp(pointDot, 0.0, hitInfo.distanc);
+
+	vec3 closestPoint = ray.origin + ray.direction * pointDot;
+	float fDist = length(closestPoint - pointLight.position);
+	col += pointLight.color * 0.01 / (fDist * fDist);
+}
+
 
 vec3 GetNormal(in vec3 position, in float transparencyPointer)
 {
@@ -1062,7 +1116,7 @@ vec4 mainImage()
 		sceneColor = ShadeSurface(ray, intersection, surface, material);
 	}
 
-	AddAtmosphere(sceneColor, ray, intersection);
+	ApplyAtmosphere(sceneColor, ray, intersection);
 
 	float exposure = 1.5;
 	vec2 coord = (uv - 0.5) * (_iResolution.x / _iResolution.y) * 2.0;

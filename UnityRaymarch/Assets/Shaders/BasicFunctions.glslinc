@@ -115,7 +115,7 @@ float GetHeightmapLowPrecision(vec3 p)
     float hills;
 
     // Combine from components
-    float hill_1 = 8.0 * perlinnoise(0.1 * p.xz); // High amplitude, very low frequency
+    float hill_1 = 8.0 * perlinnoise(0.1 * p.xz); // High amplitude, very low frequency 
 
     hills += hill_1;
 

@@ -89,6 +89,7 @@
     <None Include="Assets\Huge Mocap Library\READTHIS.txt" />
     <None Include="Assets\Shaders\General\Shading.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdCappedCone.glslinc" />
+    <None Include="Assets\Shaders\SDFs\Custom\Wheat.glslinc" />
     <None Include="Assets\Shaders\Modifiers\ModMirror1.shader" />
     <None Include="Assets\Shaders\Modifiers\R45.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdEllipsoid.glslinc" />
@@ -141,6 +142,7 @@
     <None Include="Assets\Shaders\SDFs\Primitive\sdPlane.glslinc" />
     <None Include="Assets\Shaders\SDFs\Primitive\udQuad.glslinc" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdCappedCylinder.glslinc" />
+    <None Include="Assets\Shaders\SDFs\Custom\Hay.glslinc" />
     <None Include="Assets\Shaders\Operators\OpDifferenceStairs.shader" />
     <None Include="Assets\Shaders\Operators\OpIntersectionRound.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\Torus.glslinc" />

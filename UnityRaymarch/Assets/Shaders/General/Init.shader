@@ -60,7 +60,7 @@ vec4 mainImage()
 		sceneColor = ShadeSurface(ray, intersection, surface, material);
 	}
 
-	AddAtmosphere(sceneColor, ray, intersection);
+	ApplyAtmosphere(sceneColor, ray, intersection);
 
 	float exposure = 1.5;
 	vec2 coord = (uv - 0.5) * (_iResolution.x / _iResolution.y) * 2.0;

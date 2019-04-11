@@ -1,0 +1,26 @@
+﻿float Hay(vec3 pos, vec3 algorithm) {
+	pos*=algorithm;
+    vec3 opos = pos ;
+    vec3 opos_ = opos;
+
+    
+    float vali = 0.015+fract(opos.x+opos.z*100.)*0.0001;
+    opos.x = mod(opos.x+cos(opos_.z*100.)*0.04, vali*0.51) - (vali/2.0); 
+    opos.z = mod(opos.z+sin(opos_.x*100.)*0.001, vali*0.51) - (vali/2.0); 
+    opos.z += hash11(opos.x*0.01)*0.001;
+
+    opos.y+=0.1;
+    pR(opos.yz, cos(opos_.z*100.)*0.01);
+    float va = 1.+hash11(opos.z*0.0001)*700.;
+    pR(opos.yx, 0.1*cos(va*10.*cos(va*0.01)*mod(hash11(opos.x*0.00012),vali)+opos.y*100.));
+    float distance = sdBox(opos, vec3(0.000001,0.02,0.000001));
+    pR(opos.yx, -0.1-abs(0.1*cos(opos.y)));
+    distance = min(distance,sdBox(opos, vec3(0.000001,0.02,0.000001)));
+    opos = opos_;
+ 
+    float finalDist = 0.0;
+    finalDist = distance;
+
+
+    return finalDist;
+}

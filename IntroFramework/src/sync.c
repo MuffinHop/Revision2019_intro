@@ -1,5 +1,5 @@
          #include <math.h>
-         float RM_Objects[60];
+         float RM_Objects[80];
             struct vec3 {
                     float x, y, z;
                 };
@@ -22,21 +22,21 @@
               }; 
  
        vec3 ID0ArrayScaleX[6] = { 
-               { 5, 0.1, 1 }, 
-               { 100000, 0.1, 1 }, 
-               { 200000, 0.1, 1 } 
+               { 5, 3, 1 }, 
+               { 100000, 3, 1 }, 
+               { 200000, 3, 1 } 
               }; 
  
        vec3 ID0ArrayScaleY[6] = { 
-               { 5, 0.1, 1 }, 
-               { 100000, 0.1, 1 }, 
-               { 200000, 0.1, 1 } 
+               { 5, 0.005, 1 }, 
+               { 100000, 0.005, 1 }, 
+               { 200000, 0.005, 1 } 
               }; 
  
        vec3 ID0ArrayScaleZ[6] = { 
-               { 5, 0.1, 1 }, 
-               { 100000, 0.1, 1 }, 
-               { 200000, 0.1, 1 } 
+               { 5, 3, 1 }, 
+               { 100000, 3, 1 }, 
+               { 200000, 3, 1 } 
               }; 
  
        vec3 ID0ArrayRotationX[6] = { 
@@ -64,39 +64,39 @@
               }; 
  
        vec3 ID1ArrayPositionX[6] = { 
-               { 5, -1.5, 1 }, 
-               { 100000, -1.5, 1 }, 
-               { 200000, -1.5, 1 } 
+               { 5, -20.22, 1 }, 
+               { 100000, -20.22, 1 }, 
+               { 200000, -20.22, 1 } 
               }; 
  
        vec3 ID1ArrayPositionY[6] = { 
-               { 5, 0.18, 1 }, 
-               { 100000, 0.18, 1 }, 
-               { 200000, 0.18, 1 } 
+               { 5, -0.68, 1 }, 
+               { 100000, -0.68, 1 }, 
+               { 200000, -0.68, 1 } 
               }; 
  
        vec3 ID1ArrayPositionZ[6] = { 
-               { 5, 1.24, 1 }, 
-               { 100000, 1.24, 1 }, 
-               { 200000, 1.24, 1 } 
+               { 5, 9.96, 1 }, 
+               { 100000, 9.96, 1 }, 
+               { 200000, 9.96, 1 } 
               }; 
  
        vec3 ID1ArrayScaleX[6] = { 
-               { 5, 1, 1 }, 
-               { 100000, 1, 1 }, 
-               { 200000, 1, 1 } 
+               { 5, 0.4, 1 }, 
+               { 100000, 0.4, 1 }, 
+               { 200000, 0.4, 1 } 
               }; 
  
        vec3 ID1ArrayScaleY[6] = { 
-               { 5, 1, 1 }, 
-               { 100000, 1, 1 }, 
-               { 200000, 1, 1 } 
+               { 5, 2.3, 1 }, 
+               { 100000, 2.3, 1 }, 
+               { 200000, 2.3, 1 } 
               }; 
  
        vec3 ID1ArrayScaleZ[6] = { 
-               { 5, 1, 1 }, 
-               { 100000, 1, 1 }, 
-               { 200000, 1, 1 } 
+               { 5, 0.91, 1 }, 
+               { 100000, 0.91, 1 }, 
+               { 200000, 0.91, 1 } 
               }; 
  
        vec3 ID1ArrayRotationX[6] = { 
@@ -112,33 +112,93 @@
               }; 
  
        vec3 ID1ArrayRotationZ[6] = { 
-               { 5, -0.3826834, 1 }, 
-               { 100000, -0.3826834, 1 }, 
-               { 200000, -0.3826834, 1 } 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
               }; 
  
        vec3 ID1ArrayRotationW[6] = { 
-               { 5, 0.9238796, 1 }, 
-               { 100000, 0.9238796, 1 }, 
-               { 200000, 0.9238796, 1 } 
+               { 5, 1, 1 }, 
+               { 100000, 1, 1 }, 
+               { 200000, 1, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayPositionX[6] = { 
+               { 5, -18.75, 1 }, 
+               { 100000, -18.75, 1 }, 
+               { 200000, -18.75, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayPositionY[6] = { 
+               { 5, -0.6, 1 }, 
+               { 100000, -0.6, 1 }, 
+               { 200000, -0.6, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayPositionZ[6] = { 
+               { 5, 8.6, 1 }, 
+               { 100000, 8.6, 1 }, 
+               { 200000, 8.6, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayScaleX[6] = { 
+               { 5, 0.32, 1 }, 
+               { 100000, 0.32, 1 }, 
+               { 200000, 0.32, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayScaleY[6] = { 
+               { 5, -13.57, 1 }, 
+               { 100000, -13.57, 1 }, 
+               { 200000, -13.57, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayScaleZ[6] = { 
+               { 5, 2.1, 1 }, 
+               { 100000, 2.1, 1 }, 
+               { 200000, 2.1, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayRotationX[6] = { 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayRotationY[6] = { 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayRotationZ[6] = { 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
+              }; 
+ 
+       vec3 ID5ArrayRotationW[6] = { 
+               { 5, 1, 1 }, 
+               { 100000, 1, 1 }, 
+               { 200000, 1, 1 } 
               }; 
  
        vec3 ID2ArrayPositionX[6] = { 
-               { 5, -0.18, 1 }, 
-               { 100000, -0.18, 1 }, 
-               { 200000, -0.18, 1 } 
+               { 5, -1.5, 1 }, 
+               { 100000, -1.5, 1 }, 
+               { 200000, -1.5, 1 } 
               }; 
  
        vec3 ID2ArrayPositionY[6] = { 
-               { 5, -0.2, 1 }, 
-               { 100000, -0.2, 1 }, 
-               { 200000, -0.2, 1 } 
+               { 5, 0.18, 1 }, 
+               { 100000, 0.18, 1 }, 
+               { 200000, 0.18, 1 } 
               }; 
  
        vec3 ID2ArrayPositionZ[6] = { 
-               { 5, 25.05, 1 }, 
-               { 100000, 25.05, 1 }, 
-               { 200000, 25.05, 1 } 
+               { 5, 1.24, 1 }, 
+               { 100000, 1.24, 1 }, 
+               { 200000, 1.24, 1 } 
               }; 
  
        vec3 ID2ArrayScaleX[6] = { 
@@ -172,51 +232,51 @@
               }; 
  
        vec3 ID2ArrayRotationZ[6] = { 
-               { 5, 0, 1 }, 
-               { 100000, 0, 1 }, 
-               { 200000, 0, 1 } 
+               { 5, -0.3826834, 1 }, 
+               { 100000, -0.3826834, 1 }, 
+               { 200000, -0.3826834, 1 } 
               }; 
  
        vec3 ID2ArrayRotationW[6] = { 
+               { 5, 0.9238796, 1 }, 
+               { 100000, 0.9238796, 1 }, 
+               { 200000, 0.9238796, 1 } 
+              }; 
+ 
+       vec3 ID3ArrayPositionX[6] = { 
+               { 5, -0.18, 1 }, 
+               { 100000, -0.18, 1 }, 
+               { 200000, -0.18, 1 } 
+              }; 
+ 
+       vec3 ID3ArrayPositionY[6] = { 
+               { 5, -0.2, 1 }, 
+               { 100000, -0.2, 1 }, 
+               { 200000, -0.2, 1 } 
+              }; 
+ 
+       vec3 ID3ArrayPositionZ[6] = { 
+               { 5, 25.05, 1 }, 
+               { 100000, 25.05, 1 }, 
+               { 200000, 25.05, 1 } 
+              }; 
+ 
+       vec3 ID3ArrayScaleX[6] = { 
                { 5, 1, 1 }, 
                { 100000, 1, 1 }, 
                { 200000, 1, 1 } 
               }; 
  
-       vec3 ID3ArrayPositionX[6] = { 
-               { 5, 0, 1 }, 
-               { 100000, 0, 1 }, 
-               { 200000, 0, 1 } 
-              }; 
- 
-       vec3 ID3ArrayPositionY[6] = { 
-               { 5, 0, 1 }, 
-               { 100000, 0, 1 }, 
-               { 200000, 0, 1 } 
-              }; 
- 
-       vec3 ID3ArrayPositionZ[6] = { 
-               { 5, 0, 1 }, 
-               { 100000, 0, 1 }, 
-               { 200000, 0, 1 } 
-              }; 
- 
-       vec3 ID3ArrayScaleX[6] = { 
-               { 5, 0.1, 1 }, 
-               { 100000, 0.1, 1 }, 
-               { 200000, 0.1, 1 } 
-              }; 
- 
        vec3 ID3ArrayScaleY[6] = { 
-               { 5, 0.1, 1 }, 
-               { 100000, 0.1, 1 }, 
-               { 200000, 0.1, 1 } 
+               { 5, 1, 1 }, 
+               { 100000, 1, 1 }, 
+               { 200000, 1, 1 } 
               }; 
  
        vec3 ID3ArrayScaleZ[6] = { 
-               { 5, 0.1, 1 }, 
-               { 100000, 0.1, 1 }, 
-               { 200000, 0.1, 1 } 
+               { 5, 1, 1 }, 
+               { 100000, 1, 1 }, 
+               { 200000, 1, 1 } 
               }; 
  
        vec3 ID3ArrayRotationX[6] = { 
@@ -244,120 +304,180 @@
               }; 
  
        vec3 ID4ArrayPositionX[6] = { 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
+              }; 
+ 
+       vec3 ID4ArrayPositionY[6] = { 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
+              }; 
+ 
+       vec3 ID4ArrayPositionZ[6] = { 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
+              }; 
+ 
+       vec3 ID4ArrayScaleX[6] = { 
+               { 5, 3, 1 }, 
+               { 100000, 3, 1 }, 
+               { 200000, 3, 1 } 
+              }; 
+ 
+       vec3 ID4ArrayScaleY[6] = { 
+               { 5, 0.005, 1 }, 
+               { 100000, 0.005, 1 }, 
+               { 200000, 0.005, 1 } 
+              }; 
+ 
+       vec3 ID4ArrayScaleZ[6] = { 
+               { 5, 3, 1 }, 
+               { 100000, 3, 1 }, 
+               { 200000, 3, 1 } 
+              }; 
+ 
+       vec3 ID4ArrayRotationX[6] = { 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
+              }; 
+ 
+       vec3 ID4ArrayRotationY[6] = { 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
+              }; 
+ 
+       vec3 ID4ArrayRotationZ[6] = { 
+               { 5, 0, 1 }, 
+               { 100000, 0, 1 }, 
+               { 200000, 0, 1 } 
+              }; 
+ 
+       vec3 ID4ArrayRotationW[6] = { 
+               { 5, 1, 1 }, 
+               { 100000, 1, 1 }, 
+               { 200000, 1, 1 } 
+              }; 
+ 
+       vec3 ID6ArrayPositionX[6] = { 
                { 5, -1.26, 1 }, 
                { 100000, -1.26, 1 }, 
                { 200000, -1.26, 1 } 
               }; 
  
-       vec3 ID4ArrayPositionY[6] = { 
+       vec3 ID6ArrayPositionY[6] = { 
                { 5, 0.1, 1 }, 
                { 100000, 0.1, 1 }, 
                { 200000, 0.1, 1 } 
               }; 
  
-       vec3 ID4ArrayPositionZ[6] = { 
+       vec3 ID6ArrayPositionZ[6] = { 
                { 5, 10.96, 1 }, 
                { 100000, 10.96, 1 }, 
                { 200000, 10.96, 1 } 
               }; 
  
-       vec3 ID4ArrayScaleX[6] = { 
+       vec3 ID6ArrayScaleX[6] = { 
                { 5, 1, 1 }, 
                { 100000, 1, 1 }, 
                { 200000, 1, 1 } 
               }; 
  
-       vec3 ID4ArrayScaleY[6] = { 
+       vec3 ID6ArrayScaleY[6] = { 
                { 5, 1, 1 }, 
                { 100000, 1, 1 }, 
                { 200000, 1, 1 } 
               }; 
  
-       vec3 ID4ArrayScaleZ[6] = { 
+       vec3 ID6ArrayScaleZ[6] = { 
                { 5, 1, 1 }, 
                { 100000, 1, 1 }, 
                { 200000, 1, 1 } 
               }; 
  
-       vec3 ID4ArrayRotationX[6] = { 
+       vec3 ID6ArrayRotationX[6] = { 
                { 5, -0.103846, 1 }, 
                { 100000, -0.103846, 1 }, 
                { 200000, -0.103846, 1 } 
               }; 
  
-       vec3 ID4ArrayRotationY[6] = { 
+       vec3 ID6ArrayRotationY[6] = { 
                { 5, -0.3132005, 1 }, 
                { 100000, -0.3132005, 1 }, 
                { 200000, -0.3132005, 1 } 
               }; 
  
-       vec3 ID4ArrayRotationZ[6] = { 
+       vec3 ID6ArrayRotationZ[6] = { 
                { 5, -0.1669408, 1 }, 
                { 100000, -0.1669408, 1 }, 
                { 200000, -0.1669408, 1 } 
               }; 
  
-       vec3 ID4ArrayRotationW[6] = { 
+       vec3 ID6ArrayRotationW[6] = { 
                { 5, 0.9291137, 1 }, 
                { 100000, 0.9291137, 1 }, 
                { 200000, 0.9291137, 1 } 
               }; 
  
-       vec3 ID5ArrayPositionX[6] = { 
+       vec3 ID7ArrayPositionX[6] = { 
                { 5, 2.465, 1 }, 
                { 100000, 2.465, 1 }, 
                { 200000, 2.465, 1 } 
               }; 
  
-       vec3 ID5ArrayPositionY[6] = { 
+       vec3 ID7ArrayPositionY[6] = { 
                { 5, 0.18, 1 }, 
                { 100000, 0.18, 1 }, 
                { 200000, 0.18, 1 } 
               }; 
  
-       vec3 ID5ArrayPositionZ[6] = { 
+       vec3 ID7ArrayPositionZ[6] = { 
                { 5, 10.74, 1 }, 
                { 100000, 10.74, 1 }, 
                { 200000, 10.74, 1 } 
               }; 
  
-       vec3 ID5ArrayScaleX[6] = { 
+       vec3 ID7ArrayScaleX[6] = { 
                { 5, 1, 1 }, 
                { 100000, 1, 1 }, 
                { 200000, 1, 1 } 
               }; 
  
-       vec3 ID5ArrayScaleY[6] = { 
+       vec3 ID7ArrayScaleY[6] = { 
                { 5, 1, 1 }, 
                { 100000, 1, 1 }, 
                { 200000, 1, 1 } 
               }; 
  
-       vec3 ID5ArrayScaleZ[6] = { 
+       vec3 ID7ArrayScaleZ[6] = { 
                { 5, 1, 1 }, 
                { 100000, 1, 1 }, 
                { 200000, 1, 1 } 
               }; 
  
-       vec3 ID5ArrayRotationX[6] = { 
+       vec3 ID7ArrayRotationX[6] = { 
                { 5, -0.2482672, 1 }, 
                { 100000, -0.2482672, 1 }, 
                { 200000, -0.2482672, 1 } 
               }; 
  
-       vec3 ID5ArrayRotationY[6] = { 
+       vec3 ID7ArrayRotationY[6] = { 
                { 5, 0, 1 }, 
                { 100000, 0, 1 }, 
                { 200000, 0, 1 } 
               }; 
  
-       vec3 ID5ArrayRotationZ[6] = { 
+       vec3 ID7ArrayRotationZ[6] = { 
                { 5, 0, 1 }, 
                { 100000, 0, 1 }, 
                { 200000, 0, 1 } 
               }; 
  
-       vec3 ID5ArrayRotationW[6] = { 
+       vec3 ID7ArrayRotationW[6] = { 
                { 5, 0.9686916, 1 }, 
                { 100000, 0.9686916, 1 }, 
                { 200000, 0.9686916, 1 } 
@@ -370,137 +490,195 @@
                {2100000.0f, 12, 0 } 
               }; 
        float iTime;
-       vec3 DirectionalLightXArray[4] = { 
-               { 0, -1, 0 }, 
-               { 256, 0, 0 }, 
-               {100000.0f, 0, 0 }, 
-               {2100000.0f, 0, 0 } 
-              }; 
-       float DirectionalLightX;
-       vec3 DirectionalLightYArray[4] = { 
-               { 0, 0.2, 0 }, 
-               { 256, 0, 0 }, 
-               {100000.0f, 0, 0 }, 
-               {2100000.0f, 0, 0 } 
-              }; 
-       float DirectionalLightY;
-       vec3 DirectionalLightZArray[4] = { 
-               { 0, -1, 0 }, 
-               { 256, 0, 0 }, 
-               {100000.0f, 0, 0 }, 
-               {2100000.0f, 0, 0 } 
-              }; 
-       float DirectionalLightZ;
-       vec3 DirectionalLightRArray[4] = { 
-               { 0, 12, 0 }, 
-               { 256, 8, 0 }, 
-               {100000.0f, 8, 0 }, 
-               {2100000.0f, 8, 0 } 
-              }; 
-       float DirectionalLightR;
-       vec3 DirectionalLightGArray[4] = { 
-               { 0, 12, 0 }, 
-               { 256, 8, 0 }, 
-               {100000.0f, 8, 0 }, 
-               {2100000.0f, 8, 0 } 
-              }; 
-       float DirectionalLightG;
-       vec3 DirectionalLightBArray[4] = { 
-               { 0, 33, 0 }, 
-               { 256, 8, 0 }, 
-               {100000.0f, 8, 0 }, 
-               {2100000.0f, 8, 0 } 
-              }; 
-       float DirectionalLightB;
-       vec3 PointLightPositionXArray[4] = { 
-               { 0, -22, 0 }, 
-               { 256, -5, 0 }, 
-               {100000.0f, -5, 0 }, 
-               {2100000.0f, -5, 0 } 
-              }; 
-       float PointLightPositionX;
-       vec3 PointLightPositionYArray[4] = { 
-               { 0, -4, 0 }, 
-               { 256, -0.4, 0 }, 
-               {100000.0f, -0.4, 0 }, 
-               {2100000.0f, -0.4, 0 } 
-              }; 
-       float PointLightPositionY;
-       vec3 PointLightPositionZArray[4] = { 
-               { 0, -22, 0 }, 
-               { 256, 30, 0 }, 
-               {100000.0f, 30, 0 }, 
-               {2100000.0f, 30, 0 } 
-              }; 
-       float PointLightPositionZ;
-       vec3 PointLightRArray[4] = { 
-               { 0, 122, 0 }, 
-               { 256, 122, 0 }, 
-               {100000.0f, 122, 0 }, 
-               {2100000.0f, 122, 0 } 
-              }; 
-       float PointLightR;
-       vec3 PointLightGArray[4] = { 
-               { 0, 88, 0 }, 
-               { 256, 55, 0 }, 
-               {100000.0f, 55, 0 }, 
-               {2100000.0f, 55, 0 } 
-              }; 
-       float PointLightG;
-       vec3 PointLightBArray[4] = { 
-               { 0, 66, 0 }, 
-               { 256, 22, 0 }, 
-               {100000.0f, 22, 0 }, 
-               {2100000.0f, 22, 0 } 
-              }; 
-       float PointLightB;
-       vec3 CameraPositionXArray[5] = { 
-               { 0, 39, 1 }, 
-               { 255, 38, 0 }, 
-               { 256, 4, 0 }, 
-               {100000.0f, 4, 0 }, 
-               {2100000.0f, 4, 0 } 
-              }; 
-       float CameraPositionX;
-       vec3 CameraPositionYArray[4] = { 
-               { 0, 12, 0 }, 
-               { 256, 1, 0 }, 
-               {100000.0f, 1, 0 }, 
-               {2100000.0f, 1, 0 } 
-              }; 
-       float CameraPositionY;
-       vec3 CameraPositionZArray[6] = { 
-               { 0, 32, 1 }, 
-               { 255, 31, 0 }, 
-               { 256, 0, 0 }, 
-               { 687, 2, 0 }, 
-               {100000.0f, 2, 0 }, 
-               {2100000.0f, 2, 0 } 
-              }; 
-       float CameraPositionZ;
-       vec3 LookAtXArray[6] = { 
-               { 0, 0.5, 1 }, 
-               { 255, 0.5, 0 }, 
-               { 256, 2, 1 }, 
-               { 334, 3, 0 }, 
+       vec3 DirectionalLightXArray[6] = { 
+               { 0, 1, 0 }, 
+               { 256, 0.3, 0 }, 
+               { 534, -0.3, 0 }, 
+               { 688, 3, 0 }, 
                {100000.0f, 3, 0 }, 
                {2100000.0f, 3, 0 } 
               }; 
+       float DirectionalLightX;
+       vec3 DirectionalLightYArray[7] = { 
+               { 0, -1, 0 }, 
+               { 140, 1, 0 }, 
+               { 256, -0.1, 0 }, 
+               { 534, 0.5, 0 }, 
+               { 688, 3, 0 }, 
+               {100000.0f, 3, 0 }, 
+               {2100000.0f, 3, 0 } 
+              }; 
+       float DirectionalLightY;
+       vec3 DirectionalLightZArray[7] = { 
+               { 0, 1, 0 }, 
+               { 140, -2, 0 }, 
+               { 256, -1, 0 }, 
+               { 534, 0.3, 0 }, 
+               { 688, 3, 0 }, 
+               {100000.0f, 3, 0 }, 
+               {2100000.0f, 3, 0 } 
+              }; 
+       float DirectionalLightZ;
+       vec3 DirectionalLightRArray[6] = { 
+               { 0, 9, 0 }, 
+               { 256, 3, 0 }, 
+               { 534, 22, 0 }, 
+               { 688, 9, 0 }, 
+               {100000.0f, 9, 0 }, 
+               {2100000.0f, 9, 0 } 
+              }; 
+       float DirectionalLightR;
+       vec3 DirectionalLightGArray[6] = { 
+               { 0, 6, 0 }, 
+               { 256, 3, 0 }, 
+               { 534, 9, 0 }, 
+               { 688, 9, 0 }, 
+               {100000.0f, 9, 0 }, 
+               {2100000.0f, 9, 0 } 
+              }; 
+       float DirectionalLightG;
+       vec3 DirectionalLightBArray[6] = { 
+               { 0, 6, 0 }, 
+               { 256, 3, 0 }, 
+               { 534, 7, 0 }, 
+               { 688, 14, 0 }, 
+               {100000.0f, 14, 0 }, 
+               {2100000.0f, 14, 0 } 
+              }; 
+       float DirectionalLightB;
+       vec3 PointLightPositionXArray[9] = { 
+               { 0, -22, 0 }, 
+               { 140, -22, 1 }, 
+               { 255, -22, 0 }, 
+               { 256, 3, 0 }, 
+               { 533, 4, 0 }, 
+               { 534, 0, 0 }, 
+               { 688, -3, 0 }, 
+               {100000.0f, -3, 0 }, 
+               {2100000.0f, -3, 0 } 
+              }; 
+       float PointLightPositionX;
+       vec3 PointLightPositionYArray[8] = { 
+               { 0, -12, 0 }, 
+               { 140, -5, 1 }, 
+               { 255, 0, 0 }, 
+               { 256, 1, 0 }, 
+               { 534, -8, 0 }, 
+               { 688, -10, 0 }, 
+               {100000.0f, -10, 0 }, 
+               {2100000.0f, -10, 0 } 
+              }; 
+       float PointLightPositionY;
+       vec3 PointLightPositionZArray[9] = { 
+               { 0, -22, 0 }, 
+               { 140, -22, 1 }, 
+               { 255, -18, 0 }, 
+               { 256, -11, 0 }, 
+               { 533, 4, 0 }, 
+               { 534, -22, 0 }, 
+               { 688, -9, 0 }, 
+               {100000.0f, -9, 0 }, 
+               {2100000.0f, -9, 0 } 
+              }; 
+       float PointLightPositionZ;
+       vec3 PointLightRArray[8] = { 
+               { 0, 122, 0 }, 
+               { 140, 155, 1 }, 
+               { 255, 555, 0 }, 
+               { 256, 122, 0 }, 
+               { 534, 222, 0 }, 
+               { 688, 15, 0 }, 
+               {100000.0f, 15, 0 }, 
+               {2100000.0f, 15, 0 } 
+              }; 
+       float PointLightR;
+       vec3 PointLightGArray[8] = { 
+               { 0, 122, 0 }, 
+               { 140, 155, 1 }, 
+               { 255, 333, 0 }, 
+               { 256, 122, 0 }, 
+               { 534, 144, 0 }, 
+               { 688, 13, 0 }, 
+               {100000.0f, 13, 0 }, 
+               {2100000.0f, 13, 0 } 
+              }; 
+       float PointLightG;
+       vec3 PointLightBArray[8] = { 
+               { 0, 122, 0 }, 
+               { 140, 155, 1 }, 
+               { 255, 333, 0 }, 
+               { 256, 122, 0 }, 
+               { 534, 122, 0 }, 
+               { 688, 14, 0 }, 
+               {100000.0f, 14, 0 }, 
+               {2100000.0f, 14, 0 } 
+              }; 
+       float PointLightB;
+       vec3 CameraPositionXArray[7] = { 
+               { 0, 32, 0 }, 
+               { 256, 3, 0 }, 
+               { 533, 16, 0 }, 
+               { 534, 2, 0 }, 
+               { 688, 4.030001, 0 }, 
+               {100000.0f, 4.030001, 0 }, 
+               {2100000.0f, 4.030001, 0 } 
+              }; 
+       float CameraPositionX;
+       vec3 CameraPositionYArray[8] = { 
+               { 0, 7, 1 }, 
+               { 139, 6.8, 0 }, 
+               { 140, 8, 0 }, 
+               { 256, 1, 0 }, 
+               { 534, 12, 0 }, 
+               { 688, 0, 0 }, 
+               {100000.0f, 0, 0 }, 
+               {2100000.0f, 0, 0 } 
+              }; 
+       float CameraPositionY;
+       vec3 CameraPositionZArray[9] = { 
+               { 0, 32, 0 }, 
+               { 256, 30, 0 }, 
+               { 533, 16, 0 }, 
+               { 534, -2, 1 }, 
+               { 687, 2, 0 }, 
+               { 688, 0, 1 }, 
+               { 848, 5, 0 }, 
+               {100000.0f, 5, 0 }, 
+               {2100000.0f, 5, 0 } 
+              }; 
+       float CameraPositionZ;
+       vec3 LookAtXArray[8] = { 
+               { 0, 0.5, 1 }, 
+               { 139, -1, 0 }, 
+               { 256, 0, 0 }, 
+               { 533, -16, 0 }, 
+               { 534, 2, 0 }, 
+               { 688, 0, 0 }, 
+               {100000.0f, 0, 0 }, 
+               {2100000.0f, 0, 0 } 
+              }; 
        float LookAtX;
-       vec3 LookAtYArray[5] = { 
-               { 0, -15, 1 }, 
-               { 255, -11, 0 }, 
+       vec3 LookAtYArray[9] = { 
+               { 0, -4, 1 }, 
+               { 139, -3, 0 }, 
+               { 140, -13.99, 1 }, 
+               { 255, -12, 0 }, 
                { 256, 2, 0 }, 
-               {100000.0f, 2, 0 }, 
-               {2100000.0f, 2, 0 } 
+               { 534, 7, 0 }, 
+               { 688, -1, 0 }, 
+               {100000.0f, -1, 0 }, 
+               {2100000.0f, -1, 0 } 
               }; 
        float LookAtY;
-       vec3 LookAtZArray[5] = { 
+       vec3 LookAtZArray[8] = { 
                { 0, 1, 0 }, 
-               { 256, -12, 0 }, 
-               { 687, 7, 0 }, 
-               {100000.0f, 7, 0 }, 
-               {2100000.0f, 7, 0 } 
+               { 140, 0, 0 }, 
+               { 256, 0, 1 }, 
+               { 352, 1, 0 }, 
+               { 533, -8, 0 }, 
+               { 688, 11, 0 }, 
+               {100000.0f, 11, 0 }, 
+               {2100000.0f, 11, 0 } 
               }; 
        float LookAtZ;
        vec3 CameraUpXArray[3] = { 
@@ -521,179 +699,201 @@
                {2100000.0f, 0, 0 } 
               }; 
        float CameraUpZ;
-       vec3 FOVArray[4] = { 
+       vec3 FOVArray[5] = { 
                { 0, 32, 0 }, 
-               { 256, 22, 0 }, 
-               {100000.0f, 22, 0 }, 
-               {2100000.0f, 22, 0 } 
+               { 256, 29, 0 }, 
+               { 688, 54, 0 }, 
+               {100000.0f, 54, 0 }, 
+               {2100000.0f, 54, 0 } 
               }; 
        float FOV;
-       vec3 EpsilonArray[4] = { 
+       vec3 EpsilonArray[5] = { 
                { 0, 0.01, 0 }, 
                { 256, 0, 0 }, 
-               {100000.0f, 0, 0 }, 
-               {2100000.0f, 0, 0 } 
+               { 688, 0.004, 0 }, 
+               {100000.0f, 0.004, 0 }, 
+               {2100000.0f, 0.004, 0 } 
               }; 
        float Epsilon;
-       vec3 DistanceArray[4] = { 
-               { 0, 11, 0 }, 
-               { 256, 22, 0 }, 
-               {100000.0f, 22, 0 }, 
-               {2100000.0f, 22, 0 } 
+       vec3 DistanceArray[8] = { 
+               { 0, 8, 0 }, 
+               { 140, 5, 1 }, 
+               { 255, 12, 0 }, 
+               { 256, 12, 0 }, 
+               { 534, 16, 0 }, 
+               { 688, 15, 0 }, 
+               {100000.0f, 15, 0 }, 
+               {2100000.0f, 15, 0 } 
               }; 
        float Distance;
-       vec3 LensCoeffArray[4] = { 
-               { 0, 0.06, 0 }, 
-               { 256, 0.4, 0 }, 
-               {100000.0f, 0.4, 0 }, 
-               {2100000.0f, 0.4, 0 } 
+       vec3 LensCoeffArray[7] = { 
+               { 0, 0.4, 0 }, 
+               { 140, 0.1, 0 }, 
+               { 256, 0.04, 0 }, 
+               { 534, 0.4, 0 }, 
+               { 688, 0.3, 0 }, 
+               {100000.0f, 0.3, 0 }, 
+               {2100000.0f, 0.3, 0 } 
               }; 
        float LensCoeff;
-       vec3 MaxCoCArray[4] = { 
-               { 0, 1, 0 }, 
-               { 256, 0.12, 0 }, 
-               {100000.0f, 0.12, 0 }, 
-               {2100000.0f, 0.12, 0 } 
-              }; 
-       float MaxCoC;
-       vec3 RcpMaxCoCArray[4] = { 
-               { 0, 1, 0 }, 
-               { 256, 0.2, 0 }, 
+       vec3 MaxCoCArray[7] = { 
+               { 0, 2, 0 }, 
+               { 140, 0.04, 0 }, 
+               { 256, 0.1, 0 }, 
+               { 534, 2, 0 }, 
+               { 688, 0.2, 0 }, 
                {100000.0f, 0.2, 0 }, 
                {2100000.0f, 0.2, 0 } 
               }; 
+       float MaxCoC;
+       vec3 RcpMaxCoCArray[6] = { 
+               { 0, 0.1, 0 }, 
+               { 140, 1.3, 0 }, 
+               { 256, 1, 0 }, 
+               { 688, 0, 0 }, 
+               {100000.0f, 0, 0 }, 
+               {2100000.0f, 0, 0 } 
+              }; 
        float RcpMaxCoC;
-       vec3 MarchMinimumArray[4] = { 
+       vec3 MarchMinimumArray[7] = { 
                { 0, 0.01, 0 }, 
-               { 256, 0, 0 }, 
+               { 140, 0.01, 0 }, 
+               { 256, 0.3, 0 }, 
+               { 534, 0.7, 0 }, 
+               { 688, 0, 0 }, 
                {100000.0f, 0, 0 }, 
                {2100000.0f, 0, 0 } 
               }; 
        float MarchMinimum;
-       vec3 FarPlaneArray[4] = { 
-               { 0, 32, 0 }, 
+       vec3 FarPlaneArray[7] = { 
+               { 0, 22, 0 }, 
+               { 140, 22, 0 }, 
                { 256, 32, 0 }, 
-               {100000.0f, 32, 0 }, 
-               {2100000.0f, 32, 0 } 
+               { 534, 23, 0 }, 
+               { 688, 23, 0 }, 
+               {100000.0f, 23, 0 }, 
+               {2100000.0f, 23, 0 } 
               }; 
        float FarPlane;
        vec3 StepArray[4] = { 
                { 0, 2, 0 }, 
-               { 256, 1.4, 0 }, 
-               {100000.0f, 1.4, 0 }, 
-               {2100000.0f, 1.4, 0 } 
+               { 256, 1.3, 0 }, 
+               {100000.0f, 1.3, 0 }, 
+               {2100000.0f, 1.3, 0 } 
               }; 
        float Step;
-       vec3 Gain_RArray[4] = { 
+       vec3 Gain_RArray[5] = { 
                { 0, 0.55, 0 }, 
                { 256, 0.5, 0 }, 
+               { 534, 0.5, 0 }, 
                {100000.0f, 0.5, 0 }, 
                {2100000.0f, 0.5, 0 } 
               }; 
        float Gain_R;
-       vec3 Gain_GArray[4] = { 
+       vec3 Gain_GArray[6] = { 
                { 0, 0.5, 0 }, 
+               { 140, 0.55, 0 }, 
                { 256, 0.5, 0 }, 
-               {100000.0f, 0.5, 0 }, 
-               {2100000.0f, 0.5, 0 } 
+               { 534, 0.6, 0 }, 
+               {100000.0f, 0.6, 0 }, 
+               {2100000.0f, 0.6, 0 } 
               }; 
        float Gain_G;
-       vec3 Gain_BArray[4] = { 
+       vec3 Gain_BArray[5] = { 
                { 0, 0.4, 0 }, 
                { 256, 0.5, 0 }, 
-               {100000.0f, 0.5, 0 }, 
-               {2100000.0f, 0.5, 0 } 
+               { 534, 0.4, 0 }, 
+               {100000.0f, 0.4, 0 }, 
+               {2100000.0f, 0.4, 0 } 
               }; 
        float Gain_B;
        vec3 Gamma_RArray[4] = { 
-               { 0, 0.5, 0 }, 
-               { 256, 0.5, 0 }, 
-               {100000.0f, 0.5, 0 }, 
-               {2100000.0f, 0.5, 0 } 
+               { 0, 0.3, 0 }, 
+               { 256, 0.36, 0 }, 
+               {100000.0f, 0.36, 0 }, 
+               {2100000.0f, 0.36, 0 } 
               }; 
        float Gamma_R;
-       vec3 Gamma_GArray[4] = { 
-               { 0, 0.4, 0 }, 
-               { 256, 0.5, 0 }, 
-               {100000.0f, 0.5, 0 }, 
-               {2100000.0f, 0.5, 0 } 
+       vec3 Gamma_GArray[5] = { 
+               { 0, 0.3, 1 }, 
+               { 139, 0.33, 0 }, 
+               { 534, 0.37, 0 }, 
+               {100000.0f, 0.37, 0 }, 
+               {2100000.0f, 0.37, 0 } 
               }; 
        float Gamma_G;
        vec3 Gamma_BArray[4] = { 
-               { 0, 0.5, 0 }, 
-               { 256, 0.5, 0 }, 
+               { 0, 0.4, 0 }, 
+               { 534, 0.5, 0 }, 
                {100000.0f, 0.5, 0 }, 
                {2100000.0f, 0.5, 0 } 
               }; 
        float Gamma_B;
        vec3 Lift_RArray[4] = { 
                { 0, 0.51, 0 }, 
-               { 256, 0.5, 0 }, 
-               {100000.0f, 0.5, 0 }, 
-               {2100000.0f, 0.5, 0 } 
+               { 140, 0.55, 0 }, 
+               {100000.0f, 0.55, 0 }, 
+               {2100000.0f, 0.55, 0 } 
               }; 
        float Lift_R;
-       vec3 Lift_GArray[4] = { 
+       vec3 Lift_GArray[3] = { 
                { 0, 0.55, 0 }, 
-               { 256, 0.5, 0 }, 
-               {100000.0f, 0.5, 0 }, 
-               {2100000.0f, 0.5, 0 } 
+               {100000.0f, 0.55, 0 }, 
+               {2100000.0f, 0.55, 0 } 
               }; 
        float Lift_G;
        vec3 Lift_BArray[4] = { 
-               { 0, 0.55, 0 }, 
-               { 256, 0.5, 0 }, 
-               {100000.0f, 0.5, 0 }, 
-               {2100000.0f, 0.5, 0 } 
+               { 0, 0.55, 1 }, 
+               { 140, 0.6, 0 }, 
+               {100000.0f, 0.6, 0 }, 
+               {2100000.0f, 0.6, 0 } 
               }; 
        float Lift_B;
-       vec3 Presaturation_RArray[4] = { 
+       vec3 Presaturation_RArray[5] = { 
                { 0, 1, 0 }, 
-               { 256, 1, 0 }, 
-               {100000.0f, 1, 0 }, 
-               {2100000.0f, 1, 0 } 
+               { 140, 1, 0 }, 
+               { 256, 2, 0 }, 
+               {100000.0f, 2, 0 }, 
+               {2100000.0f, 2, 0 } 
               }; 
        float Presaturation_R;
-       vec3 Presaturation_GArray[4] = { 
+       vec3 Presaturation_GArray[3] = { 
                { 0, 1, 0 }, 
-               { 256, 1, 0 }, 
                {100000.0f, 1, 0 }, 
                {2100000.0f, 1, 0 } 
               }; 
        float Presaturation_G;
        vec3 Presaturation_BArray[4] = { 
-               { 0, 1, 0 }, 
-               { 256, 1, 0 }, 
-               {100000.0f, 1, 0 }, 
-               {2100000.0f, 1, 0 } 
+               { 0, 1.3, 0 }, 
+               { 140, 1.5, 0 }, 
+               {100000.0f, 1.5, 0 }, 
+               {2100000.0f, 1.5, 0 } 
               }; 
        float Presaturation_B;
-       vec3 ColorTemperatureStrength_RArray[4] = { 
+       vec3 ColorTemperatureStrength_RArray[3] = { 
                { 0, 1, 0 }, 
-               { 256, 1, 0 }, 
                {100000.0f, 1, 0 }, 
                {2100000.0f, 1, 0 } 
               }; 
        float ColorTemperatureStrength_R;
-       vec3 ColorTemperatureStrength_GArray[4] = { 
+       vec3 ColorTemperatureStrength_GArray[3] = { 
                { 0, 1, 0 }, 
-               { 256, 1, 0 }, 
                {100000.0f, 1, 0 }, 
                {2100000.0f, 1, 0 } 
               }; 
        float ColorTemperatureStrength_G;
-       vec3 ColorTemperatureStrength_BArray[4] = { 
+       vec3 ColorTemperatureStrength_BArray[3] = { 
                { 0, 1, 0 }, 
-               { 256, 1, 0 }, 
                {100000.0f, 1, 0 }, 
                {2100000.0f, 1, 0 } 
               }; 
        float ColorTemperatureStrength_B;
-       vec3 ColorTempratureArray[4] = { 
-               { 0, 5555, 0 }, 
-               { 256, 6500, 0 }, 
-               {100000.0f, 6500, 0 }, 
-               {2100000.0f, 6500, 0 } 
+       vec3 ColorTempratureArray[5] = { 
+               { 0, 5500, 1 }, 
+               { 140, 7000, 0 }, 
+               { 256, 5555, 0 }, 
+               {100000.0f, 5555, 0 }, 
+               {2100000.0f, 5555, 0 } 
               }; 
        float ColorTemprature;
        vec3 TempratureNormalizationArray[4] = { 
@@ -750,10 +950,12 @@ float setVal(vec3 arr[], float rrow, long size, long *R_INDX) {
 
 long pointerID0ArrayPositionX = 0,pointerID0ArrayPositionY = 0,pointerID0ArrayPositionZ = 0,pointerID0ArrayScaleX = 0,pointerID0ArrayScaleY = 0,pointerID0ArrayScaleZ = 0,pointerID0ArrayRotationX = 0,pointerID0ArrayRotationY = 0,pointerID0ArrayRotationZ = 0,pointerID0ArrayRotationW = 0; 
 long pointerID1ArrayPositionX = 0,pointerID1ArrayPositionY = 0,pointerID1ArrayPositionZ = 0,pointerID1ArrayScaleX = 0,pointerID1ArrayScaleY = 0,pointerID1ArrayScaleZ = 0,pointerID1ArrayRotationX = 0,pointerID1ArrayRotationY = 0,pointerID1ArrayRotationZ = 0,pointerID1ArrayRotationW = 0; 
+long pointerID5ArrayPositionX = 0,pointerID5ArrayPositionY = 0,pointerID5ArrayPositionZ = 0,pointerID5ArrayScaleX = 0,pointerID5ArrayScaleY = 0,pointerID5ArrayScaleZ = 0,pointerID5ArrayRotationX = 0,pointerID5ArrayRotationY = 0,pointerID5ArrayRotationZ = 0,pointerID5ArrayRotationW = 0; 
 long pointerID2ArrayPositionX = 0,pointerID2ArrayPositionY = 0,pointerID2ArrayPositionZ = 0,pointerID2ArrayScaleX = 0,pointerID2ArrayScaleY = 0,pointerID2ArrayScaleZ = 0,pointerID2ArrayRotationX = 0,pointerID2ArrayRotationY = 0,pointerID2ArrayRotationZ = 0,pointerID2ArrayRotationW = 0; 
 long pointerID3ArrayPositionX = 0,pointerID3ArrayPositionY = 0,pointerID3ArrayPositionZ = 0,pointerID3ArrayScaleX = 0,pointerID3ArrayScaleY = 0,pointerID3ArrayScaleZ = 0,pointerID3ArrayRotationX = 0,pointerID3ArrayRotationY = 0,pointerID3ArrayRotationZ = 0,pointerID3ArrayRotationW = 0; 
 long pointerID4ArrayPositionX = 0,pointerID4ArrayPositionY = 0,pointerID4ArrayPositionZ = 0,pointerID4ArrayScaleX = 0,pointerID4ArrayScaleY = 0,pointerID4ArrayScaleZ = 0,pointerID4ArrayRotationX = 0,pointerID4ArrayRotationY = 0,pointerID4ArrayRotationZ = 0,pointerID4ArrayRotationW = 0; 
-long pointerID5ArrayPositionX = 0,pointerID5ArrayPositionY = 0,pointerID5ArrayPositionZ = 0,pointerID5ArrayScaleX = 0,pointerID5ArrayScaleY = 0,pointerID5ArrayScaleZ = 0,pointerID5ArrayRotationX = 0,pointerID5ArrayRotationY = 0,pointerID5ArrayRotationZ = 0,pointerID5ArrayRotationW = 0; 
+long pointerID6ArrayPositionX = 0,pointerID6ArrayPositionY = 0,pointerID6ArrayPositionZ = 0,pointerID6ArrayScaleX = 0,pointerID6ArrayScaleY = 0,pointerID6ArrayScaleZ = 0,pointerID6ArrayRotationX = 0,pointerID6ArrayRotationY = 0,pointerID6ArrayRotationZ = 0,pointerID6ArrayRotationW = 0; 
+long pointerID7ArrayPositionX = 0,pointerID7ArrayPositionY = 0,pointerID7ArrayPositionZ = 0,pointerID7ArrayScaleX = 0,pointerID7ArrayScaleY = 0,pointerID7ArrayScaleZ = 0,pointerID7ArrayRotationX = 0,pointerID7ArrayRotationY = 0,pointerID7ArrayRotationZ = 0,pointerID7ArrayRotationW = 0; 
 long iTimeArrayPointer = 0;
 long DirectionalLightXArrayPointer = 0;
 long DirectionalLightYArrayPointer = 0;
@@ -828,6 +1030,16 @@ long TempratureNormalizationArrayPointer = 0;
        RM_Objects[17] = setVal(ID1ArrayRotationY, row, 3, &pointerID1ArrayRotationY ); 
        RM_Objects[18] = setVal(ID1ArrayRotationZ, row, 3, &pointerID1ArrayRotationZ ); 
        RM_Objects[19] = setVal(ID1ArrayRotationW, row, 3, &pointerID1ArrayRotationW ); 
+       RM_Objects[50] = setVal(ID5ArrayPositionX, row, 3, &pointerID5ArrayPositionX ); 
+       RM_Objects[51] = setVal(ID5ArrayPositionY, row, 3, &pointerID5ArrayPositionY ); 
+       RM_Objects[52] = setVal(ID5ArrayPositionZ, row, 3, &pointerID5ArrayPositionZ ); 
+       RM_Objects[53] = setVal(ID5ArrayScaleX, row, 3, &pointerID5ArrayScaleX ) / 2.0f; 
+       RM_Objects[54] = setVal(ID5ArrayScaleY, row, 3, &pointerID5ArrayScaleY ) / 2.0f; 
+       RM_Objects[55] = setVal(ID5ArrayScaleZ, row, 3, &pointerID5ArrayScaleZ ) / 2.0f; 
+       RM_Objects[56] = setVal(ID5ArrayRotationX, row, 3, &pointerID5ArrayRotationX ); 
+       RM_Objects[57] = setVal(ID5ArrayRotationY, row, 3, &pointerID5ArrayRotationY ); 
+       RM_Objects[58] = setVal(ID5ArrayRotationZ, row, 3, &pointerID5ArrayRotationZ ); 
+       RM_Objects[59] = setVal(ID5ArrayRotationW, row, 3, &pointerID5ArrayRotationW ); 
        RM_Objects[20] = setVal(ID2ArrayPositionX, row, 3, &pointerID2ArrayPositionX ); 
        RM_Objects[21] = setVal(ID2ArrayPositionY, row, 3, &pointerID2ArrayPositionY ); 
        RM_Objects[22] = setVal(ID2ArrayPositionZ, row, 3, &pointerID2ArrayPositionZ ); 
@@ -858,64 +1070,74 @@ long TempratureNormalizationArrayPointer = 0;
        RM_Objects[47] = setVal(ID4ArrayRotationY, row, 3, &pointerID4ArrayRotationY ); 
        RM_Objects[48] = setVal(ID4ArrayRotationZ, row, 3, &pointerID4ArrayRotationZ ); 
        RM_Objects[49] = setVal(ID4ArrayRotationW, row, 3, &pointerID4ArrayRotationW ); 
-       RM_Objects[50] = setVal(ID5ArrayPositionX, row, 3, &pointerID5ArrayPositionX ); 
-       RM_Objects[51] = setVal(ID5ArrayPositionY, row, 3, &pointerID5ArrayPositionY ); 
-       RM_Objects[52] = setVal(ID5ArrayPositionZ, row, 3, &pointerID5ArrayPositionZ ); 
-       RM_Objects[53] = setVal(ID5ArrayScaleX, row, 3, &pointerID5ArrayScaleX ) / 2.0f; 
-       RM_Objects[54] = setVal(ID5ArrayScaleY, row, 3, &pointerID5ArrayScaleY ) / 2.0f; 
-       RM_Objects[55] = setVal(ID5ArrayScaleZ, row, 3, &pointerID5ArrayScaleZ ) / 2.0f; 
-       RM_Objects[56] = setVal(ID5ArrayRotationX, row, 3, &pointerID5ArrayRotationX ); 
-       RM_Objects[57] = setVal(ID5ArrayRotationY, row, 3, &pointerID5ArrayRotationY ); 
-       RM_Objects[58] = setVal(ID5ArrayRotationZ, row, 3, &pointerID5ArrayRotationZ ); 
-       RM_Objects[59] = setVal(ID5ArrayRotationW, row, 3, &pointerID5ArrayRotationW ); 
+       RM_Objects[60] = setVal(ID6ArrayPositionX, row, 3, &pointerID6ArrayPositionX ); 
+       RM_Objects[61] = setVal(ID6ArrayPositionY, row, 3, &pointerID6ArrayPositionY ); 
+       RM_Objects[62] = setVal(ID6ArrayPositionZ, row, 3, &pointerID6ArrayPositionZ ); 
+       RM_Objects[63] = setVal(ID6ArrayScaleX, row, 3, &pointerID6ArrayScaleX ) / 2.0f; 
+       RM_Objects[64] = setVal(ID6ArrayScaleY, row, 3, &pointerID6ArrayScaleY ) / 2.0f; 
+       RM_Objects[65] = setVal(ID6ArrayScaleZ, row, 3, &pointerID6ArrayScaleZ ) / 2.0f; 
+       RM_Objects[66] = setVal(ID6ArrayRotationX, row, 3, &pointerID6ArrayRotationX ); 
+       RM_Objects[67] = setVal(ID6ArrayRotationY, row, 3, &pointerID6ArrayRotationY ); 
+       RM_Objects[68] = setVal(ID6ArrayRotationZ, row, 3, &pointerID6ArrayRotationZ ); 
+       RM_Objects[69] = setVal(ID6ArrayRotationW, row, 3, &pointerID6ArrayRotationW ); 
+       RM_Objects[70] = setVal(ID7ArrayPositionX, row, 3, &pointerID7ArrayPositionX ); 
+       RM_Objects[71] = setVal(ID7ArrayPositionY, row, 3, &pointerID7ArrayPositionY ); 
+       RM_Objects[72] = setVal(ID7ArrayPositionZ, row, 3, &pointerID7ArrayPositionZ ); 
+       RM_Objects[73] = setVal(ID7ArrayScaleX, row, 3, &pointerID7ArrayScaleX ) / 2.0f; 
+       RM_Objects[74] = setVal(ID7ArrayScaleY, row, 3, &pointerID7ArrayScaleY ) / 2.0f; 
+       RM_Objects[75] = setVal(ID7ArrayScaleZ, row, 3, &pointerID7ArrayScaleZ ) / 2.0f; 
+       RM_Objects[76] = setVal(ID7ArrayRotationX, row, 3, &pointerID7ArrayRotationX ); 
+       RM_Objects[77] = setVal(ID7ArrayRotationY, row, 3, &pointerID7ArrayRotationY ); 
+       RM_Objects[78] = setVal(ID7ArrayRotationZ, row, 3, &pointerID7ArrayRotationZ ); 
+       RM_Objects[79] = setVal(ID7ArrayRotationW, row, 3, &pointerID7ArrayRotationW ); 
        row = second * div;
-       iTime = setVal(iTimeArray, row, 8, &iTimeArrayPointer); 
-       DirectionalLightX = setVal(DirectionalLightXArray, row, 8, &DirectionalLightXArrayPointer); 
-       DirectionalLightY = setVal(DirectionalLightYArray, row, 8, &DirectionalLightYArrayPointer); 
-       DirectionalLightZ = setVal(DirectionalLightZArray, row, 8, &DirectionalLightZArrayPointer); 
-       DirectionalLightR = setVal(DirectionalLightRArray, row, 8, &DirectionalLightRArrayPointer); 
-       DirectionalLightG = setVal(DirectionalLightGArray, row, 8, &DirectionalLightGArrayPointer); 
-       DirectionalLightB = setVal(DirectionalLightBArray, row, 8, &DirectionalLightBArrayPointer); 
-       PointLightPositionX = setVal(PointLightPositionXArray, row, 8, &PointLightPositionXArrayPointer); 
-       PointLightPositionY = setVal(PointLightPositionYArray, row, 8, &PointLightPositionYArrayPointer); 
-       PointLightPositionZ = setVal(PointLightPositionZArray, row, 8, &PointLightPositionZArrayPointer); 
-       PointLightR = setVal(PointLightRArray, row, 8, &PointLightRArrayPointer); 
-       PointLightG = setVal(PointLightGArray, row, 8, &PointLightGArrayPointer); 
-       PointLightB = setVal(PointLightBArray, row, 8, &PointLightBArrayPointer); 
-       CameraPositionX = setVal(CameraPositionXArray, row, 8, &CameraPositionXArrayPointer); 
-       CameraPositionY = setVal(CameraPositionYArray, row, 8, &CameraPositionYArrayPointer); 
-       CameraPositionZ = setVal(CameraPositionZArray, row, 8, &CameraPositionZArrayPointer); 
-       LookAtX = setVal(LookAtXArray, row, 8, &LookAtXArrayPointer); 
-       LookAtY = setVal(LookAtYArray, row, 8, &LookAtYArrayPointer); 
-       LookAtZ = setVal(LookAtZArray, row, 8, &LookAtZArrayPointer); 
-       CameraUpX = setVal(CameraUpXArray, row, 8, &CameraUpXArrayPointer); 
-       CameraUpY = setVal(CameraUpYArray, row, 8, &CameraUpYArrayPointer); 
-       CameraUpZ = setVal(CameraUpZArray, row, 8, &CameraUpZArrayPointer); 
-       FOV = setVal(FOVArray, row, 8, &FOVArrayPointer); 
-       Epsilon = setVal(EpsilonArray, row, 8, &EpsilonArrayPointer); 
-       Distance = setVal(DistanceArray, row, 8, &DistanceArrayPointer); 
-       LensCoeff = setVal(LensCoeffArray, row, 8, &LensCoeffArrayPointer); 
-       MaxCoC = setVal(MaxCoCArray, row, 8, &MaxCoCArrayPointer); 
-       RcpMaxCoC = setVal(RcpMaxCoCArray, row, 8, &RcpMaxCoCArrayPointer); 
-       MarchMinimum = setVal(MarchMinimumArray, row, 8, &MarchMinimumArrayPointer); 
-       FarPlane = setVal(FarPlaneArray, row, 8, &FarPlaneArrayPointer); 
-       Step = setVal(StepArray, row, 8, &StepArrayPointer); 
-       Gain_R = setVal(Gain_RArray, row, 8, &Gain_RArrayPointer); 
-       Gain_G = setVal(Gain_GArray, row, 8, &Gain_GArrayPointer); 
-       Gain_B = setVal(Gain_BArray, row, 8, &Gain_BArrayPointer); 
-       Gamma_R = setVal(Gamma_RArray, row, 8, &Gamma_RArrayPointer); 
-       Gamma_G = setVal(Gamma_GArray, row, 8, &Gamma_GArrayPointer); 
-       Gamma_B = setVal(Gamma_BArray, row, 8, &Gamma_BArrayPointer); 
-       Lift_R = setVal(Lift_RArray, row, 8, &Lift_RArrayPointer); 
-       Lift_G = setVal(Lift_GArray, row, 8, &Lift_GArrayPointer); 
-       Lift_B = setVal(Lift_BArray, row, 8, &Lift_BArrayPointer); 
-       Presaturation_R = setVal(Presaturation_RArray, row, 8, &Presaturation_RArrayPointer); 
-       Presaturation_G = setVal(Presaturation_GArray, row, 8, &Presaturation_GArrayPointer); 
-       Presaturation_B = setVal(Presaturation_BArray, row, 8, &Presaturation_BArrayPointer); 
-       ColorTemperatureStrength_R = setVal(ColorTemperatureStrength_RArray, row, 8, &ColorTemperatureStrength_RArrayPointer); 
-       ColorTemperatureStrength_G = setVal(ColorTemperatureStrength_GArray, row, 8, &ColorTemperatureStrength_GArrayPointer); 
-       ColorTemperatureStrength_B = setVal(ColorTemperatureStrength_BArray, row, 8, &ColorTemperatureStrength_BArrayPointer); 
-       ColorTemprature = setVal(ColorTempratureArray, row, 8, &ColorTempratureArrayPointer); 
-       TempratureNormalization = setVal(TempratureNormalizationArray, row, 8, &TempratureNormalizationArrayPointer); 
+       iTime = setVal(iTimeArray, row, 9, &iTimeArrayPointer); 
+       DirectionalLightX = setVal(DirectionalLightXArray, row, 9, &DirectionalLightXArrayPointer); 
+       DirectionalLightY = setVal(DirectionalLightYArray, row, 9, &DirectionalLightYArrayPointer); 
+       DirectionalLightZ = setVal(DirectionalLightZArray, row, 9, &DirectionalLightZArrayPointer); 
+       DirectionalLightR = setVal(DirectionalLightRArray, row, 9, &DirectionalLightRArrayPointer); 
+       DirectionalLightG = setVal(DirectionalLightGArray, row, 9, &DirectionalLightGArrayPointer); 
+       DirectionalLightB = setVal(DirectionalLightBArray, row, 9, &DirectionalLightBArrayPointer); 
+       PointLightPositionX = setVal(PointLightPositionXArray, row, 9, &PointLightPositionXArrayPointer); 
+       PointLightPositionY = setVal(PointLightPositionYArray, row, 9, &PointLightPositionYArrayPointer); 
+       PointLightPositionZ = setVal(PointLightPositionZArray, row, 9, &PointLightPositionZArrayPointer); 
+       PointLightR = setVal(PointLightRArray, row, 9, &PointLightRArrayPointer); 
+       PointLightG = setVal(PointLightGArray, row, 9, &PointLightGArrayPointer); 
+       PointLightB = setVal(PointLightBArray, row, 9, &PointLightBArrayPointer); 
+       CameraPositionX = setVal(CameraPositionXArray, row, 9, &CameraPositionXArrayPointer); 
+       CameraPositionY = setVal(CameraPositionYArray, row, 9, &CameraPositionYArrayPointer); 
+       CameraPositionZ = setVal(CameraPositionZArray, row, 9, &CameraPositionZArrayPointer); 
+       LookAtX = setVal(LookAtXArray, row, 9, &LookAtXArrayPointer); 
+       LookAtY = setVal(LookAtYArray, row, 9, &LookAtYArrayPointer); 
+       LookAtZ = setVal(LookAtZArray, row, 9, &LookAtZArrayPointer); 
+       CameraUpX = setVal(CameraUpXArray, row, 9, &CameraUpXArrayPointer); 
+       CameraUpY = setVal(CameraUpYArray, row, 9, &CameraUpYArrayPointer); 
+       CameraUpZ = setVal(CameraUpZArray, row, 9, &CameraUpZArrayPointer); 
+       FOV = setVal(FOVArray, row, 9, &FOVArrayPointer); 
+       Epsilon = setVal(EpsilonArray, row, 9, &EpsilonArrayPointer); 
+       Distance = setVal(DistanceArray, row, 9, &DistanceArrayPointer); 
+       LensCoeff = setVal(LensCoeffArray, row, 9, &LensCoeffArrayPointer); 
+       MaxCoC = setVal(MaxCoCArray, row, 9, &MaxCoCArrayPointer); 
+       RcpMaxCoC = setVal(RcpMaxCoCArray, row, 9, &RcpMaxCoCArrayPointer); 
+       MarchMinimum = setVal(MarchMinimumArray, row, 9, &MarchMinimumArrayPointer); 
+       FarPlane = setVal(FarPlaneArray, row, 9, &FarPlaneArrayPointer); 
+       Step = setVal(StepArray, row, 9, &StepArrayPointer); 
+       Gain_R = setVal(Gain_RArray, row, 9, &Gain_RArrayPointer); 
+       Gain_G = setVal(Gain_GArray, row, 9, &Gain_GArrayPointer); 
+       Gain_B = setVal(Gain_BArray, row, 9, &Gain_BArrayPointer); 
+       Gamma_R = setVal(Gamma_RArray, row, 9, &Gamma_RArrayPointer); 
+       Gamma_G = setVal(Gamma_GArray, row, 9, &Gamma_GArrayPointer); 
+       Gamma_B = setVal(Gamma_BArray, row, 9, &Gamma_BArrayPointer); 
+       Lift_R = setVal(Lift_RArray, row, 9, &Lift_RArrayPointer); 
+       Lift_G = setVal(Lift_GArray, row, 9, &Lift_GArrayPointer); 
+       Lift_B = setVal(Lift_BArray, row, 9, &Lift_BArrayPointer); 
+       Presaturation_R = setVal(Presaturation_RArray, row, 9, &Presaturation_RArrayPointer); 
+       Presaturation_G = setVal(Presaturation_GArray, row, 9, &Presaturation_GArrayPointer); 
+       Presaturation_B = setVal(Presaturation_BArray, row, 9, &Presaturation_BArrayPointer); 
+       ColorTemperatureStrength_R = setVal(ColorTemperatureStrength_RArray, row, 9, &ColorTemperatureStrength_RArrayPointer); 
+       ColorTemperatureStrength_G = setVal(ColorTemperatureStrength_GArray, row, 9, &ColorTemperatureStrength_GArrayPointer); 
+       ColorTemperatureStrength_B = setVal(ColorTemperatureStrength_BArray, row, 9, &ColorTemperatureStrength_BArrayPointer); 
+       ColorTemprature = setVal(ColorTempratureArray, row, 9, &ColorTempratureArrayPointer); 
+       TempratureNormalization = setVal(TempratureNormalizationArray, row, 9, &TempratureNormalizationArrayPointer); 
 
     }
