@@ -4,19 +4,14 @@ float fOpUnionRund(float a, float b, float r) {
 	return max(r, min (a, b)) - length(u);
 }
 float TreeTrunk(vec3 pos, vec3 algorithm) {
-	pos.y += GetHeightmapLowPrecision(pos*algorithm) * algorithm.y;
 	vec3 opos = pos;
 	vec3 opos_ = opos;
 
 	float vali = 5.;
-	vec3 flrpos = vec3(floor(pos.z / vali) + vali,0.0,floor(pos.x / vali) + vali);	
-	opos.x += hash1(flrpos.z) * vali * 2.0;
+	opos.x += hash1(floor(pos.z / vali) + vali) * vali * 2.0;
 	opos.x = mod(opos.x, vali) - vali / 2.0;
-	opos.z += hash1(flrpos.x) * vali * 2.0;
+	opos.z += hash1(floor(pos.x / vali) + vali) * vali * 2.0;
 	opos.z = mod(opos.z, vali) - vali / 2.0;
-	if(mod(rand(flrpos.xz),1.0)<0.5) {
-		opos.y += 1000.0;
-	}
 	pR(opos.xz, pos.z*1.);
 	pR(opos.zy, 3.14);
 
