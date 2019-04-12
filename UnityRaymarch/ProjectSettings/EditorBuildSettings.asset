@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/RM_Scene.unity
+    guid: 9055edc617c109d468db6771dff0d205
+  - enabled: 1
+    path: Assets/TextTelegram.unity
+    guid: 019d7ada1f6f3634d8b6e56520d1a9be
   m_configObjects: {}
