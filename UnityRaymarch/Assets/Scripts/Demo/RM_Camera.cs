@@ -111,6 +111,7 @@ public class RM_Camera : MonoBehaviour
         _material.SetFloat("_FarPlane", SyncUp.GetVal("FarPlane"));
         _material.SetFloat("_Step", SyncUp.GetVal("Step"));
         _material.SetFloat("fogDensity", SyncUp.GetVal("fogDensity"));
+        _material.SetFloat("_TextId", SyncUp.GetVal("TextId"));
 
 
 

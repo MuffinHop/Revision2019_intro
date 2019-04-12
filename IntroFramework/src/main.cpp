@@ -5,13 +5,13 @@
 	#define DESPERATE           0
 	#define BREAK_COMPATIBILITY 0
 #else
-	#define OPENGL_DEBUG        1
-	#define FULLSCREEN          0
+	#define OPENGL_DEBUG        0
+	#define FULLSCREEN          1
 	#define DESPERATE           0
 	#define BREAK_COMPATIBILITY 0
 #endif
 
-#define POST_PASS    1
+int POST_PASS = 1;
 #define USE_MIPMAPS  1
 #define USE_AUDIO    1
 #define NO_UNIFORMS  0
@@ -27,9 +27,7 @@
 #include "glext.h"
 #include "shaders/fragment.inl"
 #include "shaders/sync.inl"
-#if POST_PASS
-	#include "shaders/post.inl"
-#endif
+#include "shaders/post.inl"
 
 #pragma data_seg(".pids")
 // static allocation saves a few bytes
@@ -365,6 +363,7 @@ extern float ColorTemprature;
 extern float TempratureNormalization;
 extern float Step;
 extern float fogDensity;
+extern float TextId;
 
 void Sync(float second);
 
@@ -492,6 +491,7 @@ ConvertRGB(BITMAPINFO *info,        /* I - Original bitmap information */
 	return (newbits);
 }
 
+
 void AllSyncDataHandle(float row);
 
 void RenderFontToTexture(GLuint texture) {
@@ -522,6 +522,8 @@ GLuint GenFontTexture() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 	return temp;
 }
+
+int fontinit = 0;
 
 #ifndef EDITOR_CONTROLS
 #pragma code_seg(".main")
@@ -558,24 +560,16 @@ int __cdecl main(int argc, char* argv[])
 	// initalize opengl context
 	SetPixelFormat(hDC, ChoosePixelFormat(hDC, &pfd), &pfd);
 	wglMakeCurrent(hDC, wglCreateContext(hDC));
-	
-	// font textures
-	RenderFont1();
-	fontTexture_telegram = GenFontTexture();
-	RenderFontToTexture(fontTexture_telegram);
 
-	RenderFont2();
-	fontTexture_cards = GenFontTexture();
-	RenderFontToTexture(fontTexture_cards);
+	GLuint TextIds[3] = { 0, 0, 0};
+
 
 
 	// create and compile shader programs
 	pidMain = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &fragment_frag);
 	//pidMain = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_VERTEX_SHADER, 1, &sync_vert);
 	
-	#if POST_PASS
-		pidPost = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &post_frag);
-	#endif
+	pidPost = ((PFNGLCREATESHADERPROGRAMVPROC)wglGetProcAddress("glCreateShaderProgramv"))(GL_FRAGMENT_SHADER, 1, &post_frag);
 
 #if OPENGL_DEBUG
 		shaderDebug(fragment_frag, FAIL_KILL);
@@ -619,6 +613,7 @@ int __cdecl main(int argc, char* argv[])
 		GLuint FarPlaneID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_FarPlane");
 		GLuint StepID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_Step");
 		GLuint fogDensityID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "fogDensity");
+		GLuint TextID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_TextId");
 
 
 
@@ -646,7 +641,6 @@ int __cdecl main(int argc, char* argv[])
 			PeekMessage(0, 0, 0, 0, PM_REMOVE);
 		#endif
 
-			Sync(time);
 #ifndef DEBUG
 		// render with the primary shader
 		auto songPos = player->GetSongPos();
@@ -657,12 +651,24 @@ int __cdecl main(int argc, char* argv[])
 		time = songPos;
 		//((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(0, (static_cast<int>(songPos*44100.0)));
 #endif
-		// font
-		((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(pidMain);
-		//glBindTexture(GL_TEXTURE_2D, fontTexture_telegram);
-		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
-		//((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
+		Sync(time);
 
+
+		// font
+		int index = (int)TextId;
+		GLuint tid = TextIds[index];
+
+
+		((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(pidMain);
+		POST_PASS = 1;
+
+		if (tid > 0) {
+			glBindTexture(GL_TEXTURE_2D, tid);
+			((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
+			((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
+			POST_PASS = 0;
+		}
+		
 		/*
 		GLuint mainTexture = 0;
 		glGenTextures(0, &mainTexture);
@@ -710,6 +716,7 @@ int __cdecl main(int argc, char* argv[])
 
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(fogDensityID, fogDensity);
 		
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(TextID, TextId);
 
 		
 
@@ -729,19 +736,21 @@ int __cdecl main(int argc, char* argv[])
 		glRects(-1, -1, 1, 1);
 
 		// render "post process" using the opengl backbuffer
-		#if POST_PASS
-			glBindTexture(GL_TEXTURE_2D, 1); 
-			#if USE_MIPMAPS
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-				glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, 0, 0, XRES, YRES, 0);
-				((PFNGLGENERATEMIPMAPPROC)wglGetProcAddress("glGenerateMipmap"))(GL_TEXTURE_2D);
-			#else
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 0, 0, XRES, YRES, 0);
-			#endif
+		if (POST_PASS == 1) {
+			glBindTexture(GL_TEXTURE_2D, 1);
+#if USE_MIPMAPS
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, 0, 0, XRES, YRES, 0);
+			((PFNGLGENERATEMIPMAPPROC)wglGetProcAddress("glGenerateMipmap"))(GL_TEXTURE_2D);
+#else
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 0, 0, XRES, YRES, 0);
+#endif
 			((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE1);
 			((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(pidPost);
 			((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(MainTexID, 0);
+
+
 			((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(iResolutionID, XRES, YRES, XRES, YRES);
 			((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(GainID, Gain_R, Gain_G, Gain_B, 0);
 			((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(GammaID, Gamma_R, Gamma_G, Gamma_B, 0);
@@ -754,7 +763,23 @@ int __cdecl main(int argc, char* argv[])
 
 
 			glRects(-1, -1, 1, 1);
-		#endif
+
+			if (fontinit == 0) {
+
+				// font textures
+				RenderFont1();
+				fontTexture_telegram = GenFontTexture();
+				RenderFontToTexture(fontTexture_telegram);
+				TextIds[1] = fontTexture_telegram;
+
+				RenderFont2();
+				fontTexture_cards = GenFontTexture();
+				RenderFontToTexture(fontTexture_cards);
+				TextIds[2] = fontTexture_cards;
+
+				fontinit = 1;
+			}
+		}
 
 		SwapBuffers(hDC);
 

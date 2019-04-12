@@ -1,4 +1,5 @@
-﻿uniform float _iTime;
+﻿uniform sampler2D _TextTex;
+uniform float _iTime;
 uniform vec4 _iResolution;
 uniform vec4 _DirectionalLight;
 uniform vec4 _DirectionalLightColor;
@@ -16,3 +17,4 @@ uniform float _MarchMinimum;
 uniform float _FarPlane;
 uniform float _Step;
 uniform float fogDensity;
+uniform float _TextId;

@@ -10,6 +10,11 @@ vec4 mainImage()
 	Trace ray;
 
 	vec2 uv = fragCoord.xy / _iResolution.xy;
+	if (_TextId >= 1.0) {
+		vec3 text = texture(_TextTex, uv).rgb;
+		fragColor.rgb = text.rgb;
+		return  fragColor;
+	}
 
 	vec3 lookAt = _CameraLookAt.xyz;
 	vec3 position = _CameraPosition.xyz;
