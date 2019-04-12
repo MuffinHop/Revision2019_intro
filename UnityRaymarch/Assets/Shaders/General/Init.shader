@@ -15,7 +15,6 @@ vec4 mainImage()
 		fragColor.rgb = text.rgb;
 		return  fragColor;
 	}
-
 	vec3 lookAt = _CameraLookAt.xyz;
 	vec3 position = _CameraPosition.xyz;
 

@@ -372,8 +372,8 @@ void InitFontToTexture() {
 	// Prepare to create a bitmap
 	my_memset(&bmi.bmiHeader, 0, sizeof(BITMAPINFOHEADER));
 	bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-	bmi.bmiHeader.biWidth = (int)XRES;
-	bmi.bmiHeader.biHeight = (int)YRES;
+	bmi.bmiHeader.biWidth = (int)1920;
+	bmi.bmiHeader.biHeight = (int)1080;
 	bmi.bmiHeader.biPlanes = 1;
 	bmi.bmiHeader.biCompression = BI_RGB;
 	bmi.bmiHeader.biBitCount = 24;
@@ -396,7 +396,7 @@ void InitFontToTexture() {
 void RenderFont1() {
 	HBRUSH brush = CreateSolidBrush(RGB(218, 196, 103)); //create brush
 	SelectObject(fonthDC, brush); //select brush into DC
-	Rectangle(fonthDC, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)); //draw rectangle over whole screen
+	Rectangle(fonthDC, 0, 0, 1920, 1080); //draw rectangle over whole screen
 
 	hFontOld = SelectObject(fonthDC, latinwide118Font);
 	DrawRectText("The Secret", RGB(255, 255, 255), RGB(218, 196, 103), 431, 64, 333, 1478);
@@ -435,7 +435,7 @@ void RenderFont2() {
 	hbmOld = SelectObject(fonthDC, hbmBitmap);
 	HBRUSH brush = CreateSolidBrush(RGB(0, 0, 0)); //create brush
 	SelectObject(fonthDC, brush); //select brush into DC
-	Rectangle(fonthDC, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)); //draw rectangle over whole screen
+	Rectangle(fonthDC, 0, 0, 1920, 1080); //draw rectangle over whole screen
 	hFontOld = SelectObject(fonthDC, Arial300Font);
 	LPCWSTR str = L"♠♣♥♦";
 	DrawRectTextW(str, 4, RGB(255, 0, 0), RGB(0, 0, 0), 0, 200, 1065, 693);
@@ -499,7 +499,7 @@ void RenderFontToTexture(GLuint texture) {
 	obrazek = ConvertRGB(&bmi, pBitmapBits);
 
 	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, XRES, YRES, 0, GL_RGB, GL_UNSIGNED_BYTE, obrazek);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1920, 1080, 0, GL_RGB, GL_UNSIGNED_BYTE, obrazek);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 

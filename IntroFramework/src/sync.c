@@ -483,6 +483,17 @@
                { 200000, 1, 1 } 
               }; 
  
+       vec3 TextIdArray[8] = { 
+               { 0, 0, 0 }, 
+               { 24, 1, 0 }, 
+               { 64, 0, 0 }, 
+               { 88, 1, 0 }, 
+               { 140, 0, 0 }, 
+               { 320, 0, 0 }, 
+               {100000.0f, 0, 0 }, 
+               {2100000.0f, 0, 0 } 
+              }; 
+       float TextId;
        vec3 iTimeArray[4] = { 
                { 0, 0, 1 }, 
                { 306, 12, 0 }, 
@@ -798,17 +809,6 @@
                {2100000.0f, 0.08, 0 } 
               }; 
        float fogDensity;
-       vec3 TextIdArray[8] = { 
-               { 0, 0, 0 }, 
-               { 24, 1, 0 }, 
-               { 64, 0, 0 }, 
-               { 88, 2, 0 }, 
-               { 140, 0, 0 }, 
-               { 320, 0, 0 }, 
-               {100000.0f, 0, 0 }, 
-               {2100000.0f, 0, 0 } 
-              }; 
-       float TextId;
        vec3 Gain_RArray[5] = { 
                { 0, 0.55, 0 }, 
                { 256, 0.5, 0 }, 
@@ -988,6 +988,7 @@ long pointerID4ArrayPositionX = 0,pointerID4ArrayPositionY = 0,pointerID4ArrayPo
 long pointerID5ArrayPositionX = 0,pointerID5ArrayPositionY = 0,pointerID5ArrayPositionZ = 0,pointerID5ArrayScaleX = 0,pointerID5ArrayScaleY = 0,pointerID5ArrayScaleZ = 0,pointerID5ArrayRotationX = 0,pointerID5ArrayRotationY = 0,pointerID5ArrayRotationZ = 0,pointerID5ArrayRotationW = 0; 
 long pointerID6ArrayPositionX = 0,pointerID6ArrayPositionY = 0,pointerID6ArrayPositionZ = 0,pointerID6ArrayScaleX = 0,pointerID6ArrayScaleY = 0,pointerID6ArrayScaleZ = 0,pointerID6ArrayRotationX = 0,pointerID6ArrayRotationY = 0,pointerID6ArrayRotationZ = 0,pointerID6ArrayRotationW = 0; 
 long pointerID7ArrayPositionX = 0,pointerID7ArrayPositionY = 0,pointerID7ArrayPositionZ = 0,pointerID7ArrayScaleX = 0,pointerID7ArrayScaleY = 0,pointerID7ArrayScaleZ = 0,pointerID7ArrayRotationX = 0,pointerID7ArrayRotationY = 0,pointerID7ArrayRotationZ = 0,pointerID7ArrayRotationW = 0; 
+long TextIdArrayPointer = 0;
 long iTimeArrayPointer = 0;
 long DirectionalLightXArrayPointer = 0;
 long DirectionalLightYArrayPointer = 0;
@@ -1020,7 +1021,6 @@ long MarchMinimumArrayPointer = 0;
 long FarPlaneArrayPointer = 0;
 long StepArrayPointer = 0;
 long fogDensityArrayPointer = 0;
-long TextIdArrayPointer = 0;
 long Gain_RArrayPointer = 0;
 long Gain_GArrayPointer = 0;
 long Gain_BArrayPointer = 0;
@@ -1041,7 +1041,7 @@ long TempratureNormalizationArrayPointer = 0;
 
         void Sync(float second)
         {
-            float div = 8.0f * 60.0f / (180.0f*0.125);
+            float div = 8.0f * 60.0f / (180.0f*0.2);
             float row = second * 60.0f;
 
                    RM_Objects[0] = setVal(ID0ArrayPositionX, row, 3, &pointerID0ArrayPositionX ); 
@@ -1125,6 +1125,7 @@ long TempratureNormalizationArrayPointer = 0;
        RM_Objects[78] = setVal(ID7ArrayRotationZ, row, 3, &pointerID7ArrayRotationZ ); 
        RM_Objects[79] = setVal(ID7ArrayRotationW, row, 3, &pointerID7ArrayRotationW ); 
        row = second * div;
+       TextId = setVal(TextIdArray, row, 9, &TextIdArrayPointer); 
        iTime = setVal(iTimeArray, row, 9, &iTimeArrayPointer); 
        DirectionalLightX = setVal(DirectionalLightXArray, row, 9, &DirectionalLightXArrayPointer); 
        DirectionalLightY = setVal(DirectionalLightYArray, row, 9, &DirectionalLightYArrayPointer); 
@@ -1157,7 +1158,6 @@ long TempratureNormalizationArrayPointer = 0;
        FarPlane = setVal(FarPlaneArray, row, 9, &FarPlaneArrayPointer); 
        Step = setVal(StepArray, row, 9, &StepArrayPointer); 
        fogDensity = setVal(fogDensityArray, row, 9, &fogDensityArrayPointer); 
-       TextId = setVal(TextIdArray, row, 9, &TextIdArrayPointer); 
        Gain_R = setVal(Gain_RArray, row, 9, &Gain_RArrayPointer); 
        Gain_G = setVal(Gain_GArray, row, 9, &Gain_GArrayPointer); 
        Gain_B = setVal(Gain_BArray, row, 9, &Gain_BArrayPointer); 

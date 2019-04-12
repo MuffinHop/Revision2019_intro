@@ -345,7 +345,7 @@ color="ffa9b250">
 		<key row="0" value="0.000000" interpolation="0" />
 		<key row="24" value="1.000000" interpolation="0" />
 		<key row="64" value="0.000000" interpolation="0" />
-		<key row="88" value="2.000000" interpolation="0" />
+		<key row="88" value="1.000000" interpolation="0" />
 		<key row="140" value="0.000000" interpolation="0" />
 		<key row="320" value="0.000000" interpolation="0" />
 	</track>

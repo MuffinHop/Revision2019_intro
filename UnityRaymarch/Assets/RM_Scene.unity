@@ -211,53 +211,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!21 &169099964
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Standard Trace Marching
-  m_Shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel0:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel1:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel2:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel3:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Value: 0
-    - _iFrame: 0
-    - _iTime: 12
-    m_Colors:
-    - _Light: {r: 0, g: 0, b: 0, a: 0}
-    - _iMouse: {r: 0, g: 0, b: 0, a: 0}
-    - _iResolution: {r: 892, g: 502, b: 0, a: 0}
 --- !u!1 &192690825
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,6 +409,50 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &293817473
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 293817475}
+  - component: {fileID: 293817474}
+  m_Layer: 0
+  m_Name: TextSceneLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &293817474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293817473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9d37aed15f86e1408dcfcb79fdbda2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewer: {fileID: 11400000, guid: f167a0712b6d7814a8e552497fa5c21c, type: 2}
+--- !u!4 &293817475
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293817473}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.672967, y: 1.2326548, z: 12.242851}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &427746711
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,7 +987,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 7
-  visibleSyncDataCount: 17759
+  visibleSyncDataCount: 18779
 --- !u!33 &726468932
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1089,7 +1086,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 1
   ID: 0
-  visibleSyncDataCount: 9276
+  visibleSyncDataCount: 10296
 --- !u!33 &757784147
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1315,7 +1312,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 10619
+  visibleSyncDataCount: 11639
 --- !u!33 &817454197
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1414,7 +1411,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 1
-  visibleSyncDataCount: 17759
+  visibleSyncDataCount: 18779
 --- !u!33 &1058162803
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2176,7 +2173,7 @@ MonoBehaviour:
   Centered: 1
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 10495
+  visibleSyncDataCount: 11515
 --- !u!33 &1456909813
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2275,7 +2272,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 9339
+  visibleSyncDataCount: 10359
 --- !u!33 &1568201614
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2592,7 +2589,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 9355
+  visibleSyncDataCount: 10375
 --- !u!1 &1862993965
 GameObject:
   m_ObjectHideFlags: 0
@@ -2646,7 +2643,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 29
+  field of view: 44
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2671,8 +2668,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1862993965}
-  m_LocalRotation: {x: 0.00024384301, y: 0.99975616, z: 0.015609762, w: -0.015617378}
-  m_LocalPosition: {x: 1, y: 1, z: 33}
+  m_LocalRotation: {x: -0.047008935, y: 0.91548944, z: -0.112217925, w: -0.3835054}
+  m_LocalPosition: {x: 30, y: 7, z: 32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2691,14 +2688,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
-  _material: {fileID: 169099964}
+  _material: {fileID: 1919905520}
   _camera: {fileID: 1862993967}
   iChannel0: {fileID: 0}
   iChannel1: {fileID: 0}
   iChannel2: {fileID: 0}
   iChannel3: {fileID: 0}
   _renderTexture: {fileID: 0}
-  _iResolution: {x: 892, y: 502}
+  _iResolution: {x: 1280, y: 720}
 --- !u!114 &1862993970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2724,6 +2721,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: 5877a9f570078174e9b793c37efa821d, type: 3}
+--- !u!21 &1919905520
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Standard Trace Marching
+  m_Shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
+  m_ShaderKeywords: NVIDIA
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Value: 0
+    - _iFrame: 0
+    - _iTime: 0
+    m_Colors:
+    - _Light: {r: 0, g: 0, b: 0, a: 0}
+    - _iMouse: {r: 0, g: 0, b: 0, a: 0}
+    - _iResolution: {r: 1280, g: 720, b: 0, a: 0}
 --- !u!1 &2049497694
 GameObject:
   m_ObjectHideFlags: 0
@@ -2763,7 +2807,7 @@ MonoBehaviour:
   Centered: 1
   Rotatable: 0
   ID: 4
-  visibleSyncDataCount: 10465
+  visibleSyncDataCount: 11485
 --- !u!33 &2049497696
 MeshFilter:
   m_ObjectHideFlags: 0
