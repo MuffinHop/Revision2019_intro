@@ -573,7 +573,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'TO: Agent "TSConf" SUBJECT: "Your Assignment"'
+  m_Text: 'TO: Agent ''TSConf'' SUBJECT: ''Your Assignment'''
 --- !u!222 &851406631
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -919,7 +919,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 237.5, y: 399.52}
+  m_AnchoredPosition: {x: 293, y: 373.92}
   m_SizeDelta: {x: 0, y: 140.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1445006002
@@ -1701,7 +1701,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "- I wish you good luck, agent.\r\n"
+  m_Text: "- I wish you good luck, agent.\r"
 --- !u!222 &2064223663
 CanvasRenderer:
   m_ObjectHideFlags: 0

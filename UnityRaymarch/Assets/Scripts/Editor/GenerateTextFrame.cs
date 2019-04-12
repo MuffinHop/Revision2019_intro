@@ -26,6 +26,7 @@ public class GenerateTextFrame
         foreach (Transform child in canvas.transform)
         {
             var t = child.gameObject.GetComponent<Text>();
+            if (t == null) continue;
             var text = t.text;
             var fontName = t.font.name + t.fontSize;
             if (!fontNames.Contains(fontName))
@@ -42,6 +43,7 @@ public class GenerateTextFrame
         foreach (Transform child in canvas.transform)
         {
             var t = child.gameObject.GetComponent<Text>();
+            if (t == null) continue;
             var text = t.text;
             var fontName = t.font.name + t.fontSize;
             if (!fontDefined.Contains(fontName))
@@ -57,6 +59,7 @@ public class GenerateTextFrame
         foreach (Transform child in canvas.transform)
         {
             var t = child.gameObject.GetComponent<Text>();
+            if (t == null) continue;
             var text = t.text;
             var fontName = t.font.name + t.fontSize;
             var tt = child.gameObject.GetComponent<RectTransform>();

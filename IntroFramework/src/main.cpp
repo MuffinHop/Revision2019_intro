@@ -6,7 +6,7 @@
 	#define BREAK_COMPATIBILITY 0
 #else
 	#define OPENGL_DEBUG        0
-	#define FULLSCREEN          1
+	#define FULLSCREEN          0
 	#define DESPERATE           0
 	#define BREAK_COMPATIBILITY 0
 #endif
@@ -398,6 +398,8 @@ void RenderFont1() {
 	SelectObject(fonthDC, brush); //select brush into DC
 	Rectangle(fonthDC, 0, 0, 1920, 1080); //draw rectangle over whole screen
 
+	/////////////// DRAW
+	// canvas: TelegramCanvas
 	hFontOld = SelectObject(fonthDC, latinwide118Font);
 	DrawRectText("The Secret", RGB(255, 255, 255), RGB(218, 196, 103), 431, 64, 333, 1478);
 	hFontOld = SelectObject(fonthDC, latinwide118Font);
@@ -409,7 +411,7 @@ void RenderFont1() {
 	hFontOld = SelectObject(fonthDC, Courier57Font);
 	DrawRectText("------------------------------------------------------", RGB(50, 50, 50), RGB(218, 196, 103), 44, 407, 477, 1880);
 	hFontOld = SelectObject(fonthDC, Courier57Font);
-	DrawRectText("TO: Agent \"TSConf\" SUBJECT: \"Your Assignment\"", RGB(50, 50, 50), RGB(218, 196, 103), 43, 372, 437, 1573);
+	DrawRectText("TO: Agent 'TSConf' SUBJECT: 'Your Assignment'", RGB(50, 50, 50), RGB(218, 196, 103), 43, 372, 437, 1573);
 	hFontOld = SelectObject(fonthDC, Courier41Font);
 	DrawRectText("I have selected you for a most important assignment. It’s purpose is to", RGB(50, 50, 50), RGB(218, 196, 103), 44, 477, 525, 1819);
 	hFontOld = SelectObject(fonthDC, Courier41Font);
@@ -425,9 +427,9 @@ void RenderFont1() {
 	hFontOld = SelectObject(fonthDC, Courier41Font);
 	DrawRectText("systems and finally destroy the aforementioned decoding machine.", RGB(50, 50, 50), RGB(218, 196, 103), 45, 894, 951, 1645);
 	hFontOld = SelectObject(fonthDC, Courier41Font);
-	DrawRectText("- I wish you good luck, agent.", RGB(50, 50, 50), RGB(218, 196, 103), 45, 1007, 1055, 795);
+	DrawRectText("- I wish you good luck, agent.",RGB(50,50,50),RGB(218,196,103),45,1007,1055,795);
 	hFontOld = SelectObject(fonthDC, Arial24Font);
-	DrawRectText("Doing your dirty work for you since 1969", RGB(50, 50, 50), RGB(218, 196, 103), 1030, 95, 211, 1409);
+	DrawRectText("Doing your dirty work for you since 1969", RGB(50, 50, 50), RGB(218, 196, 103), 1041, 96, 237, 1465);
 	// --------------------------------------------- END END END
 }
 
