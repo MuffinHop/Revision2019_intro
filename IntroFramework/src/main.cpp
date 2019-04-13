@@ -171,9 +171,12 @@ void unlz4(GET_BYTE getByte, SEND_BYTES sendBytes, const char* dictionary)
 	// don't lower this value, backreferences can be 64kb far away
 #define HISTORY_SIZE 64*1024
 	// contains the latest decoded data
-	unsigned char history[HISTORY_SIZE];
+	unsigned char *history;
 	// next free position in history[]
 	unsigned int  pos = 0;
+
+	history = (unsigned char*)my_calloc(sizeof(unsigned char) * HISTORY_SIZE, 1);
+
 
 	// parse all blocks until blockSize == 0
 	while (1)
@@ -344,7 +347,7 @@ void unlz4(GET_BYTE getByte, SEND_BYTES sendBytes, const char* dictionary)
 /// parse command-line
 int dolz4()
 {
-	unpackedData = (char*)my_calloc(sizeof(char)* 512*4096, 1);
+	unpackedData = (char*)my_calloc(sizeof(char)*1024, 64);
 
 	// and go !
 	unlz4(getByteFromIn, sendBytesToOut, NULL);
