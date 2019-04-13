@@ -573,6 +573,8 @@ shader_minifier.exe --no-renaming -v -o src\shaders\post.inl src\shaders\post.fr
     <ClInclude Include="src\definitions.h" />
     <ClInclude Include="src\fp.h" />
     <ClInclude Include="src\glext.h" />
+    <ClInclude Include="src\packfile.h" />
+    <ClInclude Include="src\smallz4.h" />
     <ClInclude Include="src\song.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">false</ExcludedFromBuild>

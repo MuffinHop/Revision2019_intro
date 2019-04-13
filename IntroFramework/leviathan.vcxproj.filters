@@ -57,6 +57,8 @@
     <ClInclude Include="src\WaveSabreCore\Thunder.h" />
     <ClInclude Include="src\WaveSabreCore\Twister.h" />
     <ClInclude Include="src\biisi.h" />
+    <ClInclude Include="src\smallz4.h" />
+    <ClInclude Include="src\packfile.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\post.inl">

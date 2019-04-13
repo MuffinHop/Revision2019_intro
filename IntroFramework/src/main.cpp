@@ -6,10 +6,12 @@
 	#define BREAK_COMPATIBILITY 0
 #else
 	#define OPENGL_DEBUG        0
-	#define FULLSCREEN          0
+	#define FULLSCREEN          1
 	#define DESPERATE           0
 	#define BREAK_COMPATIBILITY 0
 #endif
+
+#include "smallz4.h"
 
 int POST_PASS = 1;
 #define USE_MIPMAPS  1
@@ -46,6 +48,308 @@ using namespace WaveSabrePlayerLib;
 #define _NO_CRT_STDIO_INLINE
 
 #include <stdio.h>
+
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <stdint.h> // uint32_t
+#include <stdlib.h> // exit()
+#include <string.h> // memcpy
+
+#ifndef FALSE
+#define FALSE 0
+#define TRUE  1
+#endif
+
+_declspec(restrict, noalias) void *my_calloc(size_t nitems, size_t size)
+{
+	return HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, nitems * size);
+}
+
+
+// error handler
+void error(const char* msg)
+{
+	exit(1);
+}
+
+
+// ==================== I/O INTERFACE ====================
+
+
+// read one byte from input, see getByteFromIn()  for a basic implementation
+typedef unsigned char(*GET_BYTE)  ();
+// write several bytes,      see sendBytesToOut() for a basic implementation
+typedef void(*SEND_BYTES)(const unsigned char*, unsigned int);
+
+
+#include "packfile.h"
+unsigned long packOffset = 0;
+
+/// read a single byte (with simple buffering)
+static unsigned char getByteFromIn()
+{
+	return packdata[packOffset++];
+}
+
+/// output stream, usually stdout
+static FILE* out = NULL;
+/// write a block of bytes
+
+/// LZ4 LZ4 LZ4 LZ4
+/// UNPACKED DATA CAN BE READ HERE
+/// UNPACKED DATA CAN BE READ HERE
+/// UNPACKED DATA CAN BE READ HERE
+
+char* unpackedData;
+unsigned long unpackOffset = 0;
+
+static void sendBytesToOut(const unsigned char* data, unsigned int numBytes)
+{
+	if (data != NULL && numBytes > 0) {
+		for (int i = 0; i < numBytes; i++) {
+			unpackedData[unpackOffset + i] = data[i];
+		}
+		unpackOffset += numBytes;
+	}
+}
+
+
+// ==================== LZ4 DECOMPRESSOR ====================
+
+/// decompress everything in input stream (accessed via getByte) and write to output stream (via sendBytes)
+void unlz4(GET_BYTE getByte, SEND_BYTES sendBytes, const char* dictionary)
+{
+	// signature
+	unsigned char signature1 = getByte();
+	unsigned char signature2 = getByte();
+	unsigned char signature3 = getByte();
+	unsigned char signature4 = getByte();
+	uint32_t signature = (signature4 << 24) | (signature3 << 16) | (signature2 << 8) | signature1;
+	int isModern = (signature == 0x184D2204);
+	int isLegacy = (signature == 0x184C2102);
+	if (!isModern && !isLegacy)
+		error("invalid signature");
+
+	unsigned char hasBlockChecksum = FALSE;
+	unsigned char hasContentSize = FALSE;
+	unsigned char hasContentChecksum = FALSE;
+	unsigned char hasDictionaryID = FALSE;
+	if (isModern)
+	{
+		// flags
+		unsigned char flags = getByte();
+		hasBlockChecksum = flags & 16;
+		hasContentSize = flags & 8;
+		hasContentChecksum = flags & 4;
+		hasDictionaryID = flags & 1;
+
+		// only version 1 file format
+		unsigned char version = flags >> 6;
+		if (version != 1)
+			error("only LZ4 file format version 1 supported");
+
+		// ignore blocksize
+		getByte();
+
+		if (hasContentSize)
+		{
+			// ignore, skip 8 bytes
+			getByte(); getByte(); getByte(); getByte();
+			getByte(); getByte(); getByte(); getByte();
+		}
+		if (hasDictionaryID)
+		{
+			// ignore, skip 4 bytes
+			getByte(); getByte(); getByte(); getByte();
+		}
+
+		// ignore header checksum (xxhash32 of everything up this point & 0xFF)
+		getByte();
+	}
+
+	// don't lower this value, backreferences can be 64kb far away
+#define HISTORY_SIZE 64*1024
+	// contains the latest decoded data
+	unsigned char history[HISTORY_SIZE];
+	// next free position in history[]
+	unsigned int  pos = 0;
+
+	// parse all blocks until blockSize == 0
+	while (1)
+	{
+		// block size
+		uint32_t blockSize = getByte();
+		blockSize |= (uint32_t)getByte() << 8;
+		blockSize |= (uint32_t)getByte() << 16;
+		blockSize |= (uint32_t)getByte() << 24;
+
+		// highest bit set ?
+		unsigned char isCompressed = isLegacy || (blockSize & 0x80000000) == 0;
+		if (isModern)
+			blockSize &= 0x7FFFFFFF;
+
+		// stop after last block
+		if (blockSize == 0)
+			break;
+
+		if (isCompressed)
+		{
+			// decompress block
+			uint32_t blockOffset = 0;
+			uint32_t numWritten = 0;
+			while (blockOffset < blockSize)
+			{
+				// get a token
+				unsigned char token = getByte();
+
+				blockOffset++;
+
+				// determine number of literals
+				uint32_t numLiterals = (token >> 4) & 0x0F;
+				if (numLiterals == 15)
+				{
+					// number of literals length encoded in more than 1 byte
+					unsigned char current;
+					do
+					{
+						current = getByte();
+						numLiterals += current;
+						blockOffset++;
+					} while (current == 255);
+				}
+
+				blockOffset += numLiterals;
+				// copy all those literals
+				while (numLiterals-- > 0)
+				{
+					history[pos++] = getByte();
+
+					// flush output buffer
+					if (pos == HISTORY_SIZE)
+					{
+						sendBytes(history, HISTORY_SIZE);
+						numWritten += HISTORY_SIZE;
+						pos = 0;
+					}
+				}
+
+				// last token has only literals
+				if (blockOffset == blockSize)
+					break;
+
+				// match distance is encoded by two bytes (little endian)
+				blockOffset += 2;
+				uint32_t delta = getByte();
+				delta |= (uint32_t)getByte() << 8;
+				// zero isn't allowed
+				if (delta == 0)
+					error("invalid offset");
+
+				// match length (must be >= 4, therefore length is stored minus 4)
+				uint32_t matchLength = 4 + (token & 0x0F);
+				if (matchLength == 4 + 0x0F)
+				{
+					unsigned char current;
+					do // match length encoded in more than 1 byte
+					{
+						current = getByte();
+						matchLength += current;
+						blockOffset++;
+					} while (current == 255);
+				}
+
+				// copy match
+				uint32_t reference = (pos >= delta) ? pos - delta : HISTORY_SIZE + pos - delta;
+				if (pos + matchLength < HISTORY_SIZE && reference + matchLength < HISTORY_SIZE)
+				{
+					// fast copy
+					if (pos >= reference + matchLength || reference >= pos + matchLength)
+					{
+						// non-overlapping
+						memcpy(history + pos, history + reference, matchLength);
+						pos += matchLength;
+					}
+					else
+					{
+						// overlapping
+						while (matchLength-- > 0)
+							history[pos++] = history[reference++];
+					}
+				}
+				else
+				{
+					// slower copy, have to take care of buffer limits
+					while (matchLength-- > 0)
+					{
+						// copy single byte
+						history[pos++] = history[reference++];
+
+						// cannot write anymore ? => wrap around
+						if (pos == HISTORY_SIZE)
+						{
+							// flush output buffer
+							sendBytes(history, HISTORY_SIZE);
+							numWritten += HISTORY_SIZE;
+							pos = 0;
+						}
+						// cannot read anymore ? => wrap around
+						if (reference == HISTORY_SIZE)
+							reference = 0;
+					}
+				}
+			}
+
+			// all legacy blocks must be completely filled - except for the last one
+			if (isLegacy && numWritten + pos < 8 * 1024 * 1024)
+				break;
+		}
+		else
+		{
+			// copy uncompressed data and add to history, too (if next block is compressed and some matches refer to this block)
+			while (blockSize-- > 0)
+			{
+				// copy a byte ...
+				history[pos++] = getByte();
+				// ... until buffer is full => send to output
+				if (pos == HISTORY_SIZE)
+				{
+					sendBytes(history, HISTORY_SIZE);
+					pos = 0;
+				}
+			}
+		}
+
+		if (hasBlockChecksum)
+		{
+			// ignore checksum, skip 4 bytes
+			getByte(); getByte(); getByte(); getByte();
+		}
+	}
+
+	if (hasContentChecksum)
+	{
+		// ignore checksum, skip 4 bytes
+		getByte(); getByte(); getByte(); getByte();
+	}
+
+	// flush output buffer
+	sendBytes(history, pos);
+}
+
+
+// ==================== COMMAND-LINE HANDLING ====================
+
+
+/// parse command-line
+int dolz4()
+{
+	unpackedData = (char*)my_calloc(sizeof(char)* 512*4096, 1);
+
+	// and go !
+	unlz4(getByteFromIn, sendBytesToOut, NULL);
+	return 0;
+}
 
 
 void AllSyncDataHandle(float row);
@@ -187,11 +491,6 @@ HFONT subtitleFont = NULL;
 HFONT smallFont = NULL;
 GLuint fontTexture_telegram;
 GLuint fontTexture_cards;
-
-_declspec(restrict, noalias) void *my_calloc(size_t nitems, size_t size)
-{
-	return HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, nitems * size);
-}
 
 void* my_memset(void* s, int c, size_t sz) {
 	BYTE* p = (BYTE*)s;
@@ -527,6 +826,18 @@ GLuint GenFontTexture() {
 
 int fontinit = 0;
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN MAIN 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 #ifndef EDITOR_CONTROLS
 #pragma code_seg(".main")
 void entrypoint(void)
@@ -555,6 +866,8 @@ int __cdecl main(int argc, char* argv[])
 	if (hwnd == NULL) {
 		MessageBox(NULL, "CreateWindow() failed", "Error", MB_OK);
 	}
+
+	dolz4();
 
 	InitFontToTexture();
 
