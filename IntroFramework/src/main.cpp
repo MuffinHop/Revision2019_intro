@@ -46,25 +46,16 @@ using namespace WaveSabrePlayerLib;
 // static HDC hDC;
 
 #define _NO_CRT_STDIO_INLINE
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 
 
-#define _CRT_SECURE_NO_WARNINGS
-
-#include <stdint.h> // uint32_t
-#include <string.h> // memcpy
 
 #ifndef FALSE
 #define FALSE 0
 #define TRUE  1
 #endif
-
-_declspec(restrict, noalias) void *my_calloc(size_t nitems, size_t size)
-{
-	return HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, nitems * size);
-}
-
 
 // error handler
 void error(const char* msg)
@@ -173,7 +164,7 @@ void unlz4(GET_BYTE getByte, SEND_BYTES sendBytes, const char* dictionary)
 	// next free position in history[]
 	unsigned int  pos = 0;
 
-	history = (unsigned char*)my_calloc(sizeof(unsigned char) * HISTORY_SIZE, 1);
+	history = (unsigned char*)calloc(sizeof(unsigned char) * HISTORY_SIZE, 1);
 
 
 	// parse all blocks until blockSize == 0
@@ -321,6 +312,7 @@ void unlz4(GET_BYTE getByte, SEND_BYTES sendBytes, const char* dictionary)
 			}
 		}
 
+
 		if (hasBlockChecksum)
 		{
 			// ignore checksum, skip 4 bytes
@@ -345,7 +337,7 @@ void unlz4(GET_BYTE getByte, SEND_BYTES sendBytes, const char* dictionary)
 /// parse command-line
 int dolz4()
 {
-	unpackedData = (char*)my_calloc(sizeof(char)*1024, 64);
+	unpackedData = (char*)calloc(sizeof(char)*1024, 64);
 
 	// and go !
 	unlz4(getByteFromIn, sendBytesToOut, NULL);
@@ -490,36 +482,6 @@ HWND hwnd = {};
 GLuint fontTexture_telegram;
 GLuint fontTexture_cards;
 
-void* my_memset(void* s, int c, size_t sz) {
-	BYTE* p = (BYTE*)s;
-	BYTE x = c & 0xff;
-	unsigned int leftover = sz & 0x7;
-
-	/* Catch the pathological case of 0. */
-	if (!sz)
-		return s;
-
-	/* To understand what's going on here, take a look at the original
-	* bytewise_memset and consider unrolling the loop. For this situation
-	* we'll unroll the loop 8 times (assuming a 32-bit architecture). Choosing
-	* the level to which to unroll the loop can be a fine art...
-	*/
-	sz = (sz + 7) >> 3;
-	switch (leftover) {
-	case 0: do {
-		*p++ = x;
-	case 7:      *p++ = x;
-	case 6:      *p++ = x;
-	case 5:      *p++ = x;
-	case 4:      *p++ = x;
-	case 3:      *p++ = x;
-	case 2:      *p++ = x;
-	case 1:      *p++ = x;
-	} while (--sz > 0);
-	}
-	return s;
-}
-
 
 void DrawRectText(const char* sText, COLORREF fg, COLORREF bg, int left, int top, int bottom, int right) {
 	SetTextColor(fonthDC, fg);
@@ -616,7 +578,7 @@ void Sync(float second);
 void InitFontToTexture() {
 	HRESULT hr;
 	// Prepare to create a bitmap
-	my_memset(&bmi.bmiHeader, 0, sizeof(BITMAPINFOHEADER));
+	memset(&bmi.bmiHeader, 0, sizeof(BITMAPINFOHEADER));
 	bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
 	bmi.bmiHeader.biWidth = (int)1920;
 	bmi.bmiHeader.biHeight = (int)1080;
@@ -714,7 +676,7 @@ ConvertRGB(BITMAPINFO *info,        /* I - Original bitmap information */
 		width = (width + 3) & ~3;
 		bitsize = width * info->bmiHeader.biHeight;
 		if (bitmap_alloc == 0) {
-			if ((newbits = (GLubyte *)my_calloc(bitsize, 1)) == NULL)
+			if ((newbits = (GLubyte *)calloc(bitsize, 1)) == NULL)
 				return (NULL);
 
 			bitmap_alloc = 1;
