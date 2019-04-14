@@ -1,7 +1,7 @@
 ﻿// custom build and feature flags
 #ifdef DEBUG
 	#define OPENGL_DEBUG        1
-	#define FULLSCREEN          0
+	#define FULLSCREEN          1
 	#define DESPERATE           0
 	#define BREAK_COMPATIBILITY 0
 #else
@@ -53,7 +53,6 @@ using namespace WaveSabrePlayerLib;
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdint.h> // uint32_t
-#include <stdlib.h> // exit()
 #include <string.h> // memcpy
 
 #ifndef FALSE
@@ -70,7 +69,6 @@ _declspec(restrict, noalias) void *my_calloc(size_t nitems, size_t size)
 // error handler
 void error(const char* msg)
 {
-	exit(1);
 }
 
 
@@ -489,9 +487,6 @@ HGDIOBJ hFontOld;
 HDC hDC;
 
 HWND hwnd = {};
-HFONT headingFont = NULL;
-HFONT subtitleFont = NULL;
-HFONT smallFont = NULL;
 GLuint fontTexture_telegram;
 GLuint fontTexture_cards;
 
@@ -525,77 +520,6 @@ void* my_memset(void* s, int c, size_t sz) {
 	return s;
 }
 
-int fontcolors[3 * 32] = { 0,0,0 };
-
-static const char cap1_s[] = "THE MAN FROM U.N.C.L.E";
-static const char sub1_s[] = "featuring the talents of:";
-static const char sm1_s[] = "Napoleon Solo";
-static const char sm2_s[] = "Ilya Kuriakin";
-
-void FontInRect(const char* sText, RECT &rFont) {
-
-	int     i, nStringLength;
-	BOOL    bResult;
-	int     *pDx;
-	int     nX = rFont.left;
-	int     nY = rFont.top;
-	int     Width = 0;
-
-
-	// How long is the string - you need this later in this code.
-	nStringLength = strlen(sText);
-
-	// Allocate enough memory for the intercharacter spacing array.
-	pDx = (int*)my_calloc(sizeof(int)* nStringLength,1);
-
-	// Initialize the array with the standard values.
-	for (i = 0; i < nStringLength; i++) {
-		ABC     abc;
-		if (!GetCharABCWidths(fonthDC, sText[i], sText[i], &abc)) {
-			return;
-		}
-		pDx[i] = abc.abcA + abc.abcB + abc.abcC;
-
-		// You need the width.
-		Width += pDx[i];
-
-		// Also, account for the Black extent of the string.
-		if (i == 0) {
-			// Adjustment before the first character for underhang
-			nX -= abc.abcA;
-			Width -= abc.abcA;
-		}
-		if (i == nStringLength - 1) {
-			// Adjustment for overhang
-			Width -= abc.abcC;
-		}
-
-	}
-
-	int deltaCX = rFont.right - rFont.left - Width;
-	int deltaCh = deltaCX / nStringLength;
-	int remainder = deltaCX % nStringLength;
-	int error = 0;
-
-	// Distribute the adjustment through the intercharacter spacing.
-	// For a more typographically correct approach, distribute the 
-	// adjustment in the "white space."
-	for (i = 0; i < nStringLength; i++) {
-		pDx[i] += deltaCh;
-		error += remainder;
-		if (abs(error) >= nStringLength)    // adjustment?
-		{
-			int adjustment = abs(error) / error;
-			pDx[i] += adjustment;
-			error -= nStringLength * adjustment;
-		}
-
-	}
-
-	// ExtTextOut() draws our text with our ICS array.
-	bResult = ExtTextOut(fonthDC, nX, nY, ETO_OPAQUE, &rFont, sText, nStringLength, pDx);
-
-}
 
 void DrawRectText(const char* sText, COLORREF fg, COLORREF bg, int left, int top, int bottom, int right) {
 	SetTextColor(fonthDC, fg);
@@ -784,41 +708,32 @@ ConvertRGB(BITMAPINFO *info,        /* I - Original bitmap information */
 						* Copy the original bitmap to the new array, converting as necessary.
 						*/
 
-	switch (info->bmiHeader.biCompression)
+	if (info->bmiHeader.biBitCount == 24)
 	{
-	case BI_RGB:
-		if (info->bmiHeader.biBitCount == 24)
-		{
-			width = 3 * info->bmiHeader.biWidth;
-			width = (width + 3) & ~3;
-			bitsize = width * info->bmiHeader.biHeight;
-			if (bitmap_alloc == 0) {
-				if ((newbits = (GLubyte *)my_calloc(bitsize, 1)) == NULL)
-					return (NULL);
+		width = 3 * info->bmiHeader.biWidth;
+		width = (width + 3) & ~3;
+		bitsize = width * info->bmiHeader.biHeight;
+		if (bitmap_alloc == 0) {
+			if ((newbits = (GLubyte *)my_calloc(bitsize, 1)) == NULL)
+				return (NULL);
 
-				bitmap_alloc = 1;
-			}
+			bitmap_alloc = 1;
+		}
 
-			/*
-			* Swap red & blue in a 24-bit image...
-			*/
+		/*
+		* Swap red & blue in a 24-bit image...
+		*/
 
-			for (i = 0; i < info->bmiHeader.biHeight; i++)
-				for (j = 0, from = ((GLubyte *)bits) + i * width,
-					to = newbits + i * width;
-					j < info->bmiHeader.biWidth;
-					j++, from += 3, to += 3)
-				{
-					to[0] = from[2];
-					to[1] = from[1];
-					to[2] = from[0];
-				};
-		};
-		break;
-	case BI_RLE4:
-	case BI_RLE8:
-	case BI_BITFIELDS:
-		break;
+		for (i = 0; i < info->bmiHeader.biHeight; i++)
+			for (j = 0, from = ((GLubyte *)bits) + i * width,
+				to = newbits + i * width;
+				j < info->bmiHeader.biWidth;
+				j++, from += 3, to += 3)
+			{
+				to[0] = from[2];
+				to[1] = from[1];
+				to[2] = from[0];
+			};
 	};
 
 	return (newbits);
@@ -866,8 +781,6 @@ int fontinit = 0;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 
 #ifndef EDITOR_CONTROLS
@@ -1068,7 +981,6 @@ int __cdecl main(int argc, char* argv[])
 		
 
 
-
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(DistanceID, Distance);
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(LensCoeffID, LensCoeff);
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(MaxCoCID, MaxCoC);
@@ -1166,9 +1078,6 @@ int __cdecl main(int argc, char* argv[])
 	SelectObject(fonthDC, hbmOld);
 	SelectObject(fonthDC, hFontOld);
 	DeleteObject(hbmBitmap);
-	DeleteObject(headingFont);
-	DeleteObject(subtitleFont);
-	DeleteObject(smallFont);
 	DeleteDC(fonthDC);
 
 	ExitProcess(0);
