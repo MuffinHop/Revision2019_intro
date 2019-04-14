@@ -490,22 +490,27 @@ float fOpUnionRund(float a, float b, float r) {
 float TreeTrunk(vec3 pos, vec3 algorithm) {
 	vec3 opos = pos;
 	vec3 opos_ = opos;
-
-	float vali = 5.;
-	opos.x += hash1(floor(pos.z / vali) + vali) * vali * 2.0;
-	opos.x = mod(opos.x, vali) - vali / 2.0;
-	opos.z += hash1(floor(pos.x / vali) + vali) * vali * 2.0;
-	opos.z = mod(opos.z, vali) - vali / 2.0;
-	pR(opos.xz, pos.z*1.);
-	pR(opos.zy, 3.14);
+	
+    float vali = 5.;
+    opos.x += hash1(floor(pos.z / vali) + vali) * vali / 2.0;
+    opos.x = mod(opos.x, vali) - vali / 2.0;
+    opos.z += hash1(floor(pos.x / vali) + vali) * vali / 2.0;
+    opos.z = mod(opos.z, vali) - vali / 2.0;
+    pR(opos.xz, pos.z*1.);
+    pR(opos.zy, 3.14);
+	vec3 rpos = pos;
+	rpos.x = floor(pos.x / vali);
+	rpos.z = floor(pos.z / vali);
+    float ss = min(perlinnoise(rpos.xz*0.1) * 12.0,2.0);
 
 	float height = 0.0;
 	opos.y += 0.75;
-	float dist = fBox(opos + vec3(0.0,height,0.0), vec3(0.08 + atan(opos.y*2.)*0.02, 1.5, 0.05));
+	float dist = fBox(opos + vec3(0.0,height,0.0), ss*vec3(0.08 + atan(opos.y*2.)*0.02, 1.5, 0.05));
 	opos.y -= 0.75;
 	vec3 o = opos + vec3(0.0, height, 0.0);
 	pR(opos.yx, 5.0);
-	dist = fOpUnionRund(dist, fBox(opos + vec3(-0.1 + 0.1, 0.0, 0.0), vec3(0.03, 0.5, 0.02)), 0.2);
+	opos *= rotationMatrix(vec3(1.0,0.2,0.0), rpos.x + rpos.z) ;
+	dist = fOpUnionRund(dist, fBox(opos + vec3(-0.1 + 0.1, 0.0, 0.0), ss*vec3(0.03, 0.5, 0.02)), 0.2);
 	opos = o;
 	return dist;
 }
@@ -520,20 +525,21 @@ float TreeBush(vec3 pos, vec3 algorithm) {
     vec3 opos = pos;
     
     float vali = 5.;
-    //opos.x += hash1(floor(pos.z / vali) + vali) * vali * 2.0;
+    opos.x += hash1(floor(pos.z / vali) + vali) * vali / 2.0;
     opos.x = mod(opos.x, vali) - vali / 2.0;
-    //opos.z += hash1(floor(pos.x / vali) + vali) * vali * 2.0;
+    opos.z += hash1(floor(pos.x / vali) + vali) * vali / 2.0;
     opos.z = mod(opos.z, vali) - vali / 2.0;
     pR(opos.xz, pos.z*1.);
     pR(opos.zy, 3.14);
 	vec3 rpos = pos;
-
-    float ss = min(perlinnoise(pos.xz*0.12312) * 12.0,1.0);
+	rpos.x = floor(pos.x / vali);
+	rpos.z = floor(pos.z / vali);
+    float ss = min(perlinnoise(rpos.xz*0.1) * 12.0,2.0);
     vec3 o = opos;
     opos = o;
 	opos.y += GetHeightmapLowPrecision(pos*algorithm) *  algorithm.y;
 	opos.y += 3.0;
-    float distance2 = sdSphere(opos,2.0);
+    float distance2 = sdSphere(opos,ss);
     
 	pos.y += GetHeightmapLowPrecision(pos*algorithm) * algorithm.y;
     distance2 = min(distance2,fBox(pos+vec3(0.0,2.5,0.0), vec3(1111.,2.,1111.)));
@@ -924,8 +930,8 @@ void AddAtmosphere(inout vec3 col, in Trace ray, in ContactInfo hitNfo)
 	vec3 fogColor = GetSkyGradient(ray.direction);
 
 	DirectionLight directionalLight = GetDirectionLight();
-	float fDirDot = clamp(dot(-directionalLight.direction, ray.direction), 0.0, 1.0);
-	fogColor += directionalLight.color * pow(fDirDot, 20.0);
+	float fDirDot = clamp(dot(directionalLight.direction, ray.direction), 0.0, 1.0);
+	fogColor += directionalLight.color * pow(fDirDot, 2.0);
 
 	PointLight pointLight = GetPointLight();
 
@@ -1145,7 +1151,7 @@ vec4 mainImage()
 
 
 	ContactInfo intersection;
-	RayMarch(ray, intersection, 128, transparencyInformation);
+	RayMarch(ray, intersection, 256, transparencyInformation);
 	vec3 sceneColor;
 	float d = intersection.distanc;
 	if (intersection.id.x < 0.5) {
