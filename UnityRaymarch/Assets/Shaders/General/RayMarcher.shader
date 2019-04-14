@@ -128,8 +128,8 @@ void AddAtmosphere(inout vec3 col, in Trace ray, in ContactInfo hitNfo)
 	vec3 fogColor = GetSkyGradient(ray.direction);
 
 	DirectionLight directionalLight = GetDirectionLight();
-	float fDirDot = clamp(dot(-directionalLight.direction, ray.direction), 0.0, 1.0);
-	fogColor += directionalLight.color * pow(fDirDot, 20.0);
+	float fDirDot = clamp(dot(directionalLight.direction, ray.direction), 0.0, 1.0);
+	fogColor += directionalLight.color * pow(fDirDot, 2.0);
 
 	PointLight pointLight = GetPointLight();
 
