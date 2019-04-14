@@ -3,6 +3,7 @@
 
 uniform sampler2D _TextTex;
 uniform float _iTime;
+uniform vec4 _iMouse;
 uniform vec4 _iResolution;
 uniform vec4 _DirectionalLight;
 uniform vec4 _DirectionalLightColor;
@@ -233,6 +234,66 @@ float cellTile(in vec3 p) {
 	d.w = celli(p - vec3(.2, .82, .64));
 	d.xy = min(d.xz, d.yw);
 	return min(d.x, d.y)*2.66;
+}
+
+float hex(vec2 p) {
+    p.x *= 0.57735*2.0;
+	p.y += mod(floor(p.x), 2.0)*0.5;
+	p = abs((mod(p, 1.0) - 0.5));
+	return abs(max(p.x*1.5 + p.y, p.y*2.0) - 1.0);
+}
+
+float cellTile2(in vec3 p){
+    vec4 d; 
+    d.x = celli(p - vec3(.81, .62, .53));
+    p.xy = vec2(p.y-p.x, p.y + p.x)+hex(p.xy*0.2);
+    d.y = celli(p - vec3(.39, .2, .11));
+    p.yz = vec2(p.z-p.y, p.z + p.y)+hex(p.yz*0.2);
+    d.z = celli(p - vec3(.62, .24, .06));
+    p.xz = vec2(p.z-p.x, p.z + p.x)+hex(p.xz*0.2);
+    d.w = celli(p - vec3(.2, .82, .64));
+    d.xy = min(d.xz, d.yw);
+    return min(d.x, d.y)*0.5; 
+}
+vec4 skybox(vec3 coord, float stretch) {
+    coord.y+=0.2;
+    float tsky = _iTime*(100./stretch);
+    vec4 color = vec4(0.);
+	vec3 coord2;
+    coord2 = coord;
+	vec3 coord3;
+    coord3 = coord;
+	vec4 color2 = vec4(0.);
+    for(float i=0.; i<600.; i+=8.0) {
+        coord2 = coord;
+        float tiam = i/stretch+tsky;
+    	coord2 *= rotationMatrix(vec3(0.0,0.6,0.1), tiam);
+        float v = perlinnoise(coord2.zx*44.);
+        color2 += min(max(coord.y*12.-5.,0.)*0.2,1.) * 
+        (vec4(1.,0.95,0.9,1.)*(1.-v)+vec4(0.9,0.95,1.0,1.)*v)*max(perlinnoise( coord2.zx*233. )-0.67,0.0)*32.*i;
+        
+        /*coord2 += vec3(cellTile2(coord2+tiam*1.3),cellTile2(coord2+tiam*2.2+.1),cellTile2(coord2+tiam*1.3+.3));
+    	color2 += min(max(coord.y*12.-4.,0.),1.) * min(max(coord2.y*12.-4.,0.),1.) * vec4(0.,1.,0.,1.) * pow(distance(cellTile2((coord2+vec3(.0,.13,.0))),cellTile2(coord2)),4.)*stretch*stretch * 0.01 * i;
+    	color2 += min(max(coord.y*12.-4.,0.),1.) * min(max(coord2.y*12.-4.,0.),1.) * vec4(.8,0.4,0.,1.) * pow(distance(cellTile2((coord2+vec3(.0,.1,.0))),cellTile2(coord2)),4.)*stretch*stretch * 0.01 * i;
+    */
+    }
+    color2 = max(color2,vec4(0.));
+    color2 /= stretch;
+    color += color2;
+    float sd = dot(normalize(vec3(-0.5, -0.6, 0.9)), coord)*0.5+0.5;
+    sd = pow(sd, 5.);
+    vec3 col = mix(vec3(0.05,0.1,0.2), vec3(0.1,0.05,0.2), coord);
+    color.rgb += col/64.;
+    return color;
+}
+vec3 skyboxSample() {
+     vec2 uv = 2.0 * gl_FragCoord.xy / _iResolution.xy - 1.0;
+     float aspect = _iResolution.x / _iResolution.y;
+     vec3 direction = normalize( vec3(.5 * uv * vec2( aspect, 1.0), 1.0 ) );
+    direction *= rotationMatrix(vec3(0.0,1.0,0.0), _iMouse.x);
+    direction *= rotationMatrix(vec3(1.0,0.0,0.0), _iMouse.y);
+     vec4 fragColor = pow(skybox(direction*3.141592*2.*0.1, 8220.-_iTime*145.),vec4(1./2.3));
+    return fragColor.rgb;
 }
 
 // ------------------ 
@@ -773,6 +834,7 @@ vec3 GetSkyGradient(vec3 rayDirection)
 	vec3 backdrop = min(max(pow(directLight, 41.0) * vec3(1.8, 1.1, .9) * 0.6, 0.01), 1.);
 	backdrop += min(max(pow(directLight, 2.5) * vec3(0.8, 0.9, 1.0) * 1.6, 0.01), 1.);
 	backdrop += (min(max(pow(directLight, 81.0) * 1.6, 0.01), 1.)*1.1);
+	backdrop = skyboxSample().rgb ;
 	return max(backdrop, vec3(0.8, 0.9, 1.0)*0.125);
 }
 
@@ -853,9 +915,9 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 		}
 
 	}
-	if (result.distanc >= ray.length)
+	if (result.distanc >= _FarPlane)
 	{
-		result.distanc = 1000.0;
+		result.distanc = _FarPlane;
 		result.position = ray.origin + ray.direction * result.distanc;
 		result.id.x = 0.0;
 	}

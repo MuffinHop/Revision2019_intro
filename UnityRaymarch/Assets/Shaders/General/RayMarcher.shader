@@ -51,9 +51,9 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 		}
 
 	}
-	if (result.distanc >= ray.length)
+	if (result.distanc >= _FarPlane)
 	{
-		result.distanc = 1000.0;
+		result.distanc = _FarPlane;
 		result.position = ray.origin + ray.direction * result.distanc;
 		result.id.x = 0.0;
 	}
