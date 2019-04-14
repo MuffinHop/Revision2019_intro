@@ -131,128 +131,181 @@ public class RayMarchingController : MonoBehaviour
                 string specialFuncs = "";
                 string strR = rmObject.R.ToString(culture);
                 string strN = rmObject.N.ToString(culture);
-                switch (mixerFormat)
+                if ((rmObject as SdCapsule) == null)
                 {
-                    case RM_Object.Mix.Min:
-                        mixStr += "min";
-                        break;
-                    case RM_Object.Mix.Max:
-                        mixStr += "max";
-                        break;
-                    case RM_Object.Mix.MaxMinus:
-                        mixStr += "maxMinus";
-                        break;
-                    case RM_Object.Mix.OpUnionRound:           // box, sphere, r
-                        mixStr += "fOpUnionRound";
-                        specialFuncs = "," + strR;
-                        includeCode.Add("Operators/OpUnionRound.shader");
-                        break;
-                    case RM_Object.Mix.OpIntersectionRound:    // box, sphere, r
-                        mixStr += "fOpIntersectionRound";
-                        specialFuncs = "," + strR;
-                        includeCode.Add("Operators/OpIntersectionRound.shader");
-                        break;
-                    case RM_Object.Mix.OpDifferenceRound:      // box, sphere, r
-                        mixStr += "fOpDifferenceRound";
-                        specialFuncs = "," + strR;
-                        includeCode.Add("Operators/OpDifferenceRound.shader");
-                        break;
-                    case RM_Object.Mix.OpUnionChamfer:         // box, sphere, r
-                        mixStr += "fOpUnionChamfer";
-                        specialFuncs = "," + strR;
-                        includeCode.Add("Operators/OpUnionChamfer.shader");
-                        break;
-                    case RM_Object.Mix.OpIntersectionChamfer:  // box, sphere, r
-                        mixStr += "fOpIntersectionChamfer";
-                        specialFuncs = "," + strR;
-                        includeCode.Add("Operators/OpIntersectionChamfer.shader");
-                        break;
-                    case RM_Object.Mix.OpDifferenceChamfer:    // box, sphere, r
-                        mixStr += "fOpDifferenceChamfer";
-                        specialFuncs = "," + strR;
-                        includeCode.Add("Operators/OpDifferenceChamfer.shader");
-                        break;
-                    case RM_Object.Mix.OpUnionColumns:         // box, sphere, r, n
-                        mixStr += "fOpUnionColumns";
-                        specialFuncs = "," + strR + "," + strN;
-                        includeCode.Add("Operators/OpUnionColumns.shader");
-                        break;
-                    case RM_Object.Mix.OpIntersectionColumns:  // box, sphere, r, n
-                        mixStr += "fOpIntersectionColumns";
-                        specialFuncs = "," + strR + "," + strN;
-                        includeCode.Add("Operators/OpIntersectionColumns.shader");
-                        break;
-                    case RM_Object.Mix.OpDifferenceColumns:    // box, sphere, r, n
-                        mixStr += "fOpDifferenceColumns";
-                        specialFuncs = "," + strR + "," + strN;
-                        includeCode.Add("Operators/OpDifferenceColumns.shader");
-                        break;
-                    case RM_Object.Mix.OpUnionStairs:          // box, sphere, r, n
-                        mixStr += "fOpUnionStairs";
-                        specialFuncs = "," + strR + "," + strN;
-                        includeCode.Add("Operators/OpUnionStairs.shader");
-                        break;
-                    case RM_Object.Mix.OpIntersectionStairs:   // box, sphere, r, n
-                        mixStr += "fOpIntersectionStairs";
-                        specialFuncs = "," + strR + "," + strN;
-                        includeCode.Add("Operators/OpIntersectionStairs.shader");
-                        break;
-                    case RM_Object.Mix.OpDifferenceStairs:     // box, sphere, r, n
-                        mixStr += "fOpDifferenceStairs";
-                        specialFuncs = "," + strR + "," + strN;
-                        includeCode.Add("Operators/OpDifferenceStairs.shader");
-                        break;
-                    case RM_Object.Mix.OpPipe:                 // box, sphere, r*0.3
-                        mixStr += "fOpPipe";
-                        specialFuncs = "," + strR + "," + strN;
-                        includeCode.Add("Operators/OpPipe.shader");
-                        break;
-                    case RM_Object.Mix.OpEngrave:              // box, sphere, r*0.3
-                        mixStr += "fOpEngrave";
-                        specialFuncs = "," + strR + "," + strN;
-                        includeCode.Add("Operators/OpEngrave.shader");
-                        break;
-                    case RM_Object.Mix.OpGroove:               // box, sphere ,r*0.3, r*0.3
-                        mixStr += "fOpGroove";
-                        specialFuncs = "," + strR + "," + strN;
-                        includeCode.Add("Operators/OpGroove.shader");
-                        break;
-                    case RM_Object.Mix.OpTongue:               // box, sphere, r*0.3, r*0.3
-                        mixStr += "fOpTongue";
-                        specialFuncs = "," + strR + "," + strN;
-                        includeCode.Add("Operators/OpTongue.shader");
-                        break;
-                    case RM_Object.Mix.OpUnionSoft:            // box, sphere, r*0.3, r*0.3
-                        mixStr += "fOpUnionSoft";
-                        specialFuncs = "," + strR + "," + strN;
-                        includeCode.Add("Operators/OpUnionSoft.shader");
-                        break;
+                    switch (mixerFormat)
+                    {
+                        case RM_Object.Mix.Min:
+                            mixStr += "min";
+                            break;
+                        case RM_Object.Mix.Max:
+                            mixStr += "max";
+                            break;
+                        case RM_Object.Mix.MaxMinus:
+                            mixStr += "maxMinus";
+                            break;
+                        case RM_Object.Mix.OpUnionRound:           // box, sphere, r
+                            mixStr += "fOpUnionRound";
+                            specialFuncs = "," + strR;
+                            includeCode.Add("Operators/OpUnionRound.shader");
+                            break;
+                        case RM_Object.Mix.OpIntersectionRound:    // box, sphere, r
+                            mixStr += "fOpIntersectionRound";
+                            specialFuncs = "," + strR;
+                            includeCode.Add("Operators/OpIntersectionRound.shader");
+                            break;
+                        case RM_Object.Mix.OpDifferenceRound:      // box, sphere, r
+                            mixStr += "fOpDifferenceRound";
+                            specialFuncs = "," + strR;
+                            includeCode.Add("Operators/OpDifferenceRound.shader");
+                            break;
+                        case RM_Object.Mix.OpUnionChamfer:         // box, sphere, r
+                            mixStr += "fOpUnionChamfer";
+                            specialFuncs = "," + strR;
+                            includeCode.Add("Operators/OpUnionChamfer.shader");
+                            break;
+                        case RM_Object.Mix.OpIntersectionChamfer:  // box, sphere, r
+                            mixStr += "fOpIntersectionChamfer";
+                            specialFuncs = "," + strR;
+                            includeCode.Add("Operators/OpIntersectionChamfer.shader");
+                            break;
+                        case RM_Object.Mix.OpDifferenceChamfer:    // box, sphere, r
+                            mixStr += "fOpDifferenceChamfer";
+                            specialFuncs = "," + strR;
+                            includeCode.Add("Operators/OpDifferenceChamfer.shader");
+                            break;
+                        case RM_Object.Mix.OpUnionColumns:         // box, sphere, r, n
+                            mixStr += "fOpUnionColumns";
+                            specialFuncs = "," + strR + "," + strN;
+                            includeCode.Add("Operators/OpUnionColumns.shader");
+                            break;
+                        case RM_Object.Mix.OpIntersectionColumns:  // box, sphere, r, n
+                            mixStr += "fOpIntersectionColumns";
+                            specialFuncs = "," + strR + "," + strN;
+                            includeCode.Add("Operators/OpIntersectionColumns.shader");
+                            break;
+                        case RM_Object.Mix.OpDifferenceColumns:    // box, sphere, r, n
+                            mixStr += "fOpDifferenceColumns";
+                            specialFuncs = "," + strR + "," + strN;
+                            includeCode.Add("Operators/OpDifferenceColumns.shader");
+                            break;
+                        case RM_Object.Mix.OpUnionStairs:          // box, sphere, r, n
+                            mixStr += "fOpUnionStairs";
+                            specialFuncs = "," + strR + "," + strN;
+                            includeCode.Add("Operators/OpUnionStairs.shader");
+                            break;
+                        case RM_Object.Mix.OpIntersectionStairs:   // box, sphere, r, n
+                            mixStr += "fOpIntersectionStairs";
+                            specialFuncs = "," + strR + "," + strN;
+                            includeCode.Add("Operators/OpIntersectionStairs.shader");
+                            break;
+                        case RM_Object.Mix.OpDifferenceStairs:     // box, sphere, r, n
+                            mixStr += "fOpDifferenceStairs";
+                            specialFuncs = "," + strR + "," + strN;
+                            includeCode.Add("Operators/OpDifferenceStairs.shader");
+                            break;
+                        case RM_Object.Mix.OpPipe:                 // box, sphere, r*0.3
+                            mixStr += "fOpPipe";
+                            specialFuncs = "," + strR + "," + strN;
+                            includeCode.Add("Operators/OpPipe.shader");
+                            break;
+                        case RM_Object.Mix.OpEngrave:              // box, sphere, r*0.3
+                            mixStr += "fOpEngrave";
+                            specialFuncs = "," + strR + "," + strN;
+                            includeCode.Add("Operators/OpEngrave.shader");
+                            break;
+                        case RM_Object.Mix.OpGroove:               // box, sphere ,r*0.3, r*0.3
+                            mixStr += "fOpGroove";
+                            specialFuncs = "," + strR + "," + strN;
+                            includeCode.Add("Operators/OpGroove.shader");
+                            break;
+                        case RM_Object.Mix.OpTongue:               // box, sphere, r*0.3, r*0.3
+                            mixStr += "fOpTongue";
+                            specialFuncs = "," + strR + "," + strN;
+                            includeCode.Add("Operators/OpTongue.shader");
+                            break;
+                        case RM_Object.Mix.OpUnionSoft:            // box, sphere, r*0.3, r*0.3
+                            mixStr += "fOpUnionSoft";
+                            specialFuncs = "," + strR + "," + strN;
+                            includeCode.Add("Operators/OpUnionSoft.shader");
+                            break;
+                    }
+                    sdf1 += "\n//" + rmObject.name + "\n";
+                    int index = rmObject.ID * 10;
+                    if (!rmObject.Centered)
+                    {
+                        sdf1 += "               vec3 posID" + rmObject.ID + " = position - vec3(_Objects[" + (index + 0) + "], _Objects[" + (index + 1) + "], _Objects[" + (index + 2) + "]);\n";
+                    }
+                    else
+                    {
+                        sdf1 += "               #define posID" + rmObject.ID + " position\n";
+                    }
+                    if (rmObject.Rotatable)
+                    {
+                        sdf1 += "               posID" + rmObject.ID + "= RotateQuaternion(vec4(_Objects[" + (index + 6) + "], _Objects[" + (index + 7) + "], _Objects[" + (index + 8) + "], - _Objects[" + (index + 9) + "]))*posID" + rmObject.ID + ";\n";
+                    }
+                    string firstPart = "               id" + materialID + "_distance ";
+                    switch (scaleFormat)
+                    {
+                        case ShaderComponent.ScaleInfo.OneDimension:
+                            sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + rmObject.ID + ",_Objects[" + (index + 3) + "]), id" + materialID + "_distance" + specialFuncs + ");\n";
+                            break;
+                        case ShaderComponent.ScaleInfo.TwoDimension:
+                            sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + rmObject.ID + ", vec2(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "])), id" + materialID + "_distance " + specialFuncs + ");\n";
+                            break;
+                        case ShaderComponent.ScaleInfo.ThreeDimension:
+                            sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + rmObject.ID + ", vec3(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "],_Objects[" + (index + 5) + "])), id" + materialID + "_distance" + specialFuncs + ");\n";
+                            break;
+                    }
                 }
-
-                int index = rmObject.ID * 10;
-                if (!rmObject.Centered)
+                else //SdCapsule
                 {
-                    sdf1 += "               vec3 posID" + rmObject.ID + " = position - vec3(_Objects[" + (index + 0) + "], _Objects[" + (index + 1) + "], _Objects[" + (index + 2) + "]);\n";
-                } else
-                {
-                    sdf1 += "               #define posID" + rmObject.ID + " position\n";
-                }
-                if (rmObject.Rotatable)
-                {
-                    sdf1 += "               posID" + rmObject.ID + "= RotateQuaternion(vec4(_Objects[" + (index + 6) + "], _Objects[" + (index + 7) + "], _Objects[" + (index + 8) + "], - _Objects[" + (index + 9) + "]))*posID" + rmObject.ID + ";\n";
-                }
-                string firstPart = "               id" + materialID + "_distance ";
-                switch (scaleFormat)
-                {
-                    case ShaderComponent.ScaleInfo.OneDimension:
-                        sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + rmObject.ID + ",_Objects[" + (index + 3) + "]), id" + materialID + "_distance" + specialFuncs + ");\n";
-                        break;
-                    case ShaderComponent.ScaleInfo.TwoDimension:
-                        sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + rmObject.ID + ", vec2(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "])), id" + materialID + "_distance " + specialFuncs + ");\n";
-                        break;
-                    case ShaderComponent.ScaleInfo.ThreeDimension:
-                        sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + rmObject.ID + ", vec3(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "],_Objects[" + (index + 5) + "])), id" + materialID + "_distance" + specialFuncs + ");\n";
-                        break;
+                    switch (mixerFormat)
+                    {
+                        case RM_Object.Mix.Min:
+                            mixStr += "min";
+                            break;
+                        case RM_Object.Mix.Max:
+                            mixStr += "max";
+                            break;
+                        case RM_Object.Mix.MaxMinus:
+                            mixStr += "maxMinus";
+                            break;
+                        case RM_Object.Mix.OpUnionRound:           // box, sphere, r
+                            mixStr += "fOpUnionRound";
+                            specialFuncs = "," + strN;
+                            includeCode.Add("Operators/OpUnionRound.shader");
+                            break;
+                        case RM_Object.Mix.OpIntersectionRound:    // box, sphere, r
+                            mixStr += "fOpIntersectionRound";
+                            specialFuncs = "," + strN;
+                            includeCode.Add("Operators/OpIntersectionRound.shader");
+                            break;
+                        case RM_Object.Mix.OpDifferenceRound:      // box, sphere, r
+                            mixStr += "fOpDifferenceRound";
+                            specialFuncs = "," + strN;
+                            includeCode.Add("Operators/OpDifferenceRound.shader");
+                            break;
+                        case RM_Object.Mix.OpUnionChamfer:         // box, sphere, r
+                            mixStr += "fOpUnionChamfer";
+                            specialFuncs = "," + strN;
+                            includeCode.Add("Operators/OpUnionChamfer.shader");
+                            break;
+                        case RM_Object.Mix.OpIntersectionChamfer:  // box, sphere, r
+                            mixStr += "fOpIntersectionChamfer";
+                            specialFuncs = "," + strN;
+                            includeCode.Add("Operators/OpIntersectionChamfer.shader");
+                            break;
+                        case RM_Object.Mix.OpDifferenceChamfer:    // box, sphere, r
+                            mixStr += "fOpDifferenceChamfer";
+                            specialFuncs = "," + strN;
+                            includeCode.Add("Operators/OpDifferenceChamfer.shader");
+                            break;
+                    }
+                    sdf1 += "\n//" + rmObject.name + "\n";
+                    int index = rmObject.ID * 10;
+                    string firstPart = "               id" + materialID + "_distance ";
+                    sdf1 += firstPart + " = " + mixStr + "(sdCapsule(position, vec3(_Objects[" + (index + 0) + "], _Objects[" + (index + 1) + "],_Objects[" + (index + 2) + "]), vec3(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "],_Objects[" + (index + 5) + "]), " + strR + "), id" + materialID + "_distance" + specialFuncs + ");\n";
                 }
             }
             sdf1 += "               vec4 distID" + materialID + " = vec4(id" + materialID + "_distance, material_ID" + materialID + ", position.xz + vec2(position.y, 0.0));\n";
@@ -272,10 +325,15 @@ public class RayMarchingController : MonoBehaviour
             return result;
         }";
         string sdfIncludes = "\n";
+        List<string> includedModifiers = new List<string>();
         foreach (string sdfInclude in includeCode)
         {
-            var shaderCode = GetShaderPart(sdfInclude);
-            sdfIncludes += shaderCode + "\n";
+            if (!includedModifiers.Contains(sdfInclude))
+            {
+                includedModifiers.Add(sdfInclude);
+                var shaderCode = GetShaderPart(sdfInclude);
+                sdfIncludes += shaderCode + "\n";
+            }
         }
         sdf = sdfIncludes + sdf0 + sdf1 + sdf2;
         return sdf;
@@ -482,16 +540,31 @@ public class RayMarchingController : MonoBehaviour
                     var GO = gomat[material][i].gameObject;
                     var rmObject = GO.GetComponent<RM_Object>();
                     var index = rmObject.ID;
-                    RM_Camera.RM_Objects[index * 10 + 0] = GO.transform.position.x;
-                    RM_Camera.RM_Objects[index * 10 + 1] = GO.transform.position.y;
-                    RM_Camera.RM_Objects[index * 10 + 2] = GO.transform.position.z;
-                    RM_Camera.RM_Objects[index * 10 + 3] = GO.transform.localScale.x / 2.0f;
-                    RM_Camera.RM_Objects[index * 10 + 4] = GO.transform.localScale.y / 2.0f;
-                    RM_Camera.RM_Objects[index * 10 + 5] = GO.transform.localScale.z / 2.0f;
-                    RM_Camera.RM_Objects[index * 10 + 6] = GO.transform.rotation.x;
-                    RM_Camera.RM_Objects[index * 10 + 7] = GO.transform.rotation.y;
-                    RM_Camera.RM_Objects[index * 10 + 8] = GO.transform.rotation.z;
-                    RM_Camera.RM_Objects[index * 10 + 9] = GO.transform.rotation.w;
+                    if ((rmObject as SdCapsule) == null)
+                    {
+                        RM_Camera.RM_Objects[index * 10 + 0] = GO.transform.position.x;
+                        RM_Camera.RM_Objects[index * 10 + 1] = GO.transform.position.y;
+                        RM_Camera.RM_Objects[index * 10 + 2] = GO.transform.position.z;
+                        RM_Camera.RM_Objects[index * 10 + 3] = GO.transform.localScale.x / 2.0f;
+                        RM_Camera.RM_Objects[index * 10 + 4] = GO.transform.localScale.y / 2.0f;
+                        RM_Camera.RM_Objects[index * 10 + 5] = GO.transform.localScale.z / 2.0f;
+                        RM_Camera.RM_Objects[index * 10 + 6] = GO.transform.rotation.x;
+                        RM_Camera.RM_Objects[index * 10 + 7] = GO.transform.rotation.y;
+                        RM_Camera.RM_Objects[index * 10 + 8] = GO.transform.rotation.z;
+                        RM_Camera.RM_Objects[index * 10 + 9] = GO.transform.rotation.w;
+                    } else
+                    {
+                        RM_Camera.RM_Objects[index * 10 + 0] = GO.transform.position.x;
+                        RM_Camera.RM_Objects[index * 10 + 1] = GO.transform.position.y;
+                        RM_Camera.RM_Objects[index * 10 + 2] = GO.transform.position.z;
+                        RM_Camera.RM_Objects[index * 10 + 3] = GO.transform.GetChild(0).position.x;
+                        RM_Camera.RM_Objects[index * 10 + 4] = GO.transform.GetChild(0).position.y;
+                        RM_Camera.RM_Objects[index * 10 + 5] = GO.transform.GetChild(0).position.z;
+                        RM_Camera.RM_Objects[index * 10 + 6] = GO.transform.rotation.x;
+                        RM_Camera.RM_Objects[index * 10 + 7] = GO.transform.rotation.y;
+                        RM_Camera.RM_Objects[index * 10 + 8] = GO.transform.rotation.z;
+                        RM_Camera.RM_Objects[index * 10 + 9] = GO.transform.rotation.w;
+                    }
                 }
             }
         }

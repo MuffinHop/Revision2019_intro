@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Huge Mocap Library\demo\scripts\demo.cs" />
     <Compile Include="Assets\Huge Mocap Library\demo\scripts\smoothFollow.cs" />
+    <Compile Include="Assets\Scripts\Demo\AnimatorController.cs" />
     <Compile Include="Assets\Scripts\Demo\Device.cs" />
     <Compile Include="Assets\Scripts\Demo\PostProcess.cs" />
     <Compile Include="Assets\Scripts\Demo\RayMarchingController.cs" />
@@ -73,8 +74,14 @@
     <Compile Include="Assets\Scripts\Demo\RM_SyncData.cs" />
     <Compile Include="Assets\Scripts\Demo\RM_SyncDataController.cs" />
     <Compile Include="Assets\Scripts\Demo\RM_Type.cs" />
+    <Compile Include="Assets\Scripts\Demo\RMO.cs" />
+    <Compile Include="Assets\Scripts\Demo\RMOCollection.cs" />
+    <Compile Include="Assets\Scripts\Demo\RMOLoader.cs" />
+    <Compile Include="Assets\Scripts\Demo\SdCapsule.cs" />
     <Compile Include="Assets\Scripts\Demo\ShaderComponent.cs" />
     <Compile Include="Assets\Scripts\Demo\SyncUp.cs" />
+    <Compile Include="Assets\Scripts\Demo\TextSceneController.cs" />
+    <Compile Include="Assets\Scripts\Demo\TextViewerComponent.cs" />
     <Compile Include="Assets\Scripts\Demo\Track.cs" />
     <None Include="Assets\Shaders\Modifiers\ModMirror2.shader" />
     <None Include="Assets\Shaders\Modifiers\R.shader" />

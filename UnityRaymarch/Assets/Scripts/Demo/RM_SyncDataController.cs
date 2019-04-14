@@ -29,16 +29,24 @@ public class RM_SyncDataController : MonoBehaviour
     {
         var culture = System.Globalization.CultureInfo.InvariantCulture;
         string code = "";
-        code += "       vec3 " + arrayName + "[" + (History.Capacity + 2) + "] = { \n";
-        SyncRMObject historyItem = History[0];
-        for (int i = 0; i < History.Count; i++)
+        code += "       vec3 " + arrayName + "[" + (History.Count + 2) + "] = { \n";
+        if (History.Count > 0)
         {
-            historyItem = History[i];
-            code += "               { " + (int)historyItem.Row + ", " + historyItem.Value.ToString(culture) + ", 1 }, \n";
+            SyncRMObject historyItem = History[0];
+            for (int i = 0; i < History.Count; i++)
+            {
+                historyItem = History[i];
+                code += "               { " + (int)historyItem.Row + ", " + historyItem.Value.ToString(culture) + ", 1 }, \n";
+            }
+            code += "               { 100000, " + historyItem.Value.ToString(culture) + ", 1 }, \n";
+            code += "               { 200000, " + historyItem.Value.ToString(culture) + ", 1 } \n";
+            code += "              }; \n \n";
+        } else
+        {
+            code += "               { 0, 0f, 1 }, \n";
+            code += "               { 200000, 0f, 1 } \n";
+            code += "              }; \n \n";
         }
-        code += "               { 100000, " + historyItem.Value.ToString(culture) + ", 1 }, \n";
-        code += "               { 200000, " + historyItem.Value.ToString(culture) + ", 1 } \n";
-        code += "              }; \n \n";
         return code;
     }
     public void Generate()

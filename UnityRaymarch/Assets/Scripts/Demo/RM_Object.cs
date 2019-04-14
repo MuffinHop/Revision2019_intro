@@ -34,16 +34,17 @@ public class RM_Object : MonoBehaviour
     public ShaderComponent ShaderComponent;
     public RM_Surface SurfaceComponent;
     public Mix Mixer;
+    [Range(0f,2f)]
     public float R, N;
     public bool Centered;
     public bool Rotatable;
-    private Key.Type interpolation = Key.Type.Linear;
+    protected Key.Type interpolation = Key.Type.Linear;
 
-    private ShaderComponent compShaderComponent;
-    private RM_Surface compSurfaceComponent;
-    private Vector3 previousPosition = new Vector3(-1000000f,-1000000f,-100000f);
-    private Vector3 previousScale = new Vector3(0f, 0f, 0f);
-    private Vector4 previousRotation = new Vector4(-1000000f, -1000000f, -100000f, -100000f);
+    protected ShaderComponent compShaderComponent;
+    protected RM_Surface compSurfaceComponent;
+    protected Vector3 previousPosition = new Vector3(-1000000f,-1000000f,-100000f);
+    protected Vector3 previousScale = new Vector3(0f, 0f, 0f);
+    protected Vector4 previousRotation = new Vector4(-1000000f, -1000000f, -100000f, -100000f);
     public class SyncRMObject
     {
         public int Row;
@@ -65,16 +66,16 @@ public class RM_Object : MonoBehaviour
     public List<SyncRMObject> RotationZHistory;
     public List<SyncRMObject> RotationWHistory;
     public int ID;
-    private static int syncDataCount;
+    protected static int syncDataCount;
     [SerializeField]
-    private int visibleSyncDataCount;
+    protected int visibleSyncDataCount;
 
     public void SetID(int i)
     {
         ID = i;
     }
     int prevFrame = -1;
-    private void LateUpdate()
+    protected void LateUpdate()
     {
         if (PositionXHistory == null)
         {

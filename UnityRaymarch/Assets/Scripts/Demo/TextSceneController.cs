@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+[ExecuteInEditMode]
 public class TextSceneController : MonoBehaviour
 {
     [SerializeField]
