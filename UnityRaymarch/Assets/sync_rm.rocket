@@ -63,6 +63,8 @@ color="ff60b250">
 		<key row="1876" value="0.000000" interpolation="0" />
 		<key row="1877" value="0.000000" interpolation="0" />
 		<key row="2384" value="0.000000" interpolation="0" />
+		<key row="2902" value="0.000000" interpolation="1" />
+		<key row="3413" value="-1.000000" interpolation="0" />
 	</track>
 	<track name="DirectionalLightY" folded="0" muteKeyCount="0"
 color="ff4fb292">
@@ -77,6 +79,8 @@ color="ff4fb292">
 		<key row="1877" value="0.000000" interpolation="0" />
 		<key row="2384" value="-1.000000" interpolation="1" />
 		<key row="2901" value="1.000000" interpolation="0" />
+		<key row="2902" value="0.000000" interpolation="1" />
+		<key row="3413" value="-1.000000" interpolation="0" />
 	</track>
 	<track name="DirectionalLightZ" folded="0" muteKeyCount="0"
 color="ff4f71b2">
@@ -90,6 +94,8 @@ color="ff4f71b2">
 		<key row="1877" value="0.000000" interpolation="0" />
 		<key row="2384" value="-1.000000" interpolation="1" />
 		<key row="2901" value="0.000000" interpolation="0" />
+		<key row="2902" value="1.000000" interpolation="1" />
+		<key row="3413" value="-1.000000" interpolation="0" />
 	</track>
 	<track name="DirectionalLightR" folded="0" muteKeyCount="0"
 color="ff8850b2">
@@ -102,8 +108,10 @@ color="ff8850b2">
 		<key row="1268" value="12.000000" interpolation="0" />
 		<key row="1876" value="0.000000" interpolation="0" />
 		<key row="1877" value="0.000000" interpolation="0" />
-		<key row="2384" value="-3.000000" interpolation="1" />
+		<key row="2384" value="3.000000" interpolation="1" />
 		<key row="2901" value="3.000000" interpolation="0" />
+		<key row="2902" value="24.000000" interpolation="1" />
+		<key row="3413" value="32.000000" interpolation="0" />
 	</track>
 	<track name="DirectionalLightG" folded="0" muteKeyCount="0"
 color="ffb25091">
@@ -116,8 +124,10 @@ color="ffb25091">
 		<key row="1268" value="5.000000" interpolation="0" />
 		<key row="1876" value="0.000000" interpolation="0" />
 		<key row="1877" value="0.000000" interpolation="0" />
-		<key row="2384" value="-3.000000" interpolation="1" />
+		<key row="2384" value="3.000000" interpolation="1" />
 		<key row="2901" value="3.000000" interpolation="0" />
+		<key row="2902" value="16.000000" interpolation="1" />
+		<key row="3413" value="32.000000" interpolation="0" />
 	</track>
 	<track name="DirectionalLightB" folded="0" muteKeyCount="0"
 color="ffb27474">
@@ -130,8 +140,10 @@ color="ffb27474">
 		<key row="1268" value="5.000000" interpolation="0" />
 		<key row="1876" value="0.000000" interpolation="0" />
 		<key row="1877" value="0.000000" interpolation="0" />
-		<key row="2384" value="-3.000000" interpolation="0" />
+		<key row="2384" value="3.000000" interpolation="0" />
 		<key row="2901" value="3.000000" interpolation="0" />
+		<key row="2902" value="16.000000" interpolation="1" />
+		<key row="3413" value="32.000000" interpolation="0" />
 	</track>
 	<track name="PointLightPositionX" folded="0" muteKeyCount="0"
 color="ffb28050">
@@ -148,6 +160,7 @@ color="ffb28050">
 		<key row="2224" value="12.000000" interpolation="0" />
 		<key row="2384" value="12.000000" interpolation="1" />
 		<key row="2901" value="32.000000" interpolation="0" />
+		<key row="2902" value="1.000000" interpolation="0" />
 	</track>
 	<track name="PointLightPositionY" folded="0" muteKeyCount="0"
 color="ffa9b250">
@@ -163,6 +176,7 @@ color="ffa9b250">
 		<key row="1877" value="-3.000000" interpolation="0" />
 		<key row="2061" value="2.000000" interpolation="0" />
 		<key row="2384" value="-3.000000" interpolation="0" />
+		<key row="2902" value="-12.000000" interpolation="0" />
 	</track>
 	<track name="PointLightPositionZ" folded="0" muteKeyCount="0"
 color="ff60b250">
@@ -180,6 +194,7 @@ color="ff60b250">
 		<key row="2224" value="12.000000" interpolation="0" />
 		<key row="2384" value="32.000000" interpolation="2" />
 		<key row="2901" value="12.000000" interpolation="0" />
+		<key row="2902" value="88.000000" interpolation="0" />
 	</track>
 	<track name="PointLightR" folded="0" muteKeyCount="0"
 color="ff4fb292">
@@ -201,6 +216,7 @@ color="ff4fb292">
 		<key row="2061" value="321.000000" interpolation="0" />
 		<key row="2136" value="1233.000000" interpolation="0" />
 		<key row="2384" value="666.000000" interpolation="0" />
+		<key row="2902" value="32000.000000" interpolation="0" />
 	</track>
 	<track name="PointLightG" folded="0" muteKeyCount="0"
 color="ff4f71b2">
@@ -215,6 +231,7 @@ color="ff4f71b2">
 		<key row="1976" value="33.000000" interpolation="0" />
 		<key row="2136" value="222.000000" interpolation="0" />
 		<key row="2384" value="444.000000" interpolation="0" />
+		<key row="2902" value="7357.000000" interpolation="0" />
 	</track>
 	<track name="PointLightB" folded="0" muteKeyCount="0"
 color="ff8850b2">
@@ -229,6 +246,7 @@ color="ff8850b2">
 		<key row="1976" value="11.000000" interpolation="0" />
 		<key row="2136" value="111.000000" interpolation="0" />
 		<key row="2384" value="222.000000" interpolation="0" />
+		<key row="2902" value="3223.000000" interpolation="0" />
 	</track>
 	<track name="CameraPositionX" folded="0" muteKeyCount="0"
 color="ffb25091">
@@ -251,6 +269,8 @@ color="ffb25091">
 		<key row="2224" value="4.000000" interpolation="1" />
 		<key row="2383" value="7.000000" interpolation="0" />
 		<key row="2384" value="-5.000000" interpolation="0" />
+		<key row="2902" value="-8.000000" interpolation="1" />
+		<key row="3079" value="-8.000000" interpolation="0" />
 	</track>
 	<track name="CameraPositionY" folded="0" muteKeyCount="0"
 color="ffb27474">
@@ -271,6 +291,8 @@ color="ffb27474">
 		<key row="2224" value="12.000000" interpolation="1" />
 		<key row="2383" value="9.000000" interpolation="0" />
 		<key row="2384" value="6.000000" interpolation="0" />
+		<key row="2902" value="11.000000" interpolation="1" />
+		<key row="3079" value="11.000000" interpolation="0" />
 	</track>
 	<track name="CameraPositionZ" folded="0" muteKeyCount="0"
 color="ffb28050">
@@ -290,6 +312,8 @@ color="ffb28050">
 		<key row="2224" value="4.000000" interpolation="1" />
 		<key row="2383" value="7.000000" interpolation="0" />
 		<key row="2384" value="-12.000000" interpolation="0" />
+		<key row="2902" value="22.000000" interpolation="1" />
+		<key row="3079" value="11.000000" interpolation="0" />
 	</track>
 	<track name="LookAtX" folded="0" muteKeyCount="0"
 color="ffa9b250">
@@ -308,6 +332,8 @@ color="ffa9b250">
 		<key row="2061" value="-5.000000" interpolation="0" />
 		<key row="2224" value="-12.000000" interpolation="0" />
 		<key row="2384" value="-16.000000" interpolation="0" />
+		<key row="2902" value="-6.000000" interpolation="1" />
+		<key row="3079" value="-32.000000" interpolation="0" />
 	</track>
 	<track name="LookAtY" folded="0" muteKeyCount="0"
 color="ff60b250">
@@ -322,8 +348,10 @@ color="ff60b250">
 		<key row="1877" value="0.000000" interpolation="0" />
 		<key row="1976" value="4.000000" interpolation="0" />
 		<key row="2061" value="0.000000" interpolation="0" />
-		<key row="2384" value="-2.000000" interpolation="1" />
-		<key row="2901" value="12.000000" interpolation="0" />
+		<key row="2384" value="2.000000" interpolation="1" />
+		<key row="2901" value="9.000000" interpolation="0" />
+		<key row="2902" value="9.000000" interpolation="1" />
+		<key row="3079" value="-5.000000" interpolation="0" />
 	</track>
 	<track name="LookAtZ" folded="0" muteKeyCount="0"
 color="ff4fb292">
@@ -337,6 +365,8 @@ color="ff4fb292">
 		<key row="2061" value="0.000000" interpolation="0" />
 		<key row="2224" value="-32.000000" interpolation="0" />
 		<key row="2384" value="-32.000000" interpolation="0" />
+		<key row="2902" value="0.000000" interpolation="1" />
+		<key row="3079" value="-22.000000" interpolation="0" />
 	</track>
 	<track name="CameraUpX" folded="0" muteKeyCount="0"
 color="ff4f71b2">
@@ -365,11 +395,14 @@ color="ffb25091">
 		<key row="1363" value="32.000000" interpolation="0" />
 		<key row="2061" value="11.000000" interpolation="1" />
 		<key row="2135" value="32.000000" interpolation="0" />
+		<key row="2902" value="12.000000" interpolation="1" />
+		<key row="3079" value="33.000000" interpolation="0" />
 	</track>
 	<track name="Epsilon" folded="0" muteKeyCount="0"
 color="ffb27474">
 		<key row="340" value="0.010000" interpolation="0" />
 		<key row="596" value="0.000000" interpolation="0" />
+		<key row="2902" value="8.000000" interpolation="0" />
 	</track>
 	<track name="Distance" folded="0" muteKeyCount="0"
 color="ffa9b250">
@@ -380,6 +413,7 @@ color="ffa9b250">
 		<key row="1364" value="11.000000" interpolation="0" />
 		<key row="2061" value="16.000000" interpolation="0" />
 		<key row="2384" value="37.000000" interpolation="0" />
+		<key row="2902" value="32.000000" interpolation="0" />
 	</track>
 	<track name="LensCoeff" folded="0" muteKeyCount="0"
 color="ff60b250">
@@ -388,6 +422,7 @@ color="ff60b250">
 		<key row="1364" value="0.010000" interpolation="0" />
 		<key row="1877" value="0.100000" interpolation="0" />
 		<key row="2384" value="0.030000" interpolation="0" />
+		<key row="2902" value="0.020000" interpolation="0" />
 	</track>
 	<track name="MaxCoC" folded="0" muteKeyCount="0" color="ff4fb292">
 		<key row="340" value="5.000000" interpolation="0" />
@@ -403,23 +438,25 @@ color="ff4f71b2">
 		<key row="1867" value="3.000000" interpolation="0" />
 		<key row="1877" value="0.500000" interpolation="0" />
 		<key row="2384" value="0.800000" interpolation="0" />
+		<key row="2902" value="1.500000" interpolation="0" />
 	</track>
 	<track name="MarchMinimum" folded="0" muteKeyCount="0"
 color="ff8850b2">
 		<key row="340" value="1.000000" interpolation="0" />
 		<key row="596" value="0.300000" interpolation="0" />
 		<key row="2384" value="1.000000" interpolation="0" />
-		<key row="2424" value="1.200000" interpolation="0" />
+		<key row="2902" value="1.300000" interpolation="0" />
 	</track>
 	<track name="FarPlane" folded="0" muteKeyCount="0"
 color="ffb25091">
-		<key row="340" value="32.000000" interpolation="0" />
-		<key row="596" value="43.000000" interpolation="0" />
+		<key row="340" value="32.000000" interpolation="1" />
+		<key row="596" value="123.000000" interpolation="0" />
 		<key row="873" value="32.000000" interpolation="0" />
-		<key row="1268" value="31.000000" interpolation="0" />
+		<key row="1268" value="122.000000" interpolation="0" />
 		<key row="1877" value="32.000000" interpolation="0" />
 		<key row="1976" value="32.000000" interpolation="0" />
 		<key row="2384" value="66.000000" interpolation="0" />
+		<key row="2902" value="88.000000" interpolation="0" />
 	</track>
 	<track name="Step" folded="0" muteKeyCount="0" color="ffb28050">
 		<key row="340" value="0.500000" interpolation="0" />
@@ -429,7 +466,8 @@ color="ffb25091">
 		<key row="1028" value="1.400000" interpolation="0" />
 		<key row="1877" value="1.000000" interpolation="0" />
 		<key row="2224" value="4.000000" interpolation="0" />
-		<key row="2424" value="1.000000" interpolation="0" />
+		<key row="2384" value="12.000000" interpolation="0" />
+		<key row="2902" value="1.000000" interpolation="0" />
 	</track>
 	<track name="fogDensity" folded="0" muteKeyCount="0"
 color="ffa9b250">
@@ -437,14 +475,16 @@ color="ffa9b250">
 		<key row="595" value="0.300000" interpolation="0" />
 		<key row="596" value="0.100000" interpolation="0" />
 		<key row="873" value="0.300000" interpolation="0" />
-		<key row="1028" value="0.100000" interpolation="0" />
-		<key row="1268" value="0.200000" interpolation="0" />
+		<key row="1028" value="0.100000" interpolation="1" />
+		<key row="1267" value="0.200000" interpolation="0" />
+		<key row="1268" value="0.300000" interpolation="0" />
 		<key row="1364" value="0.400000" interpolation="0" />
 		<key row="1877" value="0.800000" interpolation="1" />
 		<key row="1976" value="0.500000" interpolation="0" />
 		<key row="2224" value="1.000000" interpolation="0" />
 		<key row="2384" value="0.040000" interpolation="1" />
 		<key row="2901" value="0.000000" interpolation="0" />
+		<key row="2902" value="0.400000" interpolation="0" />
 	</track>
 	<track name="TextId" folded="0" muteKeyCount="0" color="ff60b250">
 		<key row="0" value="1.000000" interpolation="0" />
@@ -455,19 +495,23 @@ color="ffa9b250">
 		<key row="340" value="0.550000" interpolation="0" />
 		<key row="596" value="0.500000" interpolation="0" />
 		<key row="1877" value="0.500000" interpolation="0" />
-		<key row="2384" value="0.600000" interpolation="0" />
+		<key row="2384" value="0.700000" interpolation="0" />
+		<key row="2902" value="0.700000" interpolation="0" />
 	</track>
 	<track name="Gain_G" folded="0" muteKeyCount="0" color="ffb28050">
 		<key row="340" value="0.500000" interpolation="0" />
 		<key row="596" value="0.500000" interpolation="0" />
 		<key row="1877" value="0.600000" interpolation="0" />
-		<key row="2384" value="0.700000" interpolation="0" />
+		<key row="2384" value="0.600000" interpolation="0" />
+		<key row="2902" value="0.650000" interpolation="0" />
 	</track>
 	<track name="Gain_B" folded="0" muteKeyCount="0" color="ffa9b250">
 		<key row="340" value="0.400000" interpolation="0" />
 		<key row="596" value="0.500000" interpolation="0" />
+		<key row="1268" value="0.550000" interpolation="0" />
 		<key row="1877" value="0.700000" interpolation="0" />
-		<key row="2384" value="0.760000" interpolation="0" />
+		<key row="2384" value="0.800000" interpolation="0" />
+		<key row="2902" value="0.500000" interpolation="0" />
 	</track>
 	<track name="Gamma_R" folded="0" muteKeyCount="0"
 color="ff60b250">
@@ -478,6 +522,7 @@ color="ff60b250">
 		<key row="2376" value="0.400000" interpolation="1" />
 		<key row="2383" value="0.000000" interpolation="0" />
 		<key row="2384" value="0.270000" interpolation="0" />
+		<key row="2902" value="0.500000" interpolation="0" />
 	</track>
 	<track name="Gamma_G" folded="0" muteKeyCount="0"
 color="ff4fb292">
@@ -489,6 +534,7 @@ color="ff4fb292">
 		<key row="2372" value="0.400000" interpolation="1" />
 		<key row="2383" value="0.000000" interpolation="0" />
 		<key row="2384" value="0.330000" interpolation="0" />
+		<key row="2902" value="0.500000" interpolation="0" />
 	</track>
 	<track name="Gamma_B" folded="0" muteKeyCount="0"
 color="ff4f71b2">
@@ -498,6 +544,7 @@ color="ff4f71b2">
 		<key row="2368" value="0.400000" interpolation="1" />
 		<key row="2383" value="0.000000" interpolation="0" />
 		<key row="2384" value="0.330000" interpolation="0" />
+		<key row="2902" value="0.600000" interpolation="0" />
 	</track>
 	<track name="Lift_R" folded="0" muteKeyCount="0" color="ff8850b2">
 		<key row="340" value="0.510000" interpolation="0" />
@@ -505,7 +552,8 @@ color="ff4f71b2">
 		<key row="1877" value="0.500000" interpolation="0" />
 		<key row="2384" value="0.480000" interpolation="0" />
 		<key row="2888" value="0.300000" interpolation="2" />
-		<key row="2901" value="1.000000" interpolation="0" />
+		<key row="2901" value="1.000000" interpolation="1" />
+		<key row="2959" value="0.500000" interpolation="0" />
 	</track>
 	<track name="Lift_G" folded="0" muteKeyCount="0" color="ffb25091">
 		<key row="340" value="0.500000" interpolation="0" />
@@ -514,7 +562,8 @@ color="ff4f71b2">
 		<key row="1877" value="0.500000" interpolation="0" />
 		<key row="2384" value="0.500000" interpolation="0" />
 		<key row="2888" value="0.500000" interpolation="2" />
-		<key row="2901" value="1.000000" interpolation="0" />
+		<key row="2901" value="1.000000" interpolation="1" />
+		<key row="2959" value="0.550000" interpolation="0" />
 	</track>
 	<track name="Lift_B" folded="0" muteKeyCount="0" color="ffb27474">
 		<key row="340" value="0.550000" interpolation="1" />
@@ -522,40 +571,48 @@ color="ff4f71b2">
 		<key row="1877" value="0.520000" interpolation="0" />
 		<key row="2384" value="0.550000" interpolation="0" />
 		<key row="2888" value="0.550000" interpolation="2" />
-		<key row="2901" value="1.000000" interpolation="0" />
+		<key row="2901" value="1.000000" interpolation="1" />
+		<key row="2959" value="0.600000" interpolation="0" />
 	</track>
 	<track name="Presaturation_R" folded="0" muteKeyCount="0"
 color="ffb28050">
 		<key row="340" value="1.000000" interpolation="0" />
 		<key row="596" value="1.000000" interpolation="0" />
+		<key row="2902" value="1.000000" interpolation="0" />
 	</track>
 	<track name="Presaturation_G" folded="0" muteKeyCount="0"
 color="ffa9b250">
 		<key row="340" value="1.000000" interpolation="0" />
 		<key row="596" value="1.000000" interpolation="0" />
+		<key row="2902" value="1.200000" interpolation="0" />
 	</track>
 	<track name="Presaturation_B" folded="0" muteKeyCount="0"
 color="ff60b250">
 		<key row="340" value="1.300000" interpolation="0" />
 		<key row="596" value="1.000000" interpolation="0" />
+		<key row="2902" value="1.400000" interpolation="0" />
 	</track>
 	<track name="ColorTemperatureStrength_R" folded="0"
 muteKeyCount="0" color="ff4fb292">
 		<key row="340" value="1.000000" interpolation="0" />
+		<key row="2902" value="1.000000" interpolation="0" />
 	</track>
 	<track name="ColorTemperatureStrength_G" folded="0"
 muteKeyCount="0" color="ff4f71b2">
 		<key row="340" value="1.000000" interpolation="0" />
+		<key row="2902" value="1.000000" interpolation="0" />
 	</track>
 	<track name="ColorTemperatureStrength_B" folded="0"
 muteKeyCount="0" color="ff8850b2">
 		<key row="340" value="1.000000" interpolation="0" />
+		<key row="2902" value="1.000000" interpolation="0" />
 	</track>
 	<track name="ColorTemprature" folded="0" muteKeyCount="0"
 color="ffb25091">
 		<key row="340" value="6500.000000" interpolation="1" />
 		<key row="595" value="7000.000000" interpolation="1" />
 		<key row="596" value="5555.000000" interpolation="0" />
+		<key row="2902" value="6500.000000" interpolation="0" />
 	</track>
 	<track name="TempratureNormalization" folded="0" muteKeyCount="0"
 color="ffb27474">
@@ -564,13 +621,17 @@ color="ffb27474">
 	</track>
 	<track name="iMouseX" folded="0" muteKeyCount="0"
 color="ffb27474">
+		<key row="340" value="0.000000" interpolation="0" />
 		<key row="418" value="0.000000" interpolation="0" />
 		<key row="2384" value="3.000000" interpolation="0" />
+		<key row="2902" value="0.000000" interpolation="0" />
 	</track>
 	<track name="iMouseY" folded="0" muteKeyCount="0"
 color="ffb28050">
+		<key row="340" value="0.000000" interpolation="0" />
 		<key row="2384" value="1.000000" interpolation="1" />
 		<key row="2901" value="1.500000" interpolation="0" />
+		<key row="2902" value="0.000000" interpolation="0" />
 	</track>
 	<track name="Animator Speed DefaultAvatar" folded="0"
 muteKeyCount="0" color="ff8850b2">
