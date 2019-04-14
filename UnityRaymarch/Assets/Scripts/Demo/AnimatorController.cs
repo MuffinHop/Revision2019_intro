@@ -5,18 +5,26 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class AnimatorController : MonoBehaviour
 {
-    private int _animid;
+    private int _animid = -1;
+    Animator _animator;
+    AnimatorClipInfo[] _currentClipInfo;
+    string _clipName;
+
+    void Awake()
+    {
+        _animator = GetComponent<Animator>();
+        _animator.speed = 0;
+    }
+    
     void Update()
     {
-        var animator = GetComponent<Animator>();
         int animid = (int)SyncUp.GetVal("Animator AnimationID " + gameObject.name);
         if (animid != _animid)
         {
-            animator.StopPlayback();
-            animator.speed = SyncUp.GetVal("Animator Speed " + gameObject.name);
-            animator.SetInteger("AnimId", animid);
-            animator.StartPlayback();
             _animid = animid;
         }
+
+        _animator.speed = 0;
+        _animator.Play(""+_animid, -1, SyncUp.GetVal("Animator Time " + gameObject.name));
     }
 }
