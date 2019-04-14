@@ -1,5 +1,6 @@
 ﻿uniform sampler2D _TextTex;
 uniform float _iTime;
+uniform vec4 _iMouse;
 uniform vec4 _iResolution;
 uniform vec4 _DirectionalLight;
 uniform vec4 _DirectionalLightColor;
