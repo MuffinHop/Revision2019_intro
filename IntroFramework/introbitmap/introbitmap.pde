@@ -1,13 +1,13 @@
 PImage q;
 
-final int W = 290;
-final int H = 42;
+final int W = 516;
+final int H = 212;
 
 byte[] pic;
-String picname = "quadlogo";
+String picname = "logoja";
 
 void setup() {
-  size(320,200);
+  size(640,360);
   q = loadImage(picname+".png");
   pic = new byte[(W*H)/8];
   for (int i = 0; i < (W*H)/8; i++) pic[i] = 0;
