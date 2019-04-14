@@ -914,7 +914,7 @@ float GetAmbientOcclusion(in ContactInfo intersection, in Surface surface)
 	float AO = 1.0;
 
 	float sdfDistance = 0.0;
-	for (int i = 0; i <= 5; i++)
+	for (int i = 0; i <= 4; i++)
 	{
 		sdfDistance += 0.1;
 		vec4 sceneDistance = GetDistanceScene(position + normal * sdfDistance, transparencyInformation);
@@ -1151,7 +1151,7 @@ vec4 mainImage()
 
 
 	ContactInfo intersection;
-	RayMarch(ray, intersection, 256, transparencyInformation);
+	RayMarch(ray, intersection, 180, transparencyInformation);
 	vec3 sceneColor;
 	float d = intersection.distanc;
 	if (intersection.id.x < 0.5) {
