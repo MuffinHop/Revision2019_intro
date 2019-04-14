@@ -121,6 +121,11 @@ public class RM_Object : MonoBehaviour
         if (Time.frameCount % 5 == 0 && prevFrame != Time.frameCount )
         {
             prevFrame = Time.frameCount ;
+            transform.position = new Vector3(
+                Mathf.Floor(transform.position.x * 100.0f) / 100.0f,
+                Mathf.Floor(transform.position.y * 100.0f) / 100.0f,
+                Mathf.Floor(transform.position.z * 100.0f) / 100.0f
+                );
             if (Mathf.Abs(previousPosition.x-transform.position.x) > 0.01f)
             {
                 PositionXHistory.Add(new SyncRMObject(Time.frameCount, transform.position.x));
