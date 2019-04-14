@@ -501,7 +501,7 @@ color="ff4f71b2">
 	</track>
 	<track name="Lift_R" folded="0" muteKeyCount="0" color="ff8850b2">
 		<key row="340" value="0.510000" interpolation="0" />
-		<key row="596" value="0.600000" interpolation="0" />
+		<key row="596" value="0.480000" interpolation="0" />
 		<key row="1877" value="0.500000" interpolation="0" />
 		<key row="2384" value="0.480000" interpolation="0" />
 		<key row="2888" value="0.300000" interpolation="2" />
