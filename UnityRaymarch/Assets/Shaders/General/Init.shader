@@ -90,7 +90,7 @@ vec4 mainImage()
 	// hack
 	if (_TextId == 3.0) {
 		vec3 text = texture(_TextTex, uv).rgb;
-		if (text.r > 0.1) fragColor.rgb += text.rgb;
+		if (text.r > 0.8) fragColor.rgb += text.rgb;
 	}
 
 
