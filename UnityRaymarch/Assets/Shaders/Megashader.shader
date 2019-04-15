@@ -1235,12 +1235,11 @@ vec4 mainImage()
 
 	vec2 uv = fragCoord.xy / _iResolution.xy;
 
-	// hack
 	if (_TextId == 1.0) {
 		vec3 text = texture(_TextTex, uv).rgb;
-		fragColor.rgb = text.rgb;
-		return  fragColor;
+		return vec4(text,0.5);
 	}
+
 	vec3 lookAt = _CameraLookAt.xyz;
 	vec3 position = _CameraPosition.xyz;
 
@@ -1311,12 +1310,23 @@ vec4 mainImage()
 	fragColor.r = focus;
 #endif
 
-	// hack
 	if (_TextId == 3.0) {
 		vec3 text = texture(_TextTex, uv).rgb;
-		if (text.r > 0.8) fragColor.rgb += text.rgb;
+		for (float i = 1.0; i < 4.0; i+=1.) {
+			text+=texture(_TextTex, uv+i*0.0003).rgb;
+		}
+		text/=4.0;
+		fragColor.rgb+=clamp(text,0.0,1.0);
 	}
 
+	if (_TextId == 4.0) {
+		vec3 text = texture(_TextTex, uv*4.).rgb;
+		for (float i = 1.0; i < 4.0; i+=1.) {
+			text+=texture(_TextTex, uv*4.+i*0.0003).rrr;
+		}
+		text/=4.0;
+		fragColor.rgb+=clamp(text,0.0,1.0);
+	}
 
 	return  fragColor;
 }

@@ -22,6 +22,7 @@ uniform float _FarPlane;
 uniform float _Step;
 uniform float fogDensity;
 uniform float _TextId;
+uniform float _Environment;
 #define maxItersGlobal 48
 #define ENABLE_FOG
 #define ENABLE_REFLECTIONS
@@ -178,8 +179,10 @@ float hash12(vec2 p)
 
 // Some magic values for a pretty filmic grain
 vec3 filmgrain(vec3 color) {
-    float noise = (hash12(gl_FragCoord.xy + 0.001*_iTime) / 3.0 + 0.85);
-    return color * noise;
+    float noiseR = ((hash12(gl_FragCoord.xy + 0.00111*_iTime)-0.5) / 4.2 * (0.125+color.r*0.25));
+    float noiseG = ((hash12(gl_FragCoord.xy + 0.00123*_iTime)-0.5) / 4.2 * (0.125+color.g*0.25));
+    float noiseB = ((hash12(gl_FragCoord.xy + 0.00132*_iTime)-0.5) / 4.2 * (0.125+color.b*0.25));
+    return color + vec3(noiseR,noiseG,noiseB);
 }
 
 // ------------------ 
@@ -498,7 +501,7 @@ const float material_ID5 = 6;
 
 const float material_ID6 = 7;
 
- uniform float _Objects[240];
+ uniform float _Objects[250];
 float fSphere(vec3 p, float r) {
 	return length(p) - r;
 }
@@ -514,6 +517,9 @@ float fBox(vec3 p, vec3 b) {
 	return length(max(d, vec3(0))) + vmax(min(d, vec3(0)));
 }
 float Wheat(vec3 pos, vec3 algorithm) {
+    float vali = 5.;
+    float ps = min(perlinnoise(pos.xz*0.1 / vali) - 0.2,0.0);
+	pos.y-= (1.0+ps) * _Environment * 1000.0;
 	pos.x+=cos(algorithm.z+pos.y*7.+pos.x*5.)*0.03;
 	pos.z-=0.5;
 	vec3 opos = pos;
@@ -543,16 +549,24 @@ float Smoke(vec3 pos, vec3 algorithm) {
 
     return distance5;
 }
+float Water(vec3 pos, vec3 algorithm) {
+	pos.y += perlinnoise(pos.xz*3.)*0.025;
+	float dist = fBox(pos, algorithm);
+	return dist;
+}
+
 
 float fOpUnionRund(float a, float b, float r) {
 	vec2 u = max(vec2(r - a,r - b), vec2(0));
 	return max(r, min (a, b)) - length(u);
 }
 float TreeTrunk(vec3 pos, vec3 algorithm) {
+    float vali = 5.;
+    float ps = perlinnoise(pos.xz*0.1 / vali) - 0.2;
+	pos.y-= ps * _Environment * 1000.0;
 	vec3 opos = pos;
 	vec3 opos_ = opos;
 	
-    float vali = 5.;
     opos.x += hash1(floor(pos.z / vali) + vali) * vali / 2.0;
     opos.x = mod(opos.x, vali) - vali / 2.0;
     opos.z += hash1(floor(pos.x / vali) + vali) * vali / 2.0;
@@ -582,10 +596,11 @@ float sdSphere(vec3 p, float s)
 
 
 float TreeBush(vec3 pos, vec3 algorithm) {
-	pos.y += GetHeightmapLowPrecision(pos*algorithm) * algorithm.y;
+    float vali = 5.;
+    float ps = perlinnoise(pos.xz*0.1 / vali) - 0.2;
+	pos.y += GetHeightmapLowPrecision(pos*algorithm) * algorithm.y - ps * _Environment;
     vec3 opos = pos;
     
-    float vali = 5.;
     opos.x += hash1(floor(pos.z / vali) + vali) * vali / 2.0;
     opos.x = mod(opos.x, vali) - vali / 2.0;
     opos.z += hash1(floor(pos.x / vali) + vali) * vali / 2.0;
@@ -595,7 +610,7 @@ float TreeBush(vec3 pos, vec3 algorithm) {
 	vec3 rpos = pos;
 	rpos.x = floor(pos.x / vali);
 	rpos.z = floor(pos.z / vali);
-    float ss = min(perlinnoise(rpos.xz*0.1) * 12.0,2.0);
+    float ss = min(perlinnoise(rpos.xz*0.1) * 12.0,1.5);
     vec3 o = opos;
     opos = o;
 	opos.y += GetHeightmapLowPrecision(pos*algorithm) *  algorithm.y;
@@ -625,19 +640,23 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
                vec3 posID0 = position - vec3(_Objects[0], _Objects[1], _Objects[2]);
                id0_distance  = min(fSphere(posID0,_Objects[3]), id0_distance);
 
+//Cube (1)
+               vec3 posID9 = position - vec3(_Objects[90], _Objects[91], _Objects[92]);
+               id0_distance  = min(Water(posID9, vec3(_Objects[93], _Objects[94],_Objects[95])), id0_distance);
+
 //Sphere (1)
-               vec3 posID12 = position - vec3(_Objects[120], _Objects[121], _Objects[122]);
-               id0_distance  = min(fSphere(posID12,_Objects[123]), id0_distance);
+               vec3 posID13 = position - vec3(_Objects[130], _Objects[131], _Objects[132]);
+               id0_distance  = min(fSphere(posID13,_Objects[133]), id0_distance);
 
 //Sphere (2)
-               vec3 posID16 = position - vec3(_Objects[160], _Objects[161], _Objects[162]);
-               id0_distance  = min(fSphere(posID16,_Objects[163]), id0_distance);
-
-//Sphere
                vec3 posID17 = position - vec3(_Objects[170], _Objects[171], _Objects[172]);
                id0_distance  = min(fSphere(posID17,_Objects[173]), id0_distance);
+
+//Sphere
+               vec3 posID18 = position - vec3(_Objects[180], _Objects[181], _Objects[182]);
+               id0_distance  = min(fSphere(posID18,_Objects[183]), id0_distance);
                vec4 distID0 = vec4(id0_distance, material_ID0, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombine(result, distID0);
+               result = DistUnionCombineTransparent(result, distID0, transparencyPointer);
 
          float id1_distance = 1e9;
 
@@ -662,30 +681,30 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
                id1_distance  = min(fBox(posID7, vec3(_Objects[73], _Objects[74],_Objects[75])), id1_distance);
 
 //RightArm
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[90], _Objects[91],_Objects[92]), vec3(_Objects[93], _Objects[94],_Objects[95]), 0.08), id1_distance);
+               id1_distance  = min(sdCapsule(position, vec3(_Objects[100], _Objects[101],_Objects[102]), vec3(_Objects[103], _Objects[104],_Objects[105]), 0.08), id1_distance);
 
 //GameObject
-               vec3 posID11 = position - vec3(_Objects[110], _Objects[111], _Objects[112]);
-               id1_distance  = fOpUnionRound(fSphere(posID11,_Objects[113]), id1_distance,0.12);
+               vec3 posID12 = position - vec3(_Objects[120], _Objects[121], _Objects[122]);
+               id1_distance  = fOpUnionRound(fSphere(posID12,_Objects[123]), id1_distance,0.12);
 
 //LeftUpLeg
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[130], _Objects[131],_Objects[132]), vec3(_Objects[133], _Objects[134],_Objects[135]), 0.1), id1_distance);
+               id1_distance  = min(sdCapsule(position, vec3(_Objects[140], _Objects[141],_Objects[142]), vec3(_Objects[143], _Objects[144],_Objects[145]), 0.1), id1_distance);
 
 //Spine
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[150], _Objects[151],_Objects[152]), vec3(_Objects[153], _Objects[154],_Objects[155]), 0.15), id1_distance);
+               id1_distance  = min(sdCapsule(position, vec3(_Objects[160], _Objects[161],_Objects[162]), vec3(_Objects[163], _Objects[164],_Objects[165]), 0.15), id1_distance);
 
 //LeftHand
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[180], _Objects[181],_Objects[182]), vec3(_Objects[183], _Objects[184],_Objects[185]), 0.04), id1_distance);
+               id1_distance  = min(sdCapsule(position, vec3(_Objects[190], _Objects[191],_Objects[192]), vec3(_Objects[193], _Objects[194],_Objects[195]), 0.04), id1_distance);
 
 //GameObject
-               vec3 posID19 = position - vec3(_Objects[190], _Objects[191], _Objects[192]);
-               id1_distance  = fOpUnionRound(fSphere(posID19,_Objects[193]), id1_distance,0.12);
+               vec3 posID20 = position - vec3(_Objects[200], _Objects[201], _Objects[202]);
+               id1_distance  = fOpUnionRound(fSphere(posID20,_Objects[203]), id1_distance,0.12);
 
 //RightHand
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[220], _Objects[221],_Objects[222]), vec3(_Objects[223], _Objects[224],_Objects[225]), 0.04), id1_distance);
+               id1_distance  = min(sdCapsule(position, vec3(_Objects[230], _Objects[231],_Objects[232]), vec3(_Objects[233], _Objects[234],_Objects[235]), 0.04), id1_distance);
 
 //RightShoulder
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[230], _Objects[231],_Objects[232]), vec3(_Objects[233], _Objects[234],_Objects[235]), 0.1), id1_distance);
+               id1_distance  = min(sdCapsule(position, vec3(_Objects[240], _Objects[241],_Objects[242]), vec3(_Objects[243], _Objects[244],_Objects[245]), 0.1), id1_distance);
                vec4 distID1 = vec4(id1_distance, material_ID1, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID1);
 
@@ -696,8 +715,8 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
                id2_distance  = min(Wheat(posID6, vec3(_Objects[63], _Objects[64],_Objects[65])), id2_distance);
 
 //Wheat (2)
-               vec3 posID10 = position - vec3(_Objects[100], _Objects[101], _Objects[102]);
-               id2_distance  = min(Wheat(posID10, vec3(_Objects[103], _Objects[104],_Objects[105])), id2_distance);
+               vec3 posID11 = position - vec3(_Objects[110], _Objects[111], _Objects[112]);
+               id2_distance  = min(Wheat(posID11, vec3(_Objects[113], _Objects[114],_Objects[115])), id2_distance);
                vec4 distID2 = vec4(id2_distance, material_ID2, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID2);
 
@@ -712,24 +731,24 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
          float id4_distance = 1e9;
 
 //Tree Trunk Ray Marched
-               #define posID14 position
-               id4_distance  = min(TreeTrunk(posID14, vec3(_Objects[143], _Objects[144],_Objects[145])), id4_distance);
+               #define posID15 position
+               id4_distance  = min(TreeTrunk(posID15, vec3(_Objects[153], _Objects[154],_Objects[155])), id4_distance);
                vec4 distID4 = vec4(id4_distance, material_ID4, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID4);
 
          float id5_distance = 1e9;
 
 //Cube Ray Marched
-               vec3 posID20 = position - vec3(_Objects[200], _Objects[201], _Objects[202]);
-               id5_distance  = min(fBox(posID20, vec3(_Objects[203], _Objects[204],_Objects[205])), id5_distance);
+               vec3 posID21 = position - vec3(_Objects[210], _Objects[211], _Objects[212]);
+               id5_distance  = min(fBox(posID21, vec3(_Objects[213], _Objects[214],_Objects[215])), id5_distance);
                vec4 distID5 = vec4(id5_distance, material_ID5, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID5);
 
          float id6_distance = 1e9;
 
 //Tree Bush Ray Marched
-               vec3 posID21 = position - vec3(_Objects[210], _Objects[211], _Objects[212]);
-               id6_distance  = min(TreeBush(posID21, vec3(_Objects[213], _Objects[214],_Objects[215])), id6_distance);
+               vec3 posID22 = position - vec3(_Objects[220], _Objects[221], _Objects[222]);
+               id6_distance  = min(TreeBush(posID22, vec3(_Objects[223], _Objects[224],_Objects[225])), id6_distance);
                vec4 distID6 = vec4(id6_distance, material_ID6, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID6);
 
@@ -779,7 +798,7 @@ Material RockPattern(vec3 position) {
        if (hitNfo.id.x == material_ID0){
               mat.reflectionCoefficient = 0.27;
               mat.albedo = vec3(1,1,1);;
-              mat.transparency =0;
+              mat.transparency =0.5019608;
               mat.smoothness = 0.8;
               mat.reflectindx = 0.69;
        }
@@ -1186,11 +1205,12 @@ vec4 mainImage()
 	Trace ray;
 
 	vec2 uv = fragCoord.xy / _iResolution.xy;
-	if (_TextId >= 1.0) {
+
+	if (_TextId == 1.0) {
 		vec3 text = texture(_TextTex, uv).rgb;
-		fragColor.rgb = text.rgb;
-		return  fragColor;
+		return vec4(text,0.5);
 	}
+
 	vec3 lookAt = _CameraLookAt.xyz;
 	vec3 position = _CameraPosition.xyz;
 
@@ -1213,11 +1233,10 @@ vec4 mainImage()
 	ray.direction = normalize(-rightDirection * viewDirectionCoord.x + upDirection * viewDirectionCoord.y + forwardDirection);
 	ray.startdistanc = 0.0;
 	ray.length = farClip;
-	ray.direction.y *= 0.85;
 
 
 	ContactInfo intersection;
-	RayMarch(ray, intersection, 200, transparencyInformation);
+	RayMarch(ray, intersection, 256, transparencyInformation);
 	vec3 sceneColor;
 	float d = intersection.distanc;
 	if (intersection.id.x < 0.5) {
@@ -1231,6 +1250,7 @@ vec4 mainImage()
 		Material material = GetObjectMaterial(intersection);
 
 		//surface.reflection = GetReflection(ray, intersection, surface);
+		surface.reflection = GetSkyGradient(ray.direction);
 
 		float distanctrans = intersection.distanc;
 		/*if (material.transparency > 0.0) {
@@ -1260,6 +1280,25 @@ vec4 mainImage()
 #ifdef DEBUG_STEPS
 	fragColor.r = focus;
 #endif
+
+	if (_TextId == 3.0) {
+		vec3 text = texture(_TextTex, uv).rgb;
+		for (float i = 1.0; i < 4.0; i+=1.) {
+			text+=texture(_TextTex, uv+i*0.0003).rgb;
+		}
+		text/=4.0;
+		fragColor.rgb+=clamp(text,0.0,1.0);
+	}
+
+	if (_TextId == 4.0) {
+		vec3 text = texture(_TextTex, uv*4.).rgb;
+		for (float i = 1.0; i < 4.0; i+=1.) {
+			text+=texture(_TextTex, uv*4.+i*0.0003).rrr;
+		}
+		text/=4.0;
+		fragColor.rgb+=clamp(text,0.0,1.0);
+	}
+
 	return  fragColor;
 }
 
