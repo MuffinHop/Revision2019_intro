@@ -84,8 +84,10 @@ float hash12(vec2 p)
 
 // Some magic values for a pretty filmic grain
 vec3 filmgrain(vec3 color) {
-    float noise = (hash12(gl_FragCoord.xy + 0.001*_iTime) / 3.0 + 0.85);
-    return color * noise;
+    float noiseR = ((hash12(gl_FragCoord.xy + 0.00111*_iTime)-0.5) / 4.2 * (0.125+color.r*0.25));
+    float noiseG = ((hash12(gl_FragCoord.xy + 0.00123*_iTime)-0.5) / 4.2 * (0.125+color.g*0.25));
+    float noiseB = ((hash12(gl_FragCoord.xy + 0.00132*_iTime)-0.5) / 4.2 * (0.125+color.b*0.25));
+    return color + vec3(noiseR,noiseG,noiseB);
 }
 
 // ------------------ 

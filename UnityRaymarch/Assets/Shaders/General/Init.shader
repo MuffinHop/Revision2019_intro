@@ -10,6 +10,9 @@ vec4 mainImage()
 	Trace ray;
 
 	vec2 uv = fragCoord.xy / _iResolution.xy;
+	if (abs(uv.y - 0.5) > 0.46) {
+		discard;
+	}
 	if (_TextId >= 1.0) {
 		vec3 text = texture(_TextTex, uv).rgb;
 		fragColor.rgb = text.rgb;
@@ -74,10 +77,13 @@ vec4 mainImage()
 	float e = 1.2 / (rf2_1 * rf2_1);
 	vec3 noise = (rand(uv + _iTime) - .5) * vec3(1.0, 1.0, 1.0) * 0.01;
 	fragColor = min(max(vec4(e*Reinhard(sceneColor * exposure) + noise, 1.0), vec4(0.0, 0.0, 0.0, 1.0)), vec4(1.0, 1.0, 1.0, 1.0));
-	fragColor.rgb = fragColor.rgb + filmgrain(fragColor.rgb) * 0.2;
+	fragColor.rgb = filmgrain(fragColor.rgb) * 1.2;
 
 	float cocs = (d - _Distance) * _LensCoeff / d;
 	cocs = clamp(cocs, -_MaxCoC, _MaxCoC);
+
+	uv = gl_FragCoord.xy / _iResolution.xy - vec2(.5);
+	fragColor = fragColor * exp(-1.2 * (uv.x*uv.x + uv.y*uv.y));
 
 	fragColor.a = saturate(abs(cocs) * _RcpMaxCoC);
 

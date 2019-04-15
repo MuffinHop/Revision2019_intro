@@ -69,7 +69,7 @@
 	vec4 mainImage(vec2 uv) {
 		vec4 i = vec4(0.);
 		float s1;
-		float blr = texture(_MainTex, uv).w;
+		float blr = max(texture(_MainTex, uv).w,0.011);
 		for (int t = 0; t < 11; t++) {
 			float s2 = s1;
 			s1 = hash(float(1 - t) + dot(uv, uv));
@@ -77,7 +77,7 @@
 			i += textureLod(_MainTex, uv + max(blr / 2. - .004, 0.)*vec2(s1 - .5, s2 - .5), blr * 2.5);
 		}
 		i /= vec4(11.);
-		return i - blr * 2.;
+		return i ;
 	}
 	void main() {
 		ColorGradingPreset ColorGradingPreset1 = ColorGradingPreset(
@@ -91,9 +91,14 @@
 		);
 
 		vec2 uv = gl_FragCoord.xy / iResolution.xy;
-		vec3 c = mainImage(uv).xyz;
-		c = colorGradingProcess(ColorGradingPreset1, c);
-		gl_FragColor = vec4(c, 1.0);
+		if (abs(uv.y - 0.5) > 0.46) {
+			gl_FragColor = vec4(0.0);
+		}
+		else {
+			vec3 c = mainImage(uv).xyz;
+			c = colorGradingProcess(ColorGradingPreset1, c);
+			gl_FragColor = vec4(c, 1.0);
+		}
 	}
 
 	#endif 
