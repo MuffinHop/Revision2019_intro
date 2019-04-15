@@ -19,7 +19,7 @@ void draw() {
   background(0);
   image(q,0,0);
   int i = 0;
-  for (int y = 0; y < H; y++) {
+  for (int y = H-1; y >= 0; y--) {
    for (int x = 0; x < W; x++) {
      color c = q.get(x,y);
      if (red(c) > 0 || green(c) > 0 || blue(c) > 0) {
