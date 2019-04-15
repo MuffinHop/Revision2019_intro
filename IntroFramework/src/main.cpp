@@ -499,6 +499,17 @@ int buftextcount = 0;
 float bufcharscurrent = 0.0;
 int bufcharstotal = 0;
 
+int buf2textlefts[32] = { 0 };
+int buf2texttops[32] = { 0 };
+char *buf2texts[32] = { "" };
+char **buf2textptr = buf2texts;
+int buf2textindex = 0;
+int buf2textcount = 0;
+
+float buf2charscurrent = 0.0;
+float buf2charsprev = 0.0;
+int buf2charstotal = 0;
+
 void DrawRectTextBuf(const char* sText, COLORREF fg, int left, int top) {
 	buftextptr[buftextindex] = (char*)sText;
 	buftextlefts[buftextindex] = left;
@@ -508,6 +519,14 @@ void DrawRectTextBuf(const char* sText, COLORREF fg, int left, int top) {
 	buftextcount++;
 }
 
+void DrawRectTextBuf2(const char* sText, COLORREF fg, int left, int top) {
+	buf2textptr[buf2textindex] = (char*)sText;
+	buf2textlefts[buf2textindex] = left;
+	buf2texttops[buf2textindex] = top;
+	buf2charstotal += (int)strlen(sText);
+	buf2textindex++;
+	buf2textcount++;
+}
 
 void DrawRectTextW(LPCWSTR a, int len, COLORREF fg, int left, int top) {
 	SetTextColor(fonthDC, fg);
@@ -653,22 +672,23 @@ void RenderFont3() {
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
 	int off = 215;
 	int y = 100;
-	DrawRectText("Logicoma", RGB(255, 255, 255), -150+off, 206-y);
-	DrawRectText("Epoch", RGB(255, 255, 255), 525 + off, 355 - y);
-	DrawRectText("DSS", RGB(255, 255, 255), -40 + off, 470 - y);
-	DrawRectText("Paraguay", RGB(255, 255, 255), 442 + off, 470 - y);
-	DrawRectText("Prismbeings", RGB(255, 255, 255), 592 + off, 211 - y);
-	DrawRectText("Conspiracy", RGB(255, 255, 255), 872 + off, 419 - y);
-	DrawRectText("PWP", RGB(255, 255, 255), 1017 + off, 574 - y);
-	DrawRectText("Dekadence", RGB(255, 255, 255), 292 + off, 574 - y);
-	DrawRectText("Peisik", RGB(255, 255, 255), -68 + off, 346 - y);
-	DrawRectText("lft", RGB(255, 255, 255), -93 + off, 569 - y);
-	DrawRectText("Poo-brain", RGB(255, 255, 255), 394 + off, 287 - y);
-	DrawRectText("Mercury", RGB(255, 255, 255), 1068 + off, 287 - y);
-	DrawRectText("Unique", RGB(255, 255, 255), 1102 + off, 500 - y);
-	DrawRectText("Loonies", RGB(255, 255, 255), 1084 + off, 645 - y);
-	DrawRectText("Calodox", RGB(255, 255, 255), 370 + off, 645 - y);
-	DrawRectText("Titan", RGB(255, 255, 255), -154 + off, 645 - y);
+	DrawRectTextBuf2("Logicoma  ", RGB(255, 255, 255), -150+off, 206-y);
+	DrawRectTextBuf2("Epoch   ", RGB(255, 255, 255), 525 + off, 355 - y);
+	DrawRectTextBuf2("DSS      ", RGB(255, 255, 255), -40 + off, 470 - y);
+	DrawRectTextBuf2("Paraguay   ", RGB(255, 255, 255), 442 + off, 470 - y);
+	DrawRectTextBuf2("Prismbeings  ", RGB(255, 255, 255), 592 + off, 211 - y);
+	DrawRectTextBuf2("Conspiracy    ", RGB(255, 255, 255), 872 + off, 419 - y);
+	DrawRectTextBuf2("PWP      ", RGB(255, 255, 255), 1017 + off, 574 - y);
+	DrawRectTextBuf2("Dekadence  ", RGB(255, 255, 255), 292 + off, 574 - y);
+	DrawRectTextBuf2("Peisik  ", RGB(255, 255, 255), -68 + off, 346 - y);
+	DrawRectTextBuf2("lft     ", RGB(255, 255, 255), -93 + off, 569 - y);
+	DrawRectTextBuf2("Poo-brain   ", RGB(255, 255, 255), 394 + off, 287 - y);
+	DrawRectTextBuf2("Mercury  ", RGB(255, 255, 255), 1068 + off, 287 - y);
+	DrawRectTextBuf2("Unique   ", RGB(255, 255, 255), 1102 + off, 500 - y);
+	DrawRectTextBuf2("Loonies  ", RGB(255, 255, 255), 1084 + off, 645 - y);
+	DrawRectTextBuf2("Calodox  ", RGB(255, 255, 255), 370 + off, 645 - y);
+	DrawRectTextBuf2("Titan   ", RGB(255, 255, 255), -154 + off, 645 - y);
+	DrawRectTextBuf2("           ", RGB(255, 255, 255), -154 + off, 645 - y);
 }
 
 int bitmap_alloc = 0;
@@ -700,9 +720,12 @@ ConvertRGB(BITMAPINFO *info,        /* I - Original bitmap information */
 			bitmap_alloc = 1;
 		}
 
+
+
 		/*
 		* Swap red & blue in a 24-bit image...
 		*/
+
 
 		for (i = 0; i < info->bmiHeader.biHeight; i++)
 			for (j = 0, from = ((GLubyte *)bits) + i * width,
@@ -718,6 +741,8 @@ ConvertRGB(BITMAPINFO *info,        /* I - Original bitmap information */
 
 	return (newbits);
 }
+
+
 
 
 void AllSyncDataHandle(float row);
@@ -761,6 +786,10 @@ int fontinit = 0;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+float startTime = 0.0;
+float endTime = 0.0;
+float dt = 0.0;
 
 
 #ifndef EDITOR_CONTROLS
@@ -885,12 +914,9 @@ int __cdecl main(int argc, char* argv[])
 		// render with the primary shader
 		auto songPos = player->GetSongPos();
 		if (songPos >= player->GetLength()) break;
-		int minutes = (int)songPos / 60;
-		int seconds = (int)songPos % 60;
-		int hundredths = (int)(songPos * 100.0) % 100;
 		time = songPos;
-		//((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(0, (static_cast<int>(songPos*44100.0)));
 #endif
+		startTime = time;
 		Sync(time);
 
 
@@ -1004,11 +1030,6 @@ int __cdecl main(int argc, char* argv[])
 			glRects(-1, -1, 1, 1);
 
 			if (fontinit == 0) {
-				// font textures
-				RenderFont3();
-				fontTexture_greets = GenFontTexture();
-				RenderFontToTexture(fontTexture_greets);
-				TextIds[3] = fontTexture_greets;
 
 				RenderFont2();
 				fontTexture_cards = GenFontTexture();
@@ -1016,7 +1037,14 @@ int __cdecl main(int argc, char* argv[])
 				TextIds[2] = fontTexture_cards;
 
 				fontinit = 1;
-				
+
+				// font textures
+				RenderFont3();
+				fontTexture_greets = GenFontTexture();
+				RenderFontToTexture(fontTexture_greets);
+				TextIds[3] = fontTexture_greets;
+
+
 				RenderFont1();
 				fontTexture_telegram = GenFontTexture();
 				RenderFontToTexture(fontTexture_telegram);
@@ -1024,35 +1052,103 @@ int __cdecl main(int argc, char* argv[])
 
 				buftextindex = 0;
 				bufcharscurrent = 0.0;
+				buf2textindex = 0;
+				buf2charscurrent = 0.0;
 			}
 
 		}
 
 		SwapBuffers(hDC);
 
-		if (fontinit == 1 && TextId == 1.0) {
-			if (buftextindex < buftextcount) {
-				if (buftextindex < 2) hFontOld = SelectObject(fonthDC, Courier57Font);
-				else hFontOld = SelectObject(fonthDC, Courier41Font);
+		if (fontinit >= 1) {
+			if (TextId == 1.0) {
+				if (buftextindex < buftextcount) {
+					if (buftextindex < 2) hFontOld = SelectObject(fonthDC, Courier57Font);
+					else hFontOld = SelectObject(fonthDC, Courier41Font);
 
-				char subbuff[128];
-				memcpy(subbuff, buftextptr[buftextindex], (int)bufcharscurrent);
-				subbuff[(int)bufcharscurrent] = '\0';
+					char subbuff[128];
+					memcpy(subbuff, buftextptr[buftextindex], (int)bufcharscurrent);
+					subbuff[(int)bufcharscurrent] = '\0';
 
-				DrawRectText(subbuff, RGB(0, 0, 0), buftextlefts[buftextindex], buftexttops[buftextindex]);
+					DrawRectText(subbuff, RGB(0, 0, 0), buftextlefts[buftextindex], buftexttops[buftextindex]);
 
-				RenderFontToTexture(fontTexture_telegram);
-				TextIds[1] = fontTexture_telegram;
-				bufcharscurrent += (bufcharstotal / 1200.);
+					RenderFontToTexture(fontTexture_telegram);
+					TextIds[1] = fontTexture_telegram;
+					
+					float speed = 30.;
+					if (buftextindex > 1) speed = 70.;
+					bufcharscurrent += dt * speed;
 
-				int len = strlen(buftextptr[buftextindex]);
-				if (bufcharscurrent > len+1) {
-					buftextindex++;
-					bufcharscurrent = 0;
+					int len = strlen(buftextptr[buftextindex]);
+					if (bufcharscurrent > len + 1) {
+						buftextindex++;
+						bufcharscurrent = 0;
+					}
 				}
+				fontinit = 2;
+			}
+
+
+			if (TextId == 3.0) {
+				if (fontinit == 2) {
+					fontinit++;
+					HBRUSH brush = CreateSolidBrush(RGB(0, 0, 0)); //create brush
+					SelectObject(fonthDC, brush); //select brush into DC
+					Rectangle(fonthDC, 0, 0, 1920, 1080); //draw rectangle over whole screen
+
+				}
+				if (buf2textindex < buf2textcount) {
+					hFontOld = SelectObject(fonthDC, latinwide56Font);
+
+					char subbuff[128];
+					memcpy(subbuff, buf2textptr[buf2textindex], (int)buf2charscurrent);
+					subbuff[(int)buf2charscurrent] = '\0';
+
+					float len = (float)strlen(buf2textptr[buf2textindex]);
+
+					float wordtime = (buf2charscurrent - 1) / (len + 1);
+					int f = (int)(255 * wordtime);
+
+					DrawRectText(subbuff, RGB(f, f, f), buf2textlefts[buf2textindex], buf2texttops[buf2textindex]);
+
+					float prevlen = 0.0;
+					if (buf2textindex > 0) {
+						char subbuff2[128];
+						memcpy(subbuff2, buf2textptr[buf2textindex - 1], (int)buf2charsprev);
+						subbuff2[(int)buf2charsprev] = '\0';
+
+						prevlen = (float)strlen(buf2textptr[buf2textindex - 1]);
+						float wordtime2 = (buf2charsprev - 1) / (prevlen + 1);
+						int f2 = 255 - (int)(255 * wordtime2)*3.;
+						if (f2 < 0) f2 = 0;
+
+						DrawRectText(subbuff2, RGB(f2, f2, f2), buf2textlefts[buf2textindex - 1], buf2texttops[buf2textindex - 1]);
+					}
+
+					if (buf2charscurrent > len + 1 && buf2charsprev > prevlen+1) {
+						buf2textindex++;
+						buf2charscurrent = 0;
+						buf2charsprev = 0;
+					}
+
+					RenderFontToTexture(fontTexture_greets);
+					TextIds[3] = fontTexture_greets;
+					buf2charscurrent += dt * 12.;
+					buf2charsprev += dt * 30.;
+				}
+
 			}
 		}
 
+
+
+#ifndef DEBUG
+		songPos = player->GetSongPos();
+		endTime = songPos;
+		dt = endTime - startTime;
+#else
+		dt = 0.001;
+#endif
 
 	} while(!GetAsyncKeyState(VK_ESCAPE)
 		#if USE_AUDIO
