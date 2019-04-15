@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp-Editor::FontViewerComponent
   textSceneNames:
   - TextTelegram
+  - TextCards
+  - TextGreets

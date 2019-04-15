@@ -481,9 +481,10 @@ HDC hDC;
 HWND hwnd = {};
 GLuint fontTexture_telegram;
 GLuint fontTexture_cards;
+GLuint fontTexture_greets;
 
 
-void DrawRectText(const char* sText, COLORREF fg, COLORREF bg, int left, int top, int bottom, int right) {
+void DrawRectText(const char* sText, COLORREF fg, int left, int top) {
 	SetTextColor(fonthDC, fg);
 	ExtTextOut(fonthDC, left, top, ETO_OPAQUE, NULL, sText, strlen(sText), NULL);
 }
@@ -498,7 +499,7 @@ int buftextcount = 0;
 float bufcharscurrent = 0.0;
 int bufcharstotal = 0;
 
-void DrawRectTextBuf(const char* sText, COLORREF fg, COLORREF bg, int left, int top, int bottom, int right) {
+void DrawRectTextBuf(const char* sText, COLORREF fg, int left, int top) {
 	buftextptr[buftextindex] = (char*)sText;
 	buftextlefts[buftextindex] = left;
 	buftexttops[buftextindex] = top;
@@ -508,12 +509,13 @@ void DrawRectTextBuf(const char* sText, COLORREF fg, COLORREF bg, int left, int 
 }
 
 
-void DrawRectTextW(LPCWSTR a, int len, COLORREF fg, COLORREF bg, int left, int top, int bottom, int right) {
+void DrawRectTextW(LPCWSTR a, int len, COLORREF fg, int left, int top) {
 	SetTextColor(fonthDC, fg);
 	ExtTextOutW(fonthDC, left, top, ETO_OPAQUE, NULL, a, len, NULL);
 }
 
 HFONT latinwide118Font = NULL;
+HFONT latinwide56Font = NULL;
 HFONT Courier57Font = NULL;
 HFONT Courier41Font = NULL;
 HFONT Arial24Font = NULL;
@@ -591,6 +593,7 @@ void InitFontToTexture() {
 	SetMapMode(fonthDC, MM_TEXT);
 
 	latinwide118Font = CreateFont(144, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Wide Latin");
+	latinwide56Font = CreateFont(82, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Wide Latin");
 	Courier57Font = CreateFont(61, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Courier New");
 	Courier41Font = CreateFont(45, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Courier New");
 	Arial24Font = CreateFont(24, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Arial");
@@ -609,35 +612,24 @@ void RenderFont1() {
 	/////////////// DRAW
 	// canvas: TelegramCanvas
 	hFontOld = SelectObject(fonthDC, latinwide118Font);
-	DrawRectText("The Secret", RGB(255, 255, 255), RGB(218, 196, 103), 431, 64, 333, 1478);
-	hFontOld = SelectObject(fonthDC, latinwide118Font);
-	DrawRectText("The Secret", RGB(0, 0, 0), RGB(218, 196, 103), 436, 71, 339, 1482);
-	hFontOld = SelectObject(fonthDC, latinwide118Font);
-	DrawRectText("Service Agency", RGB(255, 255, 255), RGB(218, 196, 103), 192, 178, 447, 1717);
-	hFontOld = SelectObject(fonthDC, latinwide118Font);
-	DrawRectText("Service Agency", RGB(0, 0, 0), RGB(218, 196, 103), 196, 184, 453, 1722);
+	DrawRectText("The Secret", RGB(255, 255, 255), 431, 64);
+	DrawRectText("The Secret", RGB(0, 0, 0), 436, 71);
+	DrawRectText("Service Agency", RGB(255, 255, 255), 192, 178);
+	DrawRectText("Service Agency", RGB(0, 0, 0), 196, 184);
 	hFontOld = SelectObject(fonthDC, Courier57Font);
-	DrawRectTextBuf("------------------------------------------------------", RGB(50, 50, 50), RGB(218, 196, 103), 44, 407, 477, 1880);
-	hFontOld = SelectObject(fonthDC, Courier57Font);
-	DrawRectTextBuf("TO: Agent 'TSConf' SUBJECT: 'Your Assignment'", RGB(50, 50, 50), RGB(218, 196, 103), 43, 372, 437, 1573);
+	DrawRectTextBuf("------------------------------------------------------", RGB(50, 50, 50), 44, 407);
+	DrawRectTextBuf("TO: Agent 'TSConf' SUBJECT: 'Your Assignment'", RGB(50, 50, 50), 43, 372);
 	hFontOld = SelectObject(fonthDC, Courier41Font);
-	DrawRectTextBuf("I have selected you for a most important assignment. It’s purpose is to", RGB(50, 50, 50), RGB(218, 196, 103), 44, 477, 525, 1819);
-	hFontOld = SelectObject(fonthDC, Courier41Font);
-	DrawRectTextBuf("give false information to the enemy and destroy key targets.", RGB(50, 50, 50), RGB(218, 196, 103), 44, 539, 592, 1544);
-	hFontOld = SelectObject(fonthDC, Courier41Font);
-	DrawRectTextBuf("If you complete it successfully you will be promoted. ", RGB(50, 50, 50), RGB(218, 196, 103), 44, 600, 651, 1394);
-	hFontOld = SelectObject(fonthDC, Courier41Font);
-	DrawRectTextBuf("You’ve been given a briefcase which shall be used to destroy", RGB(50, 50, 50), RGB(218, 196, 103), 44, 715, 766, 1544);
-	hFontOld = SelectObject(fonthDC, Courier41Font);
-	DrawRectTextBuf("the SPECTRUM base and their new ZX decoding machine. For this you shall", RGB(50, 50, 50), RGB(218, 196, 103), 44, 776, 827, 1819);
-	hFontOld = SelectObject(fonthDC, Courier41Font);
-	DrawRectTextBuf("enter their secret facility un-noticed, insert misinformation to their", RGB(50, 50, 50), RGB(218, 196, 103), 44, 835, 886, 1794);
-	hFontOld = SelectObject(fonthDC, Courier41Font);
-	DrawRectTextBuf("systems and finally destroy the aforementioned decoding machine.", RGB(50, 50, 50), RGB(218, 196, 103), 45, 894, 951, 1645);
-	hFontOld = SelectObject(fonthDC, Courier41Font);
-	DrawRectTextBuf("- I wish you good luck, agent.",RGB(50,50,50),RGB(218,196,103),45,1007,1055,795);
+	DrawRectTextBuf("I have selected you for a most important assignment. It’s purpose is to", RGB(50, 50, 50), 44, 477);
+	DrawRectTextBuf("give false information to the enemy and destroy key targets.", RGB(50, 50, 50), 44, 539);
+	DrawRectTextBuf("If you complete it successfully you will be promoted. ", RGB(50, 50, 50), 44, 600);
+	DrawRectTextBuf("You’ve been given a briefcase which shall be used to destroy", RGB(50, 50, 50), 44, 715);
+	DrawRectTextBuf("the SPECTRUM base and their new ZX decoding machine. For this you shall", RGB(50, 50, 50), 44, 776);
+	DrawRectTextBuf("enter their secret facility un-noticed, insert misinformation to their", RGB(50, 50, 50), 44, 835);
+	DrawRectTextBuf("systems and finally destroy the aforementioned decoding machine.", RGB(50, 50, 50), 45, 894);
+	DrawRectTextBuf("- I wish you good luck, agent.",RGB(50,50,50),45,1007);
 	hFontOld = SelectObject(fonthDC, Arial24Font);
-	DrawRectText("Doing your dirty work for you since 1969", RGB(50, 50, 50), RGB(218, 196, 103), 1041, 96, 237, 1465);
+	DrawRectText("Doing your dirty work for you since 1969", RGB(50, 50, 50), 1041, 96);
 	// --------------------------------------------- END END END
 }
 
@@ -650,7 +642,33 @@ void RenderFont2() {
 	Rectangle(fonthDC, 0, 0, 1920, 1080); //draw rectangle over whole screen
 	hFontOld = SelectObject(fonthDC, Arial300Font);
 	LPCWSTR str = L"♠♣♥♦";
-	DrawRectTextW(str, 4, RGB(255, 0, 0), RGB(0, 0, 0), 0, 200, 1065, 693);
+	DrawRectTextW(str, 4, RGB(255, 0, 0), 0, 200);
+}
+
+void RenderFont3() {
+	hbmOld = SelectObject(fonthDC, hbmBitmap);
+	HBRUSH brush = CreateSolidBrush(RGB(0, 0, 0)); //create brush
+	SelectObject(fonthDC, brush); //select brush into DC
+	Rectangle(fonthDC, 0, 0, 1920, 1080); //draw rectangle over whole screen
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	int off = 215;
+	int y = 100;
+	DrawRectText("Logicoma", RGB(255, 255, 255), -150+off, 206-y);
+	DrawRectText("Epoch", RGB(255, 255, 255), 525 + off, 355 - y);
+	DrawRectText("DSS", RGB(255, 255, 255), -40 + off, 470 - y);
+	DrawRectText("Paraguay", RGB(255, 255, 255), 442 + off, 470 - y);
+	DrawRectText("Prismbeings", RGB(255, 255, 255), 592 + off, 211 - y);
+	DrawRectText("Conspiracy", RGB(255, 255, 255), 872 + off, 419 - y);
+	DrawRectText("PWP", RGB(255, 255, 255), 1017 + off, 574 - y);
+	DrawRectText("Dekadence", RGB(255, 255, 255), 292 + off, 574 - y);
+	DrawRectText("Peisik", RGB(255, 255, 255), -68 + off, 346 - y);
+	DrawRectText("lft", RGB(255, 255, 255), -93 + off, 569 - y);
+	DrawRectText("Poo-brain", RGB(255, 255, 255), 394 + off, 287 - y);
+	DrawRectText("Mercury", RGB(255, 255, 255), 1068 + off, 287 - y);
+	DrawRectText("Unique", RGB(255, 255, 255), 1102 + off, 500 - y);
+	DrawRectText("Loonies", RGB(255, 255, 255), 1084 + off, 645 - y);
+	DrawRectText("Calodox", RGB(255, 255, 255), 370 + off, 645 - y);
+	DrawRectText("Titan", RGB(255, 255, 255), -154 + off, 645 - y);
 }
 
 int bitmap_alloc = 0;
@@ -783,7 +801,7 @@ int __cdecl main(int argc, char* argv[])
 	SetPixelFormat(hDC, ChoosePixelFormat(hDC, &pfd), &pfd);
 	wglMakeCurrent(hDC, wglCreateContext(hDC));
 
-	GLuint TextIds[3] = { 0, 0, 0};
+	GLuint TextIds[4] = { 0, 0, 0, 0};
 
 
 
@@ -986,6 +1004,11 @@ int __cdecl main(int argc, char* argv[])
 			glRects(-1, -1, 1, 1);
 
 			if (fontinit == 0) {
+				// font textures
+				RenderFont3();
+				fontTexture_greets = GenFontTexture();
+				RenderFontToTexture(fontTexture_greets);
+				TextIds[3] = fontTexture_greets;
 
 				RenderFont2();
 				fontTexture_cards = GenFontTexture();
@@ -994,7 +1017,6 @@ int __cdecl main(int argc, char* argv[])
 
 				fontinit = 1;
 				
-				// font textures
 				RenderFont1();
 				fontTexture_telegram = GenFontTexture();
 				RenderFontToTexture(fontTexture_telegram);
@@ -1008,7 +1030,7 @@ int __cdecl main(int argc, char* argv[])
 
 		SwapBuffers(hDC);
 
-		if (fontinit == 1) {
+		if (fontinit == 1 && TextId == 1.0) {
 			if (buftextindex < buftextcount) {
 				if (buftextindex < 2) hFontOld = SelectObject(fonthDC, Courier57Font);
 				else hFontOld = SelectObject(fonthDC, Courier41Font);
@@ -1017,7 +1039,7 @@ int __cdecl main(int argc, char* argv[])
 				memcpy(subbuff, buftextptr[buftextindex], (int)bufcharscurrent);
 				subbuff[(int)bufcharscurrent] = '\0';
 
-				DrawRectText(subbuff, RGB(0, 0, 0), RGB(218, 196, 103), buftextlefts[buftextindex], buftexttops[buftextindex], 0, 0);
+				DrawRectText(subbuff, RGB(0, 0, 0), buftextlefts[buftextindex], buftexttops[buftextindex]);
 
 				RenderFontToTexture(fontTexture_telegram);
 				TextIds[1] = fontTexture_telegram;
