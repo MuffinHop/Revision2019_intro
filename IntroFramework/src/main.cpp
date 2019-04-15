@@ -651,8 +651,8 @@ void RenderFont3() {
 	SelectObject(fonthDC, brush); //select brush into DC
 	Rectangle(fonthDC, 0, 0, 1920, 1080); //draw rectangle over whole screen
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	int off = 195;
-	int y = 50;
+	int off = 215;
+	int y = 100;
 	DrawRectText("Logicoma", RGB(255, 255, 255), -150+off, 206-y);
 	DrawRectText("Epoch", RGB(255, 255, 255), 525 + off, 355 - y);
 	DrawRectText("DSS", RGB(255, 255, 255), -40 + off, 470 - y);
