@@ -662,37 +662,37 @@ void RenderFont3() {
 	SelectObject(fonthDC, brush); //select brush into DC
 	Rectangle(fonthDC, 0, 0, 1920, 1080); //draw rectangle over whole screen
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("Logicoma", RGB(255, 255, 255), RGB(0, 0, 0), -150, 206, 301, 316);
+	DrawRectText("Logicoma", RGB(255, 255, 255), RGB(0, 0, 0), -150+175, 206, 301, 316);
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("Epoch", RGB(255, 255, 255), RGB(0, 0, 0), 525, 355, 450, 828);
+	DrawRectText("Epoch", RGB(255, 255, 255), RGB(0, 0, 0), 525 + 175, 355, 450, 828);
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("DSS", RGB(255, 255, 255), RGB(0, 0, 0), -40, 470, 565, 176);
+	DrawRectText("DSS", RGB(255, 255, 255), RGB(0, 0, 0), -40 + 175, 470, 565, 176);
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("Paraguay", RGB(255, 255, 255), RGB(0, 0, 0), 442, 470, 565, 906);
+	DrawRectText("Paraguay", RGB(255, 255, 255), RGB(0, 0, 0), 442 + 175, 470, 565, 906);
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("Prismbeings", RGB(255, 255, 255), RGB(0, 0, 0), 592, 211, 306, 1201);
+	DrawRectText("Prismbeings", RGB(255, 255, 255), RGB(0, 0, 0), 592 + 175, 211, 306, 1201);
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("Conspiracy", RGB(255, 255, 255), RGB(0, 0, 0), 872, 419, 514, 1417);
+	DrawRectText("Conspiracy", RGB(255, 255, 255), RGB(0, 0, 0), 872 + 175, 419, 514, 1417);
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("PWP", RGB(255, 255, 255), RGB(0, 0, 0), 1017, 574, 669, 1272);
+	DrawRectText("PWP", RGB(255, 255, 255), RGB(0, 0, 0), 1017 + 175, 574, 669, 1272);
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("Dekadence", RGB(255, 255, 255), RGB(0, 0, 0), 292, 574, 669, 817);
+	DrawRectText("Dekadence", RGB(255, 255, 255), RGB(0, 0, 0), 292 + 175, 574, 669, 817);
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("Peisik", RGB(255, 255, 255), RGB(0, 0, 0), -68, 346, 441, 242);
+	DrawRectText("Peisik", RGB(255, 255, 255), RGB(0, 0, 0), -68 + 175, 346, 441, 242);
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("lft", RGB(255, 255, 255), RGB(0, 0, 0), -93, 569, 664, 16);
+	DrawRectText("lft", RGB(255, 255, 255), RGB(0, 0, 0), -93, 569 + 175, 664, 16);
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("Poo-brain", RGB(255, 255, 255), RGB(0, 0, 0), 394, 287, 382, 864);
+	DrawRectText("Poo-brain", RGB(255, 255, 255), RGB(0, 0, 0), 394 + 175, 287, 382, 864);
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("Mercury", RGB(255, 255, 255), RGB(0, 0, 0), 1068, 287, 382, 1483);
+	DrawRectText("Mercury", RGB(255, 255, 255), RGB(0, 0, 0), 1068 + 175, 287, 382, 1483);
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("Unique", RGB(255, 255, 255), RGB(0, 0, 0), 1102, 500, 595, 1449);
+	DrawRectText("Unique", RGB(255, 255, 255), RGB(0, 0, 0), 1102 + 175, 500, 595, 1449);
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("Loonies", RGB(255, 255, 255), RGB(0, 0, 0), 1084, 645, 740, 1466);
+	DrawRectText("Loonies", RGB(255, 255, 255), RGB(0, 0, 0), 1084 + 175, 645, 740, 1466);
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("Calodox", RGB(255, 255, 255), RGB(0, 0, 0), 370, 645, 740, 764);
+	DrawRectText("Calodox", RGB(255, 255, 255), RGB(0, 0, 0), 370 + 175, 645, 740, 764);
 	hFontOld = SelectObject(fonthDC, latinwide56Font);
-	DrawRectText("Titan", RGB(255, 255, 255), RGB(0, 0, 0), -154, 645, 740, 101);
+	DrawRectText("Titan", RGB(255, 255, 255), RGB(0, 0, 0), -154 + 175, 645, 740, 101);
 }
 
 int bitmap_alloc = 0;

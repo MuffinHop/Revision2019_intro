@@ -12,7 +12,7 @@ vec4 mainImage()
 	vec2 uv = fragCoord.xy / _iResolution.xy;
 
 	// hack
-	if (_TextId >= 1.0) {
+	if (_TextId == 1.0) {
 		vec3 text = texture(_TextTex, uv).rgb;
 		fragColor.rgb = text.rgb;
 		return  fragColor;
