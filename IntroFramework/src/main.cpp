@@ -639,14 +639,14 @@ void RenderFont1() {
 	DrawRectTextBuf("------------------------------------------------------", RGB(50, 50, 50), 44, 407);
 	DrawRectTextBuf("TO: Agent 'TSConf' SUBJECT: 'Your Assignment'", RGB(50, 50, 50), 43, 372);
 	hFontOld = SelectObject(fonthDC, Courier41Font);
-	DrawRectTextBuf("I have selected you for a most important assignment. It’s purpose is to", RGB(50, 50, 50), 44, 477);
-	DrawRectTextBuf("give false information to the enemy and destroy key targets.", RGB(50, 50, 50), 44, 539);
-	DrawRectTextBuf("If you complete it successfully you will be promoted. ", RGB(50, 50, 50), 44, 600);
-	DrawRectTextBuf("You’ve been given a briefcase which shall be used to destroy", RGB(50, 50, 50), 44, 715);
-	DrawRectTextBuf("the SPECTRUM base and their new ZX decoding machine. For this you shall", RGB(50, 50, 50), 44, 776);
-	DrawRectTextBuf("enter their secret facility un-noticed, insert misinformation to their", RGB(50, 50, 50), 44, 835);
-	DrawRectTextBuf("systems and finally destroy the aforementioned decoding machine.", RGB(50, 50, 50), 45, 894);
-	DrawRectTextBuf("- I wish you good luck, agent.",RGB(50,50,50),45,1007);
+	DrawRectTextBuf("I have selected you for a most important assignment. It’s purpose is to  ", RGB(50, 50, 50), 44, 477);
+	DrawRectTextBuf("give false information to the enemy and destroy key targets.   ", RGB(50, 50, 50), 44, 539);
+	DrawRectTextBuf("If you complete it successfully you will be promoted.   ", RGB(50, 50, 50), 44, 600);
+	DrawRectTextBuf("You’ve been given a briefcase which shall be used to destroy   ", RGB(50, 50, 50), 44, 715);
+	DrawRectTextBuf("the SPECTRUM base and their new ZX decoding machine. For this you shall  ", RGB(50, 50, 50), 44, 776);
+	DrawRectTextBuf("enter their secret facility un-noticed, insert misinformation to their   ", RGB(50, 50, 50), 44, 835);
+	DrawRectTextBuf("systems and finally destroy the aforementioned decoding machine.  ", RGB(50, 50, 50), 45, 894);
+	DrawRectTextBuf("- I wish you good luck, agent.  ",RGB(50,50,50),45,1007);
 	hFontOld = SelectObject(fonthDC, Arial24Font);
 	DrawRectText("Doing your dirty work for you since 1969", RGB(50, 50, 50), 1041, 96);
 	// --------------------------------------------- END END END
