@@ -122,19 +122,19 @@ public class RM_Object : MonoBehaviour
         {
             prevFrame = Time.frameCount ;
             transform.position = new Vector3(
-                Mathf.Floor(transform.position.x * 100.0f) / 100.0f,
-                Mathf.Floor(transform.position.y * 100.0f) / 100.0f,
-                Mathf.Floor(transform.position.z * 100.0f) / 100.0f
+                Mathf.Floor(transform.position.x * 64.0f) / 64.0f,
+                Mathf.Floor(transform.position.y * 64.0f) / 64.0f,
+                Mathf.Floor(transform.position.z * 64.0f) / 64.0f
                 );
-            if (Mathf.Abs(previousPosition.x-transform.position.x) > 0.01f)
+            if (Mathf.Abs(previousPosition.x-transform.position.x) > 0.1f)
             {
                 PositionXHistory.Add(new SyncRMObject(Time.frameCount, transform.position.x));
             }
-            if (Mathf.Abs(previousPosition.y - transform.position.y) > 0.01f)
+            if (Mathf.Abs(previousPosition.y - transform.position.y) > 0.1f)
             {
                 PositionYHistory.Add(new SyncRMObject(Time.frameCount, transform.position.y));
             }
-            if (Mathf.Abs(previousPosition.z - transform.position.z) > 0.01f)
+            if (Mathf.Abs(previousPosition.z - transform.position.z) > 0.1f)
             {
                 PositionZHistory.Add(new SyncRMObject(Time.frameCount, transform.position.z));
             }

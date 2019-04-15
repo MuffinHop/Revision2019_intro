@@ -1,4 +1,7 @@
 ﻿float Wheat(vec3 pos, vec3 algorithm) {
+    float vali = 5.;
+    float ps = min(perlinnoise(pos.xz*0.1 / vali) - 0.2,0.0);
+	pos.y-= (1.0+ps) * _Environment * 1000.0;
 	pos.x+=cos(algorithm.z+pos.y*7.+pos.x*5.)*0.03;
 	pos.z-=0.5;
 	vec3 opos = pos;

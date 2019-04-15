@@ -39,11 +39,10 @@ vec4 mainImage()
 	ray.direction = normalize(-rightDirection * viewDirectionCoord.x + upDirection * viewDirectionCoord.y + forwardDirection);
 	ray.startdistanc = 0.0;
 	ray.length = farClip;
-	ray.direction.y *= 0.85;
 
 
 	ContactInfo intersection;
-	RayMarch(ray, intersection, 200, transparencyInformation);
+	RayMarch(ray, intersection, 256, transparencyInformation);
 	vec3 sceneColor;
 	float d = intersection.distanc;
 	if (intersection.id.x < 0.5) {
@@ -57,6 +56,7 @@ vec4 mainImage()
 		Material material = GetObjectMaterial(intersection);
 
 		//surface.reflection = GetReflection(ray, intersection, surface);
+		surface.reflection = GetSkyGradient(ray.direction);
 
 		float distanctrans = intersection.distanc;
 		/*if (material.transparency > 0.0) {

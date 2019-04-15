@@ -4,10 +4,12 @@ float fOpUnionRund(float a, float b, float r) {
 	return max(r, min (a, b)) - length(u);
 }
 float TreeTrunk(vec3 pos, vec3 algorithm) {
+    float vali = 5.;
+    float ps = perlinnoise(pos.xz*0.1 / vali) - 0.2;
+	pos.y-= ps * _Environment * 1000.0;
 	vec3 opos = pos;
 	vec3 opos_ = opos;
 	
-    float vali = 5.;
     opos.x += hash1(floor(pos.z / vali) + vali) * vali / 2.0;
     opos.x = mod(opos.x, vali) - vali / 2.0;
     opos.z += hash1(floor(pos.x / vali) + vali) * vali / 2.0;

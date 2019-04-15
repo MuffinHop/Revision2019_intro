@@ -19,3 +19,4 @@ uniform float _FarPlane;
 uniform float _Step;
 uniform float fogDensity;
 uniform float _TextId;
+uniform float _Environment;

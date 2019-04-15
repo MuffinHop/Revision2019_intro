@@ -59,8 +59,13 @@ public class SdCapsule : RM_Object
         }
 
         Rotatable = false;
-        if (Time.frameCount % 5 == 0 && prevFrame != Time.frameCount)
+        if (Time.frameCount % 6 == 0 && prevFrame != Time.frameCount)
         {
+            transform.position = new Vector3(
+                Mathf.Floor(transform.position.x * 64.0f) / 64.0f,
+                Mathf.Floor(transform.position.y * 64.0f) / 64.0f,
+                Mathf.Floor(transform.position.z * 64.0f) / 64.0f
+                );
             prevFrame = Time.frameCount;
             if (Mathf.Abs(previousPosition.x - transform.position.x) > 0.01f)
             {

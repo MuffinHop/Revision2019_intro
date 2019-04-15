@@ -1,9 +1,10 @@
 ﻿
 float TreeBush(vec3 pos, vec3 algorithm) {
-	pos.y += GetHeightmapLowPrecision(pos*algorithm) * algorithm.y;
+    float vali = 5.;
+    float ps = perlinnoise(pos.xz*0.1 / vali) - 0.2;
+	pos.y += GetHeightmapLowPrecision(pos*algorithm) * algorithm.y - ps * _Environment;
     vec3 opos = pos;
     
-    float vali = 5.;
     opos.x += hash1(floor(pos.z / vali) + vali) * vali / 2.0;
     opos.x = mod(opos.x, vali) - vali / 2.0;
     opos.z += hash1(floor(pos.x / vali) + vali) * vali / 2.0;
@@ -13,7 +14,7 @@ float TreeBush(vec3 pos, vec3 algorithm) {
 	vec3 rpos = pos;
 	rpos.x = floor(pos.x / vali);
 	rpos.z = floor(pos.z / vali);
-    float ss = min(perlinnoise(rpos.xz*0.1) * 12.0,2.0);
+    float ss = min(perlinnoise(rpos.xz*0.1) * 12.0,1.5);
     vec3 o = opos;
     opos = o;
 	opos.y += GetHeightmapLowPrecision(pos*algorithm) *  algorithm.y;

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Glassy
   m_EditorClassIdentifier: 
   reflectionCoefficient: 0.27
-  albedo: {r: 1, g: 1, b: 1, a: 1}
+  albedo: {r: 1, g: 1, b: 1, a: 0.49803922}
   smoothness: 0.8
   reflectindx: 0.69
