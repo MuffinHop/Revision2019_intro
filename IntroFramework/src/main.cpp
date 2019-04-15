@@ -90,16 +90,21 @@ static FILE* out = NULL;
 /// UNPACKED DATA CAN BE READ HERE
 /// UNPACKED DATA CAN BE READ HERE
 
-char* unpackedData;
+unsigned char* unpackedData;
 unsigned long unpackOffset = 0;
 
 static void sendBytesToOut(const unsigned char* data, unsigned int numBytes)
 {
+	int ii = 0;
 	if (data != NULL && numBytes > 0) {
 		for (int i = 0; i < numBytes; i++) {
-			unpackedData[unpackOffset + i] = data[i];
+			for (int j = 7; j >= 0; j--) {
+				int bit = (data[i] & (1 << j)) != 0;
+				unpackedData[unpackOffset + ii] = bit * 255;
+				ii++;
+			}
 		}
-		unpackOffset += numBytes;
+		unpackOffset += ii;
 	}
 }
 
@@ -334,16 +339,6 @@ void unlz4(GET_BYTE getByte, SEND_BYTES sendBytes, const char* dictionary)
 // ==================== COMMAND-LINE HANDLING ====================
 
 
-/// parse command-line
-int dolz4()
-{
-	unpackedData = (char*)calloc(sizeof(char)*1024, 64);
-
-	// and go !
-	unlz4(getByteFromIn, sendBytesToOut, NULL);
-	return 0;
-}
-
 
 void AllSyncDataHandle(float row);
 void *GetAnyGLFuncAddress(const char *name)
@@ -482,7 +477,7 @@ HWND hwnd = {};
 GLuint fontTexture_telegram;
 GLuint fontTexture_cards;
 GLuint fontTexture_greets;
-
+GLuint texture_logos;
 
 void DrawRectText(const char* sText, COLORREF fg, int left, int top) {
 	SetTextColor(fonthDC, fg);
@@ -747,7 +742,7 @@ ConvertRGB(BITMAPINFO *info,        /* I - Original bitmap information */
 
 void AllSyncDataHandle(float row);
 
-void RenderFontToTexture(GLuint texture) {
+void RenderBitmapToTexture(GLuint texture) {
 	GLvoid * obrazek;
 	obrazek = ConvertRGB(&bmi, pBitmapBits);
 
@@ -756,7 +751,7 @@ void RenderFontToTexture(GLuint texture) {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-GLuint GenFontTexture() {
+GLuint GenTexture() {
 	GLuint temp;
 	glGenTextures(1, &temp);
 	glBindTexture(GL_TEXTURE_2D, temp);
@@ -770,13 +765,40 @@ GLuint GenFontTexture() {
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	//the texture wraps over at the edges
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	return temp;
 }
 
 int fontinit = 0;
+
+/// parse command-line
+int dolz4()
+{
+	unpackedData = (unsigned char*)calloc(sizeof(unsigned char) * 516*212, 1);
+
+	// and go !
+	unlz4(getByteFromIn, sendBytesToOut, NULL);
+
+	texture_logos = GenTexture();
+
+	glBindTexture(GL_TEXTURE_2D, texture_logos);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 516, 212, 0, GL_RED, GL_UNSIGNED_BYTE, unpackedData);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+
+	/*
+	ivory 0, 0, 236, 115
+	and 0, 116, 236, 58
+	quad 0, 177, 236, 35
+
+	unity 236, 0, 278, 112
+	wave  236, 112, 278, 100
+	*/
+	return 0;
+}
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -821,8 +843,6 @@ int __cdecl main(int argc, char* argv[])
 		MessageBox(NULL, "CreateWindow() failed", "Error", MB_OK);
 	}
 
-	dolz4();
-
 	InitFontToTexture();
 
 	hDC = GetDC(hwnd);
@@ -831,7 +851,6 @@ int __cdecl main(int argc, char* argv[])
 	wglMakeCurrent(hDC, wglCreateContext(hDC));
 
 	GLuint TextIds[4] = { 0, 0, 0, 0};
-
 
 
 	// create and compile shader programs
@@ -851,14 +870,6 @@ int __cdecl main(int argc, char* argv[])
 		((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(pidMain);
 
 		double position = 0.0;
-
-#ifndef DEBUG
-		IPlayer *player;
-
-		int numRenderThreads = 3;
-		player = new RealtimePlayer(&Song, numRenderThreads);
-		player->Play();
-#endif
 
 		GLint length = sizeof(RM_Objects) / sizeof(RM_Objects[0]);
 		GLuint ObjectsID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_Objects");
@@ -897,7 +908,9 @@ int __cdecl main(int argc, char* argv[])
 		GLuint TempratureNormalizationID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_TempratureNormalization");
 
 
-		
+#ifndef DEBUG
+		IPlayer *player;
+#endif
 
 	// main loop
 	do
@@ -910,14 +923,17 @@ int __cdecl main(int argc, char* argv[])
 			PeekMessage(0, 0, 0, 0, PM_REMOVE);
 		#endif
 
+		if (fontinit > 0) {
+
 #ifndef DEBUG
-		// render with the primary shader
-		auto songPos = player->GetSongPos();
-		if (songPos >= player->GetLength()) break;
-		time = songPos;
+			// render with the primary shader
+			auto songPos = player->GetSongPos();
+			if (songPos >= player->GetLength()) break;
+			time = songPos;
 #endif
-		startTime = time;
-		Sync(time);
+			startTime = time;
+			Sync(time);
+		}
 
 
 		// font
@@ -1032,28 +1048,40 @@ int __cdecl main(int argc, char* argv[])
 			if (fontinit == 0) {
 
 				RenderFont2();
-				fontTexture_cards = GenFontTexture();
-				RenderFontToTexture(fontTexture_cards);
+				fontTexture_cards = GenTexture();
+				RenderBitmapToTexture(fontTexture_cards);
 				TextIds[2] = fontTexture_cards;
 
 				fontinit = 1;
 
 				// font textures
 				RenderFont3();
-				fontTexture_greets = GenFontTexture();
-				RenderFontToTexture(fontTexture_greets);
+				fontTexture_greets = GenTexture();
+				RenderBitmapToTexture(fontTexture_greets);
 				TextIds[3] = fontTexture_greets;
 
 
 				RenderFont1();
-				fontTexture_telegram = GenFontTexture();
-				RenderFontToTexture(fontTexture_telegram);
+				fontTexture_telegram = GenTexture();
+				RenderBitmapToTexture(fontTexture_telegram);
 				TextIds[1] = fontTexture_telegram;
 
 				buftextindex = 0;
 				bufcharscurrent = 0.0;
 				buf2textindex = 0;
 				buf2charscurrent = 0.0;
+
+				dolz4();
+				TextIds[4] = texture_logos;
+
+
+#ifndef DEBUG
+
+				int numRenderThreads = 3;
+				player = new RealtimePlayer(&Song, numRenderThreads);
+				player->Play();
+#endif
+
 			}
 
 		}
@@ -1072,7 +1100,7 @@ int __cdecl main(int argc, char* argv[])
 
 					DrawRectText(subbuff, RGB(0, 0, 0), buftextlefts[buftextindex], buftexttops[buftextindex]);
 
-					RenderFontToTexture(fontTexture_telegram);
+					RenderBitmapToTexture(fontTexture_telegram);
 					TextIds[1] = fontTexture_telegram;
 					
 					float speed = 30.;
@@ -1131,7 +1159,7 @@ int __cdecl main(int argc, char* argv[])
 						buf2charsprev = 0;
 					}
 
-					RenderFontToTexture(fontTexture_greets);
+					RenderBitmapToTexture(fontTexture_greets);
 					TextIds[3] = fontTexture_greets;
 					buf2charscurrent += dt * 12.;
 					buf2charsprev += dt * 30.;
@@ -1143,7 +1171,7 @@ int __cdecl main(int argc, char* argv[])
 
 
 #ifndef DEBUG
-		songPos = player->GetSongPos();
+		auto songPos = player->GetSongPos();
 		endTime = songPos;
 		dt = endTime - startTime;
 #else

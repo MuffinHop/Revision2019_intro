@@ -95,6 +95,15 @@ vec4 mainImage()
 		fragColor.rgb+=clamp(text,0.0,1.0);
 	}
 
+	if (_TextId == 4.0) {
+		vec3 text = texture(_TextTex, uv*4.).rgb;
+		for (float i = 1.0; i < 4.0; i+=1.) {
+			text+=texture(_TextTex, uv*4.+i*0.0003).rrr;
+		}
+		text/=4.0;
+		fragColor.rgb+=clamp(text,0.0,1.0);
+	}
+
 	return  fragColor;
 }
 
