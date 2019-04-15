@@ -10,6 +10,8 @@ vec4 mainImage()
 	Trace ray;
 
 	vec2 uv = fragCoord.xy / _iResolution.xy;
+
+	// hack
 	if (_TextId >= 1.0) {
 		vec3 text = texture(_TextTex, uv).rgb;
 		fragColor.rgb = text.rgb;
@@ -84,6 +86,14 @@ vec4 mainImage()
 #ifdef DEBUG_STEPS
 	fragColor.r = focus;
 #endif
+
+	// hack
+	if (_TextId == 3.0) {
+		vec3 text = texture(_TextTex, uv).rgb;
+		if (text.r > 0.1) fragColor.rgb += text.rgb;
+	}
+
+
 	return  fragColor;
 }
 

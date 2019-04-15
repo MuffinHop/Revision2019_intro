@@ -481,6 +481,7 @@ HDC hDC;
 HWND hwnd = {};
 GLuint fontTexture_telegram;
 GLuint fontTexture_cards;
+GLuint fontTexture_greets;
 
 
 void DrawRectText(const char* sText, COLORREF fg, COLORREF bg, int left, int top, int bottom, int right) {
@@ -514,6 +515,7 @@ void DrawRectTextW(LPCWSTR a, int len, COLORREF fg, COLORREF bg, int left, int t
 }
 
 HFONT latinwide118Font = NULL;
+HFONT latinwide56Font = NULL;
 HFONT Courier57Font = NULL;
 HFONT Courier41Font = NULL;
 HFONT Arial24Font = NULL;
@@ -591,6 +593,7 @@ void InitFontToTexture() {
 	SetMapMode(fonthDC, MM_TEXT);
 
 	latinwide118Font = CreateFont(144, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Wide Latin");
+	latinwide56Font = CreateFont(82, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Wide Latin");
 	Courier57Font = CreateFont(61, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Courier New");
 	Courier41Font = CreateFont(45, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Courier New");
 	Arial24Font = CreateFont(24, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Arial");
@@ -651,6 +654,45 @@ void RenderFont2() {
 	hFontOld = SelectObject(fonthDC, Arial300Font);
 	LPCWSTR str = L"♠♣♥♦";
 	DrawRectTextW(str, 4, RGB(255, 0, 0), RGB(0, 0, 0), 0, 200, 1065, 693);
+}
+
+void RenderFont3() {
+	hbmOld = SelectObject(fonthDC, hbmBitmap);
+	HBRUSH brush = CreateSolidBrush(RGB(0, 0, 0)); //create brush
+	SelectObject(fonthDC, brush); //select brush into DC
+	Rectangle(fonthDC, 0, 0, 1920, 1080); //draw rectangle over whole screen
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("Logicoma", RGB(255, 255, 255), RGB(0, 0, 0), -150, 206, 301, 316);
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("Epoch", RGB(255, 255, 255), RGB(0, 0, 0), 525, 355, 450, 828);
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("DSS", RGB(255, 255, 255), RGB(0, 0, 0), -40, 470, 565, 176);
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("Paraguay", RGB(255, 255, 255), RGB(0, 0, 0), 442, 470, 565, 906);
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("Prismbeings", RGB(255, 255, 255), RGB(0, 0, 0), 592, 211, 306, 1201);
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("Conspiracy", RGB(255, 255, 255), RGB(0, 0, 0), 872, 419, 514, 1417);
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("PWP", RGB(255, 255, 255), RGB(0, 0, 0), 1017, 574, 669, 1272);
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("Dekadence", RGB(255, 255, 255), RGB(0, 0, 0), 292, 574, 669, 817);
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("Peisik", RGB(255, 255, 255), RGB(0, 0, 0), -68, 346, 441, 242);
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("lft", RGB(255, 255, 255), RGB(0, 0, 0), -93, 569, 664, 16);
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("Poo-brain", RGB(255, 255, 255), RGB(0, 0, 0), 394, 287, 382, 864);
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("Mercury", RGB(255, 255, 255), RGB(0, 0, 0), 1068, 287, 382, 1483);
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("Unique", RGB(255, 255, 255), RGB(0, 0, 0), 1102, 500, 595, 1449);
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("Loonies", RGB(255, 255, 255), RGB(0, 0, 0), 1084, 645, 740, 1466);
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("Calodox", RGB(255, 255, 255), RGB(0, 0, 0), 370, 645, 740, 764);
+	hFontOld = SelectObject(fonthDC, latinwide56Font);
+	DrawRectText("Titan", RGB(255, 255, 255), RGB(0, 0, 0), -154, 645, 740, 101);
 }
 
 int bitmap_alloc = 0;
@@ -783,7 +825,7 @@ int __cdecl main(int argc, char* argv[])
 	SetPixelFormat(hDC, ChoosePixelFormat(hDC, &pfd), &pfd);
 	wglMakeCurrent(hDC, wglCreateContext(hDC));
 
-	GLuint TextIds[3] = { 0, 0, 0};
+	GLuint TextIds[4] = { 0, 0, 0, 0};
 
 
 
@@ -986,6 +1028,11 @@ int __cdecl main(int argc, char* argv[])
 			glRects(-1, -1, 1, 1);
 
 			if (fontinit == 0) {
+				// font textures
+				RenderFont3();
+				fontTexture_greets = GenFontTexture();
+				RenderFontToTexture(fontTexture_greets);
+				TextIds[3] = fontTexture_greets;
 
 				RenderFont2();
 				fontTexture_cards = GenFontTexture();
@@ -994,7 +1041,6 @@ int __cdecl main(int argc, char* argv[])
 
 				fontinit = 1;
 				
-				// font textures
 				RenderFont1();
 				fontTexture_telegram = GenFontTexture();
 				RenderFontToTexture(fontTexture_telegram);
@@ -1008,7 +1054,7 @@ int __cdecl main(int argc, char* argv[])
 
 		SwapBuffers(hDC);
 
-		if (fontinit == 1) {
+		if (fontinit == 1 && TextId == 1.0) {
 			if (buftextindex < buftextcount) {
 				if (buftextindex < 2) hFontOld = SelectObject(fonthDC, Courier57Font);
 				else hFontOld = SelectObject(fonthDC, Courier41Font);

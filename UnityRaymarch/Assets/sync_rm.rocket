@@ -4,10 +4,12 @@
 beatsPerMin="125">
 	<track name="Animator AnimationID DefaultAvatar" folded="0"
 muteKeyCount="0" color="ff4f71b2">
+		<key row="0" value="1.000000" interpolation="0" />
 		<key row="340" value="0.000000" interpolation="0" />
 		<key row="480" value="1.000000" interpolation="0" />
 		<key row="596" value="5.000000" interpolation="0" />
 		<key row="2224" value="-12.000000" interpolation="0" />
+		<key row="2416" value="3.000000" interpolation="0" />
 	</track>
 	<track name="Animator Time DefaultAvatar" folded="0"
 muteKeyCount="0" color="ff4fb292">
@@ -490,6 +492,8 @@ color="ffa9b250">
 		<key row="0" value="1.000000" interpolation="0" />
 		<key row="340" value="0.000000" interpolation="0" />
 		<key row="660" value="0.000000" interpolation="0" />
+		<key row="2416" value="3.000000" interpolation="0" />
+		<key row="2866" value="0.000000" interpolation="0" />
 	</track>
 	<track name="Gain_R" folded="0" muteKeyCount="0" color="ffb27474">
 		<key row="340" value="0.550000" interpolation="0" />
