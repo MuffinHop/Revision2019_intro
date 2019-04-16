@@ -623,7 +623,7 @@ float TreeBush(vec3 pos, vec3 algorithm) {
     distance2 = min(distance2,fBox(pos+vec3(0.0,2.5,0.0), vec3(1111.,2.,1111.)));
     distance2*=0.2;
     distance2+= cellTile(pos)*0.1;
-    distance2+= cellTile(pos*12.0)*0.025;
+    distance2+= cellTile(pos*9.0)*0.025;
     return distance2;
 }
 
@@ -1239,7 +1239,7 @@ vec4 mainImage()
 
 
 	ContactInfo intersection;
-	RayMarch(ray, intersection, 96, transparencyInformation);
+	RayMarch(ray, intersection, 80, transparencyInformation);
 	vec3 sceneColor;
 	float d = intersection.distanc;
 	if (intersection.id.x < 0.5) {

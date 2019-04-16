@@ -41,7 +41,7 @@ vec4 mainImage()
 
 
 	ContactInfo intersection;
-	RayMarch(ray, intersection, 96, transparencyInformation);
+	RayMarch(ray, intersection, 80, transparencyInformation);
 	vec3 sceneColor;
 	float d = intersection.distanc;
 	if (intersection.id.x < 0.5) {

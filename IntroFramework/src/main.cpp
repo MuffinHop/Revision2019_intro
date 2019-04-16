@@ -980,7 +980,7 @@ int __cdecl main(int argc, char* argv[])
 
 		((PFNGLUNIFORM1FVPROC)wglGetProcAddress("glUniform1fv"))(ObjectsID, length, RM_Objects);
 
-		((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(resolutionID, XRES, YRES, XRES, YRES);
+		((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(resolutionID, XRES*0.75, YRES*0.75, XRES*0.75, YRES*0.75);
 
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(iTimeID, iTime);
 
@@ -1034,7 +1034,7 @@ int __cdecl main(int argc, char* argv[])
 			glBindTexture(GL_TEXTURE_2D, 1);
 #if USE_MIPMAPS
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 0, 0, XRES, YRES, 0);
+			glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 0, 0, XRES*0.75, YRES*0.75, 0);
 			((PFNGLGENERATEMIPMAPPROC)wglGetProcAddress("glGenerateMipmap"))(GL_TEXTURE_2D);
 #else
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
