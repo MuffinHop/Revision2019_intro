@@ -52,6 +52,8 @@ uniform float _Step;
 uniform float fogDensity;
 uniform float _TextId;
 uniform float _Environment;
+uniform float _StepIncreaseByDistance;
+uniform float _StepIncreaseMax;
 #define maxItersGlobal 48
 #define ENABLE_FOG
 #define ENABLE_REFLECTIONS
@@ -954,8 +956,9 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 			cocs = min(cocs, _MaxCoC * 0.1);
 
 
+
 			result.id = sceneDistance.yzw;
-			result.distanc = result.distanc + sceneDistance.x * _Step;
+			result.distanc = result.distanc + sceneDistance.x * _Step * (1.0 + min(_StepIncreaseByDistance, _StepIncreaseMax) * result.distanc);
 		//}
 		
 		if (sceneDistance.x < max(cocs, _MarchMinimum * 0.1) || result.distanc > _FarPlane) {
@@ -1265,7 +1268,7 @@ vec4 mainImage()
 
 
 	ContactInfo intersection;
-	RayMarch(ray, intersection, 256, transparencyInformation);
+	RayMarch(ray, intersection, 96, transparencyInformation);
 	vec3 sceneColor;
 	float d = intersection.distanc;
 	if (intersection.id.x < 0.5) {

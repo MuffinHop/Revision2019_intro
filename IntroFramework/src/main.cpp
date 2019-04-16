@@ -589,6 +589,8 @@ extern float Step;
 extern float fogDensity;
 extern float TextId;
 extern float Environment;
+extern float StepIncreaseByDistance;
+extern float StepIncreaseMax;
 
 void Sync(float second);
 
@@ -823,7 +825,7 @@ void entrypoint(void)
 int __cdecl main(int argc, char* argv[])
 #endif
 {
-	float time = 0.0f;
+	float time = 20.0f;
 	// initialize window
 	#if FULLSCREEN
 		ChangeDisplaySettings(&screenSettings, CDS_FULLSCREEN);
@@ -886,7 +888,6 @@ int __cdecl main(int argc, char* argv[])
 		GLuint fovID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_FOV");
 
 
-
 		GLuint DistanceID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_Distance");
 		GLuint LensCoeffID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_LensCoeff");
 		GLuint MaxCoCID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_MaxCoC");
@@ -898,7 +899,8 @@ int __cdecl main(int argc, char* argv[])
 		GLuint TextID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_TextId");
 		GLuint iMouseID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_iMouse");
 		GLuint environmentID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_Environment");
-
+		GLuint StepIncreaseByDistanceID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_StepIncreaseByDistance");
+		GLuint StepIncreaseMaxID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_StepIncreaseMax");
 
 
 		GLuint MainTexID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_MainTex");
@@ -910,7 +912,6 @@ int __cdecl main(int argc, char* argv[])
 		GLuint ColorTemperatureStrengthID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_ColorTemperatureStrength");
 		GLuint ColorTempratureID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_ColorTemprature");
 		GLuint TempratureNormalizationID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_TempratureNormalization");
-
 
 
 #ifndef DEBUG
@@ -1017,7 +1018,9 @@ int __cdecl main(int argc, char* argv[])
 
 		((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(iMouseID, iMouseX, iMouseY, 0.0f, 0.0f);
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(environmentID, Environment);
-		
+
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(StepIncreaseByDistanceID, StepIncreaseByDistance);
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(StepIncreaseMaxID, StepIncreaseMax);
 		
 
 
