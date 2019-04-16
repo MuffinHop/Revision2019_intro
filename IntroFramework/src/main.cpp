@@ -1012,7 +1012,7 @@ int __cdecl main(int argc, char* argv[])
 
 
 #ifdef DEBUG
-		time += 1.0f / 60.0f; 
+		time += 30.0f / 60.0f; 
 #endif
 		glRects(-1, -1, 1, 1);
 

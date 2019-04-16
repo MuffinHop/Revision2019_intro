@@ -27,6 +27,7 @@ public class RM_SyncDataController : MonoBehaviour
     }
     string GetSyncArray(List<SyncRMObject> History, string arrayName)
     {
+        if (arrayName.Contains(" ")) return "";
         var culture = System.Globalization.CultureInfo.InvariantCulture;
         string code = "";
         code += "       vec3 " + arrayName + "[" + (History.Count + 2) + "] = { \n";
@@ -36,15 +37,15 @@ public class RM_SyncDataController : MonoBehaviour
             for (int i = 0; i < History.Count; i++)
             {
                 historyItem = History[i];
-                code += "               { " + (int)historyItem.Row + ", " + historyItem.Value.ToString(culture) + ", 1 }, \n";
+                code += "               { " + (int)historyItem.Row + ", " + historyItem.Value.ToString("F2", culture) + "f, 1.0f }, \n";
             }
-            code += "               { 100000, " + historyItem.Value.ToString(culture) + ", 1 }, \n";
-            code += "               { 200000, " + historyItem.Value.ToString(culture) + ", 1 } \n";
+            code += "               { 100000.0f, " + historyItem.Value.ToString("F2", culture) + "f, 1.0f }, \n";
+            code += "               { 200000.0f, " + historyItem.Value.ToString("F2",culture) + "f, 1.0f } \n";
             code += "              }; \n \n";
         } else
         {
-            code += "               { 0, 0f, 1 }, \n";
-            code += "               { 200000, 0f, 1 } \n";
+            code += "               { 0.0f, 0.0f, 1.0f }, \n";
+            code += "               { 200000.0f, 0.0f, 1.0f } \n";
             code += "              }; \n \n";
         }
         return code;
@@ -86,21 +87,24 @@ public class RM_SyncDataController : MonoBehaviour
         foreach (var item in SyncUp.RocketParameterNames)
         {
             List<Track.Key> itemKey = SyncUp.Device.GetTrack(item).Keys();
-            if (itemKey.Count > 0)
+            if (!item.Contains(" "))
             {
-                syncCode += "       vec3 " + item + "Array[" + (itemKey.Count + 2) + "] = { \n";
-
-                Track.Key syncval = itemKey[0];
-                for (int i = 0; i < itemKey.Count; i++)
+                if (itemKey.Count > 0)
                 {
-                    syncval = itemKey[i];
-                    syncCode += "               { " + (int)syncval.row + ", " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " }, \n";
+                    syncCode += "       vec3 " + item + "Array[" + (itemKey.Count + 2) + "] = { \n";
+
+                    Track.Key syncval = itemKey[0];
+                    for (int i = 0; i < itemKey.Count; i++)
+                    {
+                        syncval = itemKey[i];
+                        syncCode += "               { " + (int)syncval.row + ", " + syncval.value.ToString("F2", culture) + "f, " + (int)syncval.type + " }, \n";
+                    }
+                    syncCode += "               {100000.0f, " + syncval.value.ToString("F2", culture) + "f, " + (int)syncval.type + " }, \n";
+                    syncCode += "               {2100000.0f, " + syncval.value.ToString("F2", culture) + "f, " + (int)syncval.type + " } \n";
+                    syncCode += "              }; \n";
                 }
-                syncCode += "               {100000.0f, " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " }, \n";
-                syncCode += "               {2100000.0f, " + syncval.value.ToString(culture) + ", " + (int)syncval.type + " } \n";
-                syncCode += "              }; \n";
+                syncCode += "       float " + item + ";\n";
             }
-            syncCode += "       float " + item + ";\n";
         }
 
 
@@ -195,7 +199,7 @@ float setVal(vec3 arr[], float rrow, long size, long *R_INDX) {
         foreach (var item in SyncUp.RocketParameterNames)
         {
             List<Track.Key> itemKey = SyncUp.Device.GetTrack(item).Keys();
-            if (itemKey.Count > 0)
+            if (itemKey.Count > 0 && !item.Contains(" "))
             {
                 syncCode += "long " + item + "ArrayPointer = 0;\n";
                 regularSyncCode += "       " + item + " = setVal(" + item + "Array, row, " + (syncData.Count+2) + ", &" + item + "ArrayPointer); \n";

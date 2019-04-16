@@ -146,6 +146,7 @@
     <None Include="Assets\Shaders\Operators\OpDifferenceRound.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\HexagonCircumcircle.glslinc" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdSphere.glslinc" />
+    <None Include="Assets\Shaders\SDFs\Custom\Water.glslinc" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdPlane.glslinc" />
     <None Include="Assets\Shaders\SDFs\Primitive\udQuad.glslinc" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdCappedCylinder.glslinc" />

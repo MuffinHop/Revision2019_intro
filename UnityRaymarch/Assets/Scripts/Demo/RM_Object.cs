@@ -118,7 +118,7 @@ public class RM_Object : MonoBehaviour
             RotationWHistory = new List<SyncRMObject>();
         }
 
-        if (Time.frameCount % 5 == 0 && prevFrame != Time.frameCount )
+        if (Time.frameCount % 60 == 6 && prevFrame != Time.frameCount )
         {
             prevFrame = Time.frameCount ;
             transform.position = new Vector3(
