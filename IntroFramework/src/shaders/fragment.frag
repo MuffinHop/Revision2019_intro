@@ -596,7 +596,7 @@ float sdSphere(vec3 p, float s)
 	return length(p) - s;
 }
 
-
+float detailed = 0.;
 float TreeBush(vec3 pos, vec3 algorithm) {
     float vali = 5.;
     float ps = perlinnoise(pos.xz*0.1 / vali) - 0.2;
@@ -622,8 +622,8 @@ float TreeBush(vec3 pos, vec3 algorithm) {
 	pos.y += GetHeightmapLowPrecision(pos*algorithm) * algorithm.y;
     distance2 = min(distance2,fBox(pos+vec3(0.0,2.5,0.0), vec3(1111.,2.,1111.)));
     distance2*=0.2;
-    distance2+= cellTile(pos)*0.1;
-    distance2+= cellTile(pos*9.0)*0.025;
+    distance2+= cellTile(pos) * 0.2 * min(detailed*12.0,1.0);	
+    distance2+= cellTile(pos*9.0)*0.025 * detailed;
     return distance2;
 }
 
@@ -931,7 +931,7 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 			result.id = sceneDistance.yzw;
 			result.distanc = result.distanc + sceneDistance.x * _Step * (1.0 + min(_StepIncreaseByDistance, _StepIncreaseMax) * result.distanc);
 		//}
-		
+			detailed = 1.0 / (1.0+result.distanc * 2.0);
 		if (sceneDistance.x < max(cocs, _MarchMinimum * 0.1) || result.distanc > _FarPlane) {
 			sceneDistance = GetDistanceScene(result.position, transparencyPointer);
 #ifdef DEBUG_STEPS
@@ -941,6 +941,7 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 		}
 
 	}
+	detailed = 1.0;
 	if (result.distanc >= _FarPlane)
 	{
 		result.distanc = _FarPlane;

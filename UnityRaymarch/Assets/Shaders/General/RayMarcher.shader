@@ -42,7 +42,7 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 			result.id = sceneDistance.yzw;
 			result.distanc = result.distanc + sceneDistance.x * _Step * (1.0 + min(_StepIncreaseByDistance, _StepIncreaseMax) * result.distanc);
 		//}
-		
+			detailed = 1.0 / (1.0+result.distanc * 2.0);
 		if (sceneDistance.x < max(cocs, _MarchMinimum * 0.1) || result.distanc > _FarPlane) {
 			sceneDistance = GetDistanceScene(result.position, transparencyPointer);
 #ifdef DEBUG_STEPS
@@ -52,6 +52,7 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 		}
 
 	}
+	detailed = 1.0;
 	if (result.distanc >= _FarPlane)
 	{
 		result.distanc = _FarPlane;

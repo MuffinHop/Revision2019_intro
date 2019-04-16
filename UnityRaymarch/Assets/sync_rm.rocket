@@ -765,11 +765,13 @@ color="ff8850b2">
 		<key row="340" value="0.060000" interpolation="0" />
 		<key row="596" value="0.060000" interpolation="0" />
 		<key row="873" value="0.040000" interpolation="0" />
-		<key row="1364" value="0.050000" interpolation="0" />
+		<key row="1364" value="0.100000" interpolation="0" />
+		<key row="2061" value="0.100000" interpolation="0" />
 	</track>
 	<track name="StepIncreaseMax" folded="0" color="ff4fb292">
 		<key row="340" value="0.500000" interpolation="0" />
 		<key row="596" value="0.500000" interpolation="0" />
-		<key row="1364" value="1.000000" interpolation="0" />
+		<key row="1364" value="2.000000" interpolation="0" />
+		<key row="2061" value="0.080000" interpolation="0" />
 	</track>
 </tracks>
