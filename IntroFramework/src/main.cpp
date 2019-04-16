@@ -1167,6 +1167,13 @@ int __cdecl main(int argc, char* argv[])
 						buf2textindex++;
 						buf2charscurrent = 0;
 						buf2charsprev = 0;
+						if (buf2textindex >= 2) {
+
+							DrawRectText(buf2textptr[buf2textindex - 2], RGB(0, 0, 0), buf2textlefts[buf2textindex - 2] - 1, buf2texttops[buf2textindex - 2] - 1);
+							DrawRectText(buf2textptr[buf2textindex - 2], RGB(0, 0, 0), buf2textlefts[buf2textindex - 2] + 1, buf2texttops[buf2textindex - 2] - 1);
+							DrawRectText(buf2textptr[buf2textindex - 2], RGB(0, 0, 0), buf2textlefts[buf2textindex - 2] - 2, buf2texttops[buf2textindex - 2] + 1);
+							DrawRectText(buf2textptr[buf2textindex - 2], RGB(0, 0, 0), buf2textlefts[buf2textindex - 2] + 2, buf2texttops[buf2textindex - 2] + 1);
+						}
 					}
 
 					RenderBitmapToTexture(fontTexture_greets);
