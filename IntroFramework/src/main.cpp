@@ -588,6 +588,7 @@ extern float TempratureNormalization;
 extern float Step;
 extern float fogDensity;
 extern float TextId;
+extern float Environment;
 
 void Sync(float second);
 
@@ -885,6 +886,7 @@ int __cdecl main(int argc, char* argv[])
 		GLuint fovID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_FOV");
 
 
+
 		GLuint DistanceID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_Distance");
 		GLuint LensCoeffID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_LensCoeff");
 		GLuint MaxCoCID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_MaxCoC");
@@ -894,6 +896,8 @@ int __cdecl main(int argc, char* argv[])
 		GLuint StepID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_Step");
 		GLuint fogDensityID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "fogDensity");
 		GLuint TextID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_TextId");
+		GLuint iMouseID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_iMouse");
+		GLuint environmentID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_Environment");
 
 
 
@@ -906,6 +910,7 @@ int __cdecl main(int argc, char* argv[])
 		GLuint ColorTemperatureStrengthID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_ColorTemperatureStrength");
 		GLuint ColorTempratureID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_ColorTemprature");
 		GLuint TempratureNormalizationID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_TempratureNormalization");
+
 
 
 #ifndef DEBUG
@@ -974,7 +979,7 @@ int __cdecl main(int argc, char* argv[])
 
 		((PFNGLUNIFORM1FVPROC)wglGetProcAddress("glUniform1fv"))(ObjectsID, length, RM_Objects);
 
-		((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))( resolutionID, XRES, YRES, XRES, YRES);
+		((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(resolutionID, XRES, YRES, XRES, YRES);
 
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(iTimeID, iTime);
 
@@ -1010,9 +1015,14 @@ int __cdecl main(int argc, char* argv[])
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(MarchMinimumID, MarchMinimum);
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(FarPlaneID, FarPlane);
 
+		((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(iMouseID, iMouseX, iMouseY, 0.0f, 0.0f);
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(environmentID, Environment);
+		
+		
+
 
 #ifdef DEBUG
-		time += 30.0f / 60.0f; 
+		time += 60.0f / 60.0f; 
 #endif
 		glRects(-1, -1, 1, 1);
 
@@ -1021,7 +1031,7 @@ int __cdecl main(int argc, char* argv[])
 			glBindTexture(GL_TEXTURE_2D, 1);
 #if USE_MIPMAPS
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, 0, 0, XRES, YRES, 0);
+			glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 0, 0, XRES, YRES, 0);
 			((PFNGLGENERATEMIPMAPPROC)wglGetProcAddress("glGenerateMipmap"))(GL_TEXTURE_2D);
 #else
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

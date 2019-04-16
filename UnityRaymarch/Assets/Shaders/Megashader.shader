@@ -776,7 +776,7 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
          float id6_distance = 1e9;
 
 //Tree Bush Ray Marched
-               vec3 posID22 = position - vec3(_Objects[220], _Objects[221], _Objects[222]);
+               #define posID22 position
                id6_distance  = min(TreeBush(posID22, vec3(_Objects[223], _Objects[224],_Objects[225])), id6_distance);
                vec4 distID6 = vec4(id6_distance, material_ID6, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID6);

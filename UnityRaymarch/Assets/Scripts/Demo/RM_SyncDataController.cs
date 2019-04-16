@@ -175,23 +175,23 @@ float setVal(vec3 arr[], float rrow, long size, long *R_INDX) {
                 syncCode += "pointerID" + rmObject.ID + "ArrayRotationW = 0; \n";
                 arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayPositionX, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayPositionX ); \n";
                 index++;
-                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayPositionY, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayPositionY ); \n";
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayPositionY, row, " + (rmObject.PositionYHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayPositionY ); \n";
                 index++;
-                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayPositionZ, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayPositionZ ); \n";
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayPositionZ, row, " + (rmObject.PositionZHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayPositionZ ); \n";
                 index++;
-                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayScaleX, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayScaleX ) / 2.0f; \n";
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayScaleX, row, " + (rmObject.ScaleXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayScaleX ) / 2.0f; \n";
                 index++;
-                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayScaleY, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayScaleY ) / 2.0f; \n";
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayScaleY, row, " + (rmObject.ScaleYHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayScaleY ) / 2.0f; \n";
                 index++;
-                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayScaleZ, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayScaleZ ) / 2.0f; \n";
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayScaleZ, row, " + (rmObject.ScaleZHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayScaleZ ) / 2.0f; \n";
                 index++;
-                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayRotationX, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayRotationX ); \n";
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayRotationX, row, " + (rmObject.RotationXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayRotationX ); \n";
                 index++;
-                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayRotationY, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayRotationY ); \n";
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayRotationY, row, " + (rmObject.RotationYHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayRotationY ); \n";
                 index++;
-                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayRotationZ, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayRotationZ ); \n";
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayRotationZ, row, " + (rmObject.RotationZHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayRotationZ ); \n";
                 index++;
-                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayRotationW, row, " + (rmObject.PositionXHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayRotationW ); \n";
+                arrayCode += "       RM_Objects[" + index + "] = setVal(ID" + rmObject.ID + "ArrayRotationW, row, " + (rmObject.RotationWHistory.Count + 2) + ", &pointerID" + rmObject.ID + "ArrayRotationW ); \n";
                 index++;
             }
         }
@@ -202,7 +202,7 @@ float setVal(vec3 arr[], float rrow, long size, long *R_INDX) {
             if (itemKey.Count > 0 && !item.Contains(" "))
             {
                 syncCode += "long " + item + "ArrayPointer = 0;\n";
-                regularSyncCode += "       " + item + " = setVal(" + item + "Array, row, " + (syncData.Count+2) + ", &" + item + "ArrayPointer); \n";
+                regularSyncCode += "       " + item + " = setVal(" + item + "Array, row, " + (itemKey.Count + 2) + ", &" + item + "ArrayPointer); \n";
             }
         }
         syncCode += @"

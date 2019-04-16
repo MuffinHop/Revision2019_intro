@@ -113,13 +113,7 @@ public class RM_Camera : MonoBehaviour
         _material.SetFloat("fogDensity", SyncUp.GetVal("fogDensity"));
         _material.SetFloat("_TextId", SyncUp.GetVal("TextId"));
         _material.SetVector("_iMouse", new Vector4(SyncUp.GetVal("iMouseX"), SyncUp.GetVal("iMouseY"),0f,0f));
-
-
         _material.SetFloat("_Environment", SyncUp.GetVal("Environment"));
-
-
-
-
 
 
         if (RM_Objects != null && RM_Objects.Count > 0)
