@@ -9,6 +9,6 @@
 	opos.x+= mod(opos.z*1.5, algorithm.y)*algorithm.x;
 	opos.z = mod(opos.z, algorithm.z) - algorithm.z / 2.0;
 	opos.z-= mod(opos.z, algorithm.z/2.)*0.1;
-	float dist = fBox(opos + vec3(0.2,0.0,0.2), vec3(0.002, 0.2, 0.003));
+	float dist = fBox(opos + vec3(0.2,0.0,0.2), vec3(0.01, 0.2, 0.01));
 	return dist;
 }

@@ -30,6 +30,9 @@ void main()
 }
 #endif
 #ifdef FRAGMENT
+
+#pragma multi_compile OBJMAX OBJMIN
+
 uniform sampler2D _TextTex;
 uniform float _iTime;
 uniform vec4 _iMouse;
@@ -54,6 +57,7 @@ uniform float _TextId;
 uniform float _Environment;
 uniform float _StepIncreaseByDistance;
 uniform float _StepIncreaseMax;
+uniform float OBJMAX, OBJMIN;
 #define maxItersGlobal 48
 #define ENABLE_FOG
 #define ENABLE_REFLECTIONS
@@ -532,7 +536,7 @@ const float material_ID5 = 6;
 
 const float material_ID6 = 7;
 
- uniform float _Objects[250];
+ uniform float _Objects[240];
 float fSphere(vec3 p, float r) {
 	return length(p) - r;
 }
@@ -558,7 +562,7 @@ float Wheat(vec3 pos, vec3 algorithm) {
 	opos.x+= mod(opos.z*1.5, algorithm.y)*algorithm.x;
 	opos.z = mod(opos.z, algorithm.z) - algorithm.z / 2.0;
 	opos.z-= mod(opos.z, algorithm.z/2.)*0.1;
-	float dist = fBox(opos + vec3(0.2,0.0,0.2), vec3(0.002, 0.2, 0.003));
+	float dist = fBox(opos + vec3(0.2,0.0,0.2), vec3(0.01, 0.2, 0.01));
 	return dist;
 }
 
@@ -651,8 +655,8 @@ float TreeBush(vec3 pos, vec3 algorithm) {
 	pos.y += GetHeightmapLowPrecision(pos*algorithm) * algorithm.y;
     distance2 = min(distance2,fBox(pos+vec3(0.0,2.5,0.0), vec3(1111.,2.,1111.)));
     distance2*=0.2;
-    distance2+= cellTile(pos) * 0.2 * min(detailed*12.0,1.0);	
-    distance2+= cellTile(pos*9.0)*0.025 * detailed;
+    distance2+= cellTile(pos) * 0.2;	
+    distance2+= cellTile(pos*9.0)*0.025;
     return distance2;
 }
 
@@ -666,120 +670,166 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
             vec4 result = vec4(10000.0, -1.0, 0.0, 0.0);
         
          float id0_distance = 1e9;
+       if (OBJMAX > 0 && 0 > OBJMIN) { 
 
 //Sphere
                vec3 posID0 = position - vec3(_Objects[0], _Objects[1], _Objects[2]);
                id0_distance  = min(fSphere(posID0,_Objects[3]), id0_distance);
+       }
+       if (OBJMAX > 9 && 9 > OBJMIN) { 
 
 //Cube (1)
                vec3 posID9 = position - vec3(_Objects[90], _Objects[91], _Objects[92]);
                id0_distance  = min(Water(posID9, vec3(_Objects[93], _Objects[94],_Objects[95])), id0_distance);
+       }
+       if (OBJMAX > 13 && 13 > OBJMIN) { 
 
 //Sphere (1)
                vec3 posID13 = position - vec3(_Objects[130], _Objects[131], _Objects[132]);
                id0_distance  = min(fSphere(posID13,_Objects[133]), id0_distance);
+       }
+       if (OBJMAX > 18 && 18 > OBJMIN) { 
 
 //Sphere (2)
-               vec3 posID17 = position - vec3(_Objects[170], _Objects[171], _Objects[172]);
-               id0_distance  = min(fSphere(posID17,_Objects[173]), id0_distance);
-
-//Sphere
                vec3 posID18 = position - vec3(_Objects[180], _Objects[181], _Objects[182]);
                id0_distance  = min(fSphere(posID18,_Objects[183]), id0_distance);
+       }
+       if (OBJMAX > 19 && 19 > OBJMIN) { 
+
+//Sphere
+               vec3 posID19 = position - vec3(_Objects[190], _Objects[191], _Objects[192]);
+               id0_distance  = min(fSphere(posID19,_Objects[193]), id0_distance);
+       }
                vec4 distID0 = vec4(id0_distance, material_ID0, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombineTransparent(result, distID0, transparencyPointer);
 
          float id1_distance = 1e9;
+       if (OBJMAX > 1 && 1 > OBJMIN) { 
 
 //LeftShoulder
                id1_distance  = min(sdCapsule(position, vec3(_Objects[10], _Objects[11],_Objects[12]), vec3(_Objects[13], _Objects[14],_Objects[15]), 0.1), id1_distance);
+       }
+       if (OBJMAX > 2 && 2 > OBJMIN) { 
 
 //RightForeArm
                id1_distance  = min(sdCapsule(position, vec3(_Objects[20], _Objects[21],_Objects[22]), vec3(_Objects[23], _Objects[24],_Objects[25]), 0.06), id1_distance);
+       }
+       if (OBJMAX > 3 && 3 > OBJMIN) { 
 
 //LeftArm
                id1_distance  = min(sdCapsule(position, vec3(_Objects[30], _Objects[31],_Objects[32]), vec3(_Objects[33], _Objects[34],_Objects[35]), 0.08), id1_distance);
+       }
+       if (OBJMAX > 4 && 4 > OBJMIN) { 
 
 //RightUpLeg
                id1_distance  = min(sdCapsule(position, vec3(_Objects[40], _Objects[41],_Objects[42]), vec3(_Objects[43], _Objects[44],_Objects[45]), 0.1), id1_distance);
+       }
+       if (OBJMAX > 5 && 5 > OBJMIN) { 
 
 //LeftForeArm
                id1_distance  = min(sdCapsule(position, vec3(_Objects[50], _Objects[51],_Objects[52]), vec3(_Objects[53], _Objects[54],_Objects[55]), 0.06), id1_distance);
+       }
+       if (OBJMAX > 7 && 7 > OBJMIN) { 
 
 //Cube Ray Marched (1)
                vec3 posID7 = position - vec3(_Objects[70], _Objects[71], _Objects[72]);
                posID7= RotateQuaternion(vec4(_Objects[76], _Objects[77], _Objects[78], - _Objects[79]))*posID7;
                id1_distance  = min(fBox(posID7, vec3(_Objects[73], _Objects[74],_Objects[75])), id1_distance);
+       }
+       if (OBJMAX > 10 && 10 > OBJMIN) { 
 
 //RightArm
                id1_distance  = min(sdCapsule(position, vec3(_Objects[100], _Objects[101],_Objects[102]), vec3(_Objects[103], _Objects[104],_Objects[105]), 0.08), id1_distance);
+       }
+       if (OBJMAX > 12 && 12 > OBJMIN) { 
 
 //GameObject
                vec3 posID12 = position - vec3(_Objects[120], _Objects[121], _Objects[122]);
                id1_distance  = fOpUnionRound(fSphere(posID12,_Objects[123]), id1_distance,0.12);
+       }
+       if (OBJMAX > 14 && 14 > OBJMIN) { 
 
 //LeftUpLeg
                id1_distance  = min(sdCapsule(position, vec3(_Objects[140], _Objects[141],_Objects[142]), vec3(_Objects[143], _Objects[144],_Objects[145]), 0.1), id1_distance);
+       }
+       if (OBJMAX > 15 && 15 > OBJMIN) { 
+
+//Cube Ray Marched (2)
+               vec3 posID15 = position - vec3(_Objects[150], _Objects[151], _Objects[152]);
+               id1_distance  = min(fBox(posID15, vec3(_Objects[153], _Objects[154],_Objects[155])), id1_distance);
+       }
+       if (OBJMAX > 17 && 17 > OBJMIN) { 
 
 //Spine
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[160], _Objects[161],_Objects[162]), vec3(_Objects[163], _Objects[164],_Objects[165]), 0.15), id1_distance);
-
-//LeftHand
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[190], _Objects[191],_Objects[192]), vec3(_Objects[193], _Objects[194],_Objects[195]), 0.04), id1_distance);
+               id1_distance  = min(sdCapsule(position, vec3(_Objects[170], _Objects[171],_Objects[172]), vec3(_Objects[173], _Objects[174],_Objects[175]), 0.15), id1_distance);
+       }
+       if (OBJMAX > 20 && 20 > OBJMIN) { 
 
 //GameObject
                vec3 posID20 = position - vec3(_Objects[200], _Objects[201], _Objects[202]);
                id1_distance  = fOpUnionRound(fSphere(posID20,_Objects[203]), id1_distance,0.12);
-
-//RightHand
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[230], _Objects[231],_Objects[232]), vec3(_Objects[233], _Objects[234],_Objects[235]), 0.04), id1_distance);
+       }
+       if (OBJMAX > 23 && 23 > OBJMIN) { 
 
 //RightShoulder
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[240], _Objects[241],_Objects[242]), vec3(_Objects[243], _Objects[244],_Objects[245]), 0.1), id1_distance);
+               id1_distance  = min(sdCapsule(position, vec3(_Objects[230], _Objects[231],_Objects[232]), vec3(_Objects[233], _Objects[234],_Objects[235]), 0.1), id1_distance);
+       }
                vec4 distID1 = vec4(id1_distance, material_ID1, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID1);
 
          float id2_distance = 1e9;
+       if (OBJMAX > 6 && 6 > OBJMIN) { 
 
 //Wheat
                vec3 posID6 = position - vec3(_Objects[60], _Objects[61], _Objects[62]);
                id2_distance  = min(Wheat(posID6, vec3(_Objects[63], _Objects[64],_Objects[65])), id2_distance);
+       }
+       if (OBJMAX > 11 && 11 > OBJMIN) { 
 
 //Wheat (2)
                vec3 posID11 = position - vec3(_Objects[110], _Objects[111], _Objects[112]);
                id2_distance  = min(Wheat(posID11, vec3(_Objects[113], _Objects[114],_Objects[115])), id2_distance);
+       }
                vec4 distID2 = vec4(id2_distance, material_ID2, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID2);
 
          float id3_distance = 1e9;
+       if (OBJMAX > 8 && 8 > OBJMIN) { 
 
 //Smoke
                vec3 posID8 = position - vec3(_Objects[80], _Objects[81], _Objects[82]);
                id3_distance  = min(Smoke(posID8, vec3(_Objects[83], _Objects[84],_Objects[85])), id3_distance);
+       }
                vec4 distID3 = vec4(id3_distance, material_ID3, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID3);
 
          float id4_distance = 1e9;
+       if (OBJMAX > 16 && 16 > OBJMIN) { 
 
 //Tree Trunk Ray Marched
-               #define posID15 position
-               id4_distance  = min(TreeTrunk(posID15, vec3(_Objects[153], _Objects[154],_Objects[155])), id4_distance);
+               #define posID16 position
+               id4_distance  = min(TreeTrunk(posID16, vec3(_Objects[163], _Objects[164],_Objects[165])), id4_distance);
+       }
                vec4 distID4 = vec4(id4_distance, material_ID4, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID4);
 
          float id5_distance = 1e9;
+       if (OBJMAX > 21 && 21 > OBJMIN) { 
 
 //Cube Ray Marched
                vec3 posID21 = position - vec3(_Objects[210], _Objects[211], _Objects[212]);
                id5_distance  = min(fBox(posID21, vec3(_Objects[213], _Objects[214],_Objects[215])), id5_distance);
+       }
                vec4 distID5 = vec4(id5_distance, material_ID5, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID5);
 
          float id6_distance = 1e9;
+       if (OBJMAX > 22 && 22 > OBJMIN) { 
 
 //Tree Bush Ray Marched
                #define posID22 position
                id6_distance  = min(TreeBush(posID22, vec3(_Objects[223], _Objects[224],_Objects[225])), id6_distance);
+       }
                vec4 distID6 = vec4(id6_distance, material_ID6, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID6);
 
@@ -960,7 +1010,7 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 			result.id = sceneDistance.yzw;
 			result.distanc = result.distanc + sceneDistance.x * _Step * (1.0 + min(_StepIncreaseByDistance, _StepIncreaseMax) * result.distanc);
 		//}
-			detailed = 1.0 / (1.0+result.distanc * 2.0);
+
 		if (sceneDistance.x < max(cocs, _MarchMinimum * 0.1) || result.distanc > _FarPlane) {
 			sceneDistance = GetDistanceScene(result.position, transparencyPointer);
 #ifdef DEBUG_STEPS
@@ -971,6 +1021,30 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 
 	}
 	detailed = 1.0;
+
+	for (int i = 0;i <= 5;i++)
+	{
+		result.position = ray.origin + ray.direction * result.distanc;
+		vec4 sceneDistance = GetDistanceScene(result.position, transparencyPointer);
+		/*
+		if (inWater == 0. && (i < 1) && (sceneDistance.y == material_ID2) && (sceneDistance.x < 0.001)) {
+			inWater = 1.;
+			wasInWater = inWater;
+		}
+		else {*/
+
+		float cocs = max(result.distanc - _Distance, 0.0) * _LensCoeff * 0.1;
+		cocs = min(cocs, _MaxCoC * 0.1);
+
+
+
+		result.id = sceneDistance.yzw;
+		result.distanc = result.distanc + sceneDistance.x;
+		//}
+
+
+
+	}
 	if (result.distanc >= _FarPlane)
 	{
 		result.distanc = _FarPlane;
