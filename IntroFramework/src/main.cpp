@@ -1002,12 +1002,12 @@ int __cdecl main(int argc, char* argv[])
 			((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
 			POST_PASS = 0;
 		}
-		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE1);
+		//((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE1);
 
-		glBindTexture(GL_TEXTURE_2D, texture_perlin);
-		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(IChannel0ID,1);
+		//glBindTexture(GL_TEXTURE_2D, texture_perlin);
+		//((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(IChannel0ID,1);
 
-		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
+		//((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
 
 
 		/*
@@ -1083,7 +1083,7 @@ int __cdecl main(int argc, char* argv[])
 
 
 #ifdef DEBUG
-		time += 60.0f / 60.0f; 
+		time += 60.0f / 60.0f / 4.0f; 
 #endif
 		glRects(-1, -1, 1, 1);
 
@@ -1103,6 +1103,7 @@ int __cdecl main(int argc, char* argv[])
 			((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(MainTexID, 0);
 
 
+
 			((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(iResolutionID, XRES, YRES, XRES, YRES);
 			((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(GainID, Gain_R, Gain_G, Gain_B, 0);
 			((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(GammaID, Gamma_R, Gamma_G, Gamma_B, 0);
@@ -1115,13 +1116,13 @@ int __cdecl main(int argc, char* argv[])
 			glRects(-1, -1, 1, 1);
 
 			if (fontinit == 0) {
+				fontinit = 1;
 
 				RenderFont2();
 				fontTexture_cards = GenTexture();
 				RenderBitmapToTexture(fontTexture_cards);
 				TextIds[2] = fontTexture_cards;
 
-				fontinit = 1;
 
 				// font textures
 				RenderFont3();
@@ -1130,10 +1131,7 @@ int __cdecl main(int argc, char* argv[])
 				TextIds[3] = fontTexture_greets;
 
 
-				buftextindex = 0;
-				bufcharscurrent = 0.0;
-				buf2textindex = 0;
-				buf2charscurrent = 0.0;
+
 
 				dolz4();
 				TextIds[4] = texture_logos;
@@ -1145,6 +1143,11 @@ int __cdecl main(int argc, char* argv[])
 				fontTexture_telegram = GenTexture();
 				RenderBitmapToTexture(fontTexture_telegram);
 				TextIds[1] = fontTexture_telegram;
+
+				buftextindex = 0;
+				bufcharscurrent = 0.0;
+				buf2textindex = 0;
+				buf2charscurrent = 0.0;
 
 #ifndef DEBUG
 
@@ -1158,6 +1161,8 @@ int __cdecl main(int argc, char* argv[])
 		}
 
 		SwapBuffers(hDC);
+
+
 
 		if (fontinit >= 1) {
 			if (TextId == 1.0) {
@@ -1186,6 +1191,7 @@ int __cdecl main(int argc, char* argv[])
 				}
 				fontinit = 2;
 			}
+
 
 
 			if (TextId == 3.0) {
@@ -1255,6 +1261,7 @@ int __cdecl main(int argc, char* argv[])
 #else
 		dt = 0.001;
 #endif
+
 
 	} while(!GetAsyncKeyState(VK_ESCAPE)
 		#if USE_AUDIO
