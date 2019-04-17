@@ -10,8 +10,8 @@ public class RM_SyncDataController : MonoBehaviour
 {
     [SerializeField]
     private RayMarchingController _rayMarchingController;
-    
-    
+
+
     public void OnDestroy()
     {
         Generate();
@@ -40,9 +40,10 @@ public class RM_SyncDataController : MonoBehaviour
                 code += "               { " + (int)historyItem.Row + ", " + historyItem.Value.ToString("F2", culture) + "f, 1.0f }, \n";
             }
             code += "               { 100000.0f, " + historyItem.Value.ToString("F2", culture) + "f, 1.0f }, \n";
-            code += "               { 200000.0f, " + historyItem.Value.ToString("F2",culture) + "f, 1.0f } \n";
+            code += "               { 200000.0f, " + historyItem.Value.ToString("F2", culture) + "f, 1.0f } \n";
             code += "              }; \n \n";
-        } else
+        }
+        else
         {
             code += "               { 0.0f, 0.0f, 1.0f }, \n";
             code += "               { 200000.0f, 0.0f, 1.0f } \n";
@@ -208,11 +209,13 @@ float setVal(vec3 arr[], float rrow, long size, long *R_INDX) {
         syncCode += @"
         void Sync(float second)
         {
-            float div = 8.0f * 60.0f / 180.0f;
             float row = second * 60.0f;
 
             ";
+        // frow = AudioSource.time * BPM / 60f * 8f;
         syncCode += arrayCode;
+        
+        syncCode += "       float div = " + SyncUp.BPMs + " / 60.0f * 8.0f;\n";
         syncCode += "       row = second * div;\n";
         syncCode += regularSyncCode;
 

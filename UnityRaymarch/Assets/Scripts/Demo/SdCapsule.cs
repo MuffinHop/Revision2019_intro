@@ -6,10 +6,6 @@ using static RocketNet.Track;
 [ExecuteInEditMode, System.Serializable]
 public class SdCapsule : RM_Object
 {
-    protected Vector3 previousPosition0 = new Vector3(-1000000f, -1000000f, -100000f);
-    protected Vector3 previousPosition1 = new Vector3(-1000000f, -1000000f, -100000f);
-
-    int prevFrame = -1;
     protected new void LateUpdate()
     {
         while (transform.childCount == 0)
@@ -69,28 +65,28 @@ public class SdCapsule : RM_Object
             prevFrame = Time.frameCount;
             if (Mathf.Abs(previousPosition.x - transform.position.x) > 0.01f)
             {
-                PositionXHistory.Add(new SyncRMObject(Time.frameCount, transform.position.x));
+                PositionXHistory.Add(new SyncRMObject((int)(SyncUp.time*60.0f), transform.position.x));
             }
             if (Mathf.Abs(previousPosition.y - transform.position.y) > 0.01f)
             {
-                PositionYHistory.Add(new SyncRMObject(Time.frameCount, transform.position.y));
+                PositionYHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.position.y));
             }
             if (Mathf.Abs(previousPosition.z - transform.position.z) > 0.01f)
             {
-                PositionZHistory.Add(new SyncRMObject(Time.frameCount, transform.position.z));
+                PositionZHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.position.z));
             }
 
             if (Mathf.Abs(previousScale.x - transform.GetChild(0).position.x) > 0.01f)
             {
-                ScaleXHistory.Add(new SyncRMObject(Time.frameCount, transform.GetChild(0).position.x));
+                ScaleXHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.GetChild(0).position.x * 2.0f));
             }
             if (Mathf.Abs(previousScale.y - transform.GetChild(0).position.y) > 0.01f)
             {
-                ScaleYHistory.Add(new SyncRMObject(Time.frameCount, transform.GetChild(0).position.y));
+                ScaleYHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.GetChild(0).position.y * 2.0f));
             }
             if (Mathf.Abs(previousScale.z - transform.GetChild(0).position.z) > 0.01f)
             {
-                ScaleZHistory.Add(new SyncRMObject(Time.frameCount, transform.GetChild(0).position.z));
+                ScaleZHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.GetChild(0).position.z * 2.0f));
             }
 
             previousPosition = transform.position;

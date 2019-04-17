@@ -11,6 +11,7 @@ public class SyncUp : MonoBehaviour
     static int row = 0;
     static float frow = 0f;
     static public Device Device;
+    static public float BPMs;
     public float BPM;
     public AudioSource AudioSource;
     private Dictionary<int, RM_Object> rmObjects;
@@ -57,6 +58,7 @@ public class SyncUp : MonoBehaviour
         frow = r;
         row = r;
         AudioSource.time = time = r / BPM * 60f / 8f;
+        BPMs = BPM;
     }
     void Pause(bool a)
     {
