@@ -559,6 +559,7 @@ shader_minifier.exe --no-renaming -v -o src\shaders\post.inl src\shaders\post.fr
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="gl_loader.h" />
+    <ClInclude Include="src\SimplexNoise.h" />
     <ClInclude Include="src\biisi.h" />
     <ClInclude Include="src\editor.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Snapshot|Win32'">true</ExcludedFromBuild>
@@ -622,6 +623,7 @@ shader_minifier.exe --no-renaming -v -o src\shaders\post.inl src\shaders\post.fr
     <ClInclude Include="src\WaveSabrePlayerLib\WavWriter.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\SimplexNoise.cpp" />
     <ClCompile Include="src\editor.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\song.cpp">

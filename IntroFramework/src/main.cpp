@@ -1,7 +1,7 @@
 ﻿// custom build and feature flags
 #ifdef DEBUG
 	#define OPENGL_DEBUG        1
-	#define FULLSCREEN          1
+	#define FULLSCREEN          0
 	#define DESPERATE           0
 	#define BREAK_COMPATIBILITY 0
 #else
@@ -12,6 +12,7 @@
 #endif
 
 #include "smallz4.h"
+#include "SimplexNoise.h"
 
 int POST_PASS = 1;
 #define USE_MIPMAPS  1
@@ -478,6 +479,9 @@ GLuint fontTexture_telegram;
 GLuint fontTexture_cards;
 GLuint fontTexture_greets;
 GLuint texture_logos;
+GLuint texture_perlin;
+unsigned char* perlinnoise;
+
 
 void DrawRectText(const char* sText, COLORREF fg, int left, int top) {
 	SetTextColor(fonthDC, fg);
@@ -621,6 +625,7 @@ void InitFontToTexture() {
 	SetTextAlign(fonthDC, TA_TOP | TA_LEFT);
 }
 
+
 void RenderFont1() {
 	HBRUSH brush = CreateSolidBrush(RGB(218, 196, 103)); //create brush
 	SelectObject(fonthDC, brush); //select brush into DC
@@ -661,6 +666,7 @@ void RenderFont2() {
 	LPCWSTR str = L"♠♣♥♦";
 	DrawRectTextW(str, 4, RGB(255, 0, 0), 0, 200);
 }
+
 
 void RenderFont3() {
 	hbmOld = SelectObject(fonthDC, hbmBitmap);
@@ -754,7 +760,7 @@ void RenderBitmapToTexture(GLuint texture) {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-GLuint GenTexture() {
+GLuint GenTexture(GLfloat param = GL_CLAMP) {
 	GLuint temp;
 	glGenTextures(1, &temp);
 	glBindTexture(GL_TEXTURE_2D, temp);
@@ -768,8 +774,8 @@ GLuint GenTexture() {
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	//the texture wraps over at the edges
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, param);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, param);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	return temp;
 }
@@ -803,6 +809,39 @@ int dolz4()
 }
 
 
+#define M_PI 3.1415926535
+
+float GetNoise(float x, float y, float octaves, float texSize) {
+	double c = 2, a = 1; // torus parameters (controlling size)
+	double xt = (c + a * cos(2 * M_PI*(y / texSize)))*cos(2 * M_PI*(x / texSize));
+	double yt = (c + a * cos(2 * M_PI*(y / texSize)))*sin(2 * M_PI*(x / texSize));
+	double zt = a * sin(2 * M_PI*(y / texSize));
+	float noise = octave_noise_3d(octaves, 0.5, 1.0, xt, yt, zt);
+	return ((noise+1.0)/2.0)*255;
+}
+
+void GeneratePerlin() {
+	float texSize = 512.0;
+	size_t octaves = 64;
+
+	perlinnoise = (unsigned char*) malloc(((int)texSize*(int)texSize)*3);
+	texture_perlin = GenTexture(GL_CLAMP);
+	(void)texture_perlin;
+
+	int i = 0;
+	for (float y = 0.; y < texSize; y += 1.) {
+		for (float x = 0.; x < texSize; x += 1.) {
+			perlinnoise[i++] = GetNoise(x, y, octaves, texSize);
+			perlinnoise[i++] = GetNoise(x*4.0, y*4.0, octaves, texSize);
+			perlinnoise[i++] = GetNoise(x*16.0, y*16.0, octaves, texSize);
+		}
+	}
+
+
+	glBindTexture(GL_TEXTURE_2D, texture_perlin);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (int)texSize, (int)texSize, 0, GL_RGB, GL_UNSIGNED_BYTE, perlinnoise);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -825,6 +864,7 @@ void entrypoint(void)
 int __cdecl main(int argc, char* argv[])
 #endif
 {
+
 	float time = 20.0f;
 	// initialize window
 	#if FULLSCREEN
@@ -946,7 +986,6 @@ int __cdecl main(int argc, char* argv[])
 		int index = (int)TextId;
 		GLuint tid = TextIds[index];
 
-
 		((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(pidMain);
 		POST_PASS = 1;
 
@@ -957,6 +996,7 @@ int __cdecl main(int argc, char* argv[])
 			POST_PASS = 0;
 		}
 		
+
 		/*
 		GLuint mainTexture = 0;
 		glGenTextures(0, &mainTexture);
@@ -1087,6 +1127,7 @@ int __cdecl main(int argc, char* argv[])
 				dolz4();
 				TextIds[4] = texture_logos;
 
+				GeneratePerlin();
 
 #ifndef DEBUG
 
