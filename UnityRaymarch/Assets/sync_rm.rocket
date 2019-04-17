@@ -39,7 +39,7 @@ color="ff4fb292">
 		<key row="1364" value="-0.200000" interpolation="0" />
 	</track>
 	<track name="Position ZDefaultAvatar" folded="0" color="ffb28050">
-		<key row="596" value="19.000000" interpolation="0" />
+		<key row="596" value="27.000000" interpolation="0" />
 		<key row="873" value="44.000000" interpolation="0" />
 		<key row="1028" value="18.000000" interpolation="1" />
 		<key row="1267" value="12.000000" interpolation="0" />
@@ -777,14 +777,14 @@ color="ff8850b2">
 	<track name="ObjMax" folded="0" color="ff4f71b2">
 		<key row="0" value="3.000000" interpolation="0" />
 		<key row="340" value="23.000000" interpolation="0" />
-		<key row="596" value="23.000000" interpolation="0" />
+		<key row="596" value="32.000000" interpolation="0" />
 		<key row="873" value="32.000000" interpolation="0" />
 		<key row="1877" value="23.000000" interpolation="0" />
 	</track>
 	<track name="ObjMin" folded="0" color="ff8850b2">
 		<key row="0" value="0.000000" interpolation="0" />
 		<key row="340" value="14.000000" interpolation="0" />
-		<key row="596" value="9.000000" interpolation="0" />
+		<key row="596" value="0.000000" interpolation="0" />
 		<key row="873" value="12.000000" interpolation="0" />
 		<key row="1364" value="5.000000" interpolation="0" />
 		<key row="1877" value="12.000000" interpolation="0" />

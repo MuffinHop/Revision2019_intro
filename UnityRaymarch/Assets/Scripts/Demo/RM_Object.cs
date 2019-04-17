@@ -74,7 +74,7 @@ public class RM_Object : MonoBehaviour
     {
         ID = i;
     }
-    int prevFrame = -1;
+    protected int prevFrame = -1;
     protected void LateUpdate()
     {
         if (PositionXHistory == null)
@@ -128,22 +128,22 @@ public class RM_Object : MonoBehaviour
                 );
             if (Mathf.Abs(previousPosition.x-transform.position.x) > 0.1f)
             {
-                PositionXHistory.Add(new SyncRMObject(Time.frameCount, transform.position.x));
+                PositionXHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.position.x));
             }
             if (Mathf.Abs(previousPosition.y - transform.position.y) > 0.1f)
             {
-                PositionYHistory.Add(new SyncRMObject(Time.frameCount, transform.position.y));
+                PositionYHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.position.y));
             }
             if (Mathf.Abs(previousPosition.z - transform.position.z) > 0.1f)
             {
-                PositionZHistory.Add(new SyncRMObject(Time.frameCount, transform.position.z));
+                PositionZHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.position.z));
             }
 
             if (previousScale != transform.localScale)
             {
-                ScaleXHistory.Add(new SyncRMObject(Time.frameCount, transform.localScale.x));
-                ScaleYHistory.Add(new SyncRMObject(Time.frameCount, transform.localScale.y));
-                ScaleZHistory.Add(new SyncRMObject(Time.frameCount, transform.localScale.z));
+                ScaleXHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.localScale.x));
+                ScaleYHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.localScale.y));
+                ScaleZHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.localScale.z));
             }
 
             if (Mathf.Abs(previousRotation.x - transform.rotation.x) > 0.1f)

@@ -989,39 +989,60 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 	ContactInfo originalResult = result;
 	result.distanc = ray.startdistanc;
 	result.id.x = 0.0;
-	float prevStep = 0.0;
-	float nextStep = 0.0;
-	float prevDistance = 1e8;
-	vec4 sceneDistance = GetDistanceScene(result.position, transparencyPointer);
-	float sgn = sign(sceneDistance.x);
-	for (float i = 0.;i <= 30.;i++)
-	{
-			result.position = ray.origin + ray.direction * result.distanc;
-			sceneDistance = GetDistanceScene(result.position, transparencyPointer);
-
-			result.id = sceneDistance.yzw;
-			result.distanc = result.distanc + i / 60.0 * (1.0 + i * 0.03);
-			if (sign(sceneDistance.x) != sgn) {
-				nextStep = result.distanc;
-				break;
-			}
-			prevDistance = sceneDistance.x;
-			prevStep = result.distanc;
-	}
-	detailed = 1.0;
-	result.distanc = prevStep;
-	for (float i = 0.;i <= 30.;i++)
+	for (int i = 0;i <= maxIter;i++)
 	{
 		result.position = ray.origin + ray.direction * result.distanc;
-		sceneDistance = GetDistanceScene(result.position, transparencyPointer);
+		vec4 sceneDistance = GetDistanceScene(result.position, transparencyPointer);
+		/*
+		if (inWater == 0. && (i < 1) && (sceneDistance.y == material_ID2) && (sceneDistance.x < 0.001)) {
+			inWater = 1.;
+			wasInWater = inWater;
+		}
+		else {*/
+
+			float cocs = max(result.distanc - _Distance,0.0) * _LensCoeff * 0.1;
+			cocs = min(cocs, _MaxCoC * 0.1);
+
+
+
+			result.id = sceneDistance.yzw;
+			result.distanc = result.distanc + sceneDistance.x * _Step * (1.0 + min(_StepIncreaseByDistance, _StepIncreaseMax) * result.distanc);
+		//}
+
+		if (sceneDistance.x < max(cocs, _MarchMinimum * 0.1) || result.distanc > _FarPlane) {
+			sceneDistance = GetDistanceScene(result.position, transparencyPointer);
+#ifdef DEBUG_STEPS
+			focus = cocs;
+#endif
+			break;
+		}
+
+	}
+	detailed = 1.0;
+
+	for (int i = 0;i <= 5;i++)
+	{
+		result.position = ray.origin + ray.direction * result.distanc;
+		vec4 sceneDistance = GetDistanceScene(result.position, transparencyPointer);
+		/*
+		if (inWater == 0. && (i < 1) && (sceneDistance.y == material_ID2) && (sceneDistance.x < 0.001)) {
+			inWater = 1.;
+			wasInWater = inWater;
+		}
+		else {*/
+
+		float cocs = max(result.distanc - _Distance, 0.0) * _LensCoeff * 0.1;
+		cocs = min(cocs, _MaxCoC * 0.1);
+
+
 
 		result.id = sceneDistance.yzw;
 		result.distanc = result.distanc + sceneDistance.x;
+		//}
 
-		prevDistance = sceneDistance.x;
-		prevStep = result.distanc;
+
+
 	}
-
 	if (result.distanc >= _FarPlane)
 	{
 		result.distanc = _FarPlane;
