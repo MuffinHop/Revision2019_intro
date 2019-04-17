@@ -659,7 +659,6 @@ void RenderFont1() {
 }
 
 
-
 void RenderFont2() {
 	hbmOld = SelectObject(fonthDC, hbmBitmap);
 	HBRUSH brush = CreateSolidBrush(RGB(0, 0, 0)); //create brush
@@ -812,6 +811,7 @@ int dolz4()
 }
 
 
+
 #define M_PI 3.1415926535
 
 float GetNoise(float x, float y, float octaves, float texSize) {
@@ -944,6 +944,7 @@ int __cdecl main(int argc, char* argv[])
 		GLuint environmentID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_Environment");
 		GLuint StepIncreaseByDistanceID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_StepIncreaseByDistance");
 		GLuint StepIncreaseMaxID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_StepIncreaseMax");
+		GLuint IChannel0ID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_iChannel0");
 
 		GLuint OBJMAXID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "OBJMAX");
 		GLuint OBJMINID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "OBJMIN");
@@ -1001,7 +1002,13 @@ int __cdecl main(int argc, char* argv[])
 			((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
 			POST_PASS = 0;
 		}
-		
+		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE1);
+
+		glBindTexture(GL_TEXTURE_2D, texture_perlin);
+		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(IChannel0ID,1);
+
+		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
+
 
 		/*
 		GLuint mainTexture = 0;
@@ -1072,7 +1079,7 @@ int __cdecl main(int argc, char* argv[])
 
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(StepIncreaseByDistanceID, StepIncreaseByDistance);
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(StepIncreaseMaxID, StepIncreaseMax);
-		
+
 
 
 #ifdef DEBUG
@@ -1104,8 +1111,6 @@ int __cdecl main(int argc, char* argv[])
 			((PFNGLUNIFORM4FPROC)wglGetProcAddress("glUniform4f"))(ColorTemperatureStrengthID, ColorTemperatureStrength_R, ColorTemperatureStrength_G, ColorTemperatureStrength_B, 0);
 			((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(ColorTempratureID, ColorTemprature);
 			((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(TempratureNormalizationID, TempratureNormalization);
-
-
 
 			glRects(-1, -1, 1, 1);
 
