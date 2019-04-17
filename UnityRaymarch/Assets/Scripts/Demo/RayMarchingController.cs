@@ -230,6 +230,7 @@ public class RayMarchingController : MonoBehaviour
                             includeCode.Add("Operators/OpUnionSoft.shader");
                             break;
                     }
+                    sdf1 += "       if (OBJMAX > " + rmObject.ID + " && " + rmObject.ID + " > OBJMIN) { \n";
                     sdf1 += "\n//" + rmObject.name + "\n";
                     int index = rmObject.ID * 10;
                     if (!rmObject.Centered)
@@ -245,6 +246,8 @@ public class RayMarchingController : MonoBehaviour
                         sdf1 += "               posID" + rmObject.ID + "= RotateQuaternion(vec4(_Objects[" + (index + 6) + "], _Objects[" + (index + 7) + "], _Objects[" + (index + 8) + "], - _Objects[" + (index + 9) + "]))*posID" + rmObject.ID + ";\n";
                     }
                     string firstPart = "               id" + materialID + "_distance ";
+
+
                     switch (scaleFormat)
                     {
                         case ShaderComponent.ScaleInfo.OneDimension:
@@ -257,6 +260,9 @@ public class RayMarchingController : MonoBehaviour
                             sdf1 += firstPart + " = " + mixStr + "(" + functionName.ToString() + "(posID" + rmObject.ID + ", vec3(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "],_Objects[" + (index + 5) + "])), id" + materialID + "_distance" + specialFuncs + ");\n";
                             break;
                     }
+                    sdf1 += "       }\n";
+
+
                 }
                 else //SdCapsule
                 {
@@ -302,10 +308,16 @@ public class RayMarchingController : MonoBehaviour
                             includeCode.Add("Operators/OpDifferenceChamfer.shader");
                             break;
                     }
+                    sdf1 += "       if (OBJMAX > " + rmObject.ID + " && " + rmObject.ID + " > OBJMIN) { \n";
                     sdf1 += "\n//" + rmObject.name + "\n";
                     int index = rmObject.ID * 10;
                     string firstPart = "               id" + materialID + "_distance ";
+
+
                     sdf1 += firstPart + " = " + mixStr + "(sdCapsule(position, vec3(_Objects[" + (index + 0) + "], _Objects[" + (index + 1) + "],_Objects[" + (index + 2) + "]), vec3(_Objects[" + (index + 3) + "], _Objects[" + (index + 4) + "],_Objects[" + (index + 5) + "]), " + strR + "), id" + materialID + "_distance" + specialFuncs + ");\n";
+                    sdf1 += "       }\n";
+
+
                 }
             }
             sdf1 += "               vec4 distID" + materialID + " = vec4(id" + materialID + "_distance, material_ID" + materialID + ", position.xz + vec2(position.y, 0.0));\n";

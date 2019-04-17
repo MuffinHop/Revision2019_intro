@@ -595,6 +595,9 @@ extern float TextId;
 extern float Environment;
 extern float StepIncreaseByDistance;
 extern float StepIncreaseMax;
+extern float ObjMax;
+extern float ObjMin;
+
 
 void Sync(float second);
 
@@ -942,6 +945,9 @@ int __cdecl main(int argc, char* argv[])
 		GLuint StepIncreaseByDistanceID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_StepIncreaseByDistance");
 		GLuint StepIncreaseMaxID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "_StepIncreaseMax");
 
+		GLuint OBJMAXID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "OBJMAX");
+		GLuint OBJMINID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidMain, "OBJMIN");
+
 
 		GLuint MainTexID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "_MainTex");
 		GLuint iResolutionID = ((PFNGLGETUNIFORMLOCATIONPROC)wglGetProcAddress("glGetUniformLocation"))(pidPost, "iResolution");
@@ -1045,6 +1051,11 @@ int __cdecl main(int argc, char* argv[])
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(fogDensityID, fogDensity);
 		
 		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(TextID, TextId);
+
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(OBJMAXID, ObjMax);
+
+		((PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f"))(OBJMINID, ObjMin);
+
 
 		
 

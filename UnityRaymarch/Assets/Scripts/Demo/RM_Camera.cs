@@ -18,6 +18,9 @@ public class RM_Camera : MonoBehaviour
     [SerializeField]
     private Vector2 _iResolution;
 
+    private int _objMin = 0;
+    private int _objMax = 64;
+
     public static List<float> RM_Objects;
     void Awake()
     {
@@ -112,23 +115,24 @@ public class RM_Camera : MonoBehaviour
         _material.SetFloat("_Step", SyncUp.GetVal("Step"));
         _material.SetFloat("fogDensity", SyncUp.GetVal("fogDensity"));
         _material.SetFloat("_TextId", SyncUp.GetVal("TextId"));
-        _material.SetVector("_iMouse", new Vector4(SyncUp.GetVal("iMouseX"), SyncUp.GetVal("iMouseY"),0f,0f));
+        _material.SetVector("_iMouse", new Vector4(SyncUp.GetVal("iMouseX"), SyncUp.GetVal("iMouseY"), 0f, 0f));
         _material.SetFloat("_Environment", SyncUp.GetVal("Environment"));
         _material.SetFloat("_StepIncreaseByDistance", SyncUp.GetVal("StepIncreaseByDistance"));
         _material.SetFloat("_StepIncreaseMax", SyncUp.GetVal("StepIncreaseMax"));
-
 
         if (RM_Objects != null && RM_Objects.Count > 0)
         {
             _material.SetFloatArray("_Objects", RM_Objects);
         }
-        if (SystemInfo.graphicsDeviceName.ToUpper().Contains("NVIDIA") || SystemInfo.graphicsDeviceName.ToUpper().Contains("GEFORCE"))
-        {
-            _material.EnableKeyword("NVIDIA");
-        }
+
         if (_material != null)
         {
             Graphics.Blit(src, dest, _material);
         }
+
+        var objMax = SyncUp.GetVal("ObjMax");
+        var objMin = SyncUp.GetVal("ObjMin");
+        _material.SetFloat("OBJMAX", objMax);
+        _material.SetFloat("OBJMIN", objMin);
     }
 }

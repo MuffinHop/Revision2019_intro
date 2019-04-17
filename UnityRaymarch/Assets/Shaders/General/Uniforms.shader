@@ -22,3 +22,4 @@ uniform float _TextId;
 uniform float _Environment;
 uniform float _StepIncreaseByDistance;
 uniform float _StepIncreaseMax;
+uniform float OBJMAX, OBJMIN;
