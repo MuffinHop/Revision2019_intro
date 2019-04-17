@@ -1130,11 +1130,6 @@ int __cdecl main(int argc, char* argv[])
 				TextIds[3] = fontTexture_greets;
 
 
-				RenderFont1();
-				fontTexture_telegram = GenTexture();
-				RenderBitmapToTexture(fontTexture_telegram);
-				TextIds[1] = fontTexture_telegram;
-
 				buftextindex = 0;
 				bufcharscurrent = 0.0;
 				buf2textindex = 0;
@@ -1144,6 +1139,12 @@ int __cdecl main(int argc, char* argv[])
 				TextIds[4] = texture_logos;
 
 				GeneratePerlin();
+
+
+				RenderFont1();
+				fontTexture_telegram = GenTexture();
+				RenderBitmapToTexture(fontTexture_telegram);
+				TextIds[1] = fontTexture_telegram;
 
 #ifndef DEBUG
 
