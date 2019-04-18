@@ -1,4 +1,5 @@
 ﻿uniform sampler2D _TextTex;
+uniform sampler2D _iChannel0;
 uniform float _iTime;
 uniform vec4 _iMouse;
 uniform vec4 _iResolution;
