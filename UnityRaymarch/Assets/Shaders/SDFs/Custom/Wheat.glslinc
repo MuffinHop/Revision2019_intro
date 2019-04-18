@@ -1,14 +1,17 @@
 ﻿float Wheat(vec3 pos, vec3 algorithm) {
-    float vali = 5.;
-    float ps = min(perlinnoise(pos.xz*0.1 / vali) - 0.2,0.0);
-	pos.y-= (1.0+ps) * _Environment * 1000.0;
-	pos.x+=cos(algorithm.z+pos.y*7.+pos.x*5.)*0.03;
-	pos.z-=0.5;
+	pos.y += GetHeightmapLowPrecision(pos*algorithm);
+    float ps = 0.0;
+    float vali = 4.;
+	float t = _iTime * 0.001;
+	pos.xz+=vec2(perlinnoise(pos.xz*0.01+t)-0.5,perlinnoise(pos.xz*0.01+3.0+t)-0.5)* pos.y * 4.0;
 	vec3 opos = pos;
-	opos.x = mod(opos.x, algorithm.z) - algorithm.z / 2.0;
-	opos.x+= mod(opos.z*1.5, algorithm.y)*algorithm.x;
-	opos.z = mod(opos.z, algorithm.z) - algorithm.z / 2.0;
-	opos.z-= mod(opos.z, algorithm.z/2.)*0.1;
-	float dist = fBox(opos + vec3(0.2,0.0,0.2), vec3(0.01, 0.2, 0.01));
+	float scale = max(ceil(rand(floor(pos.xz/algorithm.xz)) - 0.5),0.0);
+    opos.x = mod(opos.x, algorithm.x);
+    opos.z = mod(opos.z, algorithm.z);
+    opos.x -= algorithm.x / 2.0;
+    opos.z -= algorithm.z / 2.0;
+	opos.y+=scale*100.0;
+	scale+=1.0;
+	float dist = fBox(opos, vec3(0.1-opos.y*0.1*scale, 0.7, 0.1-opos.y*0.1*scale));
 	return dist;
 }

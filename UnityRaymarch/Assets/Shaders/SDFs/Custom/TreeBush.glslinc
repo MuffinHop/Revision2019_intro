@@ -2,22 +2,24 @@
 float TreeBush(vec3 pos, vec3 algorithm) {
     float vali = 10.;
 	vec3 opos = pos;
-	opos.x += hash1(floor(pos.z/vali)-0.5)*vali;
-	opos.z += hash1(floor(pos.x/vali)-0.5)*vali;
 	float scale = max(ceil(rand(floor(pos.xz/vali)) - 0.5),0.0);
 	float scale2 = rand(8.*floor(pos.xz/vali)) + 1.0;
     opos.x = mod(opos.x, vali);
     opos.z = mod(opos.z, vali);
+	opos.x += hash1(floor(pos.z/vali)-0.5) * vali * 0.2;
+	opos.z += hash1(floor(pos.x/vali)-0.5) * vali * 0.2;
     opos.x -= vali / 2.0;
     opos.z -= vali / 2.0;
 	float distance2 = 1e8;
-	distance2 = min(distance2,sdSphere(opos - vec3(0.0,16.0+scale*100.0+scale*3.0,0.0),2.0*scale2));
+	distance2 = min(distance2,sdSphere(opos - vec3(0.0,16.0+scale*100.0+scale*3.0,0.0),2.5*scale2*(1.0+pos.y*0.01)   ));
 	pos.y += GetHeightmapLowPrecision(pos*algorithm) * _Environment;
     distance2 = min(distance2,fBox(pos, vec3(1111.,12.,1111.)));
 	
     distance2*=0.2;
-    distance2+= cellTile(pos/2.0) * 0.2;	
-    distance2+= cellTile(pos*9.0)*0.025;
+    distance2+= cellTile(pos/4.0) * 0.4;	
+    distance2+= cellTile(pos/8.0) * 0.2;		
+    distance2+= cellTile(pos*2.0) * 0.05;	
+    distance2+= cellTile(pos*5.0) * 0.01;
 	
     return distance2;
 }

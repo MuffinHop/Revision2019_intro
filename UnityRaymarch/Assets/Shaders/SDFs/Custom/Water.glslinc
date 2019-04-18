@@ -1,5 +1,5 @@
 ﻿float Water(vec3 pos, vec3 algorithm) {
-	pos.y += perlinnoise(pos.xz*3.)*0.025;
+	pos.y += perlinnoise(pos.xz/9. + _iTime*0.0317)*perlinnoise(pos.xz/12. + _iTime*0.0222)*0.05;
 	float dist = fBox(pos, algorithm);
 	return dist;
 }

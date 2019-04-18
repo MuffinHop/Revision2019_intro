@@ -83,6 +83,8 @@
     <Compile Include="Assets\Scripts\Demo\TextSceneController.cs" />
     <Compile Include="Assets\Scripts\Demo\TextViewerComponent.cs" />
     <Compile Include="Assets\Scripts\Demo\Track.cs" />
+    <Compile Include="Assets\waterlevel.cs" />
+    <Compile Include="Assets\wheatdensity.cs" />
     <None Include="Assets\Shaders\Modifiers\ModMirror2.shader" />
     <None Include="Assets\Shaders\Modifiers\R.shader" />
     <None Include="Assets\Shaders\General\Vertex.shader" />

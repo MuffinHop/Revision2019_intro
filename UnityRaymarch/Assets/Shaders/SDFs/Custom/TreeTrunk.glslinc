@@ -6,18 +6,19 @@ float fOpUnionRund(float a, float b, float r) {
 float TreeTrunk(vec3 pos, vec3 algorithm) {
     float vali = 10.;
 	vec3 opos = pos;
-	opos.x += hash1(floor(pos.z/vali)-0.5)*vali;
-	opos.z += hash1(floor(pos.x/vali)-0.5)*vali;
 	float scale = max(ceil(rand(floor(pos.xz/vali)) - 0.5),0.0);
 	float scale2 = rand(8.*floor(pos.xz/vali)) + 1.0;
     opos.x = mod(opos.x, vali);
     opos.z = mod(opos.z, vali);
+	opos.x += hash1(floor(pos.z/vali)-0.5) * vali * 0.2;
+	opos.z += hash1(floor(pos.x/vali)-0.5) * vali * 0.2;
     opos.x -= vali / 2.0;
     opos.z -= vali / 2.0;
 	opos+=scale*100.0;
 	float dist = sdCappedCylinder( opos, vec2(0.51-opos.y*0.03,5.5) );
 	
     dist-= cellTile(pos*3.0)*cellTile(pos*2.0) * 0.1;
-
+	
+    dist-= cellTile(pos)*3.3/(1.0+12.0*abs(pos.y+5.0));
 	return dist;
 }

@@ -507,7 +507,9 @@ const float material_ID4 = 5;
 
 const float material_ID5 = 6;
 
- uniform float _Objects[70];
+const float material_ID6 = 7;
+
+ uniform float _Objects[100];
 // Box: correct distance to corners
 float fBox(vec3 p, vec3 b) {
 	vec3 d = abs(p) - b;
@@ -531,6 +533,30 @@ float Smoke(vec3 pos, vec3 algorithm) {
 
     return distance5;
 }
+float Water(vec3 pos, vec3 algorithm) {
+	pos.y += perlinnoise(pos.xz/9. + _iTime*0.0317)*perlinnoise(pos.xz/12. + _iTime*0.0222)*0.05;
+	float dist = fBox(pos, algorithm);
+	return dist;
+}
+
+float Wheat(vec3 pos, vec3 algorithm) {
+	pos.y += GetHeightmapLowPrecision(pos*algorithm);
+    float ps = 0.0;
+    float vali = 4.;
+	float t = _iTime * 0.001;
+	pos.xz+=vec2(perlinnoise(pos.xz*0.01+t)-0.5,perlinnoise(pos.xz*0.01+3.0+t)-0.5)* pos.y * 4.0;
+	vec3 opos = pos;
+	float scale = max(ceil(rand(floor(pos.xz/algorithm.xz)) - 0.5),0.0);
+    opos.x = mod(opos.x, algorithm.x);
+    opos.z = mod(opos.z, algorithm.z);
+    opos.x -= algorithm.x / 2.0;
+    opos.z -= algorithm.z / 2.0;
+	opos.y+=scale*100.0;
+	scale+=1.0;
+	float dist = fBox(opos, vec3(0.1-opos.y*0.1*scale, 0.7, 0.1-opos.y*0.1*scale));
+	return dist;
+}
+
 float sdCappedCylinder(vec3 p, vec2 h)
 {
 	vec2 d = abs(vec2(length(p.xz), p.y)) - h;
@@ -544,19 +570,20 @@ float fOpUnionRund(float a, float b, float r) {
 float TreeTrunk(vec3 pos, vec3 algorithm) {
     float vali = 10.;
 	vec3 opos = pos;
-	opos.x += hash1(floor(pos.z/vali)-0.5)*vali;
-	opos.z += hash1(floor(pos.x/vali)-0.5)*vali;
 	float scale = max(ceil(rand(floor(pos.xz/vali)) - 0.5),0.0);
 	float scale2 = rand(8.*floor(pos.xz/vali)) + 1.0;
     opos.x = mod(opos.x, vali);
     opos.z = mod(opos.z, vali);
+	opos.x += hash1(floor(pos.z/vali)-0.5) * vali * 0.2;
+	opos.z += hash1(floor(pos.x/vali)-0.5) * vali * 0.2;
     opos.x -= vali / 2.0;
     opos.z -= vali / 2.0;
 	opos+=scale*100.0;
 	float dist = sdCappedCylinder( opos, vec2(0.51-opos.y*0.03,5.5) );
 	
     dist-= cellTile(pos*3.0)*cellTile(pos*2.0) * 0.1;
-
+	
+    dist-= cellTile(pos)*3.3/(1.0+12.0*abs(pos.y+5.0));
 	return dist;
 }
 float fSphere(vec3 p, float r) {
@@ -571,22 +598,24 @@ float detailed = 0.;
 float TreeBush(vec3 pos, vec3 algorithm) {
     float vali = 10.;
 	vec3 opos = pos;
-	opos.x += hash1(floor(pos.z/vali)-0.5)*vali;
-	opos.z += hash1(floor(pos.x/vali)-0.5)*vali;
 	float scale = max(ceil(rand(floor(pos.xz/vali)) - 0.5),0.0);
 	float scale2 = rand(8.*floor(pos.xz/vali)) + 1.0;
     opos.x = mod(opos.x, vali);
     opos.z = mod(opos.z, vali);
+	opos.x += hash1(floor(pos.z/vali)-0.5) * vali * 0.2;
+	opos.z += hash1(floor(pos.x/vali)-0.5) * vali * 0.2;
     opos.x -= vali / 2.0;
     opos.z -= vali / 2.0;
 	float distance2 = 1e8;
-	distance2 = min(distance2,sdSphere(opos - vec3(0.0,16.0+scale*100.0+scale*3.0,0.0),2.0*scale2));
+	distance2 = min(distance2,sdSphere(opos - vec3(0.0,16.0+scale*100.0+scale*3.0,0.0),2.5*scale2*(1.0+pos.y*0.01)   ));
 	pos.y += GetHeightmapLowPrecision(pos*algorithm) * _Environment;
     distance2 = min(distance2,fBox(pos, vec3(1111.,12.,1111.)));
 	
     distance2*=0.2;
-    distance2+= cellTile(pos/2.0) * 0.2;	
-    distance2+= cellTile(pos*9.0)*0.025;
+    distance2+= cellTile(pos/4.0) * 0.4;	
+    distance2+= cellTile(pos/8.0) * 0.2;		
+    distance2+= cellTile(pos*2.0) * 0.05;	
+    distance2+= cellTile(pos*5.0) * 0.01;
 	
     return distance2;
 }
@@ -603,11 +632,11 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
                posID0= RotateQuaternion(vec4(_Objects[6], _Objects[7], _Objects[8], - _Objects[9]))*posID0;
                id0_distance  = min(fBox(posID0, vec3(_Objects[3], _Objects[4],_Objects[5])), id0_distance);
        }
-       if (OBJMAX > 2 && 2 > OBJMIN) { 
+       if (OBJMAX > 5 && 5 > OBJMIN) { 
 
 //Cube Ray Marched (2)
-               vec3 posID2 = position - vec3(_Objects[20], _Objects[21], _Objects[22]);
-               id0_distance  = min(fBox(posID2, vec3(_Objects[23], _Objects[24],_Objects[25])), id0_distance);
+               vec3 posID5 = position - vec3(_Objects[50], _Objects[51], _Objects[52]);
+               id0_distance  = min(fBox(posID5, vec3(_Objects[53], _Objects[54],_Objects[55])), id0_distance);
        }
                vec4 distID0 = vec4(id0_distance, material_ID0, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID0);
@@ -623,44 +652,66 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
                result = DistUnionCombine(result, distID1);
 
          float id2_distance = 1e9;
-       if (OBJMAX > 3 && 3 > OBJMIN) { 
+       if (OBJMAX > 2 && 2 > OBJMIN) { 
 
-//Tree Trunk Ray Marched
-               vec3 posID3 = position - vec3(_Objects[30], _Objects[31], _Objects[32]);
-               id2_distance  = min(TreeTrunk(posID3, vec3(_Objects[33], _Objects[34],_Objects[35])), id2_distance);
+//Cube (1)
+               vec3 posID2 = position - vec3(_Objects[20], _Objects[21], _Objects[22]);
+               id2_distance  = min(Water(posID2, vec3(_Objects[23], _Objects[24],_Objects[25])), id2_distance);
        }
-               vec4 distID2 = vec4(id2_distance, material_ID2, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombine(result, distID2);
-
-         float id3_distance = 1e9;
-       if (OBJMAX > 4 && 4 > OBJMIN) { 
+       if (OBJMAX > 7 && 7 > OBJMIN) { 
 
 //Sphere
+               vec3 posID7 = position - vec3(_Objects[70], _Objects[71], _Objects[72]);
+               id2_distance  = min(fSphere(posID7,_Objects[73]), id2_distance);
+       }
+               vec4 distID2 = vec4(id2_distance, material_ID2, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombineTransparent(result, distID2, transparencyPointer);
+
+         float id3_distance = 1e9;
+       if (OBJMAX > 3 && 3 > OBJMIN) { 
+
+//Wheat
+               vec3 posID3 = position - vec3(_Objects[30], _Objects[31], _Objects[32]);
+               id3_distance  = min(Wheat(posID3, vec3(_Objects[33], _Objects[34],_Objects[35])), id3_distance);
+       }
+       if (OBJMAX > 4 && 4 > OBJMIN) { 
+
+//Wheat (2)
                vec3 posID4 = position - vec3(_Objects[40], _Objects[41], _Objects[42]);
-               id3_distance  = min(fSphere(posID4,_Objects[43]), id3_distance);
+               id3_distance  = min(Wheat(posID4, vec3(_Objects[43], _Objects[44],_Objects[45])), id3_distance);
        }
                vec4 distID3 = vec4(id3_distance, material_ID3, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombineTransparent(result, distID3, transparencyPointer);
+               result = DistUnionCombine(result, distID3);
 
          float id4_distance = 1e9;
-       if (OBJMAX > 5 && 5 > OBJMIN) { 
+       if (OBJMAX > 6 && 6 > OBJMIN) { 
 
-//Cube Ray Marched
-               vec3 posID5 = position - vec3(_Objects[50], _Objects[51], _Objects[52]);
-               id4_distance  = min(fBox(posID5, vec3(_Objects[53], _Objects[54],_Objects[55])), id4_distance);
+//Tree Trunk Ray Marched
+               vec3 posID6 = position - vec3(_Objects[60], _Objects[61], _Objects[62]);
+               id4_distance  = min(TreeTrunk(posID6, vec3(_Objects[63], _Objects[64],_Objects[65])), id4_distance);
        }
                vec4 distID4 = vec4(id4_distance, material_ID4, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID4);
 
          float id5_distance = 1e9;
-       if (OBJMAX > 6 && 6 > OBJMIN) { 
+       if (OBJMAX > 8 && 8 > OBJMIN) { 
 
-//Tree Bush Ray Marched
-               vec3 posID6 = position - vec3(_Objects[60], _Objects[61], _Objects[62]);
-               id5_distance  = min(TreeBush(posID6, vec3(_Objects[63], _Objects[64],_Objects[65])), id5_distance);
+//Cube Ray Marched
+               vec3 posID8 = position - vec3(_Objects[80], _Objects[81], _Objects[82]);
+               id5_distance  = min(fBox(posID8, vec3(_Objects[83], _Objects[84],_Objects[85])), id5_distance);
        }
                vec4 distID5 = vec4(id5_distance, material_ID5, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID5);
+
+         float id6_distance = 1e9;
+       if (OBJMAX > 9 && 9 > OBJMIN) { 
+
+//Tree Bush Ray Marched
+               vec3 posID9 = position - vec3(_Objects[90], _Objects[91], _Objects[92]);
+               id6_distance  = min(TreeBush(posID9, vec3(_Objects[93], _Objects[94],_Objects[95])), id6_distance);
+       }
+               vec4 distID6 = vec4(id6_distance, material_ID6, position.xz + vec2(position.y, 0.0));
+               result = DistUnionCombine(result, distID6);
 
 
             return result;
@@ -720,24 +771,31 @@ Material RockPattern(vec3 position) {
               mat.reflectindx = 0.8;
        }
        if (hitNfo.id.x == material_ID2){
-              mat.reflectionCoefficient = 0.62;
-              mat.albedo = vec3(0.4716981,0.2599148,0.09567462);;
-              mat.transparency =0;
-              mat.smoothness = 0.86;
-              mat.reflectindx = 0.74;
-       }
-       if (hitNfo.id.x == material_ID3){
               mat.reflectionCoefficient = 0.27;
               mat.albedo = vec3(1,1,1);;
               mat.transparency =0.5019608;
               mat.smoothness = 0.8;
               mat.reflectindx = 0.69;
        }
+       if (hitNfo.id.x == material_ID3){
+              mat.reflectionCoefficient = 0.1;
+              mat.albedo = vec3(0.6517754,0.6698113,0.2243236);;
+              mat.transparency =0;
+              mat.smoothness = 0.1;
+              mat.reflectindx = 0.2;
+       }
        if (hitNfo.id.x == material_ID4){
+              mat.reflectionCoefficient = 0.62;
+              mat.albedo = vec3(0.4716981,0.2599148,0.09567462);;
+              mat.transparency =0;
+              mat.smoothness = 0.86;
+              mat.reflectindx = 0.74;
+       }
+       if (hitNfo.id.x == material_ID5){
               mat = RockPattern(hitNfo.position);
 ;
        }
-       if (hitNfo.id.x == material_ID5){
+       if (hitNfo.id.x == material_ID6){
               mat.reflectionCoefficient = 0.11;
               mat.albedo = vec3(0.3978099,0.6603774,0.2896938);;
               mat.transparency =0;
