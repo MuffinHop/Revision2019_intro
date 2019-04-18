@@ -1002,12 +1002,12 @@ int __cdecl main(int argc, char* argv[])
 			((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
 			POST_PASS = 0;
 		}
-		//((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE1);
+		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE1);
 
-		//glBindTexture(GL_TEXTURE_2D, texture_perlin);
-		//((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(IChannel0ID,1);
+		glBindTexture(GL_TEXTURE_2D, texture_perlin);
+		((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(IChannel0ID,1);
 
-		//((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
+		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
 
 
 		/*
@@ -1163,7 +1163,6 @@ int __cdecl main(int argc, char* argv[])
 		SwapBuffers(hDC);
 
 
-
 		if (fontinit >= 1) {
 			if (TextId == 1.0) {
 				if (buftextindex < buftextcount) {
@@ -1187,12 +1186,19 @@ int __cdecl main(int argc, char* argv[])
 					if (bufcharscurrent > len + 1) {
 						buftextindex++;
 						bufcharscurrent = 0;
+						if (buftextindex == 3) DrawRectText("                                         assignment                      ", RGB(230, 50, 50), 44, 477);
+						if (buftextindex == 3) DrawRectText("                                         assignment                      ", RGB(230, 50, 50), 44-1, 477-1);
+
+						if (buftextindex == 4) DrawRectText("                              enemy                            ", RGB(230, 50, 50), 44, 539);
+						if (buftextindex == 6) DrawRectText("                    briefcase                                  ", RGB(230, 50, 50), 44, 715);
+						if (buftextindex == 7) DrawRectText("    SPECTRUM                    ZX          machine                      ", RGB(230, 50, 50), 44, 776);
+						if (buftextindex == 4) DrawRectText("                              enemy                            ", RGB(230, 50, 50), 44-1, 539-1);
+						if (buftextindex == 6) DrawRectText("                    briefcase                                  ", RGB(230, 50, 50), 44-1, 715-1);
+						if (buftextindex == 7) DrawRectText("    SPECTRUM                    ZX          machine                      ", RGB(230, 50, 50), 44-1, 776-1);
 					}
 				}
 				fontinit = 2;
 			}
-
-
 
 			if (TextId == 3.0) {
 				if (fontinit == 2) {
