@@ -637,24 +637,24 @@ void RenderFont1() {
 	/////////////// DRAW
 	// canvas: TelegramCanvas
 	hFontOld = SelectObject(fonthDC, latinwide118Font);
-	DrawRectText("The Secret", RGB(255, 255, 255), 431, 64);
-	DrawRectText("The Secret", RGB(0, 0, 0), 436, 71);
-	DrawRectText("Service Agency", RGB(255, 255, 255), 192, 178);
-	DrawRectText("Service Agency", RGB(0, 0, 0), 196, 184);
+	DrawRectText("The Secret", RGB(255, 255, 255), 431, 64-32);
+	DrawRectText("The Secret", RGB(0, 0, 0), 436, 71 - 32);
+	DrawRectText("Service Agency", RGB(255, 255, 255), 192, 178 - 32);
+	DrawRectText("Service Agency", RGB(0, 0, 0), 196, 184 - 32);
 	hFontOld = SelectObject(fonthDC, Courier57Font);
-	DrawRectTextBuf("------------------------------------------------------", RGB(50, 50, 50), 44, 407);
-	DrawRectTextBuf("TO: Agent 'TSConf' SUBJECT: 'Your Assignment'", RGB(50, 50, 50), 43, 372);
+	DrawRectTextBuf("------------------------------------------------------", RGB(50, 50, 50), 44, 407 - 32);
+	DrawRectTextBuf("TO: Agent 'TSConf' SUBJECT: 'Your Assignment'", RGB(50, 50, 50), 43, 372 - 32);
 	hFontOld = SelectObject(fonthDC, Courier41Font);
-	DrawRectTextBuf("I have selected you for a most important assignment. It’s purpose is to  ", RGB(50, 50, 50), 44, 477);
-	DrawRectTextBuf("give false information to the enemy and destroy key targets.   ", RGB(50, 50, 50), 44, 539);
-	DrawRectTextBuf("If you complete it successfully you will be promoted.   ", RGB(50, 50, 50), 44, 600);
-	DrawRectTextBuf("You’ve been given a briefcase which shall be used to destroy   ", RGB(50, 50, 50), 44, 715);
-	DrawRectTextBuf("the SPECTRUM base and their new ZX decoding machine. For this you shall  ", RGB(50, 50, 50), 44, 776);
-	DrawRectTextBuf("enter their secret facility un-noticed, insert misinformation to their   ", RGB(50, 50, 50), 44, 835);
-	DrawRectTextBuf("systems and finally destroy the aforementioned decoding machine.  ", RGB(50, 50, 50), 45, 894);
-	DrawRectTextBuf("- I wish you good luck, agent.  ",RGB(50,50,50),45,1007);
+	DrawRectTextBuf("I have selected you for a most important assignment. It’s purpose is to  ", RGB(50, 50, 50), 44, 477 - 32);
+	DrawRectTextBuf("give false information to the enemy and destroy key targets.   ", RGB(50, 50, 50), 44, 539 - 32);
+	DrawRectTextBuf("If you complete it successfully you will be promoted.   ", RGB(50, 50, 50), 44, 600 - 32);
+	DrawRectTextBuf("You’ve been given a briefcase which shall be used to destroy   ", RGB(50, 50, 50), 44, 715 - 32);
+	DrawRectTextBuf("the SPECTRUM base and their new ZX decoding machine. For this you shall  ", RGB(50, 50, 50), 44, 776 - 32);
+	DrawRectTextBuf("enter their secret facility un-noticed, insert misinformation to their   ", RGB(50, 50, 50), 44, 835 - 32);
+	DrawRectTextBuf("systems and finally destroy the aforementioned decoding machine.  ", RGB(50, 50, 50), 45, 894 - 32);
+	DrawRectTextBuf("- I wish you good luck, agent.  ",RGB(50,50,50),45,1007 - 32);
 	hFontOld = SelectObject(fonthDC, Arial24Font);
-	DrawRectText("Doing your dirty work for you since 1969", RGB(50, 50, 50), 1041, 96);
+	DrawRectText("Doing your dirty work for you since 1969", RGB(50, 50, 50), 1041, 96 - 32);
 	// --------------------------------------------- END END END
 }
 
@@ -1185,15 +1185,15 @@ int __cdecl main(int argc, char* argv[])
 					if (bufcharscurrent > len + 1) {
 						buftextindex++;
 						bufcharscurrent = 0;
-						if (buftextindex == 3) DrawRectText("                                         assignment                      ", RGB(230, 50, 50), 44, 477);
-						if (buftextindex == 3) DrawRectText("                                         assignment                      ", RGB(230, 50, 50), 44-1, 477-1);
+						if (buftextindex == 3) DrawRectText("                                         assignment                      ", RGB(230, 50, 50), 44, 477 - 32);
+						if (buftextindex == 3) DrawRectText("                                         assignment                      ", RGB(230, 50, 50), 44-1, 477-1 - 32);
 
-						if (buftextindex == 4) DrawRectText("                              enemy                            ", RGB(230, 50, 50), 44, 539);
-						if (buftextindex == 6) DrawRectText("                    briefcase                                  ", RGB(230, 50, 50), 44, 715);
-						if (buftextindex == 7) DrawRectText("    SPECTRUM                    ZX          machine                      ", RGB(230, 50, 50), 44, 776);
-						if (buftextindex == 4) DrawRectText("                              enemy                            ", RGB(230, 50, 50), 44-1, 539-1);
-						if (buftextindex == 6) DrawRectText("                    briefcase                                  ", RGB(230, 50, 50), 44-1, 715-1);
-						if (buftextindex == 7) DrawRectText("    SPECTRUM                    ZX          machine                      ", RGB(230, 50, 50), 44-1, 776-1);
+						if (buftextindex == 4) DrawRectText("                              enemy                            ", RGB(230, 50, 50), 44, 539 - 32);
+						if (buftextindex == 6) DrawRectText("                    briefcase                                  ", RGB(230, 50, 50), 44, 715 - 32);
+						if (buftextindex == 7) DrawRectText("    SPECTRUM                    ZX          machine                      ", RGB(230, 50, 50), 44, 776 - 32);
+						if (buftextindex == 4) DrawRectText("                              enemy                            ", RGB(230, 50, 50), 44-1, 539-1 - 32);
+						if (buftextindex == 6) DrawRectText("                    briefcase                                  ", RGB(230, 50, 50), 44-1, 715-1 - 32);
+						if (buftextindex == 7) DrawRectText("    SPECTRUM                    ZX          machine                      ", RGB(230, 50, 50), 44-1, 776-1 - 32);
 					}
 				}
 				fontinit = 2;

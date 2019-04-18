@@ -13,8 +13,10 @@ vec4 mainImage()
 
 	if (_TextId == 1.0) {
 		vec3 text = texture(_TextTex, uv).rgb;
-		return vec4(text,0.01+(0.005*cos(uv.x*0.1)*sin(uv.y*0.1)));
+		float off = distance(vec2(0.5),vec2(uv.x))*0.01;
+		return vec4(text,off+0.01+(0.005*cos(uv.x*0.1)*sin(uv.y*0.1)));
 	}
+
 
 	vec3 lookAt = _CameraLookAt.xyz;
 	vec3 position = _CameraPosition.xyz;
@@ -103,7 +105,6 @@ vec4 mainImage()
 		text/=4.0;
 		fragColor.rgb+=clamp(text,0.0,1.0);
 	}
-
 	return  fragColor;
 }
 
