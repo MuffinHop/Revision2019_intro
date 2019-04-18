@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
   m_Name: Wood
   m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.04
-  albedo: {r: 0.6509434, g: 0.3772959, b: 0.26713246, a: 1}
-  smoothness: 0.51
-  reflectindx: 0.03
+  reflectionCoefficient: 0.62
+  albedo: {r: 0.4716981, g: 0.25991476, b: 0.09567462, a: 1}
+  smoothness: 0.86
+  reflectindx: 0.74

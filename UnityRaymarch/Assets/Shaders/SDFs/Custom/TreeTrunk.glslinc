@@ -4,31 +4,20 @@ float fOpUnionRund(float a, float b, float r) {
 	return max(r, min (a, b)) - length(u);
 }
 float TreeTrunk(vec3 pos, vec3 algorithm) {
-    float vali = 5.;
-    float ps = perlinnoise(pos.xz*0.1 / vali) - 0.2;
-	pos.y-= ps * _Environment * 1000.0;
+    float vali = 10.;
 	vec3 opos = pos;
-	vec3 opos_ = opos;
+	opos.x += hash1(floor(pos.z/vali)-0.5)*vali;
+	opos.z += hash1(floor(pos.x/vali)-0.5)*vali;
+	float scale = max(ceil(rand(floor(pos.xz/vali)) - 0.5),0.0);
+	float scale2 = rand(8.*floor(pos.xz/vali)) + 1.0;
+    opos.x = mod(opos.x, vali);
+    opos.z = mod(opos.z, vali);
+    opos.x -= vali / 2.0;
+    opos.z -= vali / 2.0;
+	opos+=scale*100.0;
+	float dist = sdCappedCylinder( opos, vec2(0.51-opos.y*0.03,5.5) );
 	
-    opos.x += hash1(floor(pos.z / vali) + vali) * vali / 2.0;
-    opos.x = mod(opos.x, vali) - vali / 2.0;
-    opos.z += hash1(floor(pos.x / vali) + vali) * vali / 2.0;
-    opos.z = mod(opos.z, vali) - vali / 2.0;
-    pR(opos.xz, pos.z*1.);
-    pR(opos.zy, 3.14);
-	vec3 rpos = pos;
-	rpos.x = floor(pos.x / vali);
-	rpos.z = floor(pos.z / vali);
-    float ss = min(perlinnoise(rpos.xz*0.1) * 12.0,2.0);
+    dist-= cellTile(pos*3.0)*cellTile(pos*2.0) * 0.1;
 
-	float height = 0.0;
-	opos.y += 0.75;
-	float dist = fBox(opos + vec3(0.0,height,0.0), ss*vec3(0.08 + atan(opos.y*2.)*0.02, 1.5, 0.05));
-	opos.y -= 0.75;
-	vec3 o = opos + vec3(0.0, height, 0.0);
-	pR(opos.yx, 5.0);
-	opos *= rotationMatrix(vec3(1.0,0.2,0.0), rpos.x + rpos.z) ;
-	dist = fOpUnionRund(dist, fBox(opos + vec3(-0.1 + 0.1, 0.0, 0.0), ss*vec3(0.03, 0.5, 0.02)), 0.2);
-	opos = o;
 	return dist;
 }

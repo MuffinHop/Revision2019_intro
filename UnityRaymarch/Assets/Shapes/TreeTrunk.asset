@@ -17,3 +17,4 @@ MonoBehaviour:
   FunctionName: TreeTrunk
   AdditionalShaderFiles:
   - {fileID: 10900000, guid: 45681e217a34d934cafc24b239234386, type: 3}
+  - {fileID: 10900000, guid: e257a4ab0d44a1340bf5c4aed5f6701e, type: 3}
