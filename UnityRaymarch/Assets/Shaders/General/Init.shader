@@ -12,9 +12,21 @@ vec4 mainImage()
 	vec2 uv = fragCoord.xy / _iResolution.xy;
 
 	if (_TextId == 1.0) {
-		vec3 text = texture(_TextTex, uv).rgb;
-		float off = distance(vec2(0.5),vec2(uv.x))*0.01;
-		return vec4(text,off+0.01+(0.005*cos(uv.x*0.1)*sin(uv.y*0.1)));
+		vec2 _uv = uv;
+		float off = distance(vec2(0.5),vec2(uv.x))*0.005;
+		
+		vec4 d = vec4(hash(uv),hash(uv*0.75));
+		vec2 rnd = vec2(rand(uv+d.r*.05), rand(uv+d.b*.05));
+		const vec2 lensRadius = vec2(0.65*1.75, 0.05);
+		float dist = distance(uv.xy, vec2(0.5,0.5));
+		float vigfin = pow(1.-smoothstep(lensRadius.x, lensRadius.y, dist),2.);
+   
+		rnd *= .025*vigfin+d.rg*2.0*vigfin;
+		vec4 text = texture(_TextTex, uv);
+		uv += rnd;
+		text += mix(texture(_TextTex, uv),vec4(1.0),1.0*vec4(rnd.r))*0.15;
+
+		return vec4(text.rgb,off+0.01+(0.005*cos(_uv.x*0.1)*sin(_uv.y*0.1)));
 	}
 
 
