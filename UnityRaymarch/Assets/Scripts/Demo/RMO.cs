@@ -7,21 +7,46 @@ using UnityEngine;
 [Serializable]
 public class RMO
 {
-    public string name;
+    public float r;
+    public float h;
+    public string obj;
     public string sdf;
-    public float x;
-    public float y;
-    public float z;
-    public float scalex;
-    public float scaley;
-    public float scalez;
-    public float param0;
-    public float param1;
-    public int paramBoolean;
-    public string boolean;
+    public string name;
+    public float[] location;
+    public float[] a;
+    public float[] b;
+    public float[] c;
+
     public GameObject ToGameObject()
     {
-        GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        GameObject go = null;
+        switch(sdf)
+        {
+            case "Cylinder":
+                go = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                go.transform.position = new Vector3(location[0], location[1], location[2]);
+                break;
+            case "Cube":
+                go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                go.transform.position = new Vector3(location[0], location[1], location[2]);
+                break;
+            case "Capsule":
+                go = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                go.transform.position = new Vector3(location[0], location[1], location[2]);
+                break;
+            case "Sphere":
+                go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                go.transform.position = new Vector3(location[0], location[1], location[2]);
+                break;
+            default:
+                Debug.LogWarning("Missing sdf:" + sdf + ":" + name + ":" + obj);
+                go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                go.transform.position = new Vector3(location[0], location[1], location[2]);
+                break;
+        }
+        go.transform.name = name;
+        return go;
+        /*
         MeshRenderer mr = go.GetComponent<MeshRenderer>();
         mr.material = new Material(Shader.Find("Diffuse"));
         var rm_object = go.AddComponent<RM_Object>();
@@ -58,6 +83,6 @@ public class RMO
                     break;
             }
         }
-        return go;
+        return go;*/
     }
 }

@@ -23,3 +23,4 @@ uniform float _Environment;
 uniform float _StepIncreaseByDistance;
 uniform float _StepIncreaseMax;
 uniform float OBJMAX, OBJMIN;
+uniform sampler2D _iChannel0, _iChannel1;
