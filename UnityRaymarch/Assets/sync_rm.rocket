@@ -844,6 +844,7 @@ color="ff8850b2">
 	</track>
 	<track name="Water Level" folded="0" color="ffb27474">
 		<key row="340" value="-12.000000" interpolation="0" />
+		<key row="2384" value="-5.700000" interpolation="0" />
 		<key row="2902" value="-1.800000" interpolation="0" />
 		<key row="3196" value="-1.800000" interpolation="0" />
 		<key row="3416" value="-2.100000" interpolation="0" />
