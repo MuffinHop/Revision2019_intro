@@ -810,35 +810,42 @@ int dolz4()
 	return 0;
 }
 
+//#define STB_IMAGE_WRITE_IMPLEMENTATION
 
+//#include "stb_image_write.h"
 
 #define M_PI 3.1415926535
 
-float GetNoise(float x, float y, float octaves, float texSize) {
+inline float GetNoise(float x, float y, float octaves, float texSize) {
 	double c = 2, a = 1; // torus parameters (controlling size)
 	double xt = (c + a * cos(2 * M_PI*(y / texSize)))*cos(2 * M_PI*(x / texSize));
 	double yt = (c + a * cos(2 * M_PI*(y / texSize)))*sin(2 * M_PI*(x / texSize));
 	double zt = a * sin(2 * M_PI*(y / texSize));
-	float noise = octave_noise_3d(octaves, 0.5, 1.0, xt, yt, zt);
-	return ((noise+1.0)/2.0)*255;
+	float noise = octave_noise_3d(octaves, 0.6, 2.00, xt, yt, zt);
+	return ((noise+1.0)/2.0)*(255-32);
 }
 
+
 void GeneratePerlin() {
-	float texSize = 512.0;
-	size_t octaves = 64;
+	float texSize = 4096;
+	size_t octaves = 16;
 
 	perlinnoise = (unsigned char*) malloc(((int)texSize*(int)texSize)*3);
 	texture_perlin = GenTexture(GL_CLAMP);
 	(void)texture_perlin;
 
-	int i = 0;
+	long i = 0;
 	for (float y = 0.; y < texSize; y += 1.) {
 		for (float x = 0.; x < texSize; x += 1.) {
-			perlinnoise[i++] = GetNoise(x, y, octaves, texSize);
-			perlinnoise[i++] = GetNoise(x*4.0, y*4.0, octaves, texSize);
-			perlinnoise[i++] = GetNoise(x*16.0, y*16.0, octaves, texSize);
+			float noiseval = GetNoise(x, y, octaves, texSize);
+			perlinnoise[i++] = noiseval;
+			perlinnoise[i++] = noiseval;
+			perlinnoise[i++] = noiseval;
 		}
 	}
+
+//	stbi_write_bmp("noise.bmp", (int)texSize, (int)texSize, 3, perlinnoise);
+
 
 
 	glBindTexture(GL_TEXTURE_2D, texture_perlin);
@@ -1082,7 +1089,7 @@ int __cdecl main(int argc, char* argv[])
 
 
 #ifdef DEBUG
-		time += 60.0f / 60.0f / 4.0f; 
+		time += 60.0f / 60.0f / 16.0f; 
 #endif
 		glRects(-1, -1, 1, 1);
 
