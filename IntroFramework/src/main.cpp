@@ -831,7 +831,7 @@ void GeneratePerlin() {
 	size_t octaves = 16;
 
 	perlinnoise = (unsigned char*) malloc(((int)texSize*(int)texSize)*3);
-	texture_perlin = GenTexture(GL_CLAMP);
+	texture_perlin = GenTexture(GL_REPEAT);
 	(void)texture_perlin;
 
 	long i = 0;
@@ -849,7 +849,9 @@ void GeneratePerlin() {
 
 
 	glBindTexture(GL_TEXTURE_2D, texture_perlin);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (int)texSize, (int)texSize, 0, GL_RGB, GL_UNSIGNED_BYTE, perlinnoise);
+	((PFNGLGENERATEMIPMAPPROC)wglGetProcAddress("glGenerateMipmap"))(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
