@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static RocketNet.Track;
 
-[ExecuteInEditMode, System.Serializable]
+[System.Serializable]
 public class SdCapsule : RM_Object
 {
     protected new void LateUpdate()
@@ -55,7 +55,7 @@ public class SdCapsule : RM_Object
         }
 
         Rotatable = false;
-        if (Time.frameCount % 6 == 0 && prevFrame != Time.frameCount)
+        if (Time.frameCount % 12 == 0 && prevFrame != Time.frameCount)
         {
             transform.position = new Vector3(
                 Mathf.Floor(transform.position.x * 64.0f) / 64.0f,

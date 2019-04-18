@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static RocketNet.Track;
 
-[ExecuteInEditMode, System.Serializable]
+[System.Serializable]
 public class RM_Object : MonoBehaviour
 {
     public enum Mix
@@ -138,7 +138,8 @@ public class RM_Object : MonoBehaviour
             {
                 PositionZHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.position.z));
             }
-
+            var temp = transform.parent;
+            transform.parent = null;
             if (previousScale != transform.localScale)
             {
                 ScaleXHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.localScale.x));
@@ -167,6 +168,7 @@ public class RM_Object : MonoBehaviour
             previousScale = transform.localScale;
             previousRotation = new Vector4(transform.rotation.x,transform.rotation.y,transform.rotation.z,transform.rotation.w);
 
+            transform.parent = temp;
             visibleSyncDataCount += 10;
         }
     }

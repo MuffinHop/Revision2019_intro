@@ -1,51 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tracks rows="10000" startRow="0" endRow="5600" highlightRowStep="8">
-	<track name="Animator AnimationID DefaultAvatar" folded="0"
-color="ff4f71b2">
-		<key row="0" value="0.000000" interpolation="0" />
-		<key row="340" value="0.000000" interpolation="0" />
-		<key row="480" value="1.000000" interpolation="0" />
-		<key row="596" value="5.000000" interpolation="0" />
-		<key row="2224" value="-12.000000" interpolation="0" />
-		<key row="2384" value="0.300000" interpolation="0" />
-		<key row="2416" value="3.000000" interpolation="0" />
-		<key row="3928" value="0.000000" interpolation="0" />
-	</track>
-	<track name="Animator Time DefaultAvatar" folded="0"
-color="ff4fb292">
-		<key row="596" value="0.000000" interpolation="1" />
-		<key row="733" value="0.900000" interpolation="1" />
-		<key row="734" value="1.300000" interpolation="1" />
-		<key row="871" value="2.000000" interpolation="0" />
-	</track>
-	<track name="Position XDefaultAvatar" folded="0" color="ffb25091">
-		<key row="596" value="1.500000" interpolation="1" />
-		<key row="871" value="-3.000000" interpolation="0" />
-		<key row="873" value="21.000000" interpolation="1" />
-		<key row="1027" value="12.000000" interpolation="0" />
-		<key row="1028" value="-22.000000" interpolation="1" />
-		<key row="1267" value="-33.000000" interpolation="1" />
-		<key row="1363" value="-38.000000" interpolation="0" />
-		<key row="1364" value="-44.000000" interpolation="0" />
-	</track>
-	<track name="Position YDefaultAvatar" folded="0" color="ffb27474">
-		<key row="596" value="-0.700000" interpolation="1" />
-		<key row="644" value="-0.600000" interpolation="1" />
-		<key row="668" value="-0.700000" interpolation="1" />
-		<key row="692" value="-0.770000" interpolation="1" />
-		<key row="740" value="-0.800000" interpolation="1" />
-		<key row="1028" value="0.000000" interpolation="1" />
-		<key row="1267" value="-1.000000" interpolation="0" />
-		<key row="1364" value="-0.200000" interpolation="0" />
-	</track>
-	<track name="Position ZDefaultAvatar" folded="0" color="ffb28050">
-		<key row="596" value="27.000000" interpolation="0" />
-		<key row="873" value="44.000000" interpolation="0" />
-		<key row="1028" value="18.000000" interpolation="1" />
-		<key row="1267" value="12.000000" interpolation="0" />
-		<key row="1364" value="6.000000" interpolation="1" />
-		<key row="1876" value="77.000000" interpolation="0" />
-	</track>
 	<track name="iTime" folded="0" color="ffa9b250">
 		<key row="340" value="0.000000" interpolation="1" />
 		<key row="595" value="10.000000" interpolation="1" />
@@ -71,7 +25,7 @@ color="ff4fb292">
 		<key row="1364" value="-0.600000" interpolation="0" />
 		<key row="1876" value="0.000000" interpolation="0" />
 		<key row="1877" value="0.000000" interpolation="0" />
-		<key row="2384" value="0.000000" interpolation="0" />
+		<key row="2384" value="-1.000000" interpolation="0" />
 		<key row="2902" value="0.000000" interpolation="1" />
 		<key row="3413" value="-0.500000" interpolation="0" />
 		<key row="3416" value="1.000000" interpolation="0" />
@@ -89,7 +43,7 @@ color="ff4fb292">
 		<key row="1876" value="1.000000" interpolation="0" />
 		<key row="1877" value="0.000000" interpolation="0" />
 		<key row="1976" value="2.000000" interpolation="0" />
-		<key row="2384" value="-1.000000" interpolation="0" />
+		<key row="2384" value="-0.200000" interpolation="0" />
 		<key row="2901" value="1.000000" interpolation="0" />
 		<key row="2902" value="0.000000" interpolation="1" />
 		<key row="3413" value="-0.500000" interpolation="0" />
@@ -106,7 +60,7 @@ color="ff4fb292">
 		<key row="1876" value="-1.000000" interpolation="0" />
 		<key row="1877" value="0.000000" interpolation="0" />
 		<key row="1976" value="0.340000" interpolation="0" />
-		<key row="2384" value="-1.000000" interpolation="0" />
+		<key row="2384" value="-2.000000" interpolation="0" />
 		<key row="2901" value="0.000000" interpolation="0" />
 		<key row="2902" value="1.000000" interpolation="1" />
 		<key row="3413" value="1.000000" interpolation="0" />
@@ -290,7 +244,7 @@ color="ff4fb292">
 		<key row="3376" value="12333.000000" interpolation="0" />
 	</track>
 	<track name="CameraPositionX" folded="0" color="ffb25091">
-		<key row="340" value="0.000000" interpolation="0" />
+		<key row="340" value="2.000000" interpolation="0" />
 		<key row="596" value="1.000000" interpolation="1" />
 		<key row="872" value="-2.000000" interpolation="0" />
 		<key row="873" value="33.000000" interpolation="0" />
@@ -318,7 +272,7 @@ color="ff4fb292">
 		<key row="3928" value="16.000000" interpolation="0" />
 	</track>
 	<track name="CameraPositionY" folded="0" color="ffb27474">
-		<key row="340" value="13.000000" interpolation="1" />
+		<key row="340" value="12.000000" interpolation="0" />
 		<key row="595" value="12.000000" interpolation="0" />
 		<key row="596" value="-2.000000" interpolation="0" />
 		<key row="873" value="-1.000000" interpolation="0" />
@@ -341,7 +295,7 @@ color="ff4fb292">
 		<key row="3928" value="16.000000" interpolation="0" />
 	</track>
 	<track name="CameraPositionZ" folded="0" color="ffb28050">
-		<key row="340" value="32.000000" interpolation="0" />
+		<key row="340" value="12.000000" interpolation="0" />
 		<key row="596" value="44.000000" interpolation="0" />
 		<key row="873" value="66.000000" interpolation="0" />
 		<key row="1028" value="3.000000" interpolation="0" />
@@ -443,7 +397,7 @@ color="ff4fb292">
 		<key row="1877" value="0.000000" interpolation="0" />
 	</track>
 	<track name="FOV" folded="0" color="ffb28050">
-		<key row="340" value="40.000000" interpolation="0" />
+		<key row="340" value="23.000000" interpolation="0" />
 		<key row="596" value="40.000000" interpolation="0" />
 		<key row="1028" value="55.000000" interpolation="0" />
 		<key row="1268" value="44.000000" interpolation="3" />
@@ -498,7 +452,7 @@ color="ff4fb292">
 		<key row="3928" value="0.040000" interpolation="0" />
 	</track>
 	<track name="MaxCoC" folded="0" color="ff4fb292">
-		<key row="340" value="0.300000" interpolation="0" />
+		<key row="340" value="0.000000" interpolation="0" />
 		<key row="595" value="0.300000" interpolation="0" />
 		<key row="596" value="0.400000" interpolation="0" />
 		<key row="1028" value="0.660000" interpolation="0" />
@@ -510,7 +464,7 @@ color="ff4fb292">
 		<key row="3928" value="0.700000" interpolation="0" />
 	</track>
 	<track name="RcpMaxCoC" folded="0" color="ff4f71b2">
-		<key row="340" value="0.200000" interpolation="0" />
+		<key row="340" value="0.000000" interpolation="0" />
 		<key row="595" value="0.200000" interpolation="0" />
 		<key row="596" value="0.500000" interpolation="0" />
 		<key row="1028" value="2.000000" interpolation="0" />
@@ -579,7 +533,7 @@ color="ff4fb292">
 		<key row="1976" value="0.500000" interpolation="1" />
 		<key row="2223" value="1.000000" interpolation="0" />
 		<key row="2224" value="0.400000" interpolation="0" />
-		<key row="2384" value="0.100000" interpolation="1" />
+		<key row="2384" value="0.050000" interpolation="1" />
 		<key row="2901" value="0.000000" interpolation="0" />
 		<key row="2902" value="0.400000" interpolation="1" />
 		<key row="3376" value="0.600000" interpolation="1" />
@@ -617,6 +571,29 @@ color="ff4fb292">
 		<key row="2902" value="0.400000" interpolation="0" />
 		<key row="3089" value="0.400000" interpolation="0" />
 		<key row="3416" value="0.500000" interpolation="0" />
+	</track>
+	<track name="StepIncreaseByDistance" folded="0" color="ff60b250">
+		<key row="340" value="0.000000" interpolation="0" />
+		<key row="596" value="0.030000" interpolation="0" />
+		<key row="873" value="0.010000" interpolation="0" />
+		<key row="1028" value="0.030000" interpolation="0" />
+		<key row="1364" value="0.100000" interpolation="0" />
+		<key row="2061" value="0.100000" interpolation="0" />
+	</track>
+	<track name="StepIncreaseMax" folded="0" color="ff4fb292">
+		<key row="340" value="0.000000" interpolation="0" />
+		<key row="596" value="0.500000" interpolation="0" />
+		<key row="1364" value="2.000000" interpolation="0" />
+		<key row="2061" value="0.080000" interpolation="0" />
+	</track>
+	<track name="ObjMax" folded="0" color="ff4f71b2">
+		<key row="0" value="3.000000" interpolation="0" />
+		<key row="340" value="123.000000" interpolation="0" />
+	</track>
+	<track name="ObjMin" folded="0" color="ff8850b2">
+		<key row="0" value="0.000000" interpolation="0" />
+		<key row="340" value="0.000000" interpolation="0" />
+		<key row="596" value="0.900000" interpolation="0" />
 	</track>
 	<track name="Gain_R" folded="0" color="ffb27474">
 		<key row="340" value="0.550000" interpolation="0" />
@@ -807,41 +784,6 @@ color="ff8850b2">
 		<key row="340" value="0.000000" interpolation="0" />
 		<key row="596" value="0.000000" interpolation="0" />
 	</track>
-	<track name="Animator Speed DefaultAvatar" folded="0"
-color="ff8850b2">
-		<key row="340" value="0.000000" interpolation="0" />
-		<key row="596" value="0.000000" interpolation="0" />
-		<key row="608" value="2.000000" interpolation="0" />
-	</track>
-	<track name="StepIncreaseByDistance" folded="0" color="ff60b250">
-		<key row="340" value="0.000000" interpolation="0" />
-		<key row="596" value="0.030000" interpolation="0" />
-		<key row="873" value="0.010000" interpolation="0" />
-		<key row="1028" value="0.030000" interpolation="0" />
-		<key row="1364" value="0.100000" interpolation="0" />
-		<key row="2061" value="0.100000" interpolation="0" />
-	</track>
-	<track name="StepIncreaseMax" folded="0" color="ff4fb292">
-		<key row="340" value="0.000000" interpolation="0" />
-		<key row="596" value="0.500000" interpolation="0" />
-		<key row="1364" value="2.000000" interpolation="0" />
-		<key row="2061" value="0.080000" interpolation="0" />
-	</track>
-	<track name="ObjMax" folded="0" color="ff4f71b2">
-		<key row="0" value="3.000000" interpolation="0" />
-		<key row="340" value="123.000000" interpolation="0" />
-	</track>
-	<track name="ObjMin" folded="0" color="ff8850b2">
-		<key row="0" value="0.000000" interpolation="0" />
-		<key row="340" value="0.000000" interpolation="0" />
-		<key row="596" value="0.900000" interpolation="0" />
-	</track>
-	<track name="Wheat Scale" folded="0" color="ffb25091">
-		<key row="596" value="2.000000" interpolation="0" />
-		<key row="873" value="0.600000" interpolation="0" />
-		<key row="1028" value="1.000000" interpolation="0" />
-		<key row="1364" value="32.000000" interpolation="0" />
-	</track>
 	<track name="Water Level" folded="0" color="ffb27474">
 		<key row="340" value="-12.000000" interpolation="0" />
 		<key row="2384" value="-5.700000" interpolation="0" />
@@ -849,4 +791,74 @@ color="ff8850b2">
 		<key row="3196" value="-1.800000" interpolation="0" />
 		<key row="3416" value="-2.100000" interpolation="0" />
 	</track>
+	<track name="Wheat Scale" folded="0" color="ffb25091">
+		<key row="596" value="2.000000" interpolation="0" />
+		<key row="873" value="0.600000" interpolation="0" />
+		<key row="1028" value="1.000000" interpolation="0" />
+		<key row="1364" value="32.000000" interpolation="0" />
+	</track>
+	<track name="Animator AnimationID DefaultAvatar" folded="0"
+color="ff4f71b2">
+		<key row="0" value="0.000000" interpolation="0" />
+		<key row="340" value="0.000000" interpolation="0" />
+		<key row="480" value="1.000000" interpolation="0" />
+		<key row="596" value="5.000000" interpolation="0" />
+		<key row="2224" value="-12.000000" interpolation="0" />
+		<key row="2384" value="0.300000" interpolation="0" />
+		<key row="2416" value="3.000000" interpolation="0" />
+		<key row="3928" value="0.000000" interpolation="0" />
+	</track>
+	<track name="Animator Time DefaultAvatar" folded="0"
+color="ff4fb292">
+		<key row="596" value="0.000000" interpolation="1" />
+		<key row="733" value="0.900000" interpolation="1" />
+		<key row="734" value="1.300000" interpolation="1" />
+		<key row="871" value="2.000000" interpolation="0" />
+	</track>
+	<track name="Position XDefaultAvatar" folded="0" color="ffb25091">
+		<key row="596" value="1.500000" interpolation="1" />
+		<key row="871" value="-3.000000" interpolation="0" />
+		<key row="873" value="21.000000" interpolation="1" />
+		<key row="1027" value="12.000000" interpolation="0" />
+		<key row="1028" value="-22.000000" interpolation="1" />
+		<key row="1267" value="-33.000000" interpolation="1" />
+		<key row="1363" value="-38.000000" interpolation="0" />
+		<key row="1364" value="-44.000000" interpolation="0" />
+	</track>
+	<track name="Position YDefaultAvatar" folded="0" color="ffb27474">
+		<key row="596" value="-0.700000" interpolation="1" />
+		<key row="644" value="-0.600000" interpolation="1" />
+		<key row="668" value="-0.700000" interpolation="1" />
+		<key row="692" value="-0.770000" interpolation="1" />
+		<key row="740" value="-0.800000" interpolation="1" />
+		<key row="1028" value="0.000000" interpolation="1" />
+		<key row="1267" value="-1.000000" interpolation="0" />
+		<key row="1364" value="-0.200000" interpolation="0" />
+	</track>
+	<track name="Position ZDefaultAvatar" folded="0" color="ffb28050">
+		<key row="596" value="27.000000" interpolation="0" />
+		<key row="873" value="44.000000" interpolation="0" />
+		<key row="1028" value="18.000000" interpolation="1" />
+		<key row="1267" value="12.000000" interpolation="0" />
+		<key row="1364" value="6.000000" interpolation="1" />
+		<key row="1876" value="77.000000" interpolation="0" />
+	</track>
+	<track name="Animator Speed DefaultAvatar" folded="0"
+color="ff8850b2">
+		<key row="340" value="0.000000" interpolation="0" />
+		<key row="596" value="0.000000" interpolation="0" />
+		<key row="608" value="2.000000" interpolation="0" />
+	</track>
+	<track name="Animator AnimationID avatardyspo" folded="0"
+color="ffb28050" />
+	<track name="Animator Time avatardyspo" folded="0"
+color="ffa9b250">
+		<key row="340" value="0.000000" interpolation="1" />
+		<key row="383" value="12.000000" interpolation="0" />
+		<key row="384" value="123.000000" interpolation="1" />
+		<key row="3726" value="32.000000" interpolation="0" />
+	</track>
+	<track name="Position Xavatardyspo" folded="0" color="ff60b250" />
+	<track name="Position Yavatardyspo" folded="0" color="ff4fb292" />
+	<track name="Position Zavatardyspo" folded="0" color="ff4f71b2" />
 </tracks>

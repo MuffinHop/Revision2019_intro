@@ -552,6 +552,8 @@ public class RayMarchingController : MonoBehaviour
                     var GO = gomat[material][i].gameObject;
                     var rmObject = GO.GetComponent<RM_Object>();
                     var index = rmObject.ID;
+                    var temp = GO.transform.parent;
+                    GO.transform.parent = null;
                     if ((rmObject as SdCapsule) == null)
                     {
                         RM_Camera.RM_Objects[index * 10 + 0] = GO.transform.position.x;
@@ -577,6 +579,7 @@ public class RayMarchingController : MonoBehaviour
                         RM_Camera.RM_Objects[index * 10 + 8] = GO.transform.rotation.z;
                         RM_Camera.RM_Objects[index * 10 + 9] = GO.transform.rotation.w;
                     }
+                    GO.transform.parent = temp;
                 }
             }
         }

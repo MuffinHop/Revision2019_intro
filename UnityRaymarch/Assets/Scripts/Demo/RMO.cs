@@ -25,23 +25,41 @@ public class RMO
             case "Cylinder":
                 go = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
                 go.transform.position = new Vector3(location[0], location[1], location[2]);
+                var rm_object = go.AddComponent<RM_Object>();
+                go.transform.localScale = new Vector3(r, h, 0.1f);
                 break;
             case "Cube":
                 go = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 go.transform.position = new Vector3(location[0], location[1], location[2]);
+                var rm_object2 = go.AddComponent<RM_Object>();
+                if (c != null)
+                    go.transform.localScale = new Vector3(c[0],c[1],c[2]);
+                else
+                    go.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 break;
             case "Capsule":
+                var go2 = GameObject.CreatePrimitive(PrimitiveType.Capsule);
                 go = GameObject.CreatePrimitive(PrimitiveType.Capsule);
                 go.transform.position = new Vector3(location[0], location[1], location[2]);
+                var rm_object3 = go.AddComponent<SdCapsule>();
+                go2.transform.position = new Vector3(b[0], b[1], b[2]);
+                go2.transform.parent = go.transform;
+                go.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                go2.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                rm_object3.R = r;
                 break;
             case "Sphere":
                 go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 go.transform.position = new Vector3(location[0], location[1], location[2]);
+                go.transform.localScale = new Vector3(r,r,r);
+                var rm_object4 = go.AddComponent<RM_Object>();
                 break;
             default:
                 Debug.LogWarning("Missing sdf:" + sdf + ":" + name + ":" + obj);
                 go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 go.transform.position = new Vector3(location[0], location[1], location[2]);
+                go.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                var rm_object5 = go.AddComponent<RM_Object>();
                 break;
         }
         go.transform.name = name;
