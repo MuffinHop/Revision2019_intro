@@ -32,6 +32,7 @@ void main()
 #ifdef FRAGMENT
 
 uniform sampler2D _TextTex;
+uniform sampler2D _iChannel0;
 uniform float _iTime;
 uniform vec4 _iMouse;
 uniform vec4 _iResolution;
@@ -191,16 +192,7 @@ float rand(float co) {
 }
 float perlinnoise(in vec2 p)
 {
-	float K1 = 0.366025404;
-	float K2 = 0.211324865;
-	vec2 i = floor(p + (p.x + p.y)*K1);
-	vec2 a = p - i + (i.x + i.y)*K2;
-	vec2 o = (a.x > a.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
-	vec2 b = a - o + K2;
-	vec2 c = a - 1.0 + 2.0*K2;
-	vec3 h = max(0.5 - vec3(dot(a, a), dot(b, b), dot(c, c)), 0.0);
-	vec3 n = h * h*h*h*vec3(dot(a, hash(i + 0.0)), dot(b, hash(i + o)), dot(c, hash(i + 1.0)));
-	return dot(n, vec3(70.0));
+	return texture(_iChannel0,p).r;
 }
 // A hash function for some noise
 float hash12(vec2 p)
@@ -1312,7 +1304,7 @@ vec4 mainImage()
 	vec2 uv = fragCoord.xy / _iResolution.xy;
 
 	if (_TextId == 1.0) {
-		vec3 text = texture(_TextTex, uv).rgb;
+		vec3 text = texture(_TextTex, uv*0.75).rgb;
 		return vec4(text,0.5);
 	}
 
@@ -1387,18 +1379,18 @@ vec4 mainImage()
 #endif
 
 	if (_TextId == 3.0) {
-		vec3 text = texture(_TextTex, uv).rgb;
+		vec3 text = texture(_TextTex, uv*0.75).rgb;
 		for (float i = 1.0; i < 4.0; i+=1.) {
-			text+=texture(_TextTex, uv+i*0.0003).rgb;
+			text+=texture(_TextTex, uv*0.75+i*0.0003).rgb;
 		}
 		text/=4.0;
 		fragColor.rgb+=clamp(text,0.0,1.0);
 	}
 
 	if (_TextId == 4.0) {
-		vec3 text = texture(_TextTex, uv*4.).rgb;
+		vec3 text = texture(_TextTex, uv*0.75*4.).rgb;
 		for (float i = 1.0; i < 4.0; i+=1.) {
-			text+=texture(_TextTex, uv*4.+i*0.0003).rrr;
+			text+=texture(_TextTex, uv*0.75*4.+i*0.0003).rrr;
 		}
 		text/=4.0;
 		fragColor.rgb+=clamp(text,0.0,1.0);

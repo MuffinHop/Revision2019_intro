@@ -13,7 +13,7 @@ vec4 mainImage()
 
 	if (_TextId == 1.0) {
 		vec3 text = texture(_TextTex, uv).rgb;
-		return vec4(text,0.5);
+		return vec4(text,0.01+(0.005*cos(uv.x*0.1)*sin(uv.y*0.1)));
 	}
 
 	vec3 lookAt = _CameraLookAt.xyz;

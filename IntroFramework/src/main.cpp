@@ -1000,7 +1000,6 @@ int __cdecl main(int argc, char* argv[])
 			glBindTexture(GL_TEXTURE_2D, tid);
 			((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
 			((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(1, 0);
-			POST_PASS = 0;
 		}
 		((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE1);
 
@@ -1098,7 +1097,7 @@ int __cdecl main(int argc, char* argv[])
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 0, 0, XRES, YRES, 0);
 #endif
-			((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE1);
+			((PFNGLACTIVETEXTUREPROC)wglGetProcAddress("glActiveTexture"))(GL_TEXTURE0);
 			((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(pidPost);
 			((PFNGLUNIFORM1IPROC)wglGetProcAddress("glUniform1i"))(MainTexID, 0);
 
