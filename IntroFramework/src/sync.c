@@ -4,37 +4,37 @@
                     float x, y, z;
                 };
        vec3 ID0ArrayPositionX[3] = { 
-               { 3169, -1.50f, 1.0f }, 
+               { 2490, -1.50f, 1.0f }, 
                { 100000.0f, -1.50f, 1.0f }, 
                { 200000.0f, -1.50f, 1.0f } 
               }; 
  
        vec3 ID0ArrayPositionY[3] = { 
-               { 3169, 0.17f, 1.0f }, 
+               { 2490, 0.17f, 1.0f }, 
                { 100000.0f, 0.17f, 1.0f }, 
                { 200000.0f, 0.17f, 1.0f } 
               }; 
  
        vec3 ID0ArrayPositionZ[3] = { 
-               { 3169, 1.23f, 1.0f }, 
+               { 2490, 1.23f, 1.0f }, 
                { 100000.0f, 1.23f, 1.0f }, 
                { 200000.0f, 1.23f, 1.0f } 
               }; 
  
        vec3 ID0ArrayScaleX[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
  
        vec3 ID0ArrayScaleY[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
  
        vec3 ID0ArrayScaleZ[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
@@ -64,37 +64,37 @@
               }; 
  
        vec3 ID5ArrayPositionX[3] = { 
-               { 3169, 0.78f, 1.0f }, 
+               { 2490, 0.78f, 1.0f }, 
                { 100000.0f, 0.78f, 1.0f }, 
                { 200000.0f, 0.78f, 1.0f } 
               }; 
  
        vec3 ID5ArrayPositionY[3] = { 
-               { 3169, -1.83f, 1.0f }, 
+               { 2490, -1.83f, 1.0f }, 
                { 100000.0f, -1.83f, 1.0f }, 
                { 200000.0f, -1.83f, 1.0f } 
               }; 
  
        vec3 ID5ArrayPositionZ[3] = { 
-               { 3169, 5.88f, 1.0f }, 
+               { 2490, 5.88f, 1.0f }, 
                { 100000.0f, 5.88f, 1.0f }, 
                { 200000.0f, 5.88f, 1.0f } 
               }; 
  
        vec3 ID5ArrayScaleX[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
  
        vec3 ID5ArrayScaleY[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
  
        vec3 ID5ArrayScaleZ[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
@@ -124,37 +124,37 @@
               }; 
  
        vec3 ID1ArrayPositionX[3] = { 
-               { 3169, -0.19f, 1.0f }, 
+               { 2490, -0.19f, 1.0f }, 
                { 100000.0f, -0.19f, 1.0f }, 
                { 200000.0f, -0.19f, 1.0f } 
               }; 
  
        vec3 ID1ArrayPositionY[3] = { 
-               { 3169, -0.20f, 1.0f }, 
+               { 2490, -0.20f, 1.0f }, 
                { 100000.0f, -0.20f, 1.0f }, 
                { 200000.0f, -0.20f, 1.0f } 
               }; 
  
        vec3 ID1ArrayPositionZ[3] = { 
-               { 3169, 7.00f, 1.0f }, 
+               { 2490, 7.00f, 1.0f }, 
                { 100000.0f, 7.00f, 1.0f }, 
                { 200000.0f, 7.00f, 1.0f } 
               }; 
  
        vec3 ID1ArrayScaleX[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
  
        vec3 ID1ArrayScaleY[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
  
        vec3 ID1ArrayScaleZ[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
@@ -184,65 +184,37 @@
               }; 
  
        vec3 ID2ArrayPositionX[3] = { 
-               { 3169, -35.61f, 1.0f }, 
+               { 2490, -35.61f, 1.0f }, 
                { 100000.0f, -35.61f, 1.0f }, 
                { 200000.0f, -35.61f, 1.0f } 
               }; 
  
-       vec3 ID2ArrayPositionY[31] = { 
-               { 3169, 0.00f, 1.0f }, 
-               { 852, 2.00f, 1.0f }, 
-               { 850, -6.00f, 1.0f }, 
-               { 850, -12.00f, 1.0f }, 
-               { 7254, 1.00f, 1.0f }, 
-               { 7990, -1.00f, 1.0f }, 
-               { 7990, -2.00f, 1.0f }, 
-               { 7987, 1.00f, 1.0f }, 
-               { 8017, -2.00f, 1.0f }, 
-               { 7987, 1.00f, 1.0f }, 
-               { 7990, -2.00f, 1.0f }, 
-               { 7990, 2.00f, 1.0f }, 
-               { 7990, 1.89f, 1.0f }, 
-               { 7990, -1.91f, 1.0f }, 
-               { 7945, 1.00f, 1.0f }, 
-               { 7254, -12.00f, 1.0f }, 
-               { 7269, 1.00f, 1.0f }, 
-               { 7990, -1.81f, 1.0f }, 
-               { 7254, 1.00f, 1.0f }, 
-               { 7254, -1.81f, 1.0f }, 
-               { 8539, -1.00f, 1.0f }, 
-               { 8539, -3.00f, 1.0f }, 
-               { 8539, -2.00f, 1.0f }, 
-               { 8539, -2.50f, 1.0f }, 
-               { 8539, -2.20f, 1.0f }, 
-               { 8537, -1.81f, 1.0f }, 
-               { 8556, -2.11f, 1.0f }, 
-               { 8452, -1.81f, 1.0f }, 
-               { 8545, -2.11f, 1.0f }, 
-               { 100000.0f, -2.11f, 1.0f }, 
-               { 200000.0f, -2.11f, 1.0f } 
+       vec3 ID2ArrayPositionY[3] = { 
+               { 2490, -12.00f, 1.0f }, 
+               { 100000.0f, -12.00f, 1.0f }, 
+               { 200000.0f, -12.00f, 1.0f } 
               }; 
  
        vec3 ID2ArrayPositionZ[3] = { 
-               { 3169, -13.81f, 1.0f }, 
+               { 2490, -13.81f, 1.0f }, 
                { 100000.0f, -13.81f, 1.0f }, 
                { 200000.0f, -13.81f, 1.0f } 
               }; 
  
        vec3 ID2ArrayScaleX[3] = { 
-               { 3169, 123.00f, 1.0f }, 
+               { 2490, 123.00f, 1.0f }, 
                { 100000.0f, 123.00f, 1.0f }, 
                { 200000.0f, 123.00f, 1.0f } 
               }; 
  
        vec3 ID2ArrayScaleY[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
  
        vec3 ID2ArrayScaleZ[3] = { 
-               { 3169, 123.00f, 1.0f }, 
+               { 2490, 123.00f, 1.0f }, 
                { 100000.0f, 123.00f, 1.0f }, 
                { 200000.0f, 123.00f, 1.0f } 
               }; 
@@ -272,37 +244,37 @@
               }; 
  
        vec3 ID7ArrayPositionX[3] = { 
-               { 3169, -1.27f, 1.0f }, 
+               { 2490, -1.27f, 1.0f }, 
                { 100000.0f, -1.27f, 1.0f }, 
                { 200000.0f, -1.27f, 1.0f } 
               }; 
  
        vec3 ID7ArrayPositionY[3] = { 
-               { 3169, 0.09f, 1.0f }, 
+               { 2490, 0.09f, 1.0f }, 
                { 100000.0f, 0.09f, 1.0f }, 
                { 200000.0f, 0.09f, 1.0f } 
               }; 
  
        vec3 ID7ArrayPositionZ[3] = { 
-               { 3169, 10.95f, 1.0f }, 
+               { 2490, 10.95f, 1.0f }, 
                { 100000.0f, 10.95f, 1.0f }, 
                { 200000.0f, 10.95f, 1.0f } 
               }; 
  
        vec3 ID7ArrayScaleX[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
  
        vec3 ID7ArrayScaleY[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
  
        vec3 ID7ArrayScaleZ[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
@@ -332,54 +304,39 @@
               }; 
  
        vec3 ID3ArrayPositionX[3] = { 
-               { 3169, -20.23f, 1.0f }, 
+               { 2490, -20.23f, 1.0f }, 
                { 100000.0f, -20.23f, 1.0f }, 
                { 200000.0f, -20.23f, 1.0f } 
               }; 
  
        vec3 ID3ArrayPositionY[3] = { 
-               { 3169, -5.27f, 1.0f }, 
+               { 2490, -5.27f, 1.0f }, 
                { 100000.0f, -5.27f, 1.0f }, 
                { 200000.0f, -5.27f, 1.0f } 
               }; 
  
        vec3 ID3ArrayPositionZ[3] = { 
-               { 3169, 9.95f, 1.0f }, 
+               { 2490, 9.95f, 1.0f }, 
                { 100000.0f, 9.95f, 1.0f }, 
                { 200000.0f, 9.95f, 1.0f } 
               }; 
  
-       vec3 ID3ArrayScaleX[8] = { 
-               { 3169, 1.00f, 1.0f }, 
-               { 2535, 0.60f, 1.0f }, 
-               { 2100, 2.00f, 1.0f }, 
-               { 2182, 0.60f, 1.0f }, 
-               { 2569, 1.00f, 1.0f }, 
-               { 3409, 32.00f, 1.0f }, 
-               { 100000.0f, 32.00f, 1.0f }, 
-               { 200000.0f, 32.00f, 1.0f } 
+       vec3 ID3ArrayScaleX[3] = { 
+               { 2490, 0.60f, 1.0f }, 
+               { 100000.0f, 0.60f, 1.0f }, 
+               { 200000.0f, 0.60f, 1.0f } 
               }; 
  
-       vec3 ID3ArrayScaleY[8] = { 
-               { 3169, -0.05f, 1.0f }, 
-               { 2535, -0.05f, 1.0f }, 
-               { 2100, -0.05f, 1.0f }, 
-               { 2182, -0.05f, 1.0f }, 
-               { 2569, -0.05f, 1.0f }, 
-               { 3409, -0.05f, 1.0f }, 
+       vec3 ID3ArrayScaleY[3] = { 
+               { 2490, -0.05f, 1.0f }, 
                { 100000.0f, -0.05f, 1.0f }, 
                { 200000.0f, -0.05f, 1.0f } 
               }; 
  
-       vec3 ID3ArrayScaleZ[8] = { 
-               { 3169, 1.00f, 1.0f }, 
-               { 2535, 0.60f, 1.0f }, 
-               { 2100, 2.00f, 1.0f }, 
-               { 2182, 0.60f, 1.0f }, 
-               { 2569, 1.00f, 1.0f }, 
-               { 3409, 32.00f, 1.0f }, 
-               { 100000.0f, 32.00f, 1.0f }, 
-               { 200000.0f, 32.00f, 1.0f } 
+       vec3 ID3ArrayScaleZ[3] = { 
+               { 2490, 0.60f, 1.0f }, 
+               { 100000.0f, 0.60f, 1.0f }, 
+               { 200000.0f, 0.60f, 1.0f } 
               }; 
  
        vec3 ID3ArrayRotationX[3] = { 
@@ -407,54 +364,39 @@
               }; 
  
        vec3 ID4ArrayPositionX[3] = { 
-               { 3169, -18.75f, 1.0f }, 
+               { 2490, -18.75f, 1.0f }, 
                { 100000.0f, -18.75f, 1.0f }, 
                { 200000.0f, -18.75f, 1.0f } 
               }; 
  
        vec3 ID4ArrayPositionY[3] = { 
-               { 3169, -5.27f, 1.0f }, 
+               { 2490, -5.27f, 1.0f }, 
                { 100000.0f, -5.27f, 1.0f }, 
                { 200000.0f, -5.27f, 1.0f } 
               }; 
  
        vec3 ID4ArrayPositionZ[3] = { 
-               { 3169, 8.59f, 1.0f }, 
+               { 2490, 8.59f, 1.0f }, 
                { 100000.0f, 8.59f, 1.0f }, 
                { 200000.0f, 8.59f, 1.0f } 
               }; 
  
-       vec3 ID4ArrayScaleX[8] = { 
-               { 3169, 1.00f, 1.0f }, 
-               { 2535, 0.60f, 1.0f }, 
-               { 2100, 2.00f, 1.0f }, 
-               { 2182, 0.60f, 1.0f }, 
-               { 2569, 1.00f, 1.0f }, 
-               { 3409, 32.00f, 1.0f }, 
-               { 100000.0f, 32.00f, 1.0f }, 
-               { 200000.0f, 32.00f, 1.0f } 
+       vec3 ID4ArrayScaleX[3] = { 
+               { 2490, 0.60f, 1.0f }, 
+               { 100000.0f, 0.60f, 1.0f }, 
+               { 200000.0f, 0.60f, 1.0f } 
               }; 
  
-       vec3 ID4ArrayScaleY[8] = { 
-               { 3169, -0.05f, 1.0f }, 
-               { 2535, -0.05f, 1.0f }, 
-               { 2100, -0.05f, 1.0f }, 
-               { 2182, -0.05f, 1.0f }, 
-               { 2569, -0.05f, 1.0f }, 
-               { 3409, -0.05f, 1.0f }, 
+       vec3 ID4ArrayScaleY[3] = { 
+               { 2490, -0.05f, 1.0f }, 
                { 100000.0f, -0.05f, 1.0f }, 
                { 200000.0f, -0.05f, 1.0f } 
               }; 
  
-       vec3 ID4ArrayScaleZ[8] = { 
-               { 3169, 1.00f, 1.0f }, 
-               { 2535, 0.60f, 1.0f }, 
-               { 2100, 2.00f, 1.0f }, 
-               { 2182, 0.60f, 1.0f }, 
-               { 2569, 1.00f, 1.0f }, 
-               { 3409, 32.00f, 1.0f }, 
-               { 100000.0f, 32.00f, 1.0f }, 
-               { 200000.0f, 32.00f, 1.0f } 
+       vec3 ID4ArrayScaleZ[3] = { 
+               { 2490, 0.60f, 1.0f }, 
+               { 100000.0f, 0.60f, 1.0f }, 
+               { 200000.0f, 0.60f, 1.0f } 
               }; 
  
        vec3 ID4ArrayRotationX[3] = { 
@@ -482,37 +424,37 @@
               }; 
  
        vec3 ID6ArrayPositionX[3] = { 
-               { 3169, 0.00f, 1.0f }, 
+               { 2490, 0.00f, 1.0f }, 
                { 100000.0f, 0.00f, 1.0f }, 
                { 200000.0f, 0.00f, 1.0f } 
               }; 
  
        vec3 ID6ArrayPositionY[3] = { 
-               { 3169, 0.00f, 1.0f }, 
+               { 2490, 0.00f, 1.0f }, 
                { 100000.0f, 0.00f, 1.0f }, 
                { 200000.0f, 0.00f, 1.0f } 
               }; 
  
        vec3 ID6ArrayPositionZ[3] = { 
-               { 3169, 0.00f, 1.0f }, 
+               { 2490, 0.00f, 1.0f }, 
                { 100000.0f, 0.00f, 1.0f }, 
                { 200000.0f, 0.00f, 1.0f } 
               }; 
  
        vec3 ID6ArrayScaleX[3] = { 
-               { 3169, 2.00f, 1.0f }, 
+               { 2490, 2.00f, 1.0f }, 
                { 100000.0f, 2.00f, 1.0f }, 
                { 200000.0f, 2.00f, 1.0f } 
               }; 
  
        vec3 ID6ArrayScaleY[3] = { 
-               { 3169, 0.00f, 1.0f }, 
+               { 2490, 0.00f, 1.0f }, 
                { 100000.0f, 0.00f, 1.0f }, 
                { 200000.0f, 0.00f, 1.0f } 
               }; 
  
        vec3 ID6ArrayScaleZ[3] = { 
-               { 3169, 4.00f, 1.0f }, 
+               { 2490, 4.00f, 1.0f }, 
                { 100000.0f, 4.00f, 1.0f }, 
                { 200000.0f, 4.00f, 1.0f } 
               }; 
@@ -542,37 +484,37 @@
               }; 
  
        vec3 ID8ArrayPositionX[3] = { 
-               { 3169, 2.45f, 1.0f }, 
+               { 2490, 2.45f, 1.0f }, 
                { 100000.0f, 2.45f, 1.0f }, 
                { 200000.0f, 2.45f, 1.0f } 
               }; 
  
        vec3 ID8ArrayPositionY[3] = { 
-               { 3169, 0.17f, 1.0f }, 
+               { 2490, 0.17f, 1.0f }, 
                { 100000.0f, 0.17f, 1.0f }, 
                { 200000.0f, 0.17f, 1.0f } 
               }; 
  
        vec3 ID8ArrayPositionZ[3] = { 
-               { 3169, 10.73f, 1.0f }, 
+               { 2490, 10.73f, 1.0f }, 
                { 100000.0f, 10.73f, 1.0f }, 
                { 200000.0f, 10.73f, 1.0f } 
               }; 
  
        vec3 ID8ArrayScaleX[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
  
        vec3 ID8ArrayScaleY[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
  
        vec3 ID8ArrayScaleZ[3] = { 
-               { 3169, 1.00f, 1.0f }, 
+               { 2490, 1.00f, 1.0f }, 
                { 100000.0f, 1.00f, 1.0f }, 
                { 200000.0f, 1.00f, 1.0f } 
               }; 
@@ -602,37 +544,37 @@
               }; 
  
        vec3 ID9ArrayPositionX[3] = { 
-               { 3169, 0.00f, 1.0f }, 
+               { 2490, 0.00f, 1.0f }, 
                { 100000.0f, 0.00f, 1.0f }, 
                { 200000.0f, 0.00f, 1.0f } 
               }; 
  
        vec3 ID9ArrayPositionY[3] = { 
-               { 3169, -12.44f, 1.0f }, 
+               { 2490, -12.44f, 1.0f }, 
                { 100000.0f, -12.44f, 1.0f }, 
                { 200000.0f, -12.44f, 1.0f } 
               }; 
  
        vec3 ID9ArrayPositionZ[3] = { 
-               { 3169, 0.00f, 1.0f }, 
+               { 2490, 0.00f, 1.0f }, 
                { 100000.0f, 0.00f, 1.0f }, 
                { 200000.0f, 0.00f, 1.0f } 
               }; 
  
        vec3 ID9ArrayScaleX[3] = { 
-               { 3169, 0.01f, 1.0f }, 
+               { 2490, 0.01f, 1.0f }, 
                { 100000.0f, 0.01f, 1.0f }, 
                { 200000.0f, 0.01f, 1.0f } 
               }; 
  
        vec3 ID9ArrayScaleY[3] = { 
-               { 3169, 0.04f, 1.0f }, 
+               { 2490, 0.04f, 1.0f }, 
                { 100000.0f, 0.04f, 1.0f }, 
                { 200000.0f, 0.04f, 1.0f } 
               }; 
  
        vec3 ID9ArrayScaleZ[3] = { 
-               { 3169, 0.01f, 1.0f }, 
+               { 2490, 0.01f, 1.0f }, 
                { 100000.0f, 0.01f, 1.0f }, 
                { 200000.0f, 0.01f, 1.0f } 
               }; 
@@ -671,12 +613,13 @@
                {2100000.0f, 0.00f, 0 } 
               }; 
        float TextId;
-       vec3 iTimeArray[16] = { 
+       vec3 iTimeArray[17] = { 
                { 340, 0.00f, 1 }, 
                { 595, 10.00f, 1 }, 
                { 596, 0.00f, 1 }, 
                { 872, 2.00f, 1 }, 
                { 873, 0.00f, 1 }, 
+               { 996, 52.30f, 1 }, 
                { 1027, 2.00f, 1 }, 
                { 1028, 0.00f, 1 }, 
                { 1267, 12.00f, 1 }, 
@@ -1761,7 +1704,7 @@ long TempratureNormalizationArrayPointer = 0;
        RM_Objects[18] = setVal(ID1ArrayRotationZ, row, 3, &pointerID1ArrayRotationZ ); 
        RM_Objects[19] = setVal(ID1ArrayRotationW, row, 3, &pointerID1ArrayRotationW ); 
        RM_Objects[20] = setVal(ID2ArrayPositionX, row, 3, &pointerID2ArrayPositionX ); 
-       RM_Objects[21] = setVal(ID2ArrayPositionY, row, 31, &pointerID2ArrayPositionY ); 
+       RM_Objects[21] = setVal(ID2ArrayPositionY, row, 3, &pointerID2ArrayPositionY ); 
        RM_Objects[22] = setVal(ID2ArrayPositionZ, row, 3, &pointerID2ArrayPositionZ ); 
        RM_Objects[23] = setVal(ID2ArrayScaleX, row, 3, &pointerID2ArrayScaleX ) / 2.0f; 
        RM_Objects[24] = setVal(ID2ArrayScaleY, row, 3, &pointerID2ArrayScaleY ) / 2.0f; 
@@ -1783,9 +1726,9 @@ long TempratureNormalizationArrayPointer = 0;
        RM_Objects[30] = setVal(ID3ArrayPositionX, row, 3, &pointerID3ArrayPositionX ); 
        RM_Objects[31] = setVal(ID3ArrayPositionY, row, 3, &pointerID3ArrayPositionY ); 
        RM_Objects[32] = setVal(ID3ArrayPositionZ, row, 3, &pointerID3ArrayPositionZ ); 
-       RM_Objects[33] = setVal(ID3ArrayScaleX, row, 8, &pointerID3ArrayScaleX ) / 2.0f; 
-       RM_Objects[34] = setVal(ID3ArrayScaleY, row, 8, &pointerID3ArrayScaleY ) / 2.0f; 
-       RM_Objects[35] = setVal(ID3ArrayScaleZ, row, 8, &pointerID3ArrayScaleZ ) / 2.0f; 
+       RM_Objects[33] = setVal(ID3ArrayScaleX, row, 3, &pointerID3ArrayScaleX ) / 2.0f; 
+       RM_Objects[34] = setVal(ID3ArrayScaleY, row, 3, &pointerID3ArrayScaleY ) / 2.0f; 
+       RM_Objects[35] = setVal(ID3ArrayScaleZ, row, 3, &pointerID3ArrayScaleZ ) / 2.0f; 
        RM_Objects[36] = setVal(ID3ArrayRotationX, row, 3, &pointerID3ArrayRotationX ); 
        RM_Objects[37] = setVal(ID3ArrayRotationY, row, 3, &pointerID3ArrayRotationY ); 
        RM_Objects[38] = setVal(ID3ArrayRotationZ, row, 3, &pointerID3ArrayRotationZ ); 
@@ -1793,9 +1736,9 @@ long TempratureNormalizationArrayPointer = 0;
        RM_Objects[40] = setVal(ID4ArrayPositionX, row, 3, &pointerID4ArrayPositionX ); 
        RM_Objects[41] = setVal(ID4ArrayPositionY, row, 3, &pointerID4ArrayPositionY ); 
        RM_Objects[42] = setVal(ID4ArrayPositionZ, row, 3, &pointerID4ArrayPositionZ ); 
-       RM_Objects[43] = setVal(ID4ArrayScaleX, row, 8, &pointerID4ArrayScaleX ) / 2.0f; 
-       RM_Objects[44] = setVal(ID4ArrayScaleY, row, 8, &pointerID4ArrayScaleY ) / 2.0f; 
-       RM_Objects[45] = setVal(ID4ArrayScaleZ, row, 8, &pointerID4ArrayScaleZ ) / 2.0f; 
+       RM_Objects[43] = setVal(ID4ArrayScaleX, row, 3, &pointerID4ArrayScaleX ) / 2.0f; 
+       RM_Objects[44] = setVal(ID4ArrayScaleY, row, 3, &pointerID4ArrayScaleY ) / 2.0f; 
+       RM_Objects[45] = setVal(ID4ArrayScaleZ, row, 3, &pointerID4ArrayScaleZ ) / 2.0f; 
        RM_Objects[46] = setVal(ID4ArrayRotationX, row, 3, &pointerID4ArrayRotationX ); 
        RM_Objects[47] = setVal(ID4ArrayRotationY, row, 3, &pointerID4ArrayRotationY ); 
        RM_Objects[48] = setVal(ID4ArrayRotationZ, row, 3, &pointerID4ArrayRotationZ ); 
@@ -1833,7 +1776,7 @@ long TempratureNormalizationArrayPointer = 0;
        float div = 180 / 60.0f * 8.0f;
        row = second * div;
        TextId = setVal(TextIdArray, row, 7, &TextIdArrayPointer); 
-       iTime = setVal(iTimeArray, row, 16, &iTimeArrayPointer); 
+       iTime = setVal(iTimeArray, row, 17, &iTimeArrayPointer); 
        DirectionalLightX = setVal(DirectionalLightXArray, row, 15, &DirectionalLightXArrayPointer); 
        DirectionalLightY = setVal(DirectionalLightYArray, row, 18, &DirectionalLightYArrayPointer); 
        DirectionalLightZ = setVal(DirectionalLightZArray, row, 17, &DirectionalLightZArrayPointer); 
