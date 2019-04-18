@@ -396,53 +396,6 @@ MonoBehaviour:
   Rotatable: 0
   ID: 0
   visibleSyncDataCount: 12660
---- !u!21 &709211945
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Standard Trace Marching
-  m_Shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel0:
-        m_Texture: {fileID: 2800000, guid: 7bea65fe94c80dc4a88ade876cf07b4a, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel1:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel2:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel3:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Value: 0
-    - _iFrame: 0
-    - _iTime: 60
-    m_Colors:
-    - _Light: {r: 0, g: 0, b: 0, a: 0}
-    - _iMouse: {r: 0, g: 0, b: 0, a: 0}
-    - _iResolution: {r: 802, g: 451, b: 0, a: 0}
 --- !u!1 &757784143
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,7 +435,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 1
   ID: 0
-  visibleSyncDataCount: 35286
+  visibleSyncDataCount: 35326
 --- !u!33 &757784147
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -708,7 +661,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 36819
+  visibleSyncDataCount: 36859
 --- !u!33 &817454197
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -781,6 +734,7 @@ GameObject:
   - component: {fileID: 852551893}
   - component: {fileID: 852551892}
   - component: {fileID: 852551891}
+  - component: {fileID: 852551896}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -808,7 +762,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 2900
+  visibleSyncDataCount: 2940
 --- !u!65 &852551892
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -881,6 +835,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &852551896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852551890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6265d5f95d7d9d54ebcc351ddc2cda8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &945053887
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,7 +887,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 45009
+  visibleSyncDataCount: 45049
 --- !u!33 &945053889
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1291,7 +1257,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 3
-  visibleSyncDataCount: 45009
+  visibleSyncDataCount: 45049
 --- !u!33 &1320328085
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1471,7 +1437,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 4713
+  visibleSyncDataCount: 4753
 --- !u!33 &1419629669
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1570,7 +1536,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 36425
+  visibleSyncDataCount: 36465
 --- !u!33 &1456909813
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1801,7 +1767,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 35539
+  visibleSyncDataCount: 35579
 --- !u!33 &1568201614
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2362,7 +2328,54 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 0
-  visibleSyncDataCount: 35365
+  visibleSyncDataCount: 35405
+--- !u!21 &1783941775
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Standard Trace Marching
+  m_Shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel0:
+        m_Texture: {fileID: 2800000, guid: 7bea65fe94c80dc4a88ade876cf07b4a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Value: 0
+    - _iFrame: 0
+    - _iTime: 32
+    m_Colors:
+    - _Light: {r: 0, g: 0, b: 0, a: 0}
+    - _iMouse: {r: 0, g: 0, b: 0, a: 0}
+    - _iResolution: {r: 802, g: 451, b: 0, a: 0}
 --- !u!1 &1862993965
 GameObject:
   m_ObjectHideFlags: 0
@@ -2416,7 +2429,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 33
+  field of view: 45
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2441,8 +2454,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1862993965}
-  m_LocalRotation: {x: -0.047661684, y: 0.9486904, z: -0.17421086, w: -0.25954857}
-  m_LocalPosition: {x: -11.604791, y: 10.227545, z: 12.221135}
+  m_LocalRotation: {x: -0.047954306, y: 0.9518134, z: -0.2031377, w: -0.22469266}
+  m_LocalPosition: {x: 16, y: 16, z: 32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2461,7 +2474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
-  _material: {fileID: 709211945}
+  _material: {fileID: 1783941775}
   _camera: {fileID: 1862993967}
   iChannel0: {fileID: 2800000, guid: 7bea65fe94c80dc4a88ade876cf07b4a, type: 3}
   iChannel1: {fileID: 0}
@@ -2551,7 +2564,7 @@ MonoBehaviour:
   Centered: 0
   Rotatable: 0
   ID: 4
-  visibleSyncDataCount: 36605
+  visibleSyncDataCount: 36645
 --- !u!33 &2049497696
 MeshFilter:
   m_ObjectHideFlags: 0
