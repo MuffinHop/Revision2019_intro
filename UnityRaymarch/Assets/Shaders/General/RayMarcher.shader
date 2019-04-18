@@ -52,7 +52,6 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 		}
 
 	}
-	detailed = 1.0;
 
 	for (int i = 0;i <= 5;i++)
 	{

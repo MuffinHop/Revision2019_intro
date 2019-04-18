@@ -159,6 +159,7 @@
     <None Include="Assets\Shaders\Operators\OpPipe.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdCapsule.glslinc" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdBox.glslinc" />
+    <None Include="Assets\Shaders\SDFs\Custom\CustomMap.glslinc" />
     <None Include="Assets\Shaders\Modifiers\Mirror.shader" />
     <None Include="Assets\Shaders\Modifiers\MirrorOctant.shader" />
     <None Include="Assets\Shaders\SDFs\Primitive\sdRoundCone.glslinc" />

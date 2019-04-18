@@ -1,0 +1,29 @@
+﻿const float freqA = 0.1 / 3.75;
+const float freqB = 0.1 / 2.75;
+const float ampA = 32.0;
+const float ampB = 19.0;
+
+float smaxP(float a, float b, float s) {
+
+	float h = clamp(0.5 + 0.5*(a - b) / s, 0., 1.);
+	return mix(b, a, h) + h * (1.0 - h)*s;
+}
+vec2 path(in float z) { return vec2(ampA*sin(z * freqA), ampB*cos(z * freqB) + (7. + 7.*perlinnoise(vec2(z*0.01)))*(sin(z*0.01) - 1.)); }
+
+float Enviro(vec3 p, vec3 mult) {
+	p*=mult;
+	float tx = -cellTile2(p*(1. + cellTile2(p*0.02))*0.4) - cellTile2(p*3.) / 9.;
+	vec3 q = p * 0.11;
+	float h = dot(sin(q)*cos(q.yzx), vec3(.4)) + dot(sin(q*1.5)*cos(q.yzx*1.5), vec3(.8));
+
+	float d = p.y + h * 6.;
+
+	q = sin(p*0.5 + h);
+	h = q.x*q.y*q.z;
+
+	p.xy -= path(p.z);
+	float tnl = 1.5 - length(p.xy*vec2(.33 + sin(p.z*0.01) / 13.0, .66 + sin(p.z*0.0001124f) / 2.0)) + h + (1. - tx)*1.75;
+
+	return smaxP(d, tnl, 2.) - tx * .5 + tnl * .3;
+
+}

@@ -90,7 +90,7 @@ float GetHeightmap(vec3 p)
     float hills;
 
     // Combine from components
-    float hill_1 = 8.0 * perlinnoise(0.1 * p.xz); // High amplitude, very low frequency
+    float hill_1 = 16.0 * perlinnoise(0.1 * p.xz); // High amplitude, very low frequency
     float hill_2 = 4.0 * perlinnoise(0.5 * p.xz); // Medium amplitude, low frequency
     float hill_3 = 2.0 * perlinnoise(1.0 * p.xz); // Small amplitude, high frequency
     float hill_4 = 1.0 * perlinnoise(2.0 * p.xz); // Tiny amplitude, very high frequency
@@ -108,14 +108,23 @@ float GetHeightmapLowPrecision(vec3 p)
     float hills;
 
     // Combine from components
-	vec4 dat = texture(_iChannel1,p.xz);
+	vec4 dat = texture(_iChannel0,p.xz);
     float hill_1 = 8.0 * dat.r; // High amplitude, very low frequency 
-    float hill_2 = 4.0 * dat.g // Medium amplitude, low frequency
+    float hill_2 = 4.0 * dat.g; // Medium amplitude, low frequency
     float hill_3 = 2.0 * dat.b; // Small amplitude, high frequency
+	dat = texture(_iChannel0,p.xz * 4.0);
+    float hill_4 = 1.0 * dat.r; // High amplitude, very low frequency 
+    float hill_5 = 0.5 * dat.g; // Medium amplitude, low frequency
+    float hill_6 = 0.25 * dat.b; // Small amplitude, high frequency
+	
+    hills = hill_1;
+    hills += hill_2;
+    hills += hill_3;
+    hills += hill_4;
+    hills += hill_5;
+    hills += hill_6;
 
-    hills += hill_1;
-
-	return  hills;
+	return hills * p.y;
 }
 
 

@@ -2,6 +2,7 @@
 
 
 uniform sampler2D _TextTex;
+uniform sampler2D _iChannel0;
 uniform float _iTime;
 uniform vec4 _iMouse;
 uniform vec4 _iResolution;
@@ -26,6 +27,7 @@ uniform float _Environment;
 uniform float _StepIncreaseByDistance;
 uniform float _StepIncreaseMax;
 uniform float OBJMAX, OBJMIN;
+uniform sampler2D _iChannel1;
 #define maxItersGlobal 48
 #define ENABLE_FOG
 #define ENABLE_REFLECTIONS
@@ -161,16 +163,7 @@ float rand(float co) {
 }
 float perlinnoise(in vec2 p)
 {
-	float K1 = 0.366025404;
-	float K2 = 0.211324865;
-	vec2 i = floor(p + (p.x + p.y)*K1);
-	vec2 a = p - i + (i.x + i.y)*K2;
-	vec2 o = (a.x > a.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
-	vec2 b = a - o + K2;
-	vec2 c = a - 1.0 + 2.0*K2;
-	vec3 h = max(0.5 - vec3(dot(a, a), dot(b, b), dot(c, c)), 0.0);
-	vec3 n = h * h*h*h*vec3(dot(a, hash(i + 0.0)), dot(b, hash(i + o)), dot(c, hash(i + 1.0)));
-	return dot(n, vec3(70.0));
+	return texture(_iChannel0,p).r;
 }
 // A hash function for some noise
 float hash12(vec2 p)
@@ -197,7 +190,7 @@ float GetHeightmap(vec3 p)
     float hills;
 
     // Combine from components
-    float hill_1 = 8.0 * perlinnoise(0.1 * p.xz); // High amplitude, very low frequency
+    float hill_1 = 16.0 * perlinnoise(0.1 * p.xz); // High amplitude, very low frequency
     float hill_2 = 4.0 * perlinnoise(0.5 * p.xz); // Medium amplitude, low frequency
     float hill_3 = 2.0 * perlinnoise(1.0 * p.xz); // Small amplitude, high frequency
     float hill_4 = 1.0 * perlinnoise(2.0 * p.xz); // Tiny amplitude, very high frequency
@@ -215,14 +208,23 @@ float GetHeightmapLowPrecision(vec3 p)
     float hills;
 
     // Combine from components
-	vec4 dat = texture(_iChannel1,p.xz);
+	vec4 dat = texture(_iChannel0,p.xz);
     float hill_1 = 8.0 * dat.r; // High amplitude, very low frequency 
-    float hill_2 = 4.0 * dat.g // Medium amplitude, low frequency
+    float hill_2 = 4.0 * dat.g; // Medium amplitude, low frequency
     float hill_3 = 2.0 * dat.b; // Small amplitude, high frequency
+	dat = texture(_iChannel0,p.xz * 4.0);
+    float hill_4 = 1.0 * dat.r; // High amplitude, very low frequency 
+    float hill_5 = 0.5 * dat.g; // Medium amplitude, low frequency
+    float hill_6 = 0.25 * dat.b; // Small amplitude, high frequency
+	
+    hills = hill_1;
+    hills += hill_2;
+    hills += hill_3;
+    hills += hill_4;
+    hills += hill_5;
+    hills += hill_6;
 
-    hills += hill_1;
-
-	return  hills;
+	return hills * p.y;
 }
 
 
@@ -505,38 +507,12 @@ const float material_ID4 = 5;
 
 const float material_ID5 = 6;
 
-const float material_ID6 = 7;
-
- uniform float _Objects[240];
-float fSphere(vec3 p, float r) {
-	return length(p) - r;
-}
-float sdCapsule(vec3 p, vec3 a, vec3 b, float r)
-{
-	vec3 pa = p - a, ba = b - a;
-	float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
-	return length(pa - ba * h) - r;
-}
+ uniform float _Objects[70];
 // Box: correct distance to corners
 float fBox(vec3 p, vec3 b) {
 	vec3 d = abs(p) - b;
 	return length(max(d, vec3(0))) + vmax(min(d, vec3(0)));
 }
-float Wheat(vec3 pos, vec3 algorithm) {
-    float vali = 5.;
-    float ps = min(perlinnoise(pos.xz*0.1 / vali) - 0.2,0.0);
-	pos.y-= (1.0+ps) * _Environment * 1000.0;
-	pos.x+=cos(algorithm.z+pos.y*7.+pos.x*5.)*0.03;
-	pos.z-=0.5;
-	vec3 opos = pos;
-	opos.x = mod(opos.x, algorithm.z) - algorithm.z / 2.0;
-	opos.x+= mod(opos.z*1.5, algorithm.y)*algorithm.x;
-	opos.z = mod(opos.z, algorithm.z) - algorithm.z / 2.0;
-	opos.z-= mod(opos.z, algorithm.z/2.)*0.1;
-	float dist = fBox(opos + vec3(0.2,0.0,0.2), vec3(0.01, 0.2, 0.01));
-	return dist;
-}
-
 float sdBox(vec3 p, vec3 b)
 {
 	vec3 d = abs(p) - b;
@@ -555,45 +531,36 @@ float Smoke(vec3 pos, vec3 algorithm) {
 
     return distance5;
 }
-float Water(vec3 pos, vec3 algorithm) {
-	pos.y += perlinnoise(pos.xz*3.)*0.025;
-	float dist = fBox(pos, algorithm);
-	return dist;
+float sdCappedCylinder(vec3 p, vec2 h)
+{
+	vec2 d = abs(vec2(length(p.xz), p.y)) - h;
+	return min(max(d.x, d.y), 0.0) + length(max(d, 0.0));
 }
-
 
 float fOpUnionRund(float a, float b, float r) {
 	vec2 u = max(vec2(r - a,r - b), vec2(0));
 	return max(r, min (a, b)) - length(u);
 }
 float TreeTrunk(vec3 pos, vec3 algorithm) {
-    float vali = 5.;
-    float ps = perlinnoise(pos.xz*0.1 / vali) - 0.2;
-	pos.y-= ps * _Environment * 1000.0;
+    float vali = 10.;
 	vec3 opos = pos;
-	vec3 opos_ = opos;
+	opos.x += hash1(floor(pos.z/vali)-0.5)*vali;
+	opos.z += hash1(floor(pos.x/vali)-0.5)*vali;
+	float scale = max(ceil(rand(floor(pos.xz/vali)) - 0.5),0.0);
+	float scale2 = rand(8.*floor(pos.xz/vali)) + 1.0;
+    opos.x = mod(opos.x, vali);
+    opos.z = mod(opos.z, vali);
+    opos.x -= vali / 2.0;
+    opos.z -= vali / 2.0;
+	opos+=scale*100.0;
+	float dist = sdCappedCylinder( opos, vec2(0.51-opos.y*0.03,5.5) );
 	
-    opos.x += hash1(floor(pos.z / vali) + vali) * vali / 2.0;
-    opos.x = mod(opos.x, vali) - vali / 2.0;
-    opos.z += hash1(floor(pos.x / vali) + vali) * vali / 2.0;
-    opos.z = mod(opos.z, vali) - vali / 2.0;
-    pR(opos.xz, pos.z*1.);
-    pR(opos.zy, 3.14);
-	vec3 rpos = pos;
-	rpos.x = floor(pos.x / vali);
-	rpos.z = floor(pos.z / vali);
-    float ss = min(perlinnoise(rpos.xz*0.1) * 12.0,2.0);
+    dist-= cellTile(pos*3.0)*cellTile(pos*2.0) * 0.1;
 
-	float height = 0.0;
-	opos.y += 0.75;
-	float dist = fBox(opos + vec3(0.0,height,0.0), ss*vec3(0.08 + atan(opos.y*2.)*0.02, 1.5, 0.05));
-	opos.y -= 0.75;
-	vec3 o = opos + vec3(0.0, height, 0.0);
-	pR(opos.yx, 5.0);
-	opos *= rotationMatrix(vec3(1.0,0.2,0.0), rpos.x + rpos.z) ;
-	dist = fOpUnionRund(dist, fBox(opos + vec3(-0.1 + 0.1, 0.0, 0.0), ss*vec3(0.03, 0.5, 0.02)), 0.2);
-	opos = o;
 	return dist;
+}
+float fSphere(vec3 p, float r) {
+	return length(p) - r;
 }
 float sdSphere(vec3 p, float s)
 {
@@ -602,40 +569,28 @@ float sdSphere(vec3 p, float s)
 
 float detailed = 0.;
 float TreeBush(vec3 pos, vec3 algorithm) {
-    float vali = 5.;
-    float ps = perlinnoise(pos.xz*0.1 / vali) - 0.2;
-	pos.y += GetHeightmapLowPrecision(pos*algorithm) * algorithm.y - ps * _Environment;
-    vec3 opos = pos;
-    
-    opos.x += hash1(floor(pos.z / vali) + vali) * vali / 2.0;
-    opos.x = mod(opos.x, vali) - vali / 2.0;
-    opos.z += hash1(floor(pos.x / vali) + vali) * vali / 2.0;
-    opos.z = mod(opos.z, vali) - vali / 2.0;
-    pR(opos.xz, pos.z*1.);
-    pR(opos.zy, 3.14);
-	vec3 rpos = pos;
-	rpos.x = floor(pos.x / vali);
-	rpos.z = floor(pos.z / vali);
-    float ss = min(perlinnoise(rpos.xz*0.1) * 12.0,1.5);
-    vec3 o = opos;
-    opos = o;
-	opos.y += GetHeightmapLowPrecision(pos*algorithm) *  algorithm.y;
-	opos.y += 3.0;
-    float distance2 = sdSphere(opos,ss);
-    
-	pos.y += GetHeightmapLowPrecision(pos*algorithm) * algorithm.y;
-    distance2 = min(distance2,fBox(pos+vec3(0.0,2.5,0.0), vec3(1111.,2.,1111.)));
+    float vali = 10.;
+	vec3 opos = pos;
+	opos.x += hash1(floor(pos.z/vali)-0.5)*vali;
+	opos.z += hash1(floor(pos.x/vali)-0.5)*vali;
+	float scale = max(ceil(rand(floor(pos.xz/vali)) - 0.5),0.0);
+	float scale2 = rand(8.*floor(pos.xz/vali)) + 1.0;
+    opos.x = mod(opos.x, vali);
+    opos.z = mod(opos.z, vali);
+    opos.x -= vali / 2.0;
+    opos.z -= vali / 2.0;
+	float distance2 = 1e8;
+	distance2 = min(distance2,sdSphere(opos - vec3(0.0,16.0+scale*100.0+scale*3.0,0.0),2.0*scale2));
+	pos.y += GetHeightmapLowPrecision(pos*algorithm) * _Environment;
+    distance2 = min(distance2,fBox(pos, vec3(1111.,12.,1111.)));
+	
     distance2*=0.2;
-    distance2+= cellTile(pos) * 0.2;	
+    distance2+= cellTile(pos/2.0) * 0.2;	
     distance2+= cellTile(pos*9.0)*0.025;
+	
     return distance2;
 }
 
-// The "Round" variant uses a quarter-circle to join the two objects smoothly:
-float fOpUnionRound(float a, float b, float r) {
-	vec2 u = max(vec2(r - a, r - b), vec2(0));
-	return max(r, min(a, b)) - length(u);
-}
 vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
         {
             vec4 result = vec4(10000.0, -1.0, 0.0, 0.0);
@@ -643,166 +598,69 @@ vec4 GetDistanceScene(vec3 position, in float transparencyPointer)
          float id0_distance = 1e9;
        if (OBJMAX > 0 && 0 > OBJMIN) { 
 
-//Sphere
+//Cube Ray Marched (1)
                vec3 posID0 = position - vec3(_Objects[0], _Objects[1], _Objects[2]);
-               id0_distance  = min(fSphere(posID0,_Objects[3]), id0_distance);
+               posID0= RotateQuaternion(vec4(_Objects[6], _Objects[7], _Objects[8], - _Objects[9]))*posID0;
+               id0_distance  = min(fBox(posID0, vec3(_Objects[3], _Objects[4],_Objects[5])), id0_distance);
        }
-       if (OBJMAX > 9 && 9 > OBJMIN) { 
+       if (OBJMAX > 2 && 2 > OBJMIN) { 
 
-//Cube (1)
-               vec3 posID9 = position - vec3(_Objects[90], _Objects[91], _Objects[92]);
-               id0_distance  = min(Water(posID9, vec3(_Objects[93], _Objects[94],_Objects[95])), id0_distance);
-       }
-       if (OBJMAX > 13 && 13 > OBJMIN) { 
-
-//Sphere (1)
-               vec3 posID13 = position - vec3(_Objects[130], _Objects[131], _Objects[132]);
-               id0_distance  = min(fSphere(posID13,_Objects[133]), id0_distance);
-       }
-       if (OBJMAX > 18 && 18 > OBJMIN) { 
-
-//Sphere (2)
-               vec3 posID18 = position - vec3(_Objects[180], _Objects[181], _Objects[182]);
-               id0_distance  = min(fSphere(posID18,_Objects[183]), id0_distance);
-       }
-       if (OBJMAX > 19 && 19 > OBJMIN) { 
-
-//Sphere
-               vec3 posID19 = position - vec3(_Objects[190], _Objects[191], _Objects[192]);
-               id0_distance  = min(fSphere(posID19,_Objects[193]), id0_distance);
+//Cube Ray Marched (2)
+               vec3 posID2 = position - vec3(_Objects[20], _Objects[21], _Objects[22]);
+               id0_distance  = min(fBox(posID2, vec3(_Objects[23], _Objects[24],_Objects[25])), id0_distance);
        }
                vec4 distID0 = vec4(id0_distance, material_ID0, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombineTransparent(result, distID0, transparencyPointer);
+               result = DistUnionCombine(result, distID0);
 
          float id1_distance = 1e9;
        if (OBJMAX > 1 && 1 > OBJMIN) { 
 
-//LeftShoulder
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[10], _Objects[11],_Objects[12]), vec3(_Objects[13], _Objects[14],_Objects[15]), 0.1), id1_distance);
-       }
-       if (OBJMAX > 2 && 2 > OBJMIN) { 
-
-//RightForeArm
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[20], _Objects[21],_Objects[22]), vec3(_Objects[23], _Objects[24],_Objects[25]), 0.06), id1_distance);
-       }
-       if (OBJMAX > 3 && 3 > OBJMIN) { 
-
-//LeftArm
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[30], _Objects[31],_Objects[32]), vec3(_Objects[33], _Objects[34],_Objects[35]), 0.08), id1_distance);
-       }
-       if (OBJMAX > 4 && 4 > OBJMIN) { 
-
-//RightUpLeg
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[40], _Objects[41],_Objects[42]), vec3(_Objects[43], _Objects[44],_Objects[45]), 0.1), id1_distance);
-       }
-       if (OBJMAX > 5 && 5 > OBJMIN) { 
-
-//LeftForeArm
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[50], _Objects[51],_Objects[52]), vec3(_Objects[53], _Objects[54],_Objects[55]), 0.06), id1_distance);
-       }
-       if (OBJMAX > 7 && 7 > OBJMIN) { 
-
-//Cube Ray Marched (1)
-               vec3 posID7 = position - vec3(_Objects[70], _Objects[71], _Objects[72]);
-               posID7= RotateQuaternion(vec4(_Objects[76], _Objects[77], _Objects[78], - _Objects[79]))*posID7;
-               id1_distance  = min(fBox(posID7, vec3(_Objects[73], _Objects[74],_Objects[75])), id1_distance);
-       }
-       if (OBJMAX > 10 && 10 > OBJMIN) { 
-
-//RightArm
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[100], _Objects[101],_Objects[102]), vec3(_Objects[103], _Objects[104],_Objects[105]), 0.08), id1_distance);
-       }
-       if (OBJMAX > 12 && 12 > OBJMIN) { 
-
-//GameObject
-               vec3 posID12 = position - vec3(_Objects[120], _Objects[121], _Objects[122]);
-               id1_distance  = fOpUnionRound(fSphere(posID12,_Objects[123]), id1_distance,0.12);
-       }
-       if (OBJMAX > 14 && 14 > OBJMIN) { 
-
-//LeftUpLeg
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[140], _Objects[141],_Objects[142]), vec3(_Objects[143], _Objects[144],_Objects[145]), 0.1), id1_distance);
-       }
-       if (OBJMAX > 15 && 15 > OBJMIN) { 
-
-//Cube Ray Marched (2)
-               vec3 posID15 = position - vec3(_Objects[150], _Objects[151], _Objects[152]);
-               id1_distance  = min(fBox(posID15, vec3(_Objects[153], _Objects[154],_Objects[155])), id1_distance);
-       }
-       if (OBJMAX > 17 && 17 > OBJMIN) { 
-
-//Spine
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[170], _Objects[171],_Objects[172]), vec3(_Objects[173], _Objects[174],_Objects[175]), 0.15), id1_distance);
-       }
-       if (OBJMAX > 20 && 20 > OBJMIN) { 
-
-//GameObject
-               vec3 posID20 = position - vec3(_Objects[200], _Objects[201], _Objects[202]);
-               id1_distance  = fOpUnionRound(fSphere(posID20,_Objects[203]), id1_distance,0.12);
-       }
-       if (OBJMAX > 23 && 23 > OBJMIN) { 
-
-//RightShoulder
-               id1_distance  = min(sdCapsule(position, vec3(_Objects[230], _Objects[231],_Objects[232]), vec3(_Objects[233], _Objects[234],_Objects[235]), 0.1), id1_distance);
+//Smoke
+               vec3 posID1 = position - vec3(_Objects[10], _Objects[11], _Objects[12]);
+               id1_distance  = min(Smoke(posID1, vec3(_Objects[13], _Objects[14],_Objects[15])), id1_distance);
        }
                vec4 distID1 = vec4(id1_distance, material_ID1, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID1);
 
          float id2_distance = 1e9;
-       if (OBJMAX > 6 && 6 > OBJMIN) { 
+       if (OBJMAX > 3 && 3 > OBJMIN) { 
 
-//Wheat
-               vec3 posID6 = position - vec3(_Objects[60], _Objects[61], _Objects[62]);
-               id2_distance  = min(Wheat(posID6, vec3(_Objects[63], _Objects[64],_Objects[65])), id2_distance);
-       }
-       if (OBJMAX > 11 && 11 > OBJMIN) { 
-
-//Wheat (2)
-               vec3 posID11 = position - vec3(_Objects[110], _Objects[111], _Objects[112]);
-               id2_distance  = min(Wheat(posID11, vec3(_Objects[113], _Objects[114],_Objects[115])), id2_distance);
+//Tree Trunk Ray Marched
+               vec3 posID3 = position - vec3(_Objects[30], _Objects[31], _Objects[32]);
+               id2_distance  = min(TreeTrunk(posID3, vec3(_Objects[33], _Objects[34],_Objects[35])), id2_distance);
        }
                vec4 distID2 = vec4(id2_distance, material_ID2, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID2);
 
          float id3_distance = 1e9;
-       if (OBJMAX > 8 && 8 > OBJMIN) { 
+       if (OBJMAX > 4 && 4 > OBJMIN) { 
 
-//Smoke
-               vec3 posID8 = position - vec3(_Objects[80], _Objects[81], _Objects[82]);
-               id3_distance  = min(Smoke(posID8, vec3(_Objects[83], _Objects[84],_Objects[85])), id3_distance);
+//Sphere
+               vec3 posID4 = position - vec3(_Objects[40], _Objects[41], _Objects[42]);
+               id3_distance  = min(fSphere(posID4,_Objects[43]), id3_distance);
        }
                vec4 distID3 = vec4(id3_distance, material_ID3, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombine(result, distID3);
+               result = DistUnionCombineTransparent(result, distID3, transparencyPointer);
 
          float id4_distance = 1e9;
-       if (OBJMAX > 16 && 16 > OBJMIN) { 
+       if (OBJMAX > 5 && 5 > OBJMIN) { 
 
-//Tree Trunk Ray Marched
-               #define posID16 position
-               id4_distance  = min(TreeTrunk(posID16, vec3(_Objects[163], _Objects[164],_Objects[165])), id4_distance);
+//Cube Ray Marched
+               vec3 posID5 = position - vec3(_Objects[50], _Objects[51], _Objects[52]);
+               id4_distance  = min(fBox(posID5, vec3(_Objects[53], _Objects[54],_Objects[55])), id4_distance);
        }
                vec4 distID4 = vec4(id4_distance, material_ID4, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID4);
 
          float id5_distance = 1e9;
-       if (OBJMAX > 21 && 21 > OBJMIN) { 
+       if (OBJMAX > 6 && 6 > OBJMIN) { 
 
-//Cube Ray Marched
-               vec3 posID21 = position - vec3(_Objects[210], _Objects[211], _Objects[212]);
-               id5_distance  = min(fBox(posID21, vec3(_Objects[213], _Objects[214],_Objects[215])), id5_distance);
+//Tree Bush Ray Marched
+               vec3 posID6 = position - vec3(_Objects[60], _Objects[61], _Objects[62]);
+               id5_distance  = min(TreeBush(posID6, vec3(_Objects[63], _Objects[64],_Objects[65])), id5_distance);
        }
                vec4 distID5 = vec4(id5_distance, material_ID5, position.xz + vec2(position.y, 0.0));
                result = DistUnionCombine(result, distID5);
-
-         float id6_distance = 1e9;
-       if (OBJMAX > 22 && 22 > OBJMIN) { 
-
-//Tree Bush Ray Marched
-               #define posID22 position
-               id6_distance  = min(TreeBush(posID22, vec3(_Objects[223], _Objects[224],_Objects[225])), id6_distance);
-       }
-               vec4 distID6 = vec4(id6_distance, material_ID6, position.xz + vec2(position.y, 0.0));
-               result = DistUnionCombine(result, distID6);
 
 
             return result;
@@ -848,45 +706,38 @@ Material RockPattern(vec3 position) {
             Material mat;
             
        if (hitNfo.id.x == material_ID0){
-              mat.reflectionCoefficient = 0.27;
-              mat.albedo = vec3(1,1,1);;
-              mat.transparency =0.5019608;
-              mat.smoothness = 0.8;
-              mat.reflectindx = 0.69;
-       }
-       if (hitNfo.id.x == material_ID1){
               mat.reflectionCoefficient = 0.178;
               mat.albedo = vec3(1,1,1);;
               mat.transparency =0;
               mat.smoothness = 0.37;
               mat.reflectindx = 0.54;
        }
-       if (hitNfo.id.x == material_ID2){
-              mat.reflectionCoefficient = 0.1;
-              mat.albedo = vec3(0.6517754,0.6698113,0.2243236);;
-              mat.transparency =0;
-              mat.smoothness = 0.1;
-              mat.reflectindx = 0.2;
-       }
-       if (hitNfo.id.x == material_ID3){
+       if (hitNfo.id.x == material_ID1){
               mat.reflectionCoefficient = 0.71;
               mat.albedo = vec3(1,0,0);;
               mat.transparency =0;
               mat.smoothness = 0.84;
               mat.reflectindx = 0.8;
        }
-       if (hitNfo.id.x == material_ID4){
-              mat.reflectionCoefficient = 0.04;
-              mat.albedo = vec3(0.6509434,0.3772959,0.2671325);;
+       if (hitNfo.id.x == material_ID2){
+              mat.reflectionCoefficient = 0.11;
+              mat.albedo = vec3(0.4433962,0.2586175,0.1777768);;
               mat.transparency =0;
-              mat.smoothness = 0.51;
-              mat.reflectindx = 0.03;
+              mat.smoothness = 0.69;
+              mat.reflectindx = 0.1;
        }
-       if (hitNfo.id.x == material_ID5){
+       if (hitNfo.id.x == material_ID3){
+              mat.reflectionCoefficient = 0.27;
+              mat.albedo = vec3(1,1,1);;
+              mat.transparency =0.5019608;
+              mat.smoothness = 0.8;
+              mat.reflectindx = 0.69;
+       }
+       if (hitNfo.id.x == material_ID4){
               mat = RockPattern(hitNfo.position);
 ;
        }
-       if (hitNfo.id.x == material_ID6){
+       if (hitNfo.id.x == material_ID5){
               mat.reflectionCoefficient = 0.11;
               mat.albedo = vec3(0.3978099,0.6603774,0.2896938);;
               mat.transparency =0;
@@ -991,7 +842,6 @@ void RayMarch(in Trace ray, out ContactInfo result, int maxIter, float transpare
 		}
 
 	}
-	detailed = 1.0;
 
 	for (int i = 0;i <= 5;i++)
 	{
@@ -1285,9 +1135,23 @@ vec4 mainImage()
 	vec2 uv = fragCoord.xy / _iResolution.xy;
 
 	if (_TextId == 1.0) {
-		vec3 text = texture(_TextTex, uv).rgb;
-		return vec4(text,0.5);
+		vec2 _uv = uv;
+		float off = distance(vec2(0.5),vec2(uv.x))*0.005;
+		
+		vec4 d = vec4(hash(uv),hash(uv*0.75));
+		vec2 rnd = vec2(rand(uv+d.r*.05), rand(uv+d.b*.05));
+		const vec2 lensRadius = vec2(0.65*1.75, 0.05);
+		float dist = distance(uv.xy, vec2(0.5,0.5));
+		float vigfin = pow(1.-smoothstep(lensRadius.x, lensRadius.y, dist),2.);
+   
+		rnd *= .025*vigfin+d.rg*2.0*vigfin;
+		vec4 text = texture(_TextTex, uv);
+		uv += rnd;
+		text += mix(texture(_TextTex, uv),vec4(1.0),1.0*vec4(rnd.r))*0.15;
+
+		return vec4(text.rgb,off+0.01+(0.005*cos(_uv.x*0.1)*sin(_uv.y*0.1)));
 	}
+
 
 	vec3 lookAt = _CameraLookAt.xyz;
 	vec3 position = _CameraPosition.xyz;
@@ -1376,7 +1240,6 @@ vec4 mainImage()
 		text/=4.0;
 		fragColor.rgb+=clamp(text,0.0,1.0);
 	}
-
 	return  fragColor;
 }
 
