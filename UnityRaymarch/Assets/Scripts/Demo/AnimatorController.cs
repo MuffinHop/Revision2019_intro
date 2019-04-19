@@ -30,5 +30,9 @@ public class AnimatorController : MonoBehaviour
 
         Vector3 position = new Vector3(SyncUp.GetVal("Position X" + gameObject.name), SyncUp.GetVal("Position Y" + gameObject.name), SyncUp.GetVal("Position Z" + gameObject.name));
         transform.position = position;
-    }
+
+        Vector3 axis = new Vector3(0.0f, 1.0f, 0.0f);
+        float angle = SyncUp.GetVal("Rotation " + gameObject.name);
+        transform.rotation = Quaternion.Euler(axis * angle);
+            }
 }

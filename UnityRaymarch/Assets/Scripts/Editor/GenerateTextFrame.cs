@@ -1,8 +1,7 @@
-﻿using System.Collections;
+﻿/*
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using UnityEditor;
+using UnityEngine;
 
 public class GenerateTextFrame
 {
@@ -95,8 +94,9 @@ public class GenerateTextFrame
 
 	FontInRect(cap1_s, rc1);
          * */
-
+         /*
         logOutput+=("// --------------------------------------------- END END END\n");
         Debug.Log(logOutput);
     }
 }
+*/

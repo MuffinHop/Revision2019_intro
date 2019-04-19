@@ -121,22 +121,22 @@ public class RM_Object : MonoBehaviour
         if (Time.frameCount % 12 == 0 && prevFrame != Time.frameCount )
         {
             prevFrame = Time.frameCount ;
-            transform.position = new Vector3(
+            Vector3 pos = new Vector3(
                 Mathf.Floor(transform.position.x * 64.0f) / 64.0f,
                 Mathf.Floor(transform.position.y * 64.0f) / 64.0f,
                 Mathf.Floor(transform.position.z * 64.0f) / 64.0f
                 );
-            if (Mathf.Abs(previousPosition.x-transform.position.x) > 0.1f)
+            if (Mathf.Abs(previousPosition.x-pos.x) > 0.1f)
             {
-                PositionXHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.position.x));
+                PositionXHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), pos.x));
             }
-            if (Mathf.Abs(previousPosition.y - transform.position.y) > 0.1f)
+            if (Mathf.Abs(previousPosition.y - pos.y) > 0.1f)
             {
-                PositionYHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.position.y));
+                PositionYHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), pos.y));
             }
-            if (Mathf.Abs(previousPosition.z - transform.position.z) > 0.1f)
+            if (Mathf.Abs(previousPosition.z - pos.z) > 0.1f)
             {
-                PositionZHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.position.z));
+                PositionZHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), pos.z));
             }
             var temp = transform.parent;
             transform.parent = null;
@@ -164,7 +164,7 @@ public class RM_Object : MonoBehaviour
                 RotationWHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.w));
             }
 
-            previousPosition = transform.position;
+            previousPosition = pos;
             previousScale = transform.localScale;
             previousRotation = new Vector4(transform.rotation.x,transform.rotation.y,transform.rotation.z,transform.rotation.w);
 

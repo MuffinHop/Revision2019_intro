@@ -57,39 +57,44 @@ public class SdCapsule : RM_Object
         Rotatable = false;
         if (Time.frameCount % 12 == 0 && prevFrame != Time.frameCount)
         {
-            transform.position = new Vector3(
+            Vector3 pos = new Vector3(
                 Mathf.Floor(transform.position.x * 64.0f) / 64.0f,
                 Mathf.Floor(transform.position.y * 64.0f) / 64.0f,
                 Mathf.Floor(transform.position.z * 64.0f) / 64.0f
                 );
             prevFrame = Time.frameCount;
-            if (Mathf.Abs(previousPosition.x - transform.position.x) > 0.01f)
+            if (Mathf.Abs(previousPosition.x - pos.x) > 0.01f)
             {
-                PositionXHistory.Add(new SyncRMObject((int)(SyncUp.time*60.0f), transform.position.x));
+                PositionXHistory.Add(new SyncRMObject((int)(SyncUp.time*60.0f), pos.x));
             }
-            if (Mathf.Abs(previousPosition.y - transform.position.y) > 0.01f)
+            if (Mathf.Abs(previousPosition.y - pos.y) > 0.01f)
             {
-                PositionYHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.position.y));
+                PositionYHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), pos.y));
             }
-            if (Mathf.Abs(previousPosition.z - transform.position.z) > 0.01f)
+            if (Mathf.Abs(previousPosition.z - pos.z) > 0.01f)
             {
-                PositionZHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.position.z));
-            }
-
-            if (Mathf.Abs(previousScale.x - transform.GetChild(0).position.x) > 0.01f)
-            {
-                ScaleXHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.GetChild(0).position.x * 2.0f));
-            }
-            if (Mathf.Abs(previousScale.y - transform.GetChild(0).position.y) > 0.01f)
-            {
-                ScaleYHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.GetChild(0).position.y * 2.0f));
-            }
-            if (Mathf.Abs(previousScale.z - transform.GetChild(0).position.z) > 0.01f)
-            {
-                ScaleZHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.GetChild(0).position.z * 2.0f));
+                PositionZHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), pos.z));
             }
 
-            previousPosition = transform.position;
+            Vector3 npos = new Vector3(
+                Mathf.Floor(transform.GetChild(0).position.x * 64.0f) / 64.0f,
+                Mathf.Floor(transform.GetChild(0).position.y * 64.0f) / 64.0f,
+                Mathf.Floor(transform.GetChild(0).position.z * 64.0f) / 64.0f
+                );
+            if (Mathf.Abs(previousScale.x - npos.x) > 0.01f)
+            {
+                ScaleXHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), npos.x * 2.0f));
+            }
+            if (Mathf.Abs(previousScale.y - npos.y) > 0.01f)
+            {
+                ScaleYHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), npos.y * 2.0f));
+            }
+            if (Mathf.Abs(previousScale.z - npos.z) > 0.01f)
+            {
+                ScaleZHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), npos.z * 2.0f));
+            }
+
+            previousPosition = pos;
             previousScale = transform.GetChild(0).position;
 
             visibleSyncDataCount += 6;
