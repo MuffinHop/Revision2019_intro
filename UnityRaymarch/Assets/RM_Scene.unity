@@ -263,7 +263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: a1df274d5f56ab74a95f85f1e9dac346, type: 2}
-  SurfaceComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  SurfaceComponent: {fileID: 11400000, guid: 8fcb7eac0a53041488610d4f31e5fb6e, type: 2}
   Mixer: 0
   R: 0
   N: 0
@@ -765,7 +765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: a1df274d5f56ab74a95f85f1e9dac346, type: 2}
-  SurfaceComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  SurfaceComponent: {fileID: 11400000, guid: 8fcb7eac0a53041488610d4f31e5fb6e, type: 2}
   Mixer: 0
   R: 0
   N: 0
@@ -1541,53 +1541,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &1464945843
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Standard Trace Marching
-  m_Shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel0:
-        m_Texture: {fileID: 2800000, guid: 7bea65fe94c80dc4a88ade876cf07b4a, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel1:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel2:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _iChannel3:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - _Value: 0
-    - _iFrame: 0
-    - _iTime: 0.13768116
-    m_Colors:
-    - _Light: {r: 0, g: 0, b: 0, a: 0}
-    - _iMouse: {r: 0, g: 0, b: 0, a: 0}
-    - _iResolution: {r: 267, g: 150, b: 0, a: 0}
 --- !u!1 &1506407802
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,7 +1589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 0db05a8ef2f0b1d49b39b12c38d93e00, type: 2}
-  SurfaceComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  SurfaceComponent: {fileID: 11400000, guid: f169372fc8710754a8c3326c633feec7, type: 2}
   Mixer: 0
   R: 0.2
   N: 0
@@ -2038,8 +1991,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1862993965}
-  m_LocalRotation: {x: -0.0006158618, y: 0.99764425, z: -0.067999944, w: -0.009035462}
-  m_LocalPosition: {x: 0.79347825, y: -2, z: 44}
+  m_LocalRotation: {x: -0.0007691099, y: 0.9976417, z: -0.0676904, w: -0.011335375}
+  m_LocalPosition: {x: 1, y: -2, z: 44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2058,14 +2011,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
-  _material: {fileID: 1464945843}
+  _material: {fileID: 2075352134}
   _camera: {fileID: 1862993967}
   iChannel0: {fileID: 2800000, guid: 7bea65fe94c80dc4a88ade876cf07b4a, type: 3}
   iChannel1: {fileID: 0}
   iChannel2: {fileID: 0}
   iChannel3: {fileID: 0}
   _renderTexture: {fileID: 0}
-  _iResolution: {x: 267, y: 150}
+  _iResolution: {x: 510, y: 287}
 --- !u!114 &1862993970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2190,6 +2143,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &2075352134
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Standard Trace Marching
+  m_Shader: {fileID: 4800000, guid: 6c93aa8e716a2d84a99db4bee5bae7a3, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel0:
+        m_Texture: {fileID: 2800000, guid: 7bea65fe94c80dc4a88ade876cf07b4a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _iChannel3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Value: 0
+    - _iFrame: 0
+    - _iTime: 0
+    m_Colors:
+    - _Light: {r: 0, g: 0, b: 0, a: 0}
+    - _iMouse: {r: 0, g: 0, b: 0, a: 0}
+    - _iResolution: {r: 510, g: 287, b: 0, a: 0}
 --- !u!4 &1270235544043814998
 Transform:
   m_ObjectHideFlags: 0
@@ -3576,8 +3576,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3574511847518219762}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 1, y: -4, z: 36.27437}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3, y: -4, z: 33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3574511847517729236}
@@ -4342,7 +4342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 0db05a8ef2f0b1d49b39b12c38d93e00, type: 2}
-  SurfaceComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  SurfaceComponent: {fileID: 11400000, guid: f169372fc8710754a8c3326c633feec7, type: 2}
   Mixer: 0
   R: 0.06
   N: 0
@@ -4413,6 +4413,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3574511847517728844}
+  - component: {fileID: 3574511847518219373}
   m_Layer: 0
   m_Name: Spine
   m_TagString: Untagged
@@ -4420,6 +4421,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &3574511847518219373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3574511847518219372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fcea9145e67bca49bd91ebf9f4aa878, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShaderComponent: {fileID: 11400000, guid: 0db05a8ef2f0b1d49b39b12c38d93e00, type: 2}
+  SurfaceComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  Mixer: 0
+  R: 0.166
+  N: 0
+  Centered: 0
+  Rotatable: 0
+  ID: 0
+  visibleSyncDataCount: 186
 --- !u!1 &3574511847518219374
 GameObject:
   m_ObjectHideFlags: 0
@@ -5165,7 +5187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 0db05a8ef2f0b1d49b39b12c38d93e00, type: 2}
-  SurfaceComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  SurfaceComponent: {fileID: 11400000, guid: f169372fc8710754a8c3326c633feec7, type: 2}
   Mixer: 0
   R: 0.06
   N: 0
@@ -5530,7 +5552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
-  SurfaceComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  SurfaceComponent: {fileID: 11400000, guid: 8fcb7eac0a53041488610d4f31e5fb6e, type: 2}
   Mixer: 0
   R: 0
   N: 0
@@ -5612,7 +5634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderComponent: {fileID: 11400000, guid: 1c6493e902daba3469f32ff09801f641, type: 2}
-  SurfaceComponent: {fileID: 11400000, guid: e6cde31e47fefa142acc08c5d8f888d1, type: 2}
+  SurfaceComponent: {fileID: 11400000, guid: 8fcb7eac0a53041488610d4f31e5fb6e, type: 2}
   Mixer: 0
   R: 0
   N: 0

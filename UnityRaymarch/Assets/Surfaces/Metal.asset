@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
   m_Name: Metal
   m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.178
-  albedo: {r: 1, g: 1, b: 1, a: 1}
-  smoothness: 0.37
-  reflectindx: 0.54
+  reflectionCoefficient: 0.12
+  albedo: {r: 0.6226415, g: 0.53746885, b: 0.53746885, a: 1}
+  smoothness: 0.45
+  reflectindx: 0.03
