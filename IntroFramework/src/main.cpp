@@ -478,6 +478,7 @@ HWND hwnd = {};
 GLuint fontTexture_telegram;
 GLuint fontTexture_cards;
 GLuint fontTexture_greets;
+GLuint fontTexture_credits;
 GLuint texture_logos;
 GLuint texture_perlin;
 unsigned char* perlinnoise;
@@ -538,6 +539,7 @@ HFONT Courier57Font = NULL;
 HFONT Courier41Font = NULL;
 HFONT Arial24Font = NULL;
 HFONT Arial300Font = NULL; 
+HFONT Garamond57Font = NULL;
 
 extern float RM_Objects[126];
 extern float iMouseX;
@@ -622,6 +624,7 @@ void InitFontToTexture() {
 	Courier41Font = CreateFont(45, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Courier New");
 	Arial24Font = CreateFont(24, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Arial");
 	Arial300Font = CreateFont(300, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Arial");
+	Garamond57Font = CreateFont(57, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Garamond");
 
 	hbmOld = SelectObject(fonthDC, hbmBitmap);
 	SetBkMode(fonthDC, TRANSPARENT);
@@ -695,6 +698,24 @@ void RenderFont3() {
 	DrawRectTextBuf2("Calodox  ", RGB(255, 255, 255), 370 + off, 645 - y);
 	DrawRectTextBuf2("Titan   ", RGB(255, 255, 255), -154 + off, 645 - y);
 	DrawRectTextBuf2("           ", RGB(255, 255, 255), -154 + off, 645 - y);
+}
+
+void RenderFont4() {
+	hbmOld = SelectObject(fonthDC, hbmBitmap);
+	HBRUSH brush = CreateSolidBrush(RGB(0, 0, 0)); //create brush
+	SelectObject(fonthDC, brush); //select brush into DC
+	Rectangle(fonthDC, 0, 0, 1920, 1080); //draw rectangle over whole screen
+
+	hFontOld = SelectObject(fonthDC, Garamond57Font);
+	DrawRectText("Code by branch and visy", RGB(255, 255, 255), 53, 714);
+	hFontOld = SelectObject(fonthDC, Garamond57Font);
+	DrawRectText("Distance field models by Dysposin, branch and visy", RGB(255, 255, 255), 53, 780);
+	hFontOld = SelectObject(fonthDC, Garamond57Font);
+	DrawRectText("Music by h0ffman (WaveSabre)", RGB(255, 255, 255), 53, 845);
+	hFontOld = SelectObject(fonthDC, Garamond57Font);
+	DrawRectText("Made with Shadertoy, Unity & Blender", RGB(255, 255, 255), 53, 910);
+	hFontOld = SelectObject(fonthDC, Garamond57Font);
+	DrawRectText("Special thanks to pumpuli, noby, Ferris & zov", RGB(255, 255, 255), 54, 975);
 }
 
 int bitmap_alloc = 0;
@@ -905,7 +926,7 @@ int __cdecl main(int argc, char* argv[])
 	SetPixelFormat(hDC, ChoosePixelFormat(hDC, &pfd), &pfd);
 	wglMakeCurrent(hDC, wglCreateContext(hDC));
 
-	GLuint TextIds[4] = { 0, 0, 0, 0};
+	GLuint TextIds[5] = { 0, 0, 0, 0, 0};
 
 
 	// create and compile shader programs
@@ -1126,23 +1147,26 @@ int __cdecl main(int argc, char* argv[])
 			if (fontinit == 0) {
 				fontinit = 1;
 
+				// font textures
+
 				RenderFont2();
 				fontTexture_cards = GenTexture();
 				RenderBitmapToTexture(fontTexture_cards);
 				TextIds[2] = fontTexture_cards;
 
-
-				// font textures
 				RenderFont3();
 				fontTexture_greets = GenTexture();
 				RenderBitmapToTexture(fontTexture_greets);
 				TextIds[3] = fontTexture_greets;
 
-
+				RenderFont4();
+				fontTexture_credits = GenTexture();
+				RenderBitmapToTexture(fontTexture_credits);
+				TextIds[4] = fontTexture_credits;
 
 
 				dolz4();
-				TextIds[4] = texture_logos;
+				TextIds[5] = texture_logos;
 
 				GeneratePerlin();
 
