@@ -12,7 +12,7 @@ public class RM_SyncDataController : MonoBehaviour
     private RayMarchingController _rayMarchingController;
 
 
-    public void OnDestroy()
+    public void OnApplicationQuit()
     {
         Generate();
     }
@@ -62,6 +62,7 @@ public class RM_SyncDataController : MonoBehaviour
             var rmObjects = item.Value;
             foreach (var rmObject in rmObjects)
             {
+                Debug.Log("Generating Sync Data for " + rmObject.name, rmObject.gameObject);
                 syncArrayStr += GetSyncArray(rmObject.PositionXHistory, "ID" + rmObject.ID + "ArrayPositionX");
                 syncArrayStr += GetSyncArray(rmObject.PositionYHistory, "ID" + rmObject.ID + "ArrayPositionY");
                 syncArrayStr += GetSyncArray(rmObject.PositionZHistory, "ID" + rmObject.ID + "ArrayPositionZ");
