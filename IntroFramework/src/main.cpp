@@ -6,17 +6,19 @@
 	#define BREAK_COMPATIBILITY 0
 #else
 	#define OPENGL_DEBUG        0
-	#define FULLSCREEN          1
+	#define FULLSCREEN          0
 	#define DESPERATE           0
 	#define BREAK_COMPATIBILITY 0
 #endif
 
 #include "smallz4.h"
 #include "SimplexNoise.h"
+extern "C" long _ftol(double); //defined by VC6 C libs 
+extern "C" long _ftol2( double dblSource ) { return _ftol( dblSource ); }
 
 int POST_PASS = 1;
 #define USE_MIPMAPS  1
-#define USE_AUDIO    1
+#define USE_AUDIO    14
 #define NO_UNIFORMS  0
 
 #include "IntroFramework/gl_loader.h"
@@ -617,13 +619,13 @@ void InitFontToTexture() {
 	hbmBitmap = CreateDIBSection(fonthDC, &bmi, DIB_RGB_COLORS, (void**)&pBitmapBits, 0, 0);
 	SetMapMode(fonthDC, MM_TEXT);
 
-	latinwide118Font = CreateFont(144, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Wide Latin");
-	latinwide56Font = CreateFont(82, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Wide Latin");
+	latinwide118Font = CreateFont(200, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Garamond");
+	latinwide56Font = CreateFont(130, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Garamond");
 	Courier57Font = CreateFont(61, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Courier New");
 	Courier41Font = CreateFont(45, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Courier New");
 	Arial24Font = CreateFont(24, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Arial");
 	Arial300Font = CreateFont(300, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Arial");
-	Garamond57Font = CreateFont(57, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Garamond");
+	Garamond57Font = CreateFont(65, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, "Garamond");
 
 	hbmOld = SelectObject(fonthDC, hbmBitmap);
 	SetBkMode(fonthDC, TRANSPARENT);
@@ -639,10 +641,10 @@ void RenderFont1() {
 	/////////////// DRAW
 	// canvas: TelegramCanvas
 	hFontOld = SelectObject(fonthDC, latinwide118Font);
-	DrawRectText("The Secret", RGB(255, 255, 255), 431, 64-32);
-	DrawRectText("The Secret", RGB(0, 0, 0), 436, 71 - 32);
-	DrawRectText("Service Agency", RGB(255, 255, 255), 192, 178 - 32);
-	DrawRectText("Service Agency", RGB(0, 0, 0), 196, 184 - 32);
+	DrawRectText("The Secret", RGB(255, 255, 255), 531, 64-32);
+	DrawRectText("The Secret", RGB(0, 0, 0), 536, 71 - 32);
+	DrawRectText("Service Agency", RGB(255, 255, 255), 302, 178 - 32);
+	DrawRectText("Service Agency", RGB(0, 0, 0), 306, 184 - 32);
 	hFontOld = SelectObject(fonthDC, Courier57Font);
 	DrawRectTextBuf("------------------------------------------------------", RGB(50, 50, 50), 44, 407 - 32);
 	DrawRectTextBuf("TO: Agent 'TSConf' SUBJECT: 'Your Assignment'", RGB(50, 50, 50), 43, 372 - 32);
@@ -656,7 +658,7 @@ void RenderFont1() {
 	DrawRectTextBuf("systems and finally destroy the aforementioned decoding machine.  ", RGB(50, 50, 50), 45, 894 - 32);
 	DrawRectTextBuf("- I wish you good luck, agent.  ",RGB(50,50,50),45,1007 - 32);
 	hFontOld = SelectObject(fonthDC, Arial24Font);
-	DrawRectText("Doing your dirty work for you since 1969", RGB(50, 50, 50), 1041, 96 - 32);
+	DrawRectText("Doing your dirty work for you since 1969", RGB(50, 50, 50), 996, 96 - 32);
 	// --------------------------------------------- END END END
 }
 
@@ -706,7 +708,7 @@ void RenderFont4() {
 	Rectangle(fonthDC, 0, 0, 1920, 1080); //draw rectangle over whole screen
 
 	hFontOld = SelectObject(fonthDC, Garamond57Font);
-	DrawRectText("Code by branch and visy", RGB(255, 255, 255), 53, 714);
+	DrawRectText("Code by branch, visy and Walther", RGB(255, 255, 255), 53, 714);
 	hFontOld = SelectObject(fonthDC, Garamond57Font);
 	DrawRectText("Distance field models by Dysposin, branch and visy", RGB(255, 255, 255), 53, 780);
 	hFontOld = SelectObject(fonthDC, Garamond57Font);
@@ -847,8 +849,8 @@ inline float GetNoise(float x, float y, float octaves, float texSize) {
 
 
 void GeneratePerlin() {
-	float texSize = 4096;
-	size_t octaves = 16;
+	float texSize = 128;
+	size_t octaves = 1;
 
 	perlinnoise = (unsigned char*) malloc(((int)texSize*(int)texSize)*3);
 	texture_perlin = GenTexture(GL_REPEAT);
@@ -897,7 +899,7 @@ int __cdecl main(int argc, char* argv[])
 #endif
 {
 
-	float time = 20.0f;
+	float time = 0.0f;
 	// initialize window
 	#if FULLSCREEN
 		ChangeDisplaySettings(&screenSettings, CDS_FULLSCREEN);
