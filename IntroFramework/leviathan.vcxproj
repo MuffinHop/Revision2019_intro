@@ -166,6 +166,7 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <CallingConvention>StdCall</CallingConvention>
       <LanguageStandard>stdcpp14</LanguageStandard>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -236,7 +237,7 @@ shader_minifier.exe -v -o src\shaders\post.inl src\shaders\post.frag</Command>
       <OmitDefaultLibName>false</OmitDefaultLibName>
       <LanguageStandard>
       </LanguageStandard>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions</EnableEnhancedInstructionSet>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -311,7 +312,7 @@ shader_minifier.exe --no-renaming -v -o src\shaders\post.inl src\shaders\post.fr
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions</EnableEnhancedInstructionSet>
       <OmitDefaultLibName>true</OmitDefaultLibName>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -404,7 +405,7 @@ shader_minifier.exe --no-renaming -v -o src\shaders\post.inl src\shaders\post.fr
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <SmallerTypeCheck>false</SmallerTypeCheck>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
-      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions</EnableEnhancedInstructionSet>
       <OmitDefaultLibName>true</OmitDefaultLibName>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

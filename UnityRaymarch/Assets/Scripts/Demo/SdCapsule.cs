@@ -65,7 +65,7 @@ public class SdCapsule : RM_Object
             prevFrame = Time.frameCount;
             if (Mathf.Abs(previousPosition.x - pos.x) > 0.01f)
             {
-                PositionXHistory.Add(new SyncRMObject((int)(SyncUp.time*60.0f), pos.x));
+                PositionXHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), pos.x));
             }
             if (Mathf.Abs(previousPosition.y - pos.y) > 0.01f)
             {
@@ -95,7 +95,7 @@ public class SdCapsule : RM_Object
             }
 
             previousPosition = pos;
-            previousScale = transform.GetChild(0).position;
+            previousScale = npos;
 
             visibleSyncDataCount += 6;
         }

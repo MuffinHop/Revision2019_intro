@@ -209,7 +209,7 @@ float setVal(vec3 arr[], float rrow, long size, long *R_INDX) {
         syncCode += @"
         void Sync(float second)
         {
-            float row = second * 60.0f;
+            float row = second * 6.0f;
 
             ";
         // frow = AudioSource.time * BPM / 60f * 8f;

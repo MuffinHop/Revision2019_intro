@@ -149,19 +149,19 @@ public class RM_Object : MonoBehaviour
 
             if (Mathf.Abs(previousRotation.x - transform.rotation.x) > 0.1f)
             {
-                RotationXHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.x));
+                RotationXHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.rotation.x));
             }
             if (Mathf.Abs(previousRotation.y - transform.rotation.y) > 0.1f)
             {
-                RotationYHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.y));
+                RotationYHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.rotation.y));
             }
             if (Mathf.Abs(previousRotation.z - transform.rotation.z) > 0.1f)
             {
-                RotationZHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.z));
+                RotationZHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.rotation.z));
             }
             if (Mathf.Abs(previousRotation.w - transform.rotation.w) > 0.1f)
             {
-                RotationWHistory.Add(new SyncRMObject(Time.frameCount, transform.rotation.w));
+                RotationWHistory.Add(new SyncRMObject((int)(SyncUp.time * 60.0f), transform.rotation.w));
             }
 
             previousPosition = pos;

@@ -24,7 +24,6 @@ int POST_PASS = 1;
 
 #if OPENGL_DEBUG 
 	#include "debug.h"
-#include "atltrace.h"
 #endif
 
 #include "glext.h"
