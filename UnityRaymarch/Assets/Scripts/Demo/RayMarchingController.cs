@@ -403,8 +403,18 @@ public class RayMarchingController : MonoBehaviour
     }
     private void Start()
     {
+        RegenerateShader();
+    }
+
+    public bool GeneratedOnce = false;
+
+    public void RegenerateShader()
+    {
         int index = 0;
+        gomat = null;
+        surfaces = null;
         //detect all gameobjects with raymarch objects
+        materialIDStr = "";
         var rM_Objects = FindObjectsOfType<RM_Object>();
         foreach (var rM_Object in rM_Objects)
         {
@@ -415,7 +425,9 @@ public class RayMarchingController : MonoBehaviour
         }
 
         OrganizeShader();
+        GeneratedOnce = true;
     }
+
     public void OrganizeShader()
     {
         string coreCode = "";
