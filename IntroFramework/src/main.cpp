@@ -13,9 +13,10 @@
 
 #include "smallz4.h"
 #include "SimplexNoise.h"
+#ifndef DEBUG
 extern "C" long _ftol(double); //defined by VC6 C libs 
 extern "C" long _ftol2( double dblSource ) { return _ftol( dblSource ); }
-
+#endif
 int POST_PASS = 1;
 #define USE_MIPMAPS  1
 #define USE_AUDIO    14
