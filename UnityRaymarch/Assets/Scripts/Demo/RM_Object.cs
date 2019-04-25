@@ -172,4 +172,9 @@ public class RM_Object : MonoBehaviour
             visibleSyncDataCount += 10;
         }
     }
+
+    public void OnValidate() {
+        RayMarchingController rm = GameObject.Find("Main Camera").GetComponent<RayMarchingController>();
+        if (rm.GeneratedOnce) rm.RegenerateShader();
+    }
 }
