@@ -642,10 +642,10 @@ void RenderFont1() {
 	/////////////// DRAW
 	// canvas: TelegramCanvas
 	hFontOld = SelectObject(fonthDC, latinwide118Font);
-	DrawRectText("The Secret", RGB(255, 255, 255), 531, 64-32);
-	DrawRectText("The Secret", RGB(0, 0, 0), 536, 71 - 32);
-	DrawRectText("Service Agency", RGB(255, 255, 255), 302, 178 - 32);
-	DrawRectText("Service Agency", RGB(0, 0, 0), 306, 184 - 32);
+	DrawRectText("The Secret", RGB(255, 255, 255), 591, 64-32);
+	DrawRectText("The Secret", RGB(0, 0, 0), 596, 71 - 32);
+	DrawRectText("Service Agency", RGB(255, 255, 255), 392, 178 - 32);
+	DrawRectText("Service Agency", RGB(0, 0, 0), 396, 184 - 32);
 	hFontOld = SelectObject(fonthDC, Courier57Font);
 	DrawRectTextBuf("------------------------------------------------------", RGB(50, 50, 50), 44, 407 - 32);
 	DrawRectTextBuf("TO: Agent 'TSConf' SUBJECT: 'Your Assignment'", RGB(50, 50, 50), 43, 372 - 32);
@@ -659,8 +659,9 @@ void RenderFont1() {
 	DrawRectTextBuf("systems and finally destroy the aforementioned decoding machine.  ", RGB(50, 50, 50), 45, 894 - 32);
 	DrawRectTextBuf("- I wish you good luck, agent.  ",RGB(50,50,50),45,1007 - 32);
 	hFontOld = SelectObject(fonthDC, Arial24Font);
-	DrawRectText("Doing your dirty work for you since 1969", RGB(50, 50, 50), 996, 96 - 32);
+	DrawRectText("Doing your dirty work for you since 1969", RGB(50, 50, 50), 996, 96 - 16);
 	// --------------------------------------------- END END END
+
 }
 
 
@@ -899,7 +900,7 @@ void entrypoint(void)
 int __cdecl main(int argc, char* argv[])
 #endif
 {
-	float time = 2016.0f;
+	float time = 0.0f;
 	// initialize window
 	#if FULLSCREEN
 		ChangeDisplaySettings(&screenSettings, CDS_FULLSCREEN);

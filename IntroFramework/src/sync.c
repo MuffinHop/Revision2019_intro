@@ -1307,12 +1307,14 @@
                {2100000.0f, 0.30f, 0 } 
               }; 
        float fogDensity;
-       vec3 TextIdArray[7] = { 
+       vec3 TextIdArray[9] = { 
                { 0, 1.00f, 0 }, 
                { 340, 0.00f, 0 }, 
                { 660, 0.00f, 0 }, 
                { 2416, 3.00f, 0 }, 
-               { 2866, 4.00f, 0 }, 
+               { 2866, 0.00f, 0 }, 
+			   { 4073, 4.00f, 0 },
+			   { 4373, 5.00f, 0 },
                {100000.0f, 0.00f, 0 }, 
                {2100000.0f, 0.00f, 0 } 
               }; 
@@ -1885,7 +1887,7 @@ long TempratureNormalizationArrayPointer = 0;
        FarPlane = setVal(FarPlaneArray, row, 13, &FarPlaneArrayPointer); 
        Step = setVal(StepArray, row, 16, &StepArrayPointer); 
        fogDensity = setVal(fogDensityArray, row, 23, &fogDensityArrayPointer); 
-       TextId = setVal(TextIdArray, row, 7, &TextIdArrayPointer); 
+       TextId = setVal(TextIdArray, row, 9, &TextIdArrayPointer); 
        iMouseX = setVal(iMouseXArray, row, 5, &iMouseXArrayPointer); 
        iMouseY = setVal(iMouseYArray, row, 6, &iMouseYArrayPointer); 
        Environment = setVal(EnvironmentArray, row, 12, &EnvironmentArrayPointer); 
