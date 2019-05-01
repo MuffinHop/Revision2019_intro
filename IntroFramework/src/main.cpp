@@ -899,8 +899,7 @@ void entrypoint(void)
 int __cdecl main(int argc, char* argv[])
 #endif
 {
-
-	float time = 0.0f;
+	float time = 2016.0f;
 	// initialize window
 	#if FULLSCREEN
 		ChangeDisplaySettings(&screenSettings, CDS_FULLSCREEN);
@@ -928,7 +927,7 @@ int __cdecl main(int argc, char* argv[])
 	SetPixelFormat(hDC, ChoosePixelFormat(hDC, &pfd), &pfd);
 	wglMakeCurrent(hDC, wglCreateContext(hDC));
 
-	GLuint TextIds[5] = { 0, 0, 0, 0, 0};
+	GLuint TextIds[6] = { 0, 0, 0, 0, 0, 0};
 
 
 	// create and compile shader programs
@@ -1027,6 +1026,8 @@ int __cdecl main(int argc, char* argv[])
 
 		((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(pidMain);
 		POST_PASS = 1;
+
+
 
 		if (tid > 0) {
 			glBindTexture(GL_TEXTURE_2D, tid);
