@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
   m_Name: Wheaty
   m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.1
-  albedo: {r: 0.65177536, g: 0.6698113, b: 0.22432362, a: 1}
-  smoothness: 0.1
-  reflectindx: 0.2
+  reflectionCoefficient: 0.33
+  albedo: {r: 0.754717, g: 0.71912616, b: 0.18867925, a: 0.9098039}
+  smoothness: 0.56
+  reflectindx: 0.03

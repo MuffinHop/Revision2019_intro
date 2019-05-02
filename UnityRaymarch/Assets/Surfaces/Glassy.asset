@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
   m_Name: Glassy
   m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.27
-  albedo: {r: 1, g: 1, b: 1, a: 0.49803922}
-  smoothness: 0.8
-  reflectindx: 0.69
+  reflectionCoefficient: 0.26
+  albedo: {r: 0.5529412, g: 0.60021514, b: 0.62352943, a: 0.76862746}
+  smoothness: 0.21
+  reflectindx: 0.94

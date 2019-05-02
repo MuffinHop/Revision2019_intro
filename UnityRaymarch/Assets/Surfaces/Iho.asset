@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e0640762f208f468a9da64b5865871, type: 3}
   m_Name: Iho
   m_EditorClassIdentifier: 
-  reflectionCoefficient: 0.31
-  albedo: {r: 0.8773585, g: 0.6787057, b: 0.55869526, a: 1}
-  smoothness: 0.3
-  reflectindx: 0.28
+  reflectionCoefficient: 0.76
+  albedo: {r: 0.7294118, g: 0.64291936, b: 0.53333336, a: 0.76862746}
+  smoothness: 0.12
+  reflectindx: 0.6

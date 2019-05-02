@@ -10,7 +10,7 @@ public class RM_MenuObjects : MonoBehaviour
     static void CreateCustomGameObject(MenuCommand menuCommand)
     {
         GameObject go = new GameObject("Cube Ray Marched");
-        go.AddComponent<RM_Object>();
+        go.AddComponent<SDFObject>();
         GameObjectUtility.SetParentAndAlign(go, menuCommand.context as GameObject);
         Undo.RegisterCreatedObjectUndo(go, "Create " + go.name);
         Selection.activeObject = go;
